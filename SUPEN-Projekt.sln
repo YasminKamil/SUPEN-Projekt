@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2041
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SUPEN-Projekt", "SUPEN-Projekt\SUPEN-Projekt.csproj", "{00FC585D-60EA-4FE7-8727-E24786941637}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00FC585D-60EA-4FE7-8727-E24786941637}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00FC585D-60EA-4FE7-8727-E24786941637}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00FC585D-60EA-4FE7-8727-E24786941637}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00FC585D-60EA-4FE7-8727-E24786941637}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3BC0F97B-9D19-4E2A-AA32-9AB119BA57B1}
+	EndGlobalSection
+EndGlobal
