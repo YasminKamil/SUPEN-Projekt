@@ -13,7 +13,7 @@ namespace SUPEN_Projekt.Models {
 		public string Website { get; set; }
 		public string HelloCar { get; set; }
 
-		public string CompanyName { get; set; }
+        public string CompanyName { get; set; }
 		public string ContactEmail { get; set; }
 		public string ContactPhone { get; set; }
 
