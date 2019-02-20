@@ -14,5 +14,7 @@ namespace SUPEN_Projekt.Models {
 		public DateTime StartTime { get; set; }
 		public DateTime EndTime { get; set; }
 		public int Price { get; set; }
+        public string Hej { get; set; }
+}
 	}
 }
