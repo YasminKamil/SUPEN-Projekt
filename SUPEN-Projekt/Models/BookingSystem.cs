@@ -11,7 +11,6 @@ namespace SUPEN_Projekt.Models {
 		public string Email { get; set; }
 		public string PhoneNumber { get; set; }
 		public string Website { get; set; }
-		public string HelloCar { get; set; }
 
         public string CompanyName { get; set; }
 		public string ContactEmail { get; set; }
