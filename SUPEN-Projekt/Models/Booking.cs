@@ -29,5 +29,6 @@ namespace SUPEN_Projekt.Models {
 		
 		public int hejhejhej { get; set; }
 
+		public int nummer { get; set; }
     }
 }
