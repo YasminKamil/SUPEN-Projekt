@@ -25,7 +25,9 @@ namespace SUPEN_Projekt.Models {
 
 		public int hejsan { get; set; }
 
-	}
         public int mergaHärr { get; set; }
+		
+		public int hejhejhej { get; set; }
+
     }
 }
