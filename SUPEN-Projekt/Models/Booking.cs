@@ -5,9 +5,7 @@ using System.Web;
 
 namespace SUPEN_Projekt.Models { 
    
-    public class Booking
-    {
-
+    public class Booking {
         public int BookingId { get; set; }
         public string UserName { get; set; }
         public string UserMail { get; set; }
