@@ -34,7 +34,8 @@ namespace SUPEN_Projekt.Models {
 	}
         public int mergaHärr { get; set; }
 		
-		public int hejhejhej { get; set; }
+		public int hejhejhejhej { get; set; }
+        public int hejdå { get; set; }
 
     }
 }
