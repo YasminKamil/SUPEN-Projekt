@@ -22,5 +22,7 @@ namespace SUPEN_Projekt.Models {
 		public decimal Longitude { get; set; }
 		public string PostalCode { get; set; }
 		public string City { get; set; }
+
+
 	}
 }
