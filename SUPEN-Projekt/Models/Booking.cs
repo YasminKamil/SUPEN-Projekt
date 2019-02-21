@@ -37,5 +37,6 @@ namespace SUPEN_Projekt.Models {
 		public int hejhejhejhej { get; set; }
         public int hejdå { get; set; }
 
+		public int nummer { get; set; }
     }
 }
