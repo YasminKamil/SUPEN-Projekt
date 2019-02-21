@@ -16,9 +16,9 @@ namespace SUPEN_Projekt.Models {
 		public int Price { get; set; }
         public int MyProperty { get; set; }
     
-        public string Hej { get; set; }
+        public string HejAlla { get; set; }
 
 		public string sträng { get; set; }
-
+        //Hej alla!
 	}
 }
