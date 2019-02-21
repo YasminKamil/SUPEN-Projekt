@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SUPEN_Projekt.Models {
+namespace SUPEN_Projekt.Models { 
+   
     public class Booking
     {
 
@@ -27,6 +28,8 @@ namespace SUPEN_Projekt.Models {
 
         public int hejsan { get; set; }
 
+    
+    public int mergaHarr { get; set; }
 
         public int mergaHärr { get; set; }
 
