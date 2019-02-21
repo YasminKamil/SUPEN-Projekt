@@ -4,13 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace SUPEN_Projekt.Models {
-    public class Booking {
-        public int BookingId { get; set; }
-        public string UserName { get; set; }
-        public string UserMail { get; set; }
-        public string UserMobile { get; set; }
-    public class Booking
-    {
+		public class Booking{
         public int BookingId { get; set; }
         public string UserName { get; set; }
         public string UserMail { get; set; }
@@ -30,15 +24,12 @@ namespace SUPEN_Projekt.Models {
         public int jj { get; set; }
 
         public int hejsan { get; set; }
+		public int mergaHärr { get; set; }
 
-	}
-        public int mergaHärr { get; set; }
-		
 		public int hejhejhejhej { get; set; }
-        public int hejdå { get; set; }
+		public int hejdå { get; set; }
 		public int hejhej { get; set; }
 
 		public int nummer { get; set; }
-
-    }
+	} 
 }
