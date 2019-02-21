@@ -19,5 +19,7 @@ namespace SUPEN_Projekt.Models {
     
         public string Hej { get; set; }
 
+		public string sträng { get; set; }
+
 	}
 }
