@@ -20,5 +20,7 @@ namespace SUPEN_Projekt.Models {
 
 		public string sträng { get; set; }
 
+        public int jj {get; set;}
+
 	}
 }
