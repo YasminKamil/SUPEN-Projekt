@@ -9,6 +9,12 @@ namespace SUPEN_Projekt.Models {
         public string UserName { get; set; }
         public string UserMail { get; set; }
         public string UserMobile { get; set; }
+    public class Booking
+    {
+        public int BookingId { get; set; }
+        public string UserName { get; set; }
+        public string UserMail { get; set; }
+        public string UserMobile { get; set; }
 
         public string Subject { get; set; }
         public DateTime StartTime { get; set; }
