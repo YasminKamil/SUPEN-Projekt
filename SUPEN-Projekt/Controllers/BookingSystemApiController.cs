@@ -15,22 +15,22 @@ namespace SUPEN_Projekt.Controllers
 			db = new ApplicationDbContext();
 		}
 
-		public IEnumerable<BookingSystem> GetBookingSystems() {
+		[HttpGet]
+		public IEnumerable<BookingSystem> Get() {
 			return db.BookingSystems.ToList();
 		}
 
 		[HttpPost]
-		public BookingSystem CreateBookingSystem(BookingSystem system) {
+		public BookingSystem Create(BookingSystem system) {
 			if (!ModelState.IsValid) {
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 			}
 			db.BookingSystems.Add(system);
 			db.SaveChanges();
-
 			return system;
 		}
 
-		public void UpdateBookingSystem (int id, BookingSystem system) {
+		public void Update(int id, BookingSystem system) {
 			if (!ModelState.IsValid) {
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 			}
@@ -58,13 +58,12 @@ namespace SUPEN_Projekt.Controllers
 		}
 
 		[HttpDelete]
-		public void DeleteBookingSystem(int id) {
+		public void Delete(int id) {
 			var system = db.BookingSystems.SingleOrDefault(x => x.BookingSystemId == id);
 
 			if(system == null) {
 				throw new HttpResponseException(HttpStatusCode.NotFound);
 			}
-
 			db.BookingSystems.Remove(system);
 			db.SaveChanges();
 		}
