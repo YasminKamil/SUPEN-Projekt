@@ -156,8 +156,6 @@ namespace SUPEN_Projekt.Models {
                     PostalCode = "212 23",
                     City = "Malmö"
                 }
-
-
             };
 			bookingSystems.ForEach(x => context.BookingSystem.Add(x));
 			context.SaveChanges();
