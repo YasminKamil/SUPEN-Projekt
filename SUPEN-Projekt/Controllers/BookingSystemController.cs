@@ -123,6 +123,24 @@ namespace SUPEN_Projekt.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //selected booking system är det företag som vi utgår från. 
+        private List<BookingSystem> getBookingSystemsInRange(BookingSystem inSelectedBookingSystem)
+        {
+            var companiesInSelectedCity = bookingSystems.Where(x => x.City.ToLower() == inSelectedBookingSystem.City.ToLower() && x.CompanyName != inSelectedBookingSystem.CompanyName);
+            List<BookingSystem> companiesInRange = new List<BookingSystem>();
+            foreach (var item in companiesInSelectedCity)
+            {
+                if (inDistance(inSelectedBookingSystem.Longitude, inSelectedBookingSystem.Latitude, item.Longitude, item.Latitude, 5000))
+                {
+                    companiesInRange.Add(item);
+                    Console.WriteLine(item.CompanyName);
+                }
+            }
+            return companiesInRange;
+        }
+
+
         //beräknar distansen till andra spelare. Returnerar t/f beroende på om avståndet är ok.
         private bool inDistance(double companyALong, double companyALat, double companyBLong, double companyBLat, int maxDistance)
         {
