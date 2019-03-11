@@ -127,7 +127,7 @@ namespace SUPEN_Projekt.Controllers
         //selected booking system är det företag som vi utgår från. 
         private List<BookingSystem> getBookingSystemsInRange(BookingSystem inSelectedBookingSystem)
         {
-            var companiesInSelectedCity = bookingSystems.Where(x => x.City.ToLower() == inSelectedBookingSystem.City.ToLower() && x.CompanyName != inSelectedBookingSystem.CompanyName);
+            var companiesInSelectedCity = db.BookingSystems.Where(x => x.City.ToLower() == inSelectedBookingSystem.City.ToLower() && x.CompanyName != inSelectedBookingSystem.CompanyName);
             List<BookingSystem> companiesInRange = new List<BookingSystem>();
             foreach (var item in companiesInSelectedCity)
             {
