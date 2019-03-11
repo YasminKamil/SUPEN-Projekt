@@ -123,5 +123,21 @@ namespace SUPEN_Projekt.Controllers
             }
             base.Dispose(disposing);
         }
+        //beräknar distansen till andra spelare. Returnerar t/f beroende på om avståndet är ok.
+        private bool inDistance(double companyALong, double companyALat, double companyBLong, double companyBLat, int maxDistance)
+        {
+            bool isCloseEnough = false;
+            companyALat = companyALat / 180 * Math.PI;
+            companyALong = companyALong / 180 * Math.PI;
+            companyBLong = companyBLong / 180 * Math.PI;
+            companyBLat = companyBLat / 180 * Math.PI;
+            double distanceLatitude = (Math.Abs(companyALat - companyBLat)) / 2;
+            double distanceLongitude = (Math.Abs(companyALong - companyBLong)) / 2;
+            double x = Math.Sin(distanceLatitude) * Math.Sin(distanceLatitude) + Math.Cos(companyALat) * Math.Cos(companyBLat) * Math.Sin(distanceLongitude) * Math.Sin(distanceLatitude);
+            double y = 2 * Math.Atan2(Math.Sqrt(x), Math.Sqrt(1 - x));
+            y = y * 6371000;
+            if (y <= maxDistance) isCloseEnough = true;
+            return isCloseEnough;
+        }
     }
 }
