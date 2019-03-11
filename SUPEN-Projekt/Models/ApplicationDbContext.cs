@@ -23,19 +23,141 @@ namespace SUPEN_Projekt.Models {
 				new BookingSystem {
 					SystemName = "boka.se",
 					SystemDescription = "Description...",
-					Email = "boka@boka.se",
+					Email = "ArtofHair@boka.se",
 					PhoneNumber = "070 - 000 00 00",
-					Website = "boka.se/salongfinest",
-					CompanyName = "Salong Finest",
-					ContactEmail = "salongfinest@boka.se",
+					Website = "boka.se/ArtofHair",
+					CompanyName = "Art of Hair",
+					ContactEmail = "ArtofHair@boka.se",
 					ContactPhone = "070 - 123 56 78",
-					Address = "Köpmangatan 2",
-					Latitude = 1,
-					Longitude = 2,
+					Address = " Fabriksgatan 13",
+					Latitude = 59.2703188,
+					Longitude = 15.2074733,
 					PostalCode = "702 10",
 					City = "Örebro"
-				}
-			};
+                } 
+                ,
+                new BookingSystem {
+                    SystemName = "boka.se",
+                    SystemDescription = "Description...",
+                    Email = "bullvivan@boka.se",
+                    PhoneNumber = "070 - 000 00 00",
+                    Website = "boka.se/bullvivan",
+                    CompanyName = "Bullvivan",
+                    ContactEmail = "bullvivan@boka.se",
+                    ContactPhone = "070 - 123 56 78",
+                    Address = "Kyrkvärdsvägen 17",
+                    Latitude = 59.27412,
+                    Longitude = 15.2066,
+                    PostalCode = "702 84",
+                    City = "Örebro"
+                },
+                                new BookingSystem {
+                    SystemName = "boka.se",
+                    SystemDescription = "Description...",
+                    Email = "Epiroc@boka.se",
+                    PhoneNumber = "070 - 000 00 00",
+                    Website = "boka.se/Epiroc",
+                    CompanyName = "Epiroc",
+                    ContactEmail = "Epiroc@boka.se",
+                    ContactPhone = "070 - 123 56 78",
+                    Address = "Tackjärnsgatan 8",
+                    Latitude = 59.291713,
+                    Longitude = 15.204345,
+                    PostalCode = "703 83",
+                    City = "Örebro"
+                },
+                                                new BookingSystem {
+                    SystemName = "boka.se",
+                    SystemDescription = "Description...",
+                    Email = "Frisorkompaniet@boka.se",
+                    PhoneNumber = "070 - 000 00 00",
+                    Website = "boka.se/salongfinest",
+                    CompanyName = "Frisörkompaniet",
+                    ContactEmail = "Frisörkompaniet@boka.se",
+                    ContactPhone = "070 - 123 56 78",
+                    Address = "Kristinagatan 10",
+                    Latitude = 59.270042,
+                    Longitude = 15.229628,
+                    PostalCode = "602 26",
+                    City = "Norrköping"
+                }
+                                                ,               new BookingSystem {
+                    SystemName = "boka.se",
+                    SystemDescription = "Description...",
+                    Email = "Carspect@boka.se",
+                    PhoneNumber = "070 - 000 00 00",
+                    Website = "boka.se/Carspect",
+                    CompanyName = "Carspect",
+                    ContactEmail = "Carspect@boka.se",
+                    ContactPhone = "070 - 123 56 78",
+                    Address = "Bangårdsg. 5",
+                    Latitude = 58.593966,
+                    Longitude = 16.204253,
+                    PostalCode = "602 28",
+                    City = "Norrköping"
+                },
+                                                                                new BookingSystem {
+                    SystemName = "boka.se",
+                    SystemDescription = "Description...",
+                    Email = "Sodermalmdack@boka.se",
+                    PhoneNumber = "070 - 000 00 00",
+                    Website = "boka.se/Sodermalmdack",
+                    CompanyName = "Södermalm däck & bilrekond",
+                    ContactEmail = "Sodermalmdack@boka.se",
+                    ContactPhone = "070 - 123 56 78",
+                    Address = "Rutger Fuchsgatan 4",
+                    Latitude = 59.3079479,
+                    Longitude = 18.0789683,
+                    PostalCode = "116 67",
+                    City = "Stockholm"
+                },
+                                                                                                new BookingSystem {
+                    SystemName = "boka.se",
+                    SystemDescription = "Description...",
+                    Email = "Noir@boka.se",
+                    PhoneNumber = "070 - 000 00 00",
+                    Website = "boka.se/Noir",
+                    CompanyName = "Noir",
+                    ContactEmail = "Noir@boka.se",
+                    ContactPhone = "070 - 123 56 78",
+                    Address = "Regeringsgatan 80",
+                    Latitude = 59.3378022,
+                    Longitude = 18.0674249,
+                    PostalCode = "111 39",
+                    City = "Stockholm"
+                },
+                                                                                                              new BookingSystem {
+                    SystemName = "boka.se",
+                    SystemDescription = "Description...",
+                    Email = "BodyFace@boka.se",
+                    PhoneNumber = "070 - 000 00 00",
+                    Website = "boka.se/BodyFace",
+                    CompanyName = "BodyFace",
+                    ContactEmail = "BodyFace@boka.se",
+                    ContactPhone = "070 - 123 56 78",
+                    Address = "Fredriksbergsgatan 6",
+                    Latitude = 55.6066851,
+                    Longitude = 13.0183526,
+                    PostalCode = "212 11",
+                    City = "Malmö"
+                },                                                                                                              new BookingSystem {
+                    SystemName = "boka.se",
+                    SystemDescription = "Description...",
+                    Email = "Besikta@boka.se",
+                    PhoneNumber = "070 - 000 00 00",
+                    Website = "boka.se/Besikta",
+                    CompanyName = "Besikta",
+                    ContactEmail = "Besikta@boka.se",
+                    ContactPhone = "070 - 123 56 78",
+                    Address = "Källvattengatan 7",
+                    Latitude = 55.6059,
+                    Longitude = 13.0007,
+                    PostalCode = "212 23",
+                    City = "Malmö"
+                }
+
+
+            };
 			bookingSystems.ForEach(x => context.BookingSystem.Add(x));
 			context.SaveChanges();
 		}
