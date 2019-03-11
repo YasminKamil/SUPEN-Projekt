@@ -12,6 +12,8 @@ using System.Web.Routing;
 namespace SUPEN_Projekt {
 	public class MvcApplication : System.Web.HttpApplication {
 		protected void Application_Start() {
+			HttpConfiguration config = GlobalConfiguration.Configuration;
+			config.Routes.MapHttpRoute(name: "DefaultApi", routeTemplate: "api/{controller}/{action}/{id}", defaults: new { id = RouteParameter.Optional });
 			AreaRegistration.RegisterAllAreas();
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
