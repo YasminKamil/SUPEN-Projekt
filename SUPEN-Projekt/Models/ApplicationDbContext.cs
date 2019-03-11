@@ -34,8 +34,8 @@ namespace SUPEN_Projekt.Models {
 					Longitude = 15.2074733,
 					PostalCode = "702 10",
 					City = "Örebro"
-                } 
-                ,
+                },
+
                 new BookingSystem {
                     SystemName = "boka.se",
                     SystemDescription = "Description...",
@@ -51,7 +51,7 @@ namespace SUPEN_Projekt.Models {
                     PostalCode = "702 84",
                     City = "Örebro"
                 },
-                                new BookingSystem {
+                 new BookingSystem {
                     SystemName = "boka.se",
                     SystemDescription = "Description...",
                     Email = "Epiroc@boka.se",
@@ -66,7 +66,7 @@ namespace SUPEN_Projekt.Models {
                     PostalCode = "703 83",
                     City = "Örebro"
                 },
-                                                new BookingSystem {
+                 new BookingSystem {
                     SystemName = "boka.se",
                     SystemDescription = "Description...",
                     Email = "Frisorkompaniet@boka.se",
@@ -80,8 +80,8 @@ namespace SUPEN_Projekt.Models {
                     Longitude = 15.229628,
                     PostalCode = "602 26",
                     City = "Norrköping"
-                }
-                                                ,               new BookingSystem {
+                },
+                 new BookingSystem {
                     SystemName = "boka.se",
                     SystemDescription = "Description...",
                     Email = "Carspect@boka.se",
@@ -96,7 +96,7 @@ namespace SUPEN_Projekt.Models {
                     PostalCode = "602 28",
                     City = "Norrköping"
                 },
-                                                                                new BookingSystem {
+                 new BookingSystem {
                     SystemName = "boka.se",
                     SystemDescription = "Description...",
                     Email = "Sodermalmdack@boka.se",
@@ -111,7 +111,7 @@ namespace SUPEN_Projekt.Models {
                     PostalCode = "116 67",
                     City = "Stockholm"
                 },
-                                                                                                new BookingSystem {
+                 new BookingSystem {
                     SystemName = "boka.se",
                     SystemDescription = "Description...",
                     Email = "Noir@boka.se",
@@ -126,7 +126,7 @@ namespace SUPEN_Projekt.Models {
                     PostalCode = "111 39",
                     City = "Stockholm"
                 },
-                                                                                                              new BookingSystem {
+                 new BookingSystem {
                     SystemName = "boka.se",
                     SystemDescription = "Description...",
                     Email = "BodyFace@boka.se",
@@ -140,7 +140,8 @@ namespace SUPEN_Projekt.Models {
                     Longitude = 13.0183526,
                     PostalCode = "212 11",
                     City = "Malmö"
-                },                                                                                                              new BookingSystem {
+                },
+				  new BookingSystem {
                     SystemName = "boka.se",
                     SystemDescription = "Description...",
                     Email = "Besikta@boka.se",
