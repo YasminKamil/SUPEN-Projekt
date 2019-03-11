@@ -17,7 +17,7 @@ namespace SUPEN_Projekt.Controllers
         // GET: BookingSystem
         public ActionResult Index()
         {
-            return View(db.BookingSystem.ToList());
+            return View(db.BookingSystems.ToList());
         }
 
         // GET: BookingSystem/Details/5
@@ -27,7 +27,7 @@ namespace SUPEN_Projekt.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BookingSystem bookingSystem = db.BookingSystem.Find(id);
+            BookingSystem bookingSystem = db.BookingSystems.Find(id);
             if (bookingSystem == null)
             {
                 return HttpNotFound();
@@ -50,7 +50,7 @@ namespace SUPEN_Projekt.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.BookingSystem.Add(bookingSystem);
+                db.BookingSystems.Add(bookingSystem);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +65,7 @@ namespace SUPEN_Projekt.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BookingSystem bookingSystem = db.BookingSystem.Find(id);
+            BookingSystem bookingSystem = db.BookingSystems.Find(id);
             if (bookingSystem == null)
             {
                 return HttpNotFound();
@@ -96,7 +96,7 @@ namespace SUPEN_Projekt.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BookingSystem bookingSystem = db.BookingSystem.Find(id);
+            BookingSystem bookingSystem = db.BookingSystems.Find(id);
             if (bookingSystem == null)
             {
                 return HttpNotFound();
@@ -109,8 +109,8 @@ namespace SUPEN_Projekt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            BookingSystem bookingSystem = db.BookingSystem.Find(id);
-            db.BookingSystem.Remove(bookingSystem);
+            BookingSystem bookingSystem = db.BookingSystems.Find(id);
+            db.BookingSystems.Remove(bookingSystem);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

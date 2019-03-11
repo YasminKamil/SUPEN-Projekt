@@ -9,8 +9,8 @@ namespace SUPEN_Projekt.Models {
 	public class ApplicationDbContext : DbContext{
 		public ApplicationDbContext() : base("BookingSystemDbContext") { }
 
-		public DbSet<BookingSystem> BookingSystem { get; set; }
-		public DbSet<Booking> Booking { get; set; }
+		public DbSet<BookingSystem> BookingSystems { get; set; }
+		public DbSet<Booking> Bookings { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder) {
 			modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
@@ -157,7 +157,7 @@ namespace SUPEN_Projekt.Models {
                     City = "Malmö"
                 }
             };
-			bookingSystems.ForEach(x => context.BookingSystem.Add(x));
+			bookingSystems.ForEach(x => context.BookingSystems.Add(x));
 			context.SaveChanges();
 		}
 	}
