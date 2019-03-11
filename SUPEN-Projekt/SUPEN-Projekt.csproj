@@ -170,7 +170,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Repositories\BookingRepository.cs" />
+    <Compile Include="Repositories\BookingSystemRepository.cs" />
     <Compile Include="Repositories\IBookingRepository.cs" />
+    <Compile Include="Repositories\IBookingSystemRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Booking.cs" />
