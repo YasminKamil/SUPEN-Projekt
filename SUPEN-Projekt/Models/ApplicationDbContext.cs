@@ -19,21 +19,59 @@ namespace SUPEN_Projekt.Models {
 
 	public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> {
 		protected override void Seed(ApplicationDbContext context) {
-			var bookingSystems = new List<BookingSystem>() {
-				new BookingSystem {
-					SystemName = "boka.se",
-					SystemDescription = "Description...",
-					Email = "ArtofHair@boka.se",
-					PhoneNumber = "070 - 000 00 00",
-					Website = "boka.se/ArtofHair",
-					CompanyName = "Art of Hair",
-					ContactEmail = "ArtofHair@boka.se",
-					ContactPhone = "070 - 123 56 78",
-					Address = " Fabriksgatan 13",
-					Latitude = 59.2703188,
-					Longitude = 15.2074733,
-					PostalCode = "702 10",
-					City = "Örebro"
+            // skapar kategorier, som sne kan läggas på företag. 
+            // frågan är den om det inte är bättre att ha dessa på tjän
+            Branch b1 = new Branch();
+            b1.branchId = 1;
+            b1.branchName = "Frisör";
+
+            Branch b2 = new Branch();
+            b2.branchId = 2;
+            b2.branchName = "Besiktning";
+
+            Branch b3 = new Branch();
+            b3.branchId = 3;
+            b3.branchName = "Däck";
+
+            Branch b4= new Branch();
+            b3.branchId = 4;
+            b3.branchName = "Café";
+
+            Service s1 = new Service();
+            s1.serviceName = "Klippning";
+            s1.price = 250;
+            s1.duration = 30;
+
+            Service s2 = new Service();
+            s1.serviceName = "Färgning";
+            s1.price = 450;
+            s1.duration = 90;
+
+            Service s3 = new Service();
+            s1.serviceName = "däckbyte";
+            s1.price = 250;
+            s1.duration = 30;
+
+
+            s1.branch = b1;
+            s2.branch = b1;
+            s3.branch = b3;
+
+            var bookingSystems = new List<BookingSystem>() {
+                new BookingSystem {
+                    SystemName = "boka.se",
+                    SystemDescription = "Description...",
+                    Email = "ArtofHair@boka.se",
+                    PhoneNumber = "070 - 000 00 00",
+                    Website = "boka.se/ArtofHair",
+                    CompanyName = "Art of Hair",
+                    ContactEmail = "ArtofHair@boka.se",
+                    ContactPhone = "070 - 123 56 78",
+                    Address = " Fabriksgatan 13",
+                    Latitude = 59.2703188,
+                    Longitude = 15.2074733,
+                    PostalCode = "702 10",
+                    City = "Örebro", services = new List<Service> () {s1, s2}
                 },
 
                 new BookingSystem {
@@ -49,7 +87,7 @@ namespace SUPEN_Projekt.Models {
                     Latitude = 59.27412,
                     Longitude = 15.2066,
                     PostalCode = "702 84",
-                    City = "Örebro"
+                    City = "Örebro" 
                 },
                  new BookingSystem {
                     SystemName = "boka.se",
@@ -64,7 +102,7 @@ namespace SUPEN_Projekt.Models {
                     Latitude = 59.291713,
                     Longitude = 15.204345,
                     PostalCode = "703 83",
-                    City = "Örebro"
+                    City = "Örebro"  
                 },
                  new BookingSystem {
                     SystemName = "boka.se",
@@ -79,7 +117,7 @@ namespace SUPEN_Projekt.Models {
                     Latitude = 59.270042,
                     Longitude = 15.229628,
                     PostalCode = "602 26",
-                    City = "Norrköping"
+                    City = "Norrköping"  
                 },
                  new BookingSystem {
                     SystemName = "boka.se",
@@ -109,7 +147,7 @@ namespace SUPEN_Projekt.Models {
                     Latitude = 59.3079479,
                     Longitude = 18.0789683,
                     PostalCode = "116 67",
-                    City = "Stockholm"
+                    City = "Stockholm", services = new List<Service> () {s3}
                 },
                  new BookingSystem {
                     SystemName = "boka.se",

@@ -198,6 +198,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Service.cs" />
+    <Compile Include="Models\Branch.cs" />
     <Compile Include="Repositories\BookingRepository.cs" />
     <Compile Include="Repositories\BookingSystemRepository.cs" />
     <Compile Include="Repositories\IBookingRepository.cs" />
