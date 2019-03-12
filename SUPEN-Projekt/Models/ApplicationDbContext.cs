@@ -11,6 +11,8 @@ namespace SUPEN_Projekt.Models {
 
 		public DbSet<BookingSystem> BookingSystems { get; set; }
 		public DbSet<Booking> Bookings { get; set; }
+		public DbSet<Branch> Branches { get; set; }
+		public DbSet<Service> Services { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder) {
 			modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
