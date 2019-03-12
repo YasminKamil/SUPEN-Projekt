@@ -10,26 +10,22 @@ namespace SUPEN_Projekt.Controllers
 {
     public class RepoController : Controller
     {
-        IBookingRepository _bookingRepos;
-        IBookingSystemRepository _bookingSysRepos;
-
-        // oop principle: depend on the abstraction not on the concrete classes
-        public RepoController(IBookingRepository bookingRepos, IBookingSystemRepository bookingsysrepos)
+        IUnitOfWork _unitofwork;
+        public RepoController(IUnitOfWork unitofwork)
         {
-            _bookingRepos = bookingRepos;
-            _bookingSysRepos = bookingsysrepos;
+            _unitofwork = unitofwork;
         }
 
         // GET: Repo
         public ActionResult Index()
         {
-            IEnumerable<Booking> listbookings = _bookingRepos.GetAllBookings();
+            IEnumerable<Booking> listbookings = _unitofwork.Bookings.GetAllBookings();
             return View(listbookings);
         }
 
         public ActionResult Index2()
         {
-            IEnumerable<BookingSystem> listbookingsys = _bookingSysRepos.GetAllBookingSystems();
+            IEnumerable<BookingSystem> listbookingsys = _unitofwork.BookingSystems.GetAllBookingSystems();
             return View(listbookingsys);
         }
     }

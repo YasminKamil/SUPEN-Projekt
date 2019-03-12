@@ -17,10 +17,12 @@ namespace SUPEN_Projekt
             // it is NOT necessary to register your controllers
 
             // e.g. container.RegisterType<ITestService, TestService>();
-            container.RegisterType<BookingRepository>(new InjectionConstructor(typeof(ApplicationDbContext)));
-            container.RegisterType<IBookingRepository, BookingRepository>();
-            container.RegisterType<BookingSystemRepository>(new InjectionConstructor(typeof(ApplicationDbContext)));
-            container.RegisterType<IBookingSystemRepository, BookingSystemRepository>();
+            //container.RegisterType<BookingRepository>(new InjectionConstructor(typeof(ApplicationDbContext)));
+            //container.RegisterType<IBookingRepository, BookingRepository>();
+            //container.RegisterType<BookingSystemRepository>(new InjectionConstructor(typeof(ApplicationDbContext)));
+            //container.RegisterType<IBookingSystemRepository, BookingSystemRepository>();
+            container.RegisterType<UnitOfWork>(new InjectionConstructor(typeof(ApplicationDbContext)));
+            container.RegisterType<IUnitOfWork, UnitOfWork>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

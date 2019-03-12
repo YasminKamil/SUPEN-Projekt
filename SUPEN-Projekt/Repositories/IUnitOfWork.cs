@@ -8,7 +8,8 @@ namespace SUPEN_Projekt.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        IBookingRepository Bookings { get; }
+        IBookingRepository Bookings { get;}
+        IBookingSystemRepository BookingSystems { get; }
         int Complete();
     }
 }

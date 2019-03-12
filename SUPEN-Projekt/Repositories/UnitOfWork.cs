@@ -9,16 +9,15 @@ namespace SUPEN_Projekt.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
+        public IBookingRepository Bookings { get; private set; }
+        public IBookingSystemRepository BookingSystems { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
             Bookings = new BookingRepository(_context);
+            BookingSystems = new BookingSystemRepository(_context);
         }
-
-        public IBookingRepository Bookings { get; private set; }
-
-        //public IBookingRepository Booking => throw new NotImplementedException();
 
         public int Complete()
         {
