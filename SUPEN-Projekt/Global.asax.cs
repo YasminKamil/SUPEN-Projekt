@@ -13,7 +13,8 @@ namespace SUPEN_Projekt {
 	public class MvcApplication : System.Web.HttpApplication {
 		protected void Application_Start() {
 			HttpConfiguration config = GlobalConfiguration.Configuration;
-			config.Routes.MapHttpRoute(name: "DefaultApi", routeTemplate: "api/{controller}/{action}/{id}", defaults: new { id = RouteParameter.Optional });
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+	//		config.Routes.MapHttpRoute(name: "DefaultApi", routeTemplate: "api/{controller}/{action}/{id}", defaults: new { id = RouteParameter.Optional });
 			AreaRegistration.RegisterAllAreas();
             UnityConfig.RegisterComponents();
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
