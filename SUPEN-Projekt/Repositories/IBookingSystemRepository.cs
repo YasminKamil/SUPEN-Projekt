@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SUPEN_Projekt.Repositories
 {
-    interface IBookingSystemRepository : IRepository<BookingSystem>
+    public interface IBookingSystemRepository : IRepository<BookingSystem>
     {
 
         IEnumerable<BookingSystem> GetAllBookingSystems();
