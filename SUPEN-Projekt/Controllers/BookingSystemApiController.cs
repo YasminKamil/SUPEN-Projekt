@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Device.Location;
 
 namespace SUPEN_Projekt.Controllers
 {
@@ -29,8 +30,13 @@ namespace SUPEN_Projekt.Controllers
 			db.SaveChanges();
 			return system;
 		}
-
-		public void Update(int id, BookingSystem system) {
+        public double getDistanceTo(BookingSystem bookingSystemA, BookingSystem bookingSystemB)
+        {
+            var aCoord = new GeoCoordinate(bookingSystemA.Latitude, bookingSystemA.Longitude);
+            var bCoord = new GeoCoordinate(bookingSystemB.Latitude, bookingSystemB.Longitude);
+            return aCoord.GetDistanceTo(bCoord);
+        }
+        public void Update(int id, BookingSystem system) {
 			if (!ModelState.IsValid) {
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 			}
@@ -39,6 +45,7 @@ namespace SUPEN_Projekt.Controllers
 			if(bookingSystem == null) {
 				throw new HttpResponseException(HttpStatusCode.NotFound);
 			}
+
 
 			bookingSystem.Address = system.Address;
 			bookingSystem.City = system.City;
