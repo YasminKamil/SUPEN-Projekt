@@ -14,16 +14,16 @@ namespace SUPEN_Projekt.Controllers
     public class BookingSystemController : Controller
     {
         
-        IUnitOfWork unitofwork;
+        IUnitOfWork uw;
         public BookingSystemController(IUnitOfWork unitofwork)
         {
-            this.unitofwork = unitofwork;
+            uw = unitofwork;
         }
 
         // GET: BookingSystem
         public ActionResult Index()
         {
-            IEnumerable<BookingSystem> listbookingsys = unitofwork.BookingSystems.GetAll();
+            IEnumerable<BookingSystem> listbookingsys = uw.BookingSystems.GetAll();
             return View(listbookingsys);
             
         }
@@ -35,7 +35,7 @@ namespace SUPEN_Projekt.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BookingSystem bookingSystem = unitofwork.BookingSystems.Get(id);
+            BookingSystem bookingSystem = uw.BookingSystems.Get(id);
             if (bookingSystem == null)
             {
                 return HttpNotFound();
@@ -58,8 +58,8 @@ namespace SUPEN_Projekt.Controllers
         {
             if (ModelState.IsValid)
             {
-                unitofwork.BookingSystems.Add(bookingSystem);
-                unitofwork.Complete();
+                uw.BookingSystems.Add(bookingSystem);
+                uw.Complete();
 
                 return RedirectToAction("Index");
             }
@@ -74,7 +74,7 @@ namespace SUPEN_Projekt.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BookingSystem bookingSystem = unitofwork.BookingSystems.Get(id);
+            BookingSystem bookingSystem = uw.BookingSystems.Get(id);
             if (bookingSystem == null)
             {
                 return HttpNotFound();
@@ -91,7 +91,7 @@ namespace SUPEN_Projekt.Controllers
         {
             if (ModelState.IsValid)
             {
-                unitofwork.BookingSystems.EditBookingSystem(bookingSystem);
+                uw.BookingSystems.EditBookingSystem(bookingSystem);
                 return RedirectToAction("Index");
             }
             return View(bookingSystem);
@@ -104,7 +104,7 @@ namespace SUPEN_Projekt.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BookingSystem bookingSystem = unitofwork.BookingSystems.Get(id);
+            BookingSystem bookingSystem = uw.BookingSystems.Get(id);
             if (bookingSystem == null)
             {
                 return HttpNotFound();
@@ -117,8 +117,8 @@ namespace SUPEN_Projekt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            unitofwork.BookingSystems.RemoveBookingSystem(id);
-            unitofwork.Complete();
+            uw.BookingSystems.RemoveBookingSystem(id);
+            uw.Complete();
             return RedirectToAction("Index");
         }
     }

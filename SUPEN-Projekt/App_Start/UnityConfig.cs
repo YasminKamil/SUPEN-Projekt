@@ -3,7 +3,10 @@ using SUPEN_Projekt.Repositories;
 using System.Web.Mvc;
 using Unity;
 using Unity.Injection;
-using Unity.Mvc5;
+using Microsoft.Practices.Unity;
+using System.Web.Http;
+//using Unity.Mvc5;
+//using Unity.WebApi;
 
 namespace SUPEN_Projekt
 {
@@ -24,7 +27,10 @@ namespace SUPEN_Projekt
             container.RegisterType<UnitOfWork>(new InjectionConstructor(typeof(ApplicationDbContext)));
             container.RegisterType<IUnitOfWork, UnitOfWork>();
 
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+            DependencyResolver.SetResolver(new Unity.Mvc5.UnityDependencyResolver(container));
+            GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
+
+            //new UnityDependencyResolver(container)
         }
     }
 }

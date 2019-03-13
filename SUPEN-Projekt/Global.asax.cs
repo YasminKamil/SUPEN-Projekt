@@ -10,6 +10,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 
 namespace SUPEN_Projekt {
+
 	public class MvcApplication : System.Web.HttpApplication {
 		protected void Application_Start() {
 			HttpConfiguration config = GlobalConfiguration.Configuration;

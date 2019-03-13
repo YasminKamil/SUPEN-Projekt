@@ -1,4 +1,5 @@
 ﻿using SUPEN_Projekt.Models;
+using SUPEN_Projekt.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +10,32 @@ using System.Web.Http;
 namespace SUPEN_Projekt.Controllers
 {
     public class BookingApiController : ApiController{
-		private readonly ApplicationDbContext db;
 
-		public BookingApiController() {
-			db = new ApplicationDbContext();
-		}
-			[HttpGet]
-			public IEnumerable<Booking> Get() {
-			return db.Bookings.ToList();
+        //private readonly ApplicationDbContext db;
+        IUnitOfWork uw;
+
+        public BookingApiController(IUnitOfWork unitofwork)
+        {
+            uw = unitofwork;
+        }
+
+		[HttpGet]
+		public IEnumerable<Booking> Get()
+        {
+			return uw.Bookings.GetAll();
 		}
 
 		[HttpPost]
-		public Booking Create(Booking bookings) {
-			if (!ModelState.IsValid) {
+		public Booking Create(Booking bookings)
+        {
+			if (!ModelState.IsValid)
+            {
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 			}
-			db.Bookings.Add(bookings);
-			db.SaveChanges();
+
+			uw.Bookings.Add(bookings);
+			uw.Complete();
+
 			return bookings;
 		}
 
@@ -34,7 +44,7 @@ namespace SUPEN_Projekt.Controllers
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 			}
 
-			var bookings = db.Bookings.SingleOrDefault(x => x.BookingId == id);
+			Booking bookings = uw.Bookings.Get(id);
 			if(bookings == null) {
 				throw new HttpResponseException(HttpStatusCode.NotFound);
 			}
@@ -47,18 +57,18 @@ namespace SUPEN_Projekt.Controllers
 			bookings.EndTime = booking.EndTime;
 			bookings.Price = booking.Price;
 
-			db.SaveChanges();
+			uw.Complete();
 		}
 
 		[HttpDelete]
 		public void Delete(int id) {
-			var booking = db.Bookings.SingleOrDefault(x => x.BookingId == id);
+            Booking booking = uw.Bookings.Get(id);// SingleOrDefault(x => x.BookingId == id);
 			if(booking == null) {
 				throw new HttpResponseException(HttpStatusCode.NotFound);
 			}
 
-			db.Bookings.Remove(booking);
-			db.SaveChanges();
+			uw.Bookings.Remove(booking);
+			uw.Complete();
 		}
 		}
     }
