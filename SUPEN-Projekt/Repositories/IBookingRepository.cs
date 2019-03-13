@@ -9,7 +9,8 @@ namespace SUPEN_Projekt.Repositories
 {
     public interface IBookingRepository : IRepository<Booking>
     {
-
+        //metoden GetAllBookings är redundant eftersom Irepository redan har en metod för get all.
+        //fungerar som testmetod tills vidare.
         IEnumerable<Booking> GetAllBookings();
     }
 }

@@ -19,13 +19,16 @@ namespace SUPEN_Projekt.Controllers
         // GET: Repo
         public ActionResult Index()
         {
-            IEnumerable<Booking> listbookings = _unitofwork.Bookings.GetAllBookings();
+            //Bookings is a prop in IUnitOfWork
+            IEnumerable<Booking> listbookings = _unitofwork.Bookings.GetAll();
             return View(listbookings);
         }
 
         public ActionResult Index2()
         {
-            IEnumerable<BookingSystem> listbookingsys = _unitofwork.BookingSystems.GetAllBookingSystems();
+            //BookingSystems is a prop in IUnitOfWork
+            //Förut använde jag GetAllBookingSystems men bytte till GetALL()
+            IEnumerable<BookingSystem> listbookingsys = _unitofwork.BookingSystems.GetAll();
             return View(listbookingsys);
         }
     }

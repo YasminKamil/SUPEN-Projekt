@@ -10,7 +10,11 @@ namespace SUPEN_Projekt.Repositories
     public interface IBookingSystemRepository : IRepository<BookingSystem>
     {
 
-        IEnumerable<BookingSystem> GetAllBookingSystems();
+        IEnumerable<BookingSystem> GetAllBookingSystems();//tas bort?
+        List<BookingSystem> GetBookingSystemsInRange(BookingSystem inSelectedBookingSystem);
+        //void AddBookingSystem(BookingSystem bookingsystem);
+        void EditBookingSystem(BookingSystem bookingSystem);
+        void RemoveBookingSystem(int id);
 
     }
     

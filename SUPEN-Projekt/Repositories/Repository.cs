@@ -18,7 +18,7 @@ namespace SUPEN_Projekt.Repositories
             Context = context;
         }
 
-        public TEntity Get(int id)
+        public TEntity Get(int? id)
         {
              return Context.Set<TEntity>().Find(id);
         }
