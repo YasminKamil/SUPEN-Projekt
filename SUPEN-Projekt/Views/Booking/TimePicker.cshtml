@@ -3,7 +3,7 @@
 }
 
 <h2>TimePicker</h2>
-<div class="demo-section k-content">
+@*<div class="demo-section k-content">
 	<h4>Start Time</h4>
 	@(Html.Kendo().TimePicker()
 	.Name("start")
@@ -24,7 +24,17 @@
 
 <script>
 	function StartChange() {
-		var 
+		var startTime = this.value(),
+			endPicker = $("#end").data("kendoTimePicker");
+
+		if (startTime) {
+			startTime = new Date(startTime);
+			endPicker.max(startTime);
+
+			startTime.setMinutes(startTime.getMinutes() + this.options.interval);
+			endPicker.min(startTime);
+			endPicker.value(startTime);
+		}
 	}
-</script>
+</script>*@
  
