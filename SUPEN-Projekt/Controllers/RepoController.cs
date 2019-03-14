@@ -35,7 +35,6 @@ namespace SUPEN_Projekt.Controllers
         [Route("BookingSystem/{id:int}")]
         public ActionResult Index3(int id)
         {
-            //ABookingSystemViewModel aSystem = new ABookingSystemViewModel();
             BookingSystem bookingSystem = _unitofwork.BookingSystems.Get(id);
             ViewBag.Message = bookingSystem.CompanyName;
             return View(bookingSystem);

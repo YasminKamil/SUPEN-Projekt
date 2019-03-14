@@ -23,6 +23,7 @@ namespace SUPEN_Projekt.Controllers
         // GET: BookingSystem
         public ActionResult Index()
         {
+            ViewBag.Title = "boka.se";
             IEnumerable<BookingSystem> listbookingsys = uw.BookingSystems.GetAll();
             return View(listbookingsys);
             

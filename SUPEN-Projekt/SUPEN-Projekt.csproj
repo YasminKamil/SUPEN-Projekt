@@ -198,6 +198,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ABookingSystemController.cs" />
     <Compile Include="Controllers\BookingApiController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\BookingSystemController.cs" />
@@ -270,6 +271,7 @@
     <Content Include="Views\Repo\Index.cshtml" />
     <Content Include="Views\Repo\Index2.cshtml" />
     <Content Include="Views\Repo\Index3.cshtml" />
+    <Content Include="Views\ABookingSystem\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiController\" />
