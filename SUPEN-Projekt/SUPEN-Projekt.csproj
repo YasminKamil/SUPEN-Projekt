@@ -203,6 +203,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ListViewModel.cs" />
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Repositories\BookingRepository.cs" />
@@ -264,6 +265,7 @@
     <Content Include="Views\BookingSystem\Index.cshtml" />
     <Content Include="Views\Repo\Index.cshtml" />
     <Content Include="Views\Repo\Index2.cshtml" />
+    <Content Include="Views\Repo\Index3.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiController\" />

@@ -31,5 +31,14 @@ namespace SUPEN_Projekt.Controllers
             IEnumerable<BookingSystem> listbookingsys = _unitofwork.BookingSystems.GetAll();
             return View(listbookingsys);
         }
+
+        [Route("BookingSystem/{id:int}")]
+        public ActionResult Index3(int id)
+        {
+            //ABookingSystemViewModel aSystem = new ABookingSystemViewModel();
+            BookingSystem bookingSystem = _unitofwork.BookingSystems.Get(id);
+            ViewBag.Message = bookingSystem.CompanyName;
+            return View(bookingSystem);
+        }
     }
 }

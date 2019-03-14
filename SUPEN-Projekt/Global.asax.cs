@@ -23,5 +23,9 @@ namespace SUPEN_Projekt {
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 			Database.SetInitializer(new DatabaseInitializer());
 		}
+
+        public static void RegisterRoutes(RouteCollection routes) {
+            routes.MapMvcAttributeRoutes();
+        }
 	}
 }
