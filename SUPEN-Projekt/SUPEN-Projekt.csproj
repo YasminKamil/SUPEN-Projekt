@@ -1473,7 +1473,10 @@
     <Content Include="Scripts\kendo\cultures\kendo.culture.zh.min.js" />
     <Content Include="Scripts\kendo\cultures\kendo.culture.zu-ZA.min.js" />
     <Content Include="Scripts\kendo\cultures\kendo.culture.zu.min.js" />
+    <Content Include="Scripts\kendo\jquery-1.12.3.min.js" />
     <Content Include="Scripts\kendo\jquery.min.js" />
+    <Content Include="Scripts\kendo\jszip.min.js" />
+    <Content Include="Scripts\kendo\kendo.all.min.js" />
     <Content Include="Scripts\kendo\kendo.angular.min.js" />
     <Content Include="Scripts\kendo\kendo.autocomplete.min.js" />
     <Content Include="Scripts\kendo\kendo.binder.min.js" />
