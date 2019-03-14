@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Device.Location;
 
 namespace SUPEN_Projekt.Repositories
 {
@@ -66,6 +67,67 @@ namespace SUPEN_Projekt.Repositories
             if (y <= maxDistance) isCloseEnough = true;
             return isCloseEnough;
         }
+
+        //löser uppgift 2 i kravspecen
+        private string getBrachesCount(List<BookingSystem> inBookingSystems)
+        {
+            string branchesGrouped = "";
+            List<Branch> t1Branches = new List<Branch>();
+            foreach (var item in inBookingSystems)
+            {
+                List<Branch> t2Branches = new List<Branch>();
+                foreach (var y in item.services)
+                {
+                    if (!t2Branches.Contains(y.branch))
+                    {
+                        t2Branches.Add(y.branch);
+                    }
+                }
+                t1Branches.AddRange(t2Branches);
+            }
+
+            foreach (var item in t1Branches.GroupBy(x => x.branchName))
+            {
+                branchesGrouped += item.Key + " " + item.Count() + "\n";
+            }
+            return branchesGrouped;
+        }
+
+        //används för att koppla distans och bokninssystem, utan att behöva ändra i modellen då distansen är olika i varje sökning. 
+        private class BookingSystemOfInterest
+        {
+            public BookingSystem bookingSystem;
+            public double distance;
+            public BookingSystemOfInterest(BookingSystem bookingSystem, double distance)
+            {
+                this.bookingSystem = bookingSystem;
+                this.distance = distance;
+            }
+        }
+        //Genom att skicka in en lista av bokningsystem och det valta företaget, sorteras dem efter vilken distans de har till det valda företaget.
+        public List<BookingSystem> orderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem)
+        {
+            List<BookingSystemOfInterest> distBooking = new List<BookingSystemOfInterest>();
+            foreach (var item in inBookingSystems)
+            {
+                distBooking.Add(new BookingSystemOfInterest(item, getDistanceTo(inSelectedBookingSystem, item)));
+            }
+            inBookingSystems = new List<BookingSystem>();
+            foreach (var item in distBooking.OrderBy(x => x.distance))
+            {
+                inBookingSystems.Add(item.bookingSystem);
+                Console.WriteLine(item.distance + " " + item.bookingSystem.CompanyName);
+            }
+            return inBookingSystems;
+        }
+        //returnerar distancen mellan 2 företag
+        public double getDistanceTo(BookingSystem bookingSystemA, BookingSystem bookingSystemB)
+        {
+            var aCoord = new GeoCoordinate(bookingSystemA.Latitude, bookingSystemA.Longitude);
+            var bCoord = new GeoCoordinate(bookingSystemB.Latitude, bookingSystemB.Longitude);
+            return aCoord.GetDistanceTo(bCoord);
+        }
+
     }
 }
     

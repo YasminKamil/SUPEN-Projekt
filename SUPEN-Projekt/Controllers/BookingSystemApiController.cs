@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Device.Location;
+
 using SUPEN_Projekt.Repositories;
 
 namespace SUPEN_Projekt.Controllers
@@ -36,12 +36,7 @@ namespace SUPEN_Projekt.Controllers
 			return system;
 		}
 
-        public double getDistanceTo(BookingSystem bookingSystemA, BookingSystem bookingSystemB)
-        {
-            var aCoord = new GeoCoordinate(bookingSystemA.Latitude, bookingSystemA.Longitude);
-            var bCoord = new GeoCoordinate(bookingSystemB.Latitude, bookingSystemB.Longitude);
-            return aCoord.GetDistanceTo(bCoord);
-        }
+
 
         public void Update(int id, BookingSystem system)
             {
@@ -86,30 +81,6 @@ namespace SUPEN_Projekt.Controllers
 			uw.Complete();
 		}
 
-        //löser uppgift 2 i kravspecen
-        private string getBrachesCount(List<BookingSystem> inBookingSystems)
-        {
-            string branchesGrouped = "";
-            List<Branch> t1Branches = new List<Branch>();
-            foreach (var item in inBookingSystems)
-            {
-                List<Branch> t2Branches = new List<Branch>();
-                foreach (var y in item.services)
-                {
-                    if (!t2Branches.Contains(y.branch))
-                    {
-                        t2Branches.Add(y.branch);
-                    }
-                }
-                t1Branches.AddRange(t2Branches);
-            }
-
-            foreach (var item in t1Branches.GroupBy(x => x.branchName))
-            {
-                branchesGrouped += item.Key + " " + item.Count() + "\n";
-            }
-            return branchesGrouped;
-        }
 
     }
 }
