@@ -86,5 +86,30 @@ namespace SUPEN_Projekt.Controllers
 			uw.Complete();
 		}
 
+        //löser uppgift 2 i kravspecen
+        private string getBrachesCount(List<BookingSystem> inBookingSystems)
+        {
+            string branchesGrouped = "";
+            List<Branch> t1Branches = new List<Branch>();
+            foreach (var item in inBookingSystems)
+            {
+                List<Branch> t2Branches = new List<Branch>();
+                foreach (var y in item.services)
+                {
+                    if (!t2Branches.Contains(y.branch))
+                    {
+                        t2Branches.Add(y.branch);
+                    }
+                }
+                t1Branches.AddRange(t2Branches);
+            }
+
+            foreach (var item in t1Branches.GroupBy(x => x.branchName))
+            {
+                branchesGrouped += item.Key + " " + item.Count() + "\n";
+            }
+            return branchesGrouped;
+        }
+
     }
 }
