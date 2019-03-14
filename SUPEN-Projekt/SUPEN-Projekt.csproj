@@ -198,6 +198,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ABookingSystemController.cs" />
     <Compile Include="Controllers\BookingApiController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\BookingSystemController.cs" />
@@ -2614,6 +2615,7 @@
     <Content Include="Scripts\kendo\messages\kendo.messages.zh-CN.min.js.map" />
     <Content Include="Scripts\kendo\messages\kendo.messages.zh-HK.min.js.map" />
     <Content Include="Scripts\kendo\messages\kendo.messages.zh-TW.min.js.map" />
+    <Content Include="Views\ABookingSystem\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiController\" />
