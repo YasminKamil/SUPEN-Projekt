@@ -92,7 +92,7 @@ namespace SUPEN_Projekt.Repositories
             }
             return branchesGrouped;
         }
-
+        List<BookingSystemOfInterest> distBooking = new List<BookingSystemOfInterest>();
         //används för att koppla distans och bokninssystem, utan att behöva ändra i modellen då distansen är olika i varje sökning. 
         private class BookingSystemOfInterest
         {
@@ -107,7 +107,7 @@ namespace SUPEN_Projekt.Repositories
         //Genom att skicka in en lista av bokningsystem och det valta företaget, sorteras dem efter vilken distans de har till det valda företaget.
         public List<BookingSystem> orderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem)
         {
-            List<BookingSystemOfInterest> distBooking = new List<BookingSystemOfInterest>();
+           
             foreach (var item in inBookingSystems)
             {
                 distBooking.Add(new BookingSystemOfInterest(item, getDistanceTo(inSelectedBookingSystem, item)));
