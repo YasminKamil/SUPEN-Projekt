@@ -127,6 +127,22 @@ namespace SUPEN_Projekt.Repositories
             var bCoord = new GeoCoordinate(bookingSystemB.Latitude, bookingSystemB.Longitude);
             return aCoord.GetDistanceTo(bCoord);
         }
+        //Returnerar bookingsystems som har services inom andra brancher, kan även returnera selectedBookingService
+        public List<BookingSystem> GetBookingSystemsInOtherBranches(List<BookingSystem> inBookingSystems, Service selectedService)
+        {
+            List<BookingSystem> keep = new List<BookingSystem>();
+            BookingSystem tmbBookingSystem = new BookingSystem();
+
+            foreach (var aBookingSystem in inBookingSystems.Where(x => x.services != null))
+            {
+                List<Service> servi = aBookingSystem.services.Where(x => x.branch.branchName.ToString() != selectedService.branch.branchName).ToList<Service>();
+                if (servi.Count() != 0)
+                {
+                    keep.Add(aBookingSystem);
+                }
+            }
+            return keep;
+        }
 
     }
 }
