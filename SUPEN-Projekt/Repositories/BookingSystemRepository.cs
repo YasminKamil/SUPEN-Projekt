@@ -143,6 +143,15 @@ namespace SUPEN_Projekt.Repositories
             }
             return keep;
         }
+        public List<Branch> GetBranchesInBookingSystem(BookingSystem bookingSystem)
+        {
+            List<Branch> branchesInBookingSystem = new List<Branch>();
+            foreach (var item in bookingSystem.services)
+            {
+                branchesInBookingSystem.Add(item.branch);
+            }
+            return branchesInBookingSystem;
+        }
 
     }
 }
