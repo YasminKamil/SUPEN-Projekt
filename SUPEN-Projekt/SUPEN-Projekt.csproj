@@ -213,10 +213,10 @@
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Repositories\BookingRepository.cs" />
     <Compile Include="Repositories\BookingSystemRepository.cs" />
-    <Compile Include="Repositories\BranchRepository.cs" />
+    <Compile Include="Repositories\BrancheRepository.cs" />
     <Compile Include="Repositories\IBookingRepository.cs" />
     <Compile Include="Repositories\IBookingSystemRepository.cs" />
-    <Compile Include="Repositories\IBranchRepository.cs" />
+    <Compile Include="Repositories\IBrancheRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Booking.cs" />
@@ -2665,6 +2665,8 @@
     <Content Include="Scripts\kendo\messages\kendo.messages.zh-TW.min.js.map" />
     <Content Include="Views\ABookingSystem\Index.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
+    <Content Include="Views\Repo\Index4.cshtml" />
+    <Content Include="Views\Index5.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiController\" />

@@ -6,58 +6,62 @@ using System.Linq;
 using System.Web;
 
 namespace SUPEN_Projekt.Models {
-	public class ApplicationDbContext : DbContext{
-		public ApplicationDbContext() : base("BookingSystemDbContext") { }
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext() : base("BookingSystemDbContext") { }
 
-		public DbSet<BookingSystem> BookingSystems { get; set; }
-		public DbSet<Booking> Bookings { get; set; }
-		public DbSet<Branch> Branches { get; set; }
-		public DbSet<Service> Services { get; set; }
+        public DbSet<BookingSystem> BookingSystems { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Branch> Branches { get; set; }
+        public DbSet<Service> Services { get; set; }
 
-		protected override void OnModelCreating(DbModelBuilder modelBuilder) {
-			modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-		}
-	}
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        }
 
-	public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> {
-		protected override void Seed(ApplicationDbContext context) {
+    }
+        public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+        {
+        //List<Branch> allBranches = new List<Branch>();
+
+
+        //List<BookingSystem> bookingSystems;
+
+        protected override void Seed(ApplicationDbContext context)
+        {
             // skapar kategorier, som sne kan läggas på företag. 
             // frågan är den om det inte är bättre att ha dessa på tjän
-            Branch b1 = new Branch();
-            b1.BranchId = 1;
-            b1.BranchName = "Frisör";
+            var branches = new List<Branch>() {
+                new Branch {
+            branchName = "Frisör" },
+                new Branch {
+            branchName = "Besiktning" },
+                new Branch {
+            branchName = "Däck" },
+                new Branch {
+            branchName = "Café" },
+            }; branches.ForEach(x => context.Branches.Add(x));
 
-            Branch b2 = new Branch();
-            b2.BranchId = 2;
-            b2.BranchName = "Besiktning";
-
-            Branch b3 = new Branch();
-            b3.BranchId = 3;
-            b3.BranchName = "Däck";
-
-            Branch b4= new Branch();
-            b3.BranchId = 4;
-            b3.BranchName = "Café";
-
-            Service s1 = new Service();
-            s1.ServiceName = "Klippning";
-            s1.Price = 250;
-            s1.Duration = 30;
-
-            Service s2 = new Service();
-            s1.ServiceName = "Färgning";
-            s1.Price = 450;
-            s1.Duration = 90;
-
-            Service s3 = new Service();
-            s1.ServiceName = "däckbyte";
-            s1.Price = 250;
-            s1.Duration = 30;
-
-
-            s1.Branch = b1;
-            s2.Branch = b1;
-            s3.Branch = b3;
+            var services = new List<Service>() {
+                new Service {
+            serviceName = "Klippning",
+                duration = 1,
+                price = 100},
+                new Service {
+            serviceName = "Färgning",
+                duration = 2,
+                price = 200},
+                new Service {
+            serviceName = "Däckbyte",
+                duration = 3,
+                price = 300},
+                new Service {
+            serviceName = "bullfika",
+                duration = 4,
+                price = 70, }
+                //branch = context.Branches.Single(x => x.branchId == 1) 
+            }; services.ForEach(x => context.Services.Add(x));
 
             var bookingSystems = new List<BookingSystem>() {
                 new BookingSystem {
@@ -73,7 +77,7 @@ namespace SUPEN_Projekt.Models {
                     Latitude = 59.2703188,
                     Longitude = 15.2074733,
                     PostalCode = "702 10",
-                    City = "Örebro", services = new List<Service> () {s1, s2}
+                    City = "Örebro", //services = new List<Service> () {s1, s2}
                 },
 
                 new BookingSystem {
@@ -89,7 +93,7 @@ namespace SUPEN_Projekt.Models {
                     Latitude = 59.27412,
                     Longitude = 15.2066,
                     PostalCode = "702 84",
-                    City = "Örebro" 
+                    City = "Örebro"
                 },
                  new BookingSystem {
                     SystemName = "boka.se",
@@ -104,7 +108,7 @@ namespace SUPEN_Projekt.Models {
                     Latitude = 59.291713,
                     Longitude = 15.204345,
                     PostalCode = "703 83",
-                    City = "Örebro"  
+                    City = "Örebro"
                 },
                  new BookingSystem {
                     SystemName = "boka.se",
@@ -119,7 +123,7 @@ namespace SUPEN_Projekt.Models {
                     Latitude = 59.270042,
                     Longitude = 15.229628,
                     PostalCode = "602 26",
-                    City = "Norrköping"  
+                    City = "Norrköping"
                 },
                  new BookingSystem {
                     SystemName = "boka.se",
@@ -149,7 +153,7 @@ namespace SUPEN_Projekt.Models {
                     Latitude = 59.3079479,
                     Longitude = 18.0789683,
                     PostalCode = "116 67",
-                    City = "Stockholm", services = new List<Service> () {s3}
+                    City = "Stockholm", //services = new List<Service> () {s3}
                 },
                  new BookingSystem {
                     SystemName = "boka.se",
@@ -181,7 +185,7 @@ namespace SUPEN_Projekt.Models {
                     PostalCode = "212 11",
                     City = "Malmö"
                 },
-				  new BookingSystem {
+                  new BookingSystem {
                     SystemName = "boka.se",
                     SystemDescription = "Description...",
                     Email = "Besikta@boka.se",
@@ -197,8 +201,12 @@ namespace SUPEN_Projekt.Models {
                     City = "Malmö"
                 }
             };
-			bookingSystems.ForEach(x => context.BookingSystems.Add(x));
-			context.SaveChanges();
-		}
-	}
+                bookingSystems.ForEach(x => context.BookingSystems.Add(x));
+
+            context.SaveChanges();
+            base.Seed(context);
+
+
+        }
+    }
 }
