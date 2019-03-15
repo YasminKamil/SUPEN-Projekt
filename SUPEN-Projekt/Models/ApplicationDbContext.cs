@@ -24,40 +24,40 @@ namespace SUPEN_Projekt.Models {
             // skapar kategorier, som sne kan läggas på företag. 
             // frågan är den om det inte är bättre att ha dessa på tjän
             Branch b1 = new Branch();
-            b1.branchId = 1;
-            b1.branchName = "Frisör";
+            b1.BranchId = 1;
+            b1.BranchName = "Frisör";
 
             Branch b2 = new Branch();
-            b2.branchId = 2;
-            b2.branchName = "Besiktning";
+            b2.BranchId = 2;
+            b2.BranchName = "Besiktning";
 
             Branch b3 = new Branch();
-            b3.branchId = 3;
-            b3.branchName = "Däck";
+            b3.BranchId = 3;
+            b3.BranchName = "Däck";
 
             Branch b4= new Branch();
-            b3.branchId = 4;
-            b3.branchName = "Café";
+            b3.BranchId = 4;
+            b3.BranchName = "Café";
 
             Service s1 = new Service();
-            s1.serviceName = "Klippning";
-            s1.price = 250;
-            s1.duration = 30;
+            s1.ServiceName = "Klippning";
+            s1.Price = 250;
+            s1.Duration = 30;
 
             Service s2 = new Service();
-            s1.serviceName = "Färgning";
-            s1.price = 450;
-            s1.duration = 90;
+            s1.ServiceName = "Färgning";
+            s1.Price = 450;
+            s1.Duration = 90;
 
             Service s3 = new Service();
-            s1.serviceName = "däckbyte";
-            s1.price = 250;
-            s1.duration = 30;
+            s1.ServiceName = "däckbyte";
+            s1.Price = 250;
+            s1.Duration = 30;
 
 
-            s1.branch = b1;
-            s2.branch = b1;
-            s3.branch = b3;
+            s1.Branch = b1;
+            s2.Branch = b1;
+            s3.Branch = b3;
 
             var bookingSystems = new List<BookingSystem>() {
                 new BookingSystem {

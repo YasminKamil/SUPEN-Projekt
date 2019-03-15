@@ -14,6 +14,7 @@ namespace SUPEN_Projekt.Models {
         public string Subject { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+		public DateTime Date { get; set; }
         public int Price { get; set; }
 
         public virtual int BookingSysId { get; set; }

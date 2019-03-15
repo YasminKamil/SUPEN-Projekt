@@ -11,6 +11,8 @@ namespace SUPEN_Projekt.Repositories
         private readonly ApplicationDbContext _context;
         public IBookingRepository Bookings { get; private set; }
         public IBookingSystemRepository BookingSystems { get; private set; }
+		public IBranchRepository Branches { get; private set; }
+		public IServiceRepository Services { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {

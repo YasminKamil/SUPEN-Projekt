@@ -10,6 +10,8 @@ namespace SUPEN_Projekt.Repositories
     {
         IBookingRepository Bookings { get;}
         IBookingSystemRepository BookingSystems { get; }
+		IBranchRepository Branches { get; }
+		IServiceRepository Services { get; }
         int Complete();
     }
 }
