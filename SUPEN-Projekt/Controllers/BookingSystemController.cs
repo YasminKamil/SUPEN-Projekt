@@ -23,10 +23,8 @@ namespace SUPEN_Projekt.Controllers
         // GET: BookingSystem
         public ActionResult Index()
         {
-            ViewBag.Title = "boka.se";
-            IEnumerable<BookingSystem> listbookingsys = uw.BookingSystems.GetAll();
-            return View(listbookingsys);
-            
+           IEnumerable<BookingSystem> listbookingsys = uw.BookingSystems.GetAll();
+           return View(listbookingsys);  
         }
 
         // GET: BookingSystem/Details/5
@@ -59,6 +57,7 @@ namespace SUPEN_Projekt.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 uw.BookingSystems.Add(bookingSystem);
                 uw.Complete();
 
