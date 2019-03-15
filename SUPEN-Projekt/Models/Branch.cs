@@ -4,8 +4,10 @@ using System.Linq;
 using System.Web;
 
 namespace SUPEN_Projekt.Models {
+
 	public class Branch {
-		public int branchId { get; set; }
-		public string branchName { get; set; }
+		public virtual int branchId { get; set; }
+		public virtual string branchName { get; set; }
+        //public bool yes { get; set; }
 	}
 }

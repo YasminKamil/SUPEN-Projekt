@@ -40,6 +40,21 @@ namespace SUPEN_Projekt.Controllers
             ViewBag.Message = bookingSystem.CompanyName;
             return View(bookingSystem);
         }
+
+        public ActionResult Index4()
+        {
+           
+            IEnumerable<Service> list = uw.Services.GetAll();
+            return View(list);
+        }
+
+        public ActionResult Index5()
+        {
+
+            IEnumerable<Branch> list = uw.Branches.GetAll();
+            return View(list);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "BookingId, UserName, UserMail, UserMobile, " +
