@@ -31,6 +31,12 @@ namespace SUPEN_Projekt.Repositories
             Remove(bookingSystem);    
         }
 
+        public void AddBooking(Booking booking, int id)
+        {
+            Get(id).Bookings.Add(booking);
+        }
+
+
         public ApplicationDbContext ApplicationDbContext
         {
             get { return Context as ApplicationDbContext; }

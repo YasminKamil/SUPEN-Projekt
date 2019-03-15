@@ -15,6 +15,7 @@ namespace SUPEN_Projekt.Repositories
         //void AddBookingSystem(BookingSystem bookingsystem);
         void EditBookingSystem(BookingSystem bookingSystem);
         void RemoveBookingSystem(int id);
+        void AddBooking(Booking booking, int id);
 
     }
     
