@@ -52,7 +52,7 @@ namespace SUPEN_Projekt.Repositories
         }
 
         //beräknar distansen till andra företag. Returnerar t/f beroende på om avståndet är ok.
-        private bool InDistance(double companyALong, double companyALat, double companyBLong, double companyBLat, int maxDistance)
+        public bool InDistance(double companyALong, double companyALat, double companyBLong, double companyBLat, int maxDistance)
         {
             bool isCloseEnough = false;
             companyALat = companyALat / 180 * Math.PI;
@@ -69,7 +69,7 @@ namespace SUPEN_Projekt.Repositories
         }
 
         //löser uppgift 2 i kravspecen
-        private string getBrachesCount(List<BookingSystem> inBookingSystems)
+        public string GetBrachesCount(List<BookingSystem> inBookingSystems)
         {
             string branchesGrouped = "";
             List<Branch> t1Branches = new List<Branch>();
@@ -92,7 +92,7 @@ namespace SUPEN_Projekt.Repositories
             }
             return branchesGrouped;
         }
-        List<BookingSystemOfInterest> distBooking = new List<BookingSystemOfInterest>();
+        List<BookingSystemOfInterest> DistBooking = new List<BookingSystemOfInterest>();
         //används för att koppla distans och bokninssystem, utan att behöva ändra i modellen då distansen är olika i varje sökning. 
         private class BookingSystemOfInterest
         {
@@ -105,15 +105,15 @@ namespace SUPEN_Projekt.Repositories
             }
         }
         //Genom att skicka in en lista av bokningsystem och det valta företaget, sorteras dem efter vilken distans de har till det valda företaget.
-        public List<BookingSystem> orderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem)
+        public List<BookingSystem> OrderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem)
         {
            
             foreach (var item in inBookingSystems)
             {
-                distBooking.Add(new BookingSystemOfInterest(item, getDistanceTo(inSelectedBookingSystem, item)));
+                DistBooking.Add(new BookingSystemOfInterest(item, GetDistanceTo(inSelectedBookingSystem, item)));
             }
             inBookingSystems = new List<BookingSystem>();
-            foreach (var item in distBooking.OrderBy(x => x.distance))
+            foreach (var item in DistBooking.OrderBy(x => x.distance))
             {
                 inBookingSystems.Add(item.bookingSystem);
                 Console.WriteLine(item.distance + " " + item.bookingSystem.CompanyName);
@@ -121,7 +121,7 @@ namespace SUPEN_Projekt.Repositories
             return inBookingSystems;
         }
         //returnerar distancen mellan 2 företag
-        public double getDistanceTo(BookingSystem bookingSystemA, BookingSystem bookingSystemB)
+        public double GetDistanceTo(BookingSystem bookingSystemA, BookingSystem bookingSystemB)
         {
             var aCoord = new GeoCoordinate(bookingSystemA.Latitude, bookingSystemA.Longitude);
             var bCoord = new GeoCoordinate(bookingSystemB.Latitude, bookingSystemB.Longitude);
