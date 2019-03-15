@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SUPEN_Projekt.Models;
+using SUPEN_Projekt.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +10,18 @@ namespace SUPEN_Projekt.Controllers
 {
     public class BookingController : Controller
     {
+		IUnitOfWork uw;
+		public BookingController(IUnitOfWork unitofwork) {
+			uw = unitofwork;
+		}
+
         // GET: Booking
         public ActionResult Index()
         {
-            return View();
+			ViewModel myModel = new ViewModel();
+			myModel.Bookings = uw.Bookings.GetAllBookings();
+		//	myModel.Services = uw.Services.GetAllServices();
+            return View(myModel);
         }
     }
 }

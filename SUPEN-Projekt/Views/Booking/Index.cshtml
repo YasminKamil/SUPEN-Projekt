@@ -1,4 +1,5 @@
-﻿@model SUPEN_Projekt.Models.Service
+﻿@using SUPEN_Projekt.Models
+@model ViewModel
 
 @{
 	ViewBag.Title = "Index";
@@ -6,35 +7,60 @@
 
 <h2>Index</h2>
 
-<div id="datePicker">
+@using (Html.BeginForm()) {
+	@Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "datepicker" } })
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
-	<div class="demo-section k-content">
-		<h4>Välj datum</h4>
-		<input id="DatePicker" title="DatePicker" style="width: 20%;" />
-	</div>
+}
+
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+@section scripts{
+	<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
 
 	<script>
-		$(document).ready(function () {
-			$("#DatePicker").kendoDatePicker({
-				value: new Date(),
-				dateInput: true
+		$(function () {
+			$(".datepicker").datepicker({
+				dateFormat: "yy-mm-dd",
+				changeMonth: true,
+				changeYear: true,
+				yearRange: "2019:2025",
+				showOn: "both",
+				buttonText: "<i class= 'fa fa-calendar'></>"
 			});
-		});
+		})
 	</script>
+}
 
-</div>
 
-<div id="timePicker">
-	<div class="demo-section k-content">
-		<h4>Välj tid</h4>
-		<input id="TimePicker" value="10:00 AM" title="timepicker" style="width: 20%;" />
+@*<div id="datePicker">
+
+		<div class="demo-section k-content">
+			<h4>Välj datum</h4>
+			<input id="DatePicker" title="DatePicker" style="width: 20%;" />
+		</div>
+
+		<script>
+			$(document).ready(function () {
+				$("#DatePicker").kendoDatePicker({
+					value: new Date(),
+					dateInput: true
+				});
+			});
+		</script>
+
 	</div>
-	<script>
-		$(document).ready(function () {
-			$("#TimePicker").kendoTimePicker({
-				dateInput: true
-			});
-		});
-	</script>
 
-</div>
+	<div id="timePicker">
+		<div class="demo-section k-content">
+			<h4>Välj tid</h4>
+			<input id="TimePicker" value="10:00 AM" title="timepicker" style="width: 20%;" />
+		</div>
+		<script>
+			$(document).ready(function () {
+				$("#TimePicker").kendoTimePicker({
+					dateInput: true
+				});
+			});
+		</script>
+
+	</div>*@
