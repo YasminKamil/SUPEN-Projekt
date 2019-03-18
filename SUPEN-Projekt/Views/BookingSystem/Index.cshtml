@@ -21,7 +21,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.RouteLink(item.CompanyName, new { controller = "ABookingSystem", action = "Index", id = item.BookingSystemId })
+            @Html.RouteLink(item.CompanyName, new { controller = "ABookingSystem", action = "Index", id = item.BookingSystemId }, null)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.City)

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SUPEN_Projekt.Models.Service>
+﻿
+@model Tuple<IEnumerable<SUPEN_Projekt.Models.BookingSystem>, IEnumerable<SUPEN_Projekt.Models.Service>>
 
 @{
     ViewBag.Title = "Index4";
@@ -10,37 +11,41 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.serviceName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.duration)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.price)
-        </th>
-        <th></th>
-    </tr>
+   
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Duration
+            </th>
+            <th>
+                Price
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.serviceName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.duration)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.price)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ServiceId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ServiceId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ServiceId })
-            @Html.ActionLink("Booking", "Create")
-        </td>
-    </tr>
-}
+    @foreach (SUPEN_Projekt.Models.Service service in Model.Item2)
+    { 
+        <tr>
+            <td>
+                @service.serviceName
+            </td>
+            <td>
+                @service.duration
+            </td>
+            <td>
+                @service.price
+            </td>
+            <td>
+                @Model.Item1 = bookingSystem;
+                @Html.ActionLink("Edit", "Edit", new { id = service.ServiceId }) |
+                @Html.ActionLink("Details", "Details", new { id = service.ServiceId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = service.ServiceId })
+                @Html.ActionLink("Booking", "CreateBooking", new { bookingSystem = Model }, new { service = Model })
+            </td>
+        </tr>
+        } 
+
 
 </table>

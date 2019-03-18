@@ -19,7 +19,7 @@ namespace SUPEN_Projekt.Models {
     }
     public class stt
     {
-    //public string namn { get; set; }
+    public string namn { get; set; }
 
     }
 }

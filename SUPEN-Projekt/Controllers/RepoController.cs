@@ -37,15 +37,24 @@ namespace SUPEN_Projekt.Controllers
         public ActionResult Index3(int id)
         {
             BookingSystem bookingSystem = uw.BookingSystems.Get(id);
+            ViewModel2 viewModel2 = new ViewModel2();
+            viewModel2.bookingSystem = uw.BookingSystems.Get(id);
+            viewModel2.services = uw.Services.GetAll();
             ViewBag.Message = bookingSystem.CompanyName;
-            return View(bookingSystem);
+            //var tupleModel = new Tuple<BookingSystem, IEnumerable<Service>>(bookingSystem, uw.Services.GetAll());
+            return View(viewModel2);//bookingSystem
         }
 
-        public ActionResult Index4()
+        public PartialViewResult Index4()
         {
            
-            IEnumerable<Service> list = uw.Services.GetAll();
-            return View(list);
+                ViewBag.Message = "Welcome to my demo!";
+            
+                var tupleModel = new Tuple<IEnumerable<BookingSystem>, IEnumerable<Service>>(uw.BookingSystems.GetAll(), uw.Services.GetAll());
+                return PartialView(tupleModel);
+            
+            //IEnumerable<Service> list = uw.Services.GetAll();
+            //return PartialView(list);
         }
 
         public ActionResult Index5()
@@ -58,6 +67,19 @@ namespace SUPEN_Projekt.Controllers
         public ActionResult Create()
         {
             return View();
+        }
+
+
+        public ActionResult CreateBooking(int? systemid, int? serviceid)
+        {
+            BookingSystem s = uw.BookingSystems.Get(systemid);
+            Service service = uw.Services.Get(serviceid);
+            uw.Bookings.CreateBooking(s, service);
+            uw.Complete();
+
+            
+            var booking = uw.Bookings.Find(x => x.BookingSystemId == s.BookingSystemId);
+            return View(booking);
         }
 
         [HttpPost]
@@ -82,19 +104,23 @@ namespace SUPEN_Projekt.Controllers
             return View("booking");
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            if (id == 0)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Booking booking = uw.Bookings.Get(id);
-            if (booking == null)
+            BookingSystem bookingSystem = uw.BookingSystems.Get(id);
+
+            if (bookingSystem == null)
             {
                 return HttpNotFound();
             }
-            return View(booking);
+            return View(bookingSystem);
         }
+
+       
+
 
 
     }
