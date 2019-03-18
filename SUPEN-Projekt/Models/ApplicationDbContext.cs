@@ -18,15 +18,12 @@ namespace SUPEN_Projekt.Models {
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
         }
 
     }
         public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
         {
-        //List<Branch> allBranches = new List<Branch>();
-
-
-        //List<BookingSystem> bookingSystems;
 
         protected override void Seed(ApplicationDbContext context)
         {

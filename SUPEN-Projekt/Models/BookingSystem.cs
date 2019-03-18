@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace SUPEN_Projekt.Models {
 	public class BookingSystem {
+
+        [Key]
 		public int BookingSystemId { get; set; }
 		public string SystemName { get; set; }
 		public string SystemDescription { get; set; }
@@ -22,9 +25,8 @@ namespace SUPEN_Projekt.Models {
 		public string PostalCode { get; set; }
 		public string City { get; set; }
 
-        public ICollection<Booking> Bookings { get; set; }
-        public virtual ICollection<Service> services { get; set; }
-
-
-    }
+       
+        public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual ICollection<Service> Services { get; set; }
+	}
 }

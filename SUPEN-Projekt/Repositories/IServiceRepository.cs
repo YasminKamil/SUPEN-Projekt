@@ -9,12 +9,6 @@ namespace SUPEN_Projekt.Repositories
 {
     public interface IServiceRepository : IRepository<Service>
     {
-
+        IEnumerable<Service> GetAllServices();
     }
 }
-
-//namespace SUPEN_Projekt.Repositories {
-//	public interface IServiceRepository : IRepository<Service>{
-//		IEnumerable<Service> GetAllServices();
-//	}
-//}
