@@ -6,12 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-//namespace SUPEN_Projekt.Repositories
-//{
-//    public class ServiceRepository : Repository<Service>, IServiceRepository
-//    {
-//        public ServiceRepository(ApplicationDbContext context) : base(context)
-//        { }
+namespace SUPEN_Projekt.Repositories
+{
+    public class ServiceRepository : Repository<Service>, IServiceRepository
+    {
+       public ServiceRepository(ApplicationDbContext context) : base(context)
+        { }
 
         public IEnumerable<Service> GetAllServices()
         {

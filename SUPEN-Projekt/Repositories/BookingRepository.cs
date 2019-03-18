@@ -24,7 +24,7 @@ namespace SUPEN_Projekt.Repositories
             booking.UserName = system.CompanyName;
             booking.UserMail = system.ContactEmail;
             booking.UserMobile = system.ContactPhone;
-            booking.Subject = service.serviceName;
+            booking.Subject = service.ServiceName;
             booking.StartTime = DateTime.Today;
             booking.EndTime = DateTime.Today;
             booking.Date = DateTime.Today;

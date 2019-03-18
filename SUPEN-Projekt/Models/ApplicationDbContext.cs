@@ -95,7 +95,7 @@ namespace SUPEN_Projekt.Models {
                     Latitude = 59.2703188,
                     Longitude = 15.2074733,
                     PostalCode = "702 10",
-                    City = "Örebro", services = new List<Service> () {serviceList.SingleOrDefault(x=>x.ServiceId==3), serviceList.SingleOrDefault(x => x.ServiceId == 2) }
+                    City = "Örebro", Services = new List<Service> () {serviceList.SingleOrDefault(x=>x.ServiceId==3), serviceList.SingleOrDefault(x => x.ServiceId == 2) }
                 },
 
                 new BookingSystem {
@@ -112,7 +112,7 @@ namespace SUPEN_Projekt.Models {
                     Longitude = 15.2066,
                     PostalCode = "702 84",
                     City = "Örebro",
-                    services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==4), serviceList.SingleOrDefault(x => x.ServiceId == 1) }
+                    Services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==4), serviceList.SingleOrDefault(x => x.ServiceId == 1) }
                 },
                  new BookingSystem {
                     SystemName = "boka.se",
@@ -128,7 +128,7 @@ namespace SUPEN_Projekt.Models {
                     Longitude = 15.204345,
                     PostalCode = "703 83",
                     City = "Örebro",
-                    services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==2), serviceList.SingleOrDefault(x => x.ServiceId == 4) }
+                    Services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==2), serviceList.SingleOrDefault(x => x.ServiceId == 4) }
                 },
                  new BookingSystem {
                     SystemName = "boka.se",
@@ -144,7 +144,7 @@ namespace SUPEN_Projekt.Models {
                     Longitude = 15.229628,
                     PostalCode = "602 26",
                     City = "Norrköping",
-                    services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==3), serviceList.SingleOrDefault(x => x.ServiceId == 2) }
+                    Services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==3), serviceList.SingleOrDefault(x => x.ServiceId == 2) }
                 },
                  new BookingSystem {
                     SystemName = "boka.se",
@@ -160,7 +160,7 @@ namespace SUPEN_Projekt.Models {
                     Longitude = 16.204253,
                     PostalCode = "602 28",
                     City = "Norrköping",
-                    services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==2), serviceList.SingleOrDefault(x => x.ServiceId == 4) }
+                    Services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==2), serviceList.SingleOrDefault(x => x.ServiceId == 4) }
                 },
                  new BookingSystem {
                     SystemName = "boka.se",
@@ -176,7 +176,7 @@ namespace SUPEN_Projekt.Models {
                     Longitude = 18.0789683,
                     PostalCode = "116 67",
                     City = "Stockholm",
-                    services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==1), serviceList.SingleOrDefault(x => x.ServiceId == 2) }
+                    Services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==1), serviceList.SingleOrDefault(x => x.ServiceId == 2) }
                 },
                  new BookingSystem {
                     SystemName = "boka.se",
@@ -192,7 +192,7 @@ namespace SUPEN_Projekt.Models {
                     Longitude = 18.0674249,
                     PostalCode = "111 39",
                     City = "Stockholm",
-                    services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==1), serviceList.SingleOrDefault(x => x.ServiceId == 2) }
+                    Services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==1), serviceList.SingleOrDefault(x => x.ServiceId == 2) }
                 },
                  new BookingSystem {
                     SystemName = "boka.se",
@@ -208,7 +208,7 @@ namespace SUPEN_Projekt.Models {
                     Longitude = 13.0183526,
                     PostalCode = "212 11",
                     City = "Malmö",
-                    services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==1), serviceList.SingleOrDefault(x => x.ServiceId == 4) }
+                    Services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==1), serviceList.SingleOrDefault(x => x.ServiceId == 4) }
                 },
                   new BookingSystem {
                     SystemName = "boka.se",
@@ -224,7 +224,7 @@ namespace SUPEN_Projekt.Models {
                     Longitude = 13.0007,
                     PostalCode = "212 23",
                     City = "Malmö",
-                    services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==3), serviceList.SingleOrDefault(x => x.ServiceId == 2) }
+                    Services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==3), serviceList.SingleOrDefault(x => x.ServiceId == 2) }
                 }
             };
                 bookingSystems.ForEach(x => context.BookingSystems.Add(x));
