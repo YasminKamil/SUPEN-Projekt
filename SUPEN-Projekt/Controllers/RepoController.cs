@@ -55,30 +55,36 @@ namespace SUPEN_Projekt.Controllers
             return View(list);
         }
 
+        public ActionResult Create()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "BookingId, UserName, UserMail, UserMobile, " +
             "Subject, StartTime, EndTime, Price," +
-            "BookingSysId")]Booking booking)
+            "BookingSystemId, ServiceId")]Booking booking)
         {
             //booking.BookingSysId
 
 
             if (ModelState.IsValid)
             {
+                
                 uw.Bookings.Add(booking);
-                uw.BookingSystems.AddBooking(booking, booking.BookingSysId);
+                uw.BookingSystems.AddBooking(booking, booking.BookingSystemId);
                 uw.Complete();
 
-                return RedirectToAction("Detail");
+                return RedirectToAction("Index4");
             }
 
-            return View("Detail");
+            return View("booking");
         }
 
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }

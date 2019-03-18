@@ -18,15 +18,12 @@ namespace SUPEN_Projekt.Models {
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
         }
 
     }
         public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
         {
-        //List<Branch> allBranches = new List<Branch>();
-
-
-        //List<BookingSystem> bookingSystems;
 
         protected override void Seed(ApplicationDbContext context)
         {
@@ -60,7 +57,7 @@ namespace SUPEN_Projekt.Models {
             serviceName = "bullfika",
                 duration = 4,
                 price = 70, }
-                //branch = context.Branches.Single(x => x.branchId == 1) 
+                //branch = context.Branches.Single(x => x.branchId == 1) }
             }; services.ForEach(x => context.Services.Add(x));
 
             var bookingSystems = new List<BookingSystem>() {

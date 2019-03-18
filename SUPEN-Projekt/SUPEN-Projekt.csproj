@@ -2623,6 +2623,8 @@
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Repo\Index4.cshtml" />
     <Content Include="Views\Index5.cshtml" />
+    <Content Include="Views\Repo\Create.cshtml" />
+    <Content Include="Views\Repo\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiController\" />
