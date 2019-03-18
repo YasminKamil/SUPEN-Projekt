@@ -34,32 +34,32 @@ namespace SUPEN_Projekt.Models {
             // frågan är den om det inte är bättre att ha dessa på tjän
             var branches = new List<Branch>() {
                 new Branch {
-            branchName = "Frisör" },
+            BranchName = "Frisör" },
                 new Branch {
-            branchName = "Besiktning" },
+            BranchName = "Besiktning" },
                 new Branch {
-            branchName = "Däck" },
+            BranchName = "Däck" },
                 new Branch {
-            branchName = "Café" },
+            BranchName = "Café" },
             }; branches.ForEach(x => context.Branches.Add(x));
 
             var services = new List<Service>() {
                 new Service {
-            serviceName = "Klippning",
-                duration = 1,
-                price = 100},
+            ServiceName = "Klippning",
+                Duration = 1,
+                Price = 100},
                 new Service {
-            serviceName = "Färgning",
-                duration = 2,
-                price = 200},
+            ServiceName = "Färgning",
+                Duration = 2,
+                Price = 200},
                 new Service {
-            serviceName = "Däckbyte",
-                duration = 3,
-                price = 300},
+            ServiceName = "Däckbyte",
+                Duration = 3,
+                Price = 300},
                 new Service {
-            serviceName = "bullfika",
-                duration = 4,
-                price = 70, }
+            ServiceName = "bullfika",
+                Duration = 4,
+                Price = 70, }
                 //branch = context.Branches.Single(x => x.branchId == 1) 
             }; services.ForEach(x => context.Services.Add(x));
 
