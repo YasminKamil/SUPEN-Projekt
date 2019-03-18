@@ -23,6 +23,8 @@ namespace SUPEN_Projekt.Models {
 		public string City { get; set; }
 
         public ICollection<Booking> Bookings { get; set; }
-        public ICollection<Service> services { get; set; }
-	}
+        public virtual ICollection<Service> services { get; set; }
+
+
+    }
 }

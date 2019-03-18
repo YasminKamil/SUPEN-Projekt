@@ -36,7 +36,6 @@ namespace SUPEN_Projekt.Repositories
             Get(id).Bookings.Add(booking);
         }
 
-
         public ApplicationDbContext ApplicationDbContext
         {
             get { return Context as ApplicationDbContext; }
