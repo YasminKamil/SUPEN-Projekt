@@ -32,9 +32,6 @@ namespace SUPEN_Projekt.Repositories
             booking.Service = service;
 
             Add(booking);
-
-            //return booking;
-
         }
 
         public ApplicationDbContext ApplicationDbContext

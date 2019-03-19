@@ -26,23 +26,23 @@
 
     @foreach (var item in Model.services)
     {
-
+        var i = Model.bookingSystem;
         <tr>
             <td>
-                @item.serviceName
+                @item.ServiceName
             </td>
             <td>
-                @item.duration
+                @item.Duration
             </td>
             <td>
-                @item.price
+                @item.Price
             </td>
             <td>
 
                 @Html.ActionLink("Edit", "Edit", new { id = item.ServiceId }) |
                 @Html.ActionLink("Details", "Details", new { id = item.ServiceId }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.ServiceId })
-                @Html.ActionLink("Booking", "CreateBooking", new { id = Model.bookingSystem.BookingSystemId }, new { id = item.ServiceId} )
+                @Html.ActionLink("Booking", "CreateBooking", new { id = i.BookingSystemId }, new { id = item.ServiceId} )
             </td>
         </tr>
 

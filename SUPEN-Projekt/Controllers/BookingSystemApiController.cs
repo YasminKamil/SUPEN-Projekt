@@ -14,16 +14,15 @@ namespace SUPEN_Projekt.Controllers
         
         IUnitOfWork uw;
 
-        public BookingSystemApiController(IUnitOfWork unitofwork)
-        {
+        public BookingSystemApiController(IUnitOfWork unitofwork) {
             uw = unitofwork;
         }
 
-        [HttpGet]
+		[HttpGet]
 		public IEnumerable<BookingSystem> Get() {
 
-            IEnumerable<BookingSystem> list = uw.BookingSystems.GetAll();
-            return list;
+			IEnumerable<BookingSystem> list = uw.BookingSystems.GetAll();
+			return list;
 		}
 
 		[HttpPost]
@@ -36,37 +35,59 @@ namespace SUPEN_Projekt.Controllers
 			return system;
 		}
 
-
-
-        public void Update(int id, BookingSystem system)
-            {
-
-            if (!ModelState.IsValid) {
-				throw new HttpResponseException(HttpStatusCode.BadRequest);
+		//Metoden används för att skapa en ny post i datakällan
+		public IHttpActionResult Post(int id, BookingSystem system) {
+			if (!ModelState.IsValid) {
+				return BadRequest("Invalid data.");
 			}
 
-            BookingSystem bookingSystem = uw.BookingSystems.Get(id);
+			uw.BookingSystems.Add(new BookingSystem() {
+			Address = system.Address,
+			City = system.City,
+			CompanyName = system.CompanyName,
+			ContactEmail = system.ContactEmail,
+			ContactPhone = system.ContactPhone,
+			Email = system.Email,
+			Latitude = system.Latitude,
+			Longitude = system.Longitude,
+			PhoneNumber = system.PhoneNumber,
+			PostalCode = system.PostalCode,
+			SystemDescription = system.SystemDescription,
+			SystemName = system.SystemName,
+			Website = system.Website
+		});
 
-            if (bookingSystem == null) {
-				throw new HttpResponseException(HttpStatusCode.NotFound);
-			}
-
-			bookingSystem.Address = system.Address;
-			bookingSystem.City = system.City;
-			bookingSystem.CompanyName = system.CompanyName;
-			bookingSystem.ContactEmail = system.ContactEmail;
-			bookingSystem.ContactPhone = system.ContactPhone;
-			bookingSystem.Email = system.Email;
-			bookingSystem.Latitude = system.Latitude;
-			bookingSystem.Longitude = system.Longitude;
-			bookingSystem.PhoneNumber = system.PhoneNumber;
-			bookingSystem.PostalCode = system.PostalCode;
-			bookingSystem.SystemDescription = system.SystemDescription;
-			bookingSystem.SystemName = system.SystemName;
-			bookingSystem.Website = system.Website;
-
-            uw.Complete();
+			uw.Complete();
+			return Ok();
 		}
+
+  //      public void Update(int id, BookingSystem system) {
+  //          if (!ModelState.IsValid) {
+		//		throw new HttpResponseException(HttpStatusCode.BadRequest);
+		//	}
+
+  //          BookingSystem bookingSystem = uw.BookingSystems.Get(id);
+
+  //          if (bookingSystem == null) {
+		//		throw new HttpResponseException(HttpStatusCode.NotFound);
+		//	}
+
+		//	bookingSystem.Address = system.Address;
+		//	bookingSystem.City = system.City;
+		//	bookingSystem.CompanyName = system.CompanyName;
+		//	bookingSystem.ContactEmail = system.ContactEmail;
+		//	bookingSystem.ContactPhone = system.ContactPhone;
+		//	bookingSystem.Email = system.Email;
+		//	bookingSystem.Latitude = system.Latitude;
+		//	bookingSystem.Longitude = system.Longitude;
+		//	bookingSystem.PhoneNumber = system.PhoneNumber;
+		//	bookingSystem.PostalCode = system.PostalCode;
+		//	bookingSystem.SystemDescription = system.SystemDescription;
+		//	bookingSystem.SystemName = system.SystemName;
+		//	bookingSystem.Website = system.Website;
+
+  //          uw.Complete();
+		//}
 
 		[HttpDelete]
 		public void Delete(int id)
