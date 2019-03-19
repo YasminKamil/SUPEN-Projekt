@@ -8,9 +8,12 @@ using System.Web;
 namespace SUPEN_Projekt.Models {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext() : base("BookingSystemDbContext") { }
+        public ApplicationDbContext() : base("BookingSystemDbContext") {
+			this.Configuration.ProxyCreationEnabled = false;
 
-        public DbSet<BookingSystem> BookingSystems { get; set; }
+		}
+
+		public DbSet<BookingSystem> BookingSystems { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Service> Services { get; set; }
