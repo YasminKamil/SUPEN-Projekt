@@ -597,7 +597,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Kendo.Mvc.xml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -742,6 +741,7 @@
     <Content Include="Views\Repo\Create.cshtml" />
     <Content Include="Views\Repo\Details.cshtml" />
     <Content Include="Views\Repo\CreateBooking.cshtml" />
+    <Content Include="Views\BookingSystem\RelevantBookingSystems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiController\" />
