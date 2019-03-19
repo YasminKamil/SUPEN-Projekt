@@ -738,7 +738,10 @@
     <Content Include="Scripts\js\jt.timepicker.jquery.json" />
     <Content Include="Scripts\js\package.json" />
     <Content Include="Scripts\js\README.md" />
-    <Content Include="Views\BookingSystem\AddOrEdit.cshtml" />
+    <Content Include="Views\Repo\Create.cshtml" />
+    <Content Include="Views\Repo\Details.cshtml" />
+    <Content Include="Views\Repo\CreateBooking.cshtml" />
+    <Content Include="Views\BookingSystem\RelevantBookingSystems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiController\" />

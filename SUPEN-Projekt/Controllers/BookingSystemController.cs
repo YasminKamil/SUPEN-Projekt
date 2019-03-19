@@ -27,6 +27,25 @@ namespace SUPEN_Projekt.Controllers
            return View(listbookingsys);  
         }
 
+        //GET: BookingSystem/RelevantBookingSystems/?BookingSystemId=1&serviceId=1
+        public ActionResult RelevantBookingSystems(int? BookingSystemId, int? serviceId) {
+            if (BookingSystemId == null || serviceId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (uw.BookingSystems.Get(BookingSystemId) == null || uw.Services.Get(serviceId) == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BookingSystem selectedBookingSystem = uw.BookingSystems.Get(BookingSystemId);
+            Service selectedService = uw.Services.Get(serviceId);
+            List<BookingSystem> bookingSystemsInRange =  uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
+            List<BookingSystem> bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
+            List<BookingSystem> orderedByDistance = uw.BookingSystems.OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
+
+            return View(orderedByDistance);
+        }
+
         // GET: BookingSystem/Details/5
         public ActionResult Details(int? id)
         {
@@ -121,5 +140,10 @@ namespace SUPEN_Projekt.Controllers
             uw.Complete();
             return RedirectToAction("Index");
         }
+
+
+
+
+
     }
 }

@@ -1,5 +1,56 @@
-﻿@model SUPEN_Projekt.Models.BookingSystem
+﻿@*@model SUPEN_Projekt.Models.BookingSystem*@
+@model SUPEN_Projekt.Models.ViewModel2
+
+
 
 
 <h2>@ViewBag.Message</h2>
+@*@<div>
+        @{ Html.RenderAction("Index4");
+        }
+    </div>*@
+<table class="table">
+
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Duration
+        </th>
+        <th>
+            Price
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.services)
+    {
+
+        <tr>
+            <td>
+                @item.serviceName
+            </td>
+            <td>
+                @item.duration
+            </td>
+            <td>
+                @item.price
+            </td>
+            <td>
+
+                @Html.ActionLink("Edit", "Edit", new { id = item.ServiceId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ServiceId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ServiceId })
+                @Html.ActionLink("Booking", "CreateBooking", new { id = Model.bookingSystem.BookingSystemId }, new { id = item.ServiceId} )
+            </td>
+        </tr>
+
+    }
+
+
+</table>
+
+
+
 

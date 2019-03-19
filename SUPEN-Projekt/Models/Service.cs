@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace SUPEN_Projekt.Models {
 	public class Service {
+
+        
         public virtual int ServiceId { get; set; }
         public virtual string ServiceName { get; set; }
 		public virtual int Duration { get; set; }

@@ -36,7 +36,6 @@ namespace SUPEN_Projekt.Repositories
             Get(id).Bookings.Add(booking);
         }
 
-
         public ApplicationDbContext ApplicationDbContext
         {
             get { return Context as ApplicationDbContext; }
@@ -82,7 +81,7 @@ namespace SUPEN_Projekt.Repositories
             foreach (var item in inBookingSystems)
             {
                 List<Branch> t2Branches = new List<Branch>();
-                foreach (var y in item.services)
+                foreach (var y in item.Services)
                 {
                     if (!t2Branches.Contains(y.Branch))
                     {
@@ -139,9 +138,9 @@ namespace SUPEN_Projekt.Repositories
             List<BookingSystem> keep = new List<BookingSystem>();
             BookingSystem tmbBookingSystem = new BookingSystem();
 
-            foreach (var aBookingSystem in inBookingSystems.Where(x => x.services != null))
+            foreach (var aBookingSystem in inBookingSystems.Where(x => x.Services != null))
             {
-                List<Service> servi = aBookingSystem.services.Where(x => x.Branch.BranchName.ToString() != selectedService.Branch.BranchName).ToList<Service>();
+                List<Service> servi = aBookingSystem.Services.Where(x => x.Branch.BranchName.ToString() != selectedService.Branch.BranchName).ToList<Service>();
                 if (servi.Count() != 0)
                 {
                     keep.Add(aBookingSystem);
@@ -152,7 +151,7 @@ namespace SUPEN_Projekt.Repositories
         public List<Branch> GetBranchesInBookingSystem(BookingSystem bookingSystem)
         {
             List<Branch> branchesInBookingSystem = new List<Branch>();
-            foreach (var item in bookingSystem.services)
+            foreach (var item in bookingSystem.Services)
             {
                 branchesInBookingSystem.Add(item.Branch);
             }
