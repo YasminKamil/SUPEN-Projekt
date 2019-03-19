@@ -84,15 +84,15 @@ namespace SUPEN_Projekt.Repositories
                 List<Branch> t2Branches = new List<Branch>();
                 foreach (var y in item.Services)
                 {
-                    if (!t2Branches.Contains(y.branch))
+                    if (!t2Branches.Contains(y.Branch))
                     {
-                        t2Branches.Add(y.branch);
+                        t2Branches.Add(y.Branch);
                     }
                 }
                 t1Branches.AddRange(t2Branches);
             }
 
-            foreach (var item in t1Branches.GroupBy(x => x.branchName))
+            foreach (var item in t1Branches.GroupBy(x => x.BranchName))
             {
                 branchesGrouped += item.Key + " " + item.Count() + "\n";
             }
@@ -141,7 +141,7 @@ namespace SUPEN_Projekt.Repositories
 
             foreach (var aBookingSystem in inBookingSystems.Where(x => x.Services != null))
             {
-                List<Service> servi = aBookingSystem.Services.Where(x => x.branch.branchName.ToString() != selectedService.branch.branchName).ToList<Service>();
+                List<Service> servi = aBookingSystem.Services.Where(x => x.Branch.BranchName.ToString() != selectedService.Branch.BranchName).ToList<Service>();
                 if (servi.Count() != 0)
                 {
                     keep.Add(aBookingSystem);
@@ -154,7 +154,7 @@ namespace SUPEN_Projekt.Repositories
             List<Branch> branchesInBookingSystem = new List<Branch>();
             foreach (var item in bookingSystem.Services)
             {
-                branchesInBookingSystem.Add(item.branch);
+                branchesInBookingSystem.Add(item.Branch);
             }
             return branchesInBookingSystem;
         }
