@@ -35,14 +35,14 @@ namespace SUPEN_Projekt.Controllers
 
         [Route("BookingSystem/{id:int}")]
         public ActionResult Index3(int id)
-        {
-            BookingSystem bookingSystem = uw.BookingSystems.Get(id);
+        {//vi provar och gör dem till listobjects i stället...
+            //BookingSystem bookingSystem = uw.BookingSystems.Get(id);
             ViewModel2 viewModel2 = new ViewModel2();
             viewModel2.bookingSystem = uw.BookingSystems.Get(id);
             viewModel2.services = uw.Services.GetAll();
-            ViewBag.Message = bookingSystem.CompanyName;
-            //var tupleModel = new Tuple<BookingSystem, IEnumerable<Service>>(bookingSystem, uw.Services.GetAll());
-            return View(viewModel2);//bookingSystem
+            ViewBag.Message = viewModel2.bookingSystem.CompanyName;
+
+            return View(viewModel2);//abookingSystem + services
         }
 
         public PartialViewResult Index4()
@@ -76,7 +76,6 @@ namespace SUPEN_Projekt.Controllers
             Service service = uw.Services.Get(serviceid);
             uw.Bookings.CreateBooking(s, service);
             uw.Complete();
-
             
             var booking = uw.Bookings.Find(x => x.BookingSystemId == s.BookingSystemId);
             return View(booking);
