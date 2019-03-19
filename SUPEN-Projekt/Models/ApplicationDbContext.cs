@@ -5,15 +5,13 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
 
-namespace SUPEN_Projekt.Models {
+namespace SUPEN_Projekt.Models
+{
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext() : base("BookingSystemDbContext") {
-			this.Configuration.ProxyCreationEnabled = false;
+        public ApplicationDbContext() : base("BookingSystemDbContext") { }
 
-		}
-
-		public DbSet<BookingSystem> BookingSystems { get; set; }
+        public DbSet<BookingSystem> BookingSystems { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Service> Services { get; set; }
@@ -25,8 +23,8 @@ namespace SUPEN_Projekt.Models {
         }
 
     }
-        public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
-        {
+    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+    {
 
         protected override void Seed(ApplicationDbContext context)
         {
@@ -44,13 +42,15 @@ namespace SUPEN_Projekt.Models {
             context.Branches.AddRange(branches);
 
             Service s1 = new Service
-            { ServiceId = 1,
+            {
+                ServiceId = 1,
                 ServiceName = "Klippning",
                 Duration = 1,
                 Price = 100
-               , Branch = branches.Single(x=>x.BranchId==1)
+               ,
+                Branch = branches.Single(x => x.BranchId == 1)
             };
-           
+
             Service s2 = new Service
             {
                 ServiceId = 2,
@@ -230,7 +230,7 @@ namespace SUPEN_Projekt.Models {
                     Services = new List<Service> () { serviceList.SingleOrDefault(x=>x.ServiceId==3), serviceList.SingleOrDefault(x => x.ServiceId == 2) }
                 }
             };
-                bookingSystems.ForEach(x => context.BookingSystems.Add(x));
+            bookingSystems.ForEach(x => context.BookingSystems.Add(x));
 
             context.SaveChanges();
             base.Seed(context);
