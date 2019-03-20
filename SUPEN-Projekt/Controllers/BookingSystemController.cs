@@ -86,10 +86,11 @@ namespace SUPEN_Projekt.Controllers
 
         //    return View(bookingSystem);
         //}
+
 		[HttpPost]
 		public ActionResult Create(BookingSystem system) {
 			using (var client = new HttpClient()) {
-				client.BaseAddress = new Uri("http://localhost:55341/api/BookingSystemApi");
+				client.BaseAddress = new Uri("http://localhost:55341/api/BookingSystemApi/get");
 
 				var postTask = client.PostAsJsonAsync<BookingSystem>("BookingSystem", system);
 				postTask.Wait();
