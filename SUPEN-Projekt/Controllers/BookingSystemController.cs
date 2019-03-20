@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using SUPEN_Projekt.Models;
@@ -70,21 +71,39 @@ namespace SUPEN_Projekt.Controllers
         // POST: BookingSystem/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BookingSystemId,SystemName,SystemDescription,Email,PhoneNumber,Website,CompanyName,ContactEmail,ContactPhone,Address,Latitude,Longitude,PostalCode,City")] BookingSystem bookingSystem)
-        {
-            if (ModelState.IsValid)
-            {
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "BookingSystemId,SystemName,SystemDescription,Email,PhoneNumber,Website,CompanyName,ContactEmail,ContactPhone,Address,Latitude,Longitude,PostalCode,City")] BookingSystem bookingSystem)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
 
-                uw.BookingSystems.Add(bookingSystem);
-                uw.Complete();
+        //        uw.BookingSystems.Add(bookingSystem);
+        //        uw.Complete();
 
-                return RedirectToAction("Index");
-            }
+        //        return RedirectToAction("Index");
+        //    }
 
-            return View(bookingSystem);
-        }
+        //    return View(bookingSystem);
+        //}
+
+		[HttpPost]
+		public ActionResult Create(BookingSystem system) {
+			using (var client = new HttpClient()) {
+				client.BaseAddress = new Uri("http://localhost:55341/api/BookingSystemApi/get");
+
+				var postTask = client.PostAsJsonAsync<BookingSystem>("BookingSystem", system);
+				postTask.Wait();
+
+				var result = postTask.Result;
+				if (result.IsSuccessStatusCode) {
+					return RedirectToAction("Index");
+				}
+
+				ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator");
+				return View(system);
+			}
+		}
 
         // GET: BookingSystem/Edit/5
         public ActionResult Edit(int? id)
@@ -141,9 +160,27 @@ namespace SUPEN_Projekt.Controllers
             return RedirectToAction("Index");
         }
 
+		public ActionResult Update() {
+			return View();
+		}
 
+		[HttpPost]
+		public ActionResult Update(BookingSystem system) {
+			using(var client = new HttpClient()) {
+				client.BaseAddress = new Uri("http://localhost:55341/api/BookingSystem");
 
+				var postTask = client.PostAsJsonAsync<BookingSystem>("system", system);
+				postTask.Wait();
 
+				var result = postTask.Result;
+				if (result.IsSuccessStatusCode) {
+					return RedirectToAction("Index");
+				}
+			}
+
+			ModelState.AddModelError(string.Empty, "Server Error. Please contact the administrator");
+			return View(system);
+		}
 
     }
 }

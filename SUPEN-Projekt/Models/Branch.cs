@@ -8,6 +8,5 @@ namespace SUPEN_Projekt.Models {
 	public class Branch {
 		public virtual int BranchId { get; set; }
 		public virtual string BranchName { get; set; }
-        //public bool yes { get; set; }
 	}
 }
