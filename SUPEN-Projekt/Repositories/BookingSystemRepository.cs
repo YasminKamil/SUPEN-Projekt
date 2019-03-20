@@ -31,9 +31,23 @@ namespace SUPEN_Projekt.Repositories
             Remove(bookingSystem);    
         }
 
+        public void AddServices(BookingSystem bookingSystem)
+        {
+            //Service service = new Service();
+            var service = ApplicationDbContext.Services.Single(x => x.ServiceId == 2);
+            bookingSystem.Services.Add(service);
+        }
+
         public void AddBooking(Booking booking, int id)
         {
             Get(id).Bookings.Add(booking);
+        }
+
+        public Service BookingSystemService(int id, int ServiceId)
+        {
+            BookingSystem bookingsystem = Get(id);
+            Service service = bookingsystem.Services.Single(x => x.ServiceId == ServiceId);
+            return service;
         }
 
         public ApplicationDbContext ApplicationDbContext

@@ -27,80 +27,37 @@ namespace SUPEN_Projekt.Controllers
 
         public ActionResult Index2()
         {
-            //BookingSystems is a prop in IUnitOfWork
-            //Förut använde jag GetAllBookingSystems men bytte till GetALL()
             IEnumerable<BookingSystem> listbookingsys = uw.BookingSystems.GetAll();
             return View(listbookingsys);
         }
 
         [Route("BookingSystem/{id:int}")]
         public ActionResult Index3(int id)
-        {//vi provar och gör dem till listobjects i stället...
-            //BookingSystem bookingSystem = uw.BookingSystems.Get(id);
-            ViewModel2 viewModel2 = new ViewModel2();
-            viewModel2.bookingSystem = uw.BookingSystems.Get(id);
-            viewModel2.services = uw.Services.GetAll();
-            ViewBag.Message = viewModel2.bookingSystem.CompanyName;
+        {
+            BookingSystem bookingSystem = uw.BookingSystems.Get(id);
+            ViewBag.Message = bookingSystem.CompanyName;
 
-            return View(viewModel2);//abookingSystem + services
+            return View(bookingSystem);
         }
 
-        public PartialViewResult Index4()
+        [Route("BookingSystem/{id:int}")]
+        public ActionResult CreateBooking(int id)
         {
-           
-                ViewBag.Message = "Welcome to my demo!";
-            
-                var tupleModel = new Tuple<IEnumerable<BookingSystem>, IEnumerable<Service>>(uw.BookingSystems.GetAll(), uw.Services.GetAll());
-                return PartialView(tupleModel);
-            
-            //IEnumerable<Service> list = uw.Services.GetAll();
-            //return PartialView(list);
+           BookingSystem system = uw.BookingSystems.Get(id);
+            return PartialView("CreateBooking", system);
         }
 
-        public ActionResult Index5()
+        [Route("BookingSystem/{id:int}")]
+        [HttpPost, ActionName("CreateBooking")]
+        public ActionResult CreateBookingConf(int id)
         {
-
-            IEnumerable<Branch> list = uw.Branches.GetAll();
-            return View(list);
-        }
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-
-        public ActionResult CreateBooking(int? systemid, int? serviceid)
-        {
-            BookingSystem s = uw.BookingSystems.Get(systemid);
-            Service service = uw.Services.Get(serviceid);
-            uw.Bookings.CreateBooking(s, service);
-            uw.Complete();
-            
-            var booking = uw.Bookings.Find(x => x.BookingSystemId == s.BookingSystemId);
-            return View(booking);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BookingId, UserName, UserMail, UserMobile, " +
-            "Subject, StartTime, EndTime, Price," +
-            "BookingSystemId, ServiceId")]Booking booking)
-        {
-            //booking.BookingSysId
-
-
-            if (ModelState.IsValid)
+            if (id != 0)
             {
-                
-                uw.Bookings.Add(booking);
-                uw.BookingSystems.AddBooking(booking, booking.BookingSystemId);
+                Booking booking = uw.Bookings.CreateBooking(id);
                 uw.Complete();
-
-                return RedirectToAction("Index4");
+                return RedirectToAction("Details2", new {id = booking.BookingId});
             }
-
-            return View("booking");
+                return RedirectToAction("Index3", new { id});
         }
 
         public ActionResult Details(int? id)
@@ -118,9 +75,21 @@ namespace SUPEN_Projekt.Controllers
             return View(bookingSystem);
         }
 
-       
+        public ActionResult Details2(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Booking booking = uw.Bookings.Get(id);
 
+            if (booking == null)
+            {
+                return HttpNotFound();
+            }
 
+            return View(booking);
+        }
 
     }
 }

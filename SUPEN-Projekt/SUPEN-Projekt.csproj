@@ -687,6 +687,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -729,8 +731,6 @@
     <Content Include="Views\Repo\Index3.cshtml" />
     <Content Include="Views\ABookingSystem\Index.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
-    <Content Include="Views\Repo\Index4.cshtml" />
-    <Content Include="Views\Index5.cshtml" />
     <Content Include="Scripts\js\.eslintrc.json" />
     <Content Include="Scripts\js\.gitignore" />
     <Content Include="Scripts\js\bower.json" />
@@ -740,8 +740,9 @@
     <Content Include="Scripts\js\README.md" />
     <Content Include="Views\Repo\Create.cshtml" />
     <Content Include="Views\Repo\Details.cshtml" />
-    <Content Include="Views\Repo\CreateBooking.cshtml" />
     <Content Include="Views\BookingSystem\RelevantBookingSystems.cshtml" />
+    <Content Include="Views\Repo\Details2.cshtml" />
+    <Content Include="Views\Repo\CreateBooking.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiController\" />
