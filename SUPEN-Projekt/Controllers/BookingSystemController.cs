@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SUPEN_Projekt.Models;
 using SUPEN_Projekt.Repositories;
 
@@ -89,20 +93,46 @@ namespace SUPEN_Projekt.Controllers
 
 		[HttpPost]
 		public ActionResult Create(BookingSystem system) {
-			using (var client = new HttpClient()) {
-				client.BaseAddress = new Uri("http://localhost:55341/api/BookingSystemApi/get");
 
-				var postTask = client.PostAsJsonAsync<BookingSystem>("BookingSystem", system);
-				postTask.Wait();
+            var request = (HttpWebRequest)WebRequest.Create("http://localhost:55341/api/post");
 
-				var result = postTask.Result;
-				if (result.IsSuccessStatusCode) {
-					return RedirectToAction("Index");
-				}
+            var postData = "SystemName=" + system.SystemName;
+            postData += "&thing2=world";
+            postData += "&thing2=world";
+            postData += "&thing2=world";
+            var data = Encoding.ASCII.GetBytes(postData);
+            var json = JsonConvert.SerializeObject(system);
 
-				ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator");
-				return View(system);
-			}
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = data.Length;
+
+            byte[] a = Encoding.GetEncoding("UTF-8").GetBytes(json);
+
+
+
+            using (var stream = request.GetRequestStream())
+            {
+                stream.Write(a, 0, data.Length);
+            }
+
+            var response = (HttpWebResponse)request.GetResponse();
+
+            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            //        using (var client = new HttpClient()) {
+            //client.BaseAddress = new Uri("http://localhost:55341/api/post");
+
+            //var postTask = client.PostAsJsonAsync<BookingSystem>("BookingSystem", system);
+            //postTask.Wait();
+
+            //var result = postTask.Result;
+            //if (result.IsSuccessStatusCode) {
+            //	return RedirectToAction("Index");
+            //}
+
+            //ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator");
+            return View(system);
+			//}
 		}
 
         // GET: BookingSystem/Edit/5

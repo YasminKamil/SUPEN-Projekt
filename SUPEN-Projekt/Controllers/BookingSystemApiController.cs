@@ -7,6 +7,8 @@ using System.Net.Http;
 using System.Web.Http;
 
 using SUPEN_Projekt.Repositories;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace SUPEN_Projekt.Controllers
 {
@@ -35,7 +37,8 @@ namespace SUPEN_Projekt.Controllers
 		}
 
 
-		[HttpPut]
+		[HttpPost]
+        [Route("api/update")]
 		public void Update(int id, BookingSystem system) {
 			if (!ModelState.IsValid) {
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -77,13 +80,16 @@ namespace SUPEN_Projekt.Controllers
 			uw.BookingSystems.Remove(system);
 			uw.Complete();
 		}
-
-		public IHttpActionResult Post(BookingSystem system) {
+        [Route("api/post")]
+		public IHttpActionResult Post(JObject insystem) {
 			if (!ModelState.IsValid) {
 				return BadRequest("Invalid data");
 			}
 
-			uw.BookingSystems.Add(new BookingSystem() {
+
+            BookingSystem system = JsonConvert.DeserializeObject<BookingSystem>(insystem.ToString());
+
+            uw.BookingSystems.Add(new BookingSystem() {
 				BookingSystemId = system.BookingSystemId,
 				Address = system.Address,
 				City = system.City,
