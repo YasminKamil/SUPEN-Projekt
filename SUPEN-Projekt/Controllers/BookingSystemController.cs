@@ -92,46 +92,17 @@ namespace SUPEN_Projekt.Controllers
         //}
 
 		[HttpPost]
-		public ActionResult Create(BookingSystem system) {
+		public async System.Threading.Tasks.Task<ActionResult> Create(BookingSystem system) {
+            Console.WriteLine("hallu");
 
-            var request = (HttpWebRequest)WebRequest.Create("http://localhost:55341/api/post");
+            var url = "http://localhost:55341/api/post";
 
-            var postData = "SystemName=" + system.SystemName;
-            postData += "&thing2=world";
-            postData += "&thing2=world";
-            postData += "&thing2=world";
-            var data = Encoding.ASCII.GetBytes(postData);
-            var json = JsonConvert.SerializeObject(system);
-
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-
-            byte[] a = Encoding.GetEncoding("UTF-8").GetBytes(json);
-
-
-
-            using (var stream = request.GetRequestStream())
+            using (var client = new HttpClient())
             {
-                stream.Write(a, 0, data.Length);
-            }
-
-            var response = (HttpWebResponse)request.GetResponse();
-
-            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            //        using (var client = new HttpClient()) {
-            //client.BaseAddress = new Uri("http://localhost:55341/api/post");
-
-            //var postTask = client.PostAsJsonAsync<BookingSystem>("BookingSystem", system);
-            //postTask.Wait();
-
-            //var result = postTask.Result;
-            //if (result.IsSuccessStatusCode) {
-            //	return RedirectToAction("Index");
-            //}
-
-            //ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator");
-            return View(system);
+                var content = new StringContent(JsonConvert.SerializeObject(system), Encoding.UTF8, "application/json");
+                var result = await client.PostAsync(url, content);
+                if (result.IsSuccessStatusCode) { return RedirectToAction("Index"); }
+            } return View(system);
 			//}
 		}
 
