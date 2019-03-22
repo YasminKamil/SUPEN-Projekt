@@ -64,20 +64,9 @@ namespace SUPEN_Projekt.Repositories
             using (var client = new HttpClient())
             {
                 var content = new StringContent(JsonConvert.SerializeObject(inObject), Encoding.UTF8, "application/json");
+                     var result = await client.PostAsync(url, content);
 
-                HttpResponseMessage result;
-                if (inUrl.ToLower().EndsWith("delete"))
-                {
-                     result = await client.PostAsync(url, content);
-
-                }
-                else
-                {
-                     result = await client.PostAsync(url, content);
-
-                }
-                if (result.IsSuccessStatusCode)
-                {
+                if (result.IsSuccessStatusCode){
                     works = true;
                 }
             }

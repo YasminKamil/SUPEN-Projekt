@@ -74,59 +74,12 @@ namespace SUPEN_Projekt.Controllers
 
 		[HttpPost]
 		public async Task<ActionResult> Create(BookingSystem system) {
-                     var url = "http://localhost:55341/api/post";
+           var url = "http://localhost:55341/api/post";
 
-            if (await uw.BookingSystems.APIContact(url, system))
-            {
+            if (await uw.BookingSystems.APIContact(url, system)){
                 return RedirectToAction("Index");
             }
             return View(system);
 		}
-
-        // GET: BookingSystem/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-
-            if (id != null)
-            {
-                BookingSystem aBookingSystem = uw.BookingSystems.Get(id);
-                var url = "http://localhost:55341/api/Delete";
-
-
-                if (await uw.BookingSystems.APIContact(url, aBookingSystem))
-                {
-                    return RedirectToAction("Index");
-                }
-
-
-                return View(uw.BookingSystems.GetAll());
-
-            }
-
-return HttpNotFound();
-       
-
-
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //BookingSystem bookingSystem = uw.BookingSystems.Get(id);
-            //if (bookingSystem == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            
-        }
-
-        // POST: BookingSystem/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            uw.BookingSystems.RemoveBookingSystem(id);
-            uw.Complete();
-            return RedirectToAction("Index");
-        }
     }
 }

@@ -53,23 +53,5 @@ namespace SUPEN_Projekt.Controllers
 			uw.Complete();
 			return Ok();
 		}
-
-
-        [Route("api/delete")]
-        public IHttpActionResult Delete(int inId)
-        {
-
-
-            if(uw.BookingSystems.Get(inId) != null)
-            {
-                uw.BookingSystems.Get(inId);
-                uw.Complete();
-                return Ok();
-            }
-            return BadRequest("Invalid data");
-
-        }
-
-
     }
 }
