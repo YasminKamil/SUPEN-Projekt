@@ -5,6 +5,10 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Device.Location;
+using System.Net.Http;
+using System.Text;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace SUPEN_Projekt.Repositories
 {
@@ -168,9 +172,15 @@ namespace SUPEN_Projekt.Repositories
             foreach (var item in bookingSystem.Services)
             {
                 branchesInBookingSystem.Add(item.Branch);
+                
             }
             return branchesInBookingSystem;
         }
+
+
+
+
+
 
     }
 }
