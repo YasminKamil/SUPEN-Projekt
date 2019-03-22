@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
@@ -67,74 +68,21 @@ namespace SUPEN_Projekt.Controllers
         }
 
         // GET: BookingSystem/Create
-        public ActionResult Create()
-        {
+        public ActionResult Create(){
             return View();
         }
 
-        // POST: BookingSystem/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "BookingSystemId,SystemName,SystemDescription,Email,PhoneNumber,Website,CompanyName,ContactEmail,ContactPhone,Address,Latitude,Longitude,PostalCode,City")] BookingSystem bookingSystem)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-
-        //        uw.BookingSystems.Add(bookingSystem);
-        //        uw.Complete();
-
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(bookingSystem);
-        //}
-
 		[HttpPost]
-		public async System.Threading.Tasks.Task<ActionResult> Create(BookingSystem system) {
-            Console.WriteLine("hallu");
-
+		public async Task<ActionResult> Create(BookingSystem system) {
             var url = "http://localhost:55341/api/post";
 
-            using (var client = new HttpClient())
-            {
+            using (var client = new HttpClient()){
                 var content = new StringContent(JsonConvert.SerializeObject(system), Encoding.UTF8, "application/json");
                 var result = await client.PostAsync(url, content);
-                if (result.IsSuccessStatusCode) { return RedirectToAction("Index"); }
-            } return View(system);
-			//}
+                if (result.IsSuccessStatusCode) {
+					return RedirectToAction("Index");
+				} } return View(system);
 		}
-
-        // GET: BookingSystem/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            BookingSystem bookingSystem = uw.BookingSystems.Get(id);
-            if (bookingSystem == null)
-            {
-                return HttpNotFound();
-            }
-            return View(bookingSystem);
-        }
-
-        // POST: BookingSystem/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BookingSystemId,SystemName,SystemDescription,Email,PhoneNumber,Website,CompanyName,ContactEmail,ContactPhone,Address,Latitude,Longitude,PostalCode,City")] BookingSystem bookingSystem)
-        {
-            if (ModelState.IsValid)
-            {
-                uw.BookingSystems.EditBookingSystem(bookingSystem);
-                return RedirectToAction("Index");
-            }
-            return View(bookingSystem);
-        }
 
         // GET: BookingSystem/Delete/5
         public ActionResult Delete(int? id)
@@ -160,28 +108,5 @@ namespace SUPEN_Projekt.Controllers
             uw.Complete();
             return RedirectToAction("Index");
         }
-
-		public ActionResult Update() {
-			return View();
-		}
-
-		[HttpPost]
-		public ActionResult Update(BookingSystem system) {
-			using(var client = new HttpClient()) {
-				client.BaseAddress = new Uri("http://localhost:55341/api/BookingSystem");
-
-				var postTask = client.PostAsJsonAsync<BookingSystem>("system", system);
-				postTask.Wait();
-
-				var result = postTask.Result;
-				if (result.IsSuccessStatusCode) {
-					return RedirectToAction("Index");
-				}
-			}
-
-			ModelState.AddModelError(string.Empty, "Server Error. Please contact the administrator");
-			return View(system);
-		}
-
     }
 }
