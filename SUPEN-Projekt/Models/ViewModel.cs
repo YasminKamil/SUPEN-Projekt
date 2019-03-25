@@ -19,7 +19,13 @@ namespace SUPEN_Projekt.Models {
     public class ViewModel2
     {      
         public BookingSystem bookingSystem { get; set; }
-        public IEnumerable<Service> services { get; set; }
+        public Service service { get; set; }
               
+    }
+
+    public class ViewModel3
+    {
+        public BookingSystem bookingSystem { get; set; }
+        public IEnumerable<Service> services { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿@*@model SUPEN_Projekt.Models.ViewModel2*@
-@model SUPEN_Projekt.Models.BookingSystem
+@model SUPEN_Projekt.Models.ViewModel3
 
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
@@ -14,43 +14,35 @@
         <th>
             Name
         </th>
-        <th>
-            Duration
-        </th>
-        <th>
-            Price
-        </th>
-        <th></th>
     </tr>
 
-    @foreach (var i in Model.Services)
+    @foreach (var i in Model.services)
     {
 
-        <tr>
-            <td>
-                @i.ServiceName
-            </td>
-            <td>
-                @i.Duration
-            </td>
-            <td>
-                @i.Price
-            </td>
-            <td>
-                @*@Html.ActionLink("Booking", "CreateBooking", new { id = Model.BookingSystemId }, null)*@
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @i.ServiceName
+        </td>
+        <td>
+            @*<div id="createbooking">
+            @Ajax.ActionLink("Book here", "CreateBooking", "RepoController", new { id = Model.BookingSystemId, id2 = i.ServiceId},
+        new AjaxOptions {
+            UpdateTargetId = "createbooking",
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "GET" },
+        new { @class = "btn bnt-primary"})
+
+        </div>*@
+        </td>
+        <td>@Html.ActionLink("Book Here", "CreateBooking", new { id = Model.bookingSystem.BookingSystemId, name = i.ServiceName}, null )</td>
+       
+    </tr>
+        
     }
 
 </table>
-<div id="createbooking">
-    @Ajax.ActionLink("Click here to book this service", "CreateBooking", new { id = Model.BookingSystemId },
-                         new AjaxOptions {
-                             UpdateTargetId = "createbooking",
-                             InsertionMode = InsertionMode.Replace,
-                             HttpMethod = "GET" },
-                         new { @class = "btn bnt-primary"})
-</div>
+
+
 
 
 

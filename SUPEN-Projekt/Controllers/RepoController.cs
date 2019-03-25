@@ -25,35 +25,51 @@ namespace SUPEN_Projekt.Controllers
             return View(listbookings);
         }
 
+        public ActionResult IndexService()
+        {
+            IEnumerable<Service> listservices = uw.Services.GetAll();
+            return View(listservices);
+        }
+
         public ActionResult Index2()
         {
-            IEnumerable<BookingSystem> listbookingsys = uw.BookingSystems.GetAll();
+            IEnumerable<BookingSystem> listbookingsys = uw.BookingSystems.GetAllBookingSystems();
             return View(listbookingsys);
         }
 
         [Route("BookingSystem/{id:int}")]
         public ActionResult Index3(int id)
         {
-            BookingSystem bookingSystem = uw.BookingSystems.Get(id);
-            ViewBag.Message = bookingSystem.CompanyName;
+           
+            BookingSystem bookingSystem = uw.BookingSystems.GetTheBookingSystem(id);
 
-            return View(bookingSystem);
+            ViewModel3 vm3 = new ViewModel3();
+            vm3.bookingSystem = bookingSystem;
+            vm3.services = bookingSystem.Services.ToList();
+            ViewBag.Message = vm3.bookingSystem.CompanyName;
+
+            return View(vm3);
         }
 
-        [Route("BookingSystem/{id:int}")]
-        public ActionResult CreateBooking(int id)
+        //[Route("BookingSystem/{id:int}")]
+        public ActionResult CreateBooking(int id, string name)
         {
-           BookingSystem system = uw.BookingSystems.Get(id);
-            return PartialView("CreateBooking", system);
+           BookingSystem bookingSystem = uw.BookingSystems.GetTheBookingSystem(id);
+            ViewModel2 vm2 = new ViewModel2();
+            vm2.bookingSystem = bookingSystem;
+            vm2.service = bookingSystem.Services.Single(x=> x.ServiceName == name);
+
+            
+            return PartialView("CreateBooking", vm2);//en vanlig vy, från början parameter bookingsystem
         }
 
-        [Route("BookingSystem/{id:int}")]
+        //[Route("BookingSystem/{id:int}")]
         [HttpPost, ActionName("CreateBooking")]
-        public ActionResult CreateBookingConf(int id)
+        public ActionResult CreateBookingConf(int id, string name)
         {
             if (id != 0)
             {
-                Booking booking = uw.Bookings.CreateBooking(id);
+                Booking booking = uw.Bookings.CreateBooking(id, name);
                 uw.Complete();
                 return RedirectToAction("Details2", new {id = booking.BookingId});
             }
