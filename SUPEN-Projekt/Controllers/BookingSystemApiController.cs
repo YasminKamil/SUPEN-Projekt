@@ -9,6 +9,7 @@ using System.Web.Http;
 using SUPEN_Projekt.Repositories;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Text;
 
 namespace SUPEN_Projekt.Controllers
 {
@@ -18,14 +19,25 @@ namespace SUPEN_Projekt.Controllers
         public BookingSystemApiController(IUnitOfWork unitofwork) {
             uw = unitofwork;
         }
+       
+        [HttpGet]
+        public IEnumerable<BookingSystem> Get()
+        {
 
-		[HttpGet]
-		public IEnumerable<BookingSystem> Get() {
+            IEnumerable<BookingSystem> list = uw.BookingSystems.GetAll();
+            return list;
+        }
+        [Route("api/getstr")]
+        [HttpGet]
+        public IEnumerable<BookingSystem> GetStr()
+        {
 
-			IEnumerable<BookingSystem> list = uw.BookingSystems.GetAll();
-			return list;
-		}
-
+          IEnumerable<BookingSystem> list = uw.BookingSystems.GetAll();
+                  //   var a=  JsonConvert.SerializeObject(list);
+           
+            return list;
+        }
+      
         [Route("api/post")]
 		public IHttpActionResult Post(JObject insystem) {
 			if (!ModelState.IsValid) {

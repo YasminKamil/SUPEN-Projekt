@@ -22,6 +22,7 @@ namespace SUPEN_Projekt {
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 			Database.SetInitializer(new DatabaseInitializer());
+
 		}
 
         public static void RegisterRoutes(RouteCollection routes) {
