@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
@@ -67,150 +68,18 @@ namespace SUPEN_Projekt.Controllers
         }
 
         // GET: BookingSystem/Create
-        public ActionResult Create()
-        {
+        public ActionResult Create(){
             return View();
         }
 
-        // POST: BookingSystem/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "BookingSystemId,SystemName,SystemDescription,Email,PhoneNumber,Website,CompanyName,ContactEmail,ContactPhone,Address,Latitude,Longitude,PostalCode,City")] BookingSystem bookingSystem)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-
-        //        uw.BookingSystems.Add(bookingSystem);
-        //        uw.Complete();
-
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(bookingSystem);
-        //}
-
 		[HttpPost]
-		public ActionResult Create(BookingSystem system) {
+		public async Task<ActionResult> Create(BookingSystem system) {
+           var url = "http://localhost:55341/api/post";
 
-            var request = (HttpWebRequest)WebRequest.Create("http://localhost:55341/api/post");
-
-            var postData = "SystemName=" + system.SystemName;
-            postData += "&thing2=world";
-            postData += "&thing2=world";
-            postData += "&thing2=world";
-            var data = Encoding.ASCII.GetBytes(postData);
-            var json = JsonConvert.SerializeObject(system);
-
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-
-            byte[] a = Encoding.GetEncoding("UTF-8").GetBytes(json);
-
-
-
-            using (var stream = request.GetRequestStream())
-            {
-                stream.Write(a, 0, data.Length);
-            }
-
-            var response = (HttpWebResponse)request.GetResponse();
-
-            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            //        using (var client = new HttpClient()) {
-            //client.BaseAddress = new Uri("http://localhost:55341/api/post");
-
-            //var postTask = client.PostAsJsonAsync<BookingSystem>("BookingSystem", system);
-            //postTask.Wait();
-
-            //var result = postTask.Result;
-            //if (result.IsSuccessStatusCode) {
-            //	return RedirectToAction("Index");
-            //}
-
-            //ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator");
-            return View(system);
-			//}
-		}
-
-        // GET: BookingSystem/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            BookingSystem bookingSystem = uw.BookingSystems.Get(id);
-            if (bookingSystem == null)
-            {
-                return HttpNotFound();
-            }
-            return View(bookingSystem);
-        }
-
-        // POST: BookingSystem/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BookingSystemId,SystemName,SystemDescription,Email,PhoneNumber,Website,CompanyName,ContactEmail,ContactPhone,Address,Latitude,Longitude,PostalCode,City")] BookingSystem bookingSystem)
-        {
-            if (ModelState.IsValid)
-            {
-                uw.BookingSystems.EditBookingSystem(bookingSystem);
+            if (await uw.BookingSystems.APIContact(url, system)){
                 return RedirectToAction("Index");
             }
-            return View(bookingSystem);
-        }
-
-        // GET: BookingSystem/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            BookingSystem bookingSystem = uw.BookingSystems.Get(id);
-            if (bookingSystem == null)
-            {
-                return HttpNotFound();
-            }
-            return View(bookingSystem);
-        }
-
-        // POST: BookingSystem/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            uw.BookingSystems.RemoveBookingSystem(id);
-            uw.Complete();
-            return RedirectToAction("Index");
-        }
-
-		public ActionResult Update() {
-			return View();
+            return View(system);
 		}
-
-		[HttpPost]
-		public ActionResult Update(BookingSystem system) {
-			using(var client = new HttpClient()) {
-				client.BaseAddress = new Uri("http://localhost:55341/api/BookingSystem");
-
-				var postTask = client.PostAsJsonAsync<BookingSystem>("system", system);
-				postTask.Wait();
-
-				var result = postTask.Result;
-				if (result.IsSuccessStatusCode) {
-					return RedirectToAction("Index");
-				}
-			}
-
-			ModelState.AddModelError(string.Empty, "Server Error. Please contact the administrator");
-			return View(system);
-		}
-
     }
 }

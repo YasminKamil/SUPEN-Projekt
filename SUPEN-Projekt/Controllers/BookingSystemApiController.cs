@@ -26,66 +26,11 @@ namespace SUPEN_Projekt.Controllers
 			return list;
 		}
 
-		[HttpPost]
-		public BookingSystem Create(BookingSystem system) {
-			if (!ModelState.IsValid) {
-				throw new HttpResponseException(HttpStatusCode.BadRequest);
-			}
-			uw.BookingSystems.Add(system);
-			uw.Complete();
-			return system;
-		}
-
-
-		[HttpPost]
-        [Route("api/update")]
-		public void Update(int id, BookingSystem system) {
-			if (!ModelState.IsValid) {
-				throw new HttpResponseException(HttpStatusCode.BadRequest);
-			}
-
-			BookingSystem bookingSystem = uw.BookingSystems.Get(id);
-
-			if (bookingSystem == null) {
-				throw new HttpResponseException(HttpStatusCode.NotFound);
-			}
-
-			bookingSystem.Address = system.Address;
-			bookingSystem.City = system.City;
-			bookingSystem.CompanyName = system.CompanyName;
-			bookingSystem.ContactEmail = system.ContactEmail;
-			bookingSystem.ContactPhone = system.ContactPhone;
-			bookingSystem.Email = system.Email;
-			bookingSystem.Latitude = system.Latitude;
-			bookingSystem.Longitude = system.Longitude;
-			bookingSystem.PhoneNumber = system.PhoneNumber;
-			bookingSystem.PostalCode = system.PostalCode;
-			bookingSystem.SystemDescription = system.SystemDescription;
-			bookingSystem.SystemName = system.SystemName;
-			bookingSystem.Website = system.Website;
-
-			uw.Complete();
-
-		}
-
-		[HttpDelete]
-		public void Delete(int id)
-        {
-			BookingSystem system = uw.BookingSystems.Get(id);
-
-			if(system == null)
-            {
-				throw new HttpResponseException(HttpStatusCode.NotFound);
-			}
-			uw.BookingSystems.Remove(system);
-			uw.Complete();
-		}
         [Route("api/post")]
 		public IHttpActionResult Post(JObject insystem) {
 			if (!ModelState.IsValid) {
 				return BadRequest("Invalid data");
 			}
-
 
             BookingSystem system = JsonConvert.DeserializeObject<BookingSystem>(insystem.ToString());
 
