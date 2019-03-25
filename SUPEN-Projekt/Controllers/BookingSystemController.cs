@@ -19,7 +19,7 @@ namespace SUPEN_Projekt.Controllers
 {
     public class BookingSystemController : Controller
     {
-        
+
         IUnitOfWork uw;
         public BookingSystemController(IUnitOfWork unitofwork)
         {
@@ -27,33 +27,19 @@ namespace SUPEN_Projekt.Controllers
         }
 
         // GET: BookingSystem
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-           IEnumerable<BookingSystem> listbookingsys = uw.BookingSystems.GetAllBookingSystems();
-           return View(listbookingsys);  
-        }
-
-
-        //GET: BookingSystem/RelevantBookingSystems/?BookingSystemId=1&serviceId=1
-        public ActionResult RelevantBookingSystems(int? BookingSystemId, int? serviceId) {
-            if (BookingSystemId == null || serviceId == null)
+            string list = "";
+            HttpClient client = new HttpClient();
+            var result = client.GetAsync("http://localhost:55341/api/GetStr").Result;
+            if (result.IsSuccessStatusCode)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                list = await result.Content.ReadAsStringAsync();
             }
-            if (uw.BookingSystems.Get(BookingSystemId) == null || uw.Services.Get(serviceId) == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            BookingSystem selectedBookingSystem = uw.BookingSystems.Get(BookingSystemId);
-            Service selectedService = uw.Services.Get(serviceId);
-            List<BookingSystem> bookingSystemsInRange =  uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
-            List<BookingSystem> bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
-            List<BookingSystem> orderedByDistance = uw.BookingSystems.OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
-
-            return View(orderedByDistance);
+            List<BookingSystem> objects = JsonConvert.DeserializeObject<List<BookingSystem>>(list);
+            return View(objects);
         }
-
-
+        
         public async Task<bool> APIContact(string inUrl, Object inObject)
         {
             bool works = false;
@@ -72,39 +58,46 @@ namespace SUPEN_Projekt.Controllers
 
             return works;
         }
-        [HttpPost]
-		public async Task<ActionResult> Create(BookingSystem system) {
-           var url = "http://localhost:55341/api/post";
-
-            if (await APIContact(url, system)){
-                return RedirectToAction("Index");
-            }
-            return View(system);
-
-       }
-
-
-
-        //// GET: BookingSystem/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    BookingSystem bookingSystem = uw.BookingSystems.Get(id);
-        //    if (bookingSystem == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(bookingSystem);
-        //}
 
         // GET: BookingSystem/Create
         public ActionResult Create()
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Create(BookingSystem system)
+        {
+            var url = "http://localhost:55341/api/post";
+
+            if (await APIContact(url, system))
+            {
+                return RedirectToAction("Index");
+            }
+            return View(system);
+
+        }
+
+        //GET: BookingSystem/RelevantBookingSystems/?BookingSystemId=1&serviceId=1
+        public ActionResult RelevantBookingSystems(int? BookingSystemId, int? serviceId)
+        {
+            if (BookingSystemId == null || serviceId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (uw.BookingSystems.Get(BookingSystemId) == null || uw.Services.Get(serviceId) == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BookingSystem selectedBookingSystem = uw.BookingSystems.Get(BookingSystemId);
+            Service selectedService = uw.Services.Get(serviceId);
+            List<BookingSystem> bookingSystemsInRange = uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
+            List<BookingSystem> bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
+            List<BookingSystem> orderedByDistance = uw.BookingSystems.OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
+
+            return View(orderedByDistance);
+        }
+
 
     }
 }
