@@ -16,10 +16,12 @@ namespace SUPEN_Projekt {
 			HttpConfiguration config = GlobalConfiguration.Configuration;
             GlobalConfiguration.Configure(WebApiConfig.Register);
 	//		config.Routes.MapHttpRoute(name: "DefaultApi", routeTemplate: "api/{controller}/{action}/{id}", defaults: new { id = RouteParameter.Optional });
+    
 			AreaRegistration.RegisterAllAreas();
             UnityConfig.RegisterComponents();
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
+            
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 			Database.SetInitializer(new DatabaseInitializer());
 		}

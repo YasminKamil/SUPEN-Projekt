@@ -33,6 +33,7 @@ namespace SUPEN_Projekt.Controllers
            return View(listbookingsys);  
         }
 
+
         //GET: BookingSystem/RelevantBookingSystems/?BookingSystemId=1&serviceId=1
         public ActionResult RelevantBookingSystems(int? BookingSystemId, int? serviceId) {
             if (BookingSystemId == null || serviceId == null)
@@ -52,34 +53,58 @@ namespace SUPEN_Projekt.Controllers
             return View(orderedByDistance);
         }
 
-        // GET: BookingSystem/Details/5
-        public ActionResult Details(int? id)
+
+        public async Task<bool> APIContact(string inUrl, Object inObject)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            BookingSystem bookingSystem = uw.BookingSystems.Get(id);
-            if (bookingSystem == null)
-            {
-                return HttpNotFound();
-            }
-            return View(bookingSystem);
-        }
+            bool works = false;
+            var url = inUrl;
 
-        // GET: BookingSystem/Create
-        public ActionResult Create(){
-            return View();
-        }
+            using (var client = new HttpClient())
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(inObject), Encoding.UTF8, "application/json");
+                var result = await client.PostAsync(url, content);
 
-		[HttpPost]
+                if (result.IsSuccessStatusCode)
+                {
+                    works = true;
+                }
+            }
+
+            return works;
+        }
+        [HttpPost]
 		public async Task<ActionResult> Create(BookingSystem system) {
            var url = "http://localhost:55341/api/post";
 
-            if (await uw.BookingSystems.APIContact(url, system)){
+            if (await APIContact(url, system)){
                 return RedirectToAction("Index");
             }
             return View(system);
-		}
+
+       }
+
+
+
+        //// GET: BookingSystem/Details/5
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    BookingSystem bookingSystem = uw.BookingSystems.Get(id);
+        //    if (bookingSystem == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(bookingSystem);
+        //}
+
+        // GET: BookingSystem/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
     }
 }

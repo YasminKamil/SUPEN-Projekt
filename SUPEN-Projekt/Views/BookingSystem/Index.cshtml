@@ -2,7 +2,7 @@
 
 
 
-<h2>@Html.DisplayNameFor(model => model.SystemName)</h2>
+
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -25,11 +25,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.City)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BookingSystemId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BookingSystemId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BookingSystemId })
         </td>
     </tr>
 }

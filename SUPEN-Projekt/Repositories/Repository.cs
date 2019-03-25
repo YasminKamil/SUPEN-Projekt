@@ -56,22 +56,6 @@ namespace SUPEN_Projekt.Repositories
         {
             Context.Set<TEntity>().RemoveRange(entities);
         }
-        public async Task<bool> APIContact(string inUrl,  TEntity inObject)
-        {
-            bool works = false;
-            var url = inUrl;
-
-            using (var client = new HttpClient())
-            {
-                var content = new StringContent(JsonConvert.SerializeObject(inObject), Encoding.UTF8, "application/json");
-                     var result = await client.PostAsync(url, content);
-
-                if (result.IsSuccessStatusCode){
-                    works = true;
-                }
-            }
-
-            return works;
-        }
+    
     }
 }
