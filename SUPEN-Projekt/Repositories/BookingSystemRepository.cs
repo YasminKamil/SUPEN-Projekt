@@ -16,7 +16,7 @@ namespace SUPEN_Projekt.Repositories
 
         public IEnumerable<BookingSystem> GetAllBookingSystems()
         {
-            return ApplicationDbContext.Set<BookingSystem>().ToList();
+            return ApplicationDbContext.Set<BookingSystem>().Include(x=> x.Services).ToList();
         }
 
         public void EditBookingSystem(BookingSystem bookingSystem)
@@ -25,18 +25,27 @@ namespace SUPEN_Projekt.Repositories
             ApplicationDbContext.SaveChanges();
         }
 
+        public BookingSystem GetTheBookingSystem(int id)
+        {
+            IEnumerable<BookingSystem> listAllBookingSystem = GetAllBookingSystems();
+            BookingSystem bookingSystem = listAllBookingSystem.Single(x => x.BookingSystemId == id);
+
+            return bookingSystem;
+        }
+
         public void RemoveBookingSystem(int id)
         {
             BookingSystem bookingSystem = Get(id);
             Remove(bookingSystem);    
         }
 
-        public void AddServices(BookingSystem bookingSystem)
+        public void AddService(Service service, int id)
         {
-            //Service service = new Service();
-            var service = ApplicationDbContext.Services.Single(x => x.ServiceId == 2);
-            bookingSystem.Services.Add(service);
+            Get(id).Services.Add(service);
+
+            //bookingSystem.Services.Add()    
         }
+
 
         public void AddBooking(Booking booking, int id)
         {

@@ -11,7 +11,7 @@ namespace SUPEN_Projekt.Repositories
     {
         //metoden GetAllBookings är redundant eftersom Irepository redan har en metod för get all.
         //fungerar som testmetod tills vidare.
-        Booking CreateBooking(int id);
+        Booking CreateBooking(int id, string name);
         IEnumerable<Booking> GetAllBookings();
     }
 }

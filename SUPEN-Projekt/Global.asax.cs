@@ -20,12 +20,18 @@ namespace SUPEN_Projekt {
             UnityConfig.RegisterComponents();
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
-			BundleConfig.RegisterBundles(BundleTable.Bundles);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
 			Database.SetInitializer(new DatabaseInitializer());
 		}
 
         public static void RegisterRoutes(RouteCollection routes) {
             routes.MapMvcAttributeRoutes();
+            routes.MapRoute(
+            "CreateBooking",                                              // Route name
+            "{controller}/{action}/{Id},{name}",                           // URL with parameters
+            new { controller = "Repo", action = "CreateBooking"}  // Parameter defaults
+        );
         }
+        
 	}
 }

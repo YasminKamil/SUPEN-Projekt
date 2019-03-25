@@ -18,6 +18,7 @@ namespace SUPEN_Projekt.Repositories
             return ApplicationDbContext.Set<Service>().ToList();
         }
 
+
         public ApplicationDbContext ApplicationDbContext
         {
             get { return Context as ApplicationDbContext; }

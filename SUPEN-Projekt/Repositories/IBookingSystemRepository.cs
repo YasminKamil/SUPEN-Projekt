@@ -22,8 +22,8 @@ namespace SUPEN_Projekt.Repositories
         void RemoveBookingSystem(int id);
         void AddBooking(Booking booking, int id);
         Service BookingSystemService(int id, int ServiceId);
-        void AddServices(BookingSystem bookingSystem);
-
+        void AddService(Service service, int id);
+        BookingSystem GetTheBookingSystem(int id);
     }
     
 }
