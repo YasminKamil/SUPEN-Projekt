@@ -1,0 +1,49 @@
+﻿
+
+@model SUPEN_Projekt.Models.ViewModel3
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<h2>@ViewBag.Message</h2>
+
+<table class="table">
+
+    <tr>
+        <th>
+            Name
+        </th>
+    </tr>
+
+    @foreach (var i in Model.services)
+    {
+
+        <tr>
+            <td>
+                @i.ServiceName
+            </td>
+            <td>
+                @*<div id="createbooking">
+                        @Ajax.ActionLink("Book here", "CreateBooking", "RepoController", new { id = Model.BookingSystemId, id2 = i.ServiceId},
+                    new AjaxOptions {
+                        UpdateTargetId = "createbooking",
+                        InsertionMode = InsertionMode.Replace,
+                        HttpMethod = "GET" },
+                    new { @class = "btn bnt-primary"})
+
+                    </div>*@
+            </td>
+            <td>@Html.ActionLink("Book Here", "CreateBooking", new { id = Model.bookingSystem.BookingSystemId, name = i.ServiceName }, null)</td>
+
+        </tr>
+
+    }
+
+</table>
+
+
+
+
+
+
+
+

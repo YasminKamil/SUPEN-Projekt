@@ -25,19 +25,19 @@ namespace SUPEN_Projekt.Controllers
 			return uw.Bookings.GetAll();
 		}
 
-		[HttpPost]
-		public Booking Create(Booking bookings)
+        /*[Route("api/post")]
+        public IHttpActionResult PostBooking(Booking booking)
         {
 			if (!ModelState.IsValid)
             {
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 			}
 
-			uw.Bookings.Add(bookings);
+			uw.Bookings.Add(booking);
 			uw.Complete();
 
-			return bookings;
-		}
+			return Created(booking);
+		}*/
 
 		public void Update(int id, Booking booking) {
 			if (!ModelState.IsValid) {

@@ -1,0 +1,11 @@
+﻿@model SUPEN_Projekt.Models.ViewModel2
+
+@using (Html.BeginForm(new { id = Model.bookingSystem.BookingSystemId, name = Model.service.ServiceName }))
+{
+    @Html.AntiForgeryToken()
+    <p>You are now going to book @Model.service.ServiceName</p>
+    <div class="form-actions no-color">
+        <input type="submit" value="Confirm" class="btn btn-default" />
+        @Html.ActionLink("Cancel", "ABookingSystem", new { id = Model.bookingSystem.BookingSystemId }, null)
+    </div>
+}

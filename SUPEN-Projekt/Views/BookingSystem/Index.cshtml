@@ -2,8 +2,6 @@
 
 
 
-
-
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -21,7 +19,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.RouteLink(item.CompanyName, new { controller = "ABookingSystem", action = "Index", id = item.BookingSystemId }, null)
+            @Html.RouteLink(item.CompanyName, new { controller = "Booking", action = "ABookingSystem", id = item.BookingSystemId }, null)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.City)
