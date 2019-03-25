@@ -29,7 +29,7 @@ namespace SUPEN_Projekt.Controllers
         // GET: BookingSystem
         public ActionResult Index()
         {
-           IEnumerable<BookingSystem> listbookingsys = uw.BookingSystems.GetAll();
+           IEnumerable<BookingSystem> listbookingsys = uw.BookingSystems.GetAllBookingSystems();
            return View(listbookingsys);  
         }
 
