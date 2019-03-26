@@ -69,6 +69,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Device" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -749,6 +752,7 @@
     <Content Include="Views\Booking\ABookingSystem.cshtml" />
     <Content Include="Views\Booking\CreateBooking.cshtml" />
     <Content Include="Views\Booking\Details.cshtml" />
+    <Content Include="Views\Booking\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiController\" />

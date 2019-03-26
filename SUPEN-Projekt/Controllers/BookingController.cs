@@ -1,9 +1,13 @@
-﻿using SUPEN_Projekt.Models;
+﻿using Newtonsoft.Json;
+using SUPEN_Projekt.Models;
 using SUPEN_Projekt.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,16 +20,70 @@ namespace SUPEN_Projekt.Controllers
 			uw = unitofwork;
 		}
 
-        // GET: Booking
-        public ActionResult Index()
-        {
+		//GET: Booking
+		public ActionResult Index() {
 			ViewModel myModel = new ViewModel();
 			myModel.Bookings = uw.Bookings.GetAllBookings();
-		//	myModel.Services = uw.Services.GetAllServices();
-            return View(myModel);
-        }
+			//	myModel.Services = uw.Services.GetAllServices();
+			return View(myModel);
+		}
 
-        [Route("BookingSystem/{id:int}")]
+		public async Task<ActionResult> Index2() {
+			string list = "";
+			HttpClient client = new HttpClient();
+			var result = client.GetAsync("http://localhost:55341/api/getstrbooking").Result;
+			if (result.IsSuccessStatusCode) {
+				list = await result.Content.ReadAsStringAsync();
+			}
+
+			List<Booking> objects = JsonConvert.DeserializeObject<List<Booking>>(list);
+			return View(objects);
+		}
+
+		public ActionResult Create() {
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<ActionResult> Create(Booking booking) {
+			var url = "http://localhost:55341/api/post";
+			if(await APIContact(url, booking)) {
+				return RedirectToAction("Index");
+			}
+
+			return View(booking);
+		}
+
+		public async Task<bool> APIContact(string inUrl, Object inObject) {
+			bool works = false;
+			var url = inUrl;
+			 
+			using(var client = new HttpClient()) {
+				var content = new StringContent(JsonConvert.SerializeObject(inObject), Encoding.UTF8, "application/json");
+				var result = await client.PostAsync(url, content);
+
+				if (result.IsSuccessStatusCode) {
+					works = true;
+				}
+			}
+
+			return works;
+		}
+
+		//[HttpPost]
+		//public async Task<ActionResult> Create(BookingSystem booking) {
+		//	var url = "https://localhost:55341/api/post";
+		//	using (var client = new HttpClient()) {
+		//		var content = new StringContent(JsonConvert.SerializeObject(booking), Encoding.UTF8, "application/json");
+		//		var result = await client.PostAsync(url, content);
+		//		if (result.IsSuccessStatusCode) {
+		//			return RedirectToAction("Index");
+		//		}
+		//		return View(booking);
+		//	}
+		//}
+
+		[Route("BookingSystem/{id:int}")]
         public ActionResult ABookingSystem(int id)
         {
 

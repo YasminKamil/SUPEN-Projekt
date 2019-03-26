@@ -19,6 +19,9 @@ namespace SUPEN_Projekt.Repositories
 
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
-     //   Task<bool> APIContact(string inUrl, TEntity inObject);
-    }
+		//   Task<bool> APIContact(string inUrl, TEntity inObject);
+
+		IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeExpressions);
+
+	}
 }

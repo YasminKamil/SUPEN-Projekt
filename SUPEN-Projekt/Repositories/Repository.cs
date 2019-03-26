@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 
 
+
 namespace SUPEN_Projekt.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
@@ -57,5 +58,15 @@ namespace SUPEN_Projekt.Repositories
             Context.Set<TEntity>().RemoveRange(entities);
         }
     
+		public IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeExpressions) {
+			IDbSet<TEntity> dbSet = Context.Set<TEntity>();
+
+			IQueryable<TEntity> query = null;
+			foreach(var includeExpression in includeExpressions) {
+				query = dbSet.Include(includeExpression);
+			}
+
+			return query ?? dbSet;
+		}
     }
 }

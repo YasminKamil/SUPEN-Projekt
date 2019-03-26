@@ -1,4 +1,6 @@
-﻿using SUPEN_Projekt.Models;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using SUPEN_Projekt.Models;
 using SUPEN_Projekt.Repositories;
 using System;
 using System.Collections.Generic;
@@ -22,7 +24,39 @@ namespace SUPEN_Projekt.Controllers
 		[HttpGet]
 		public IEnumerable<Booking> Get()
         {
-			return uw.Bookings.GetAll();
+			IEnumerable<Booking> list = uw.Bookings.GetAll();
+			return list;
+		}
+
+		[Route("api/getstrbooking")]
+		[HttpGet]
+		public IEnumerable<Booking> GetStr() {
+			IEnumerable<Booking> list = uw.Bookings.GetAll();
+			return list;
+		}
+
+		[Route("api/post")]
+		public IHttpActionResult Post(JObject inbooking) {
+			if (!ModelState.IsValid) {
+				return BadRequest("Invalid data");
+			}
+
+			Booking booking = JsonConvert.DeserializeObject<Booking>(inbooking.ToString());
+
+			uw.Bookings.Add(new Booking() {
+				BookingId = booking.BookingId,
+				UserName = booking.UserName,
+				UserMobile = booking.UserMobile,
+				Subject = booking.Subject,
+				StartTime = booking.StartTime,
+				EndTime = booking.EndTime,
+				Price = booking.Price,
+				ServiceId = booking.ServiceId,
+				BookingSystemId = booking.BookingSystemId
+			});
+
+			uw.Complete();
+			return Ok();
 		}
 
         /*[Route("api/post")]
