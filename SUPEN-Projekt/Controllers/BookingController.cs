@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -39,7 +40,50 @@ namespace SUPEN_Projekt.Controllers
 			return View(objects);
 		}
 
-        [Route("BookingSystem/{id:int}")]
+		public ActionResult Create() {
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<ActionResult> Create(Booking booking) {
+			var url = "http://localhost:55341/api/post";
+			if(await APIContact(url, booking)) {
+				return RedirectToAction("Index");
+			}
+
+			return View(booking);
+		}
+
+		public async Task<bool> APIContact(string inUrl, Object inObject) {
+			bool works = false;
+			var url = inUrl;
+			 
+			using(var client = new HttpClient()) {
+				var content = new StringContent(JsonConvert.SerializeObject(inObject), Encoding.UTF8, "application/json");
+				var result = await client.PostAsync(url, content);
+
+				if (result.IsSuccessStatusCode) {
+					works = true;
+				}
+			}
+
+			return works;
+		}
+
+		//[HttpPost]
+		//public async Task<ActionResult> Create(BookingSystem booking) {
+		//	var url = "https://localhost:55341/api/post";
+		//	using (var client = new HttpClient()) {
+		//		var content = new StringContent(JsonConvert.SerializeObject(booking), Encoding.UTF8, "application/json");
+		//		var result = await client.PostAsync(url, content);
+		//		if (result.IsSuccessStatusCode) {
+		//			return RedirectToAction("Index");
+		//		}
+		//		return View(booking);
+		//	}
+		//}
+
+		[Route("BookingSystem/{id:int}")]
         public ActionResult ABookingSystem(int id)
         {
 
