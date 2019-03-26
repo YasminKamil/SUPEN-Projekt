@@ -20,7 +20,20 @@ namespace SUPEN_Projekt.Repositories
 
         public IEnumerable<BookingSystem> GetAllBookingSystems()
         {
-            return ApplicationDbContext.Set<BookingSystem>().Include(x=> x.Services).ToList();
+            //var servs = ApplicationDbContext.Set<Service>().Include(x => x.Branch).ToList();
+
+            //return ApplicationDbContext.Set<BookingSystem>().Include(x=> x.Services);
+
+            return ApplicationDbContext.Set<BookingSystem>().Include(i => i.Services);
+            /*db.BookingSystems
+                            .Include(i => i.Services.Select(s => s.Branch))
+                            .Include(i => i.Lab)
+                            .Single(x => x.Id == id);*/
+
+            //Course course = db.Courses
+            //    .Include(i => i.Modules.Select(s => s. ))
+            //    .Include(i => i.Lab)
+            //    .Single(x => x.Id == id);
         }
 
         public void EditBookingSystem(BookingSystem bookingSystem)
@@ -101,29 +114,34 @@ namespace SUPEN_Projekt.Repositories
         }
 
         //löser uppgift 2 i kravspecen
-        public string GetBrachesCount(List<BookingSystem> inBookingSystems)
-        {
-            string branchesGrouped = "";
-            List<Branch> t1Branches = new List<Branch>();
-            foreach (var item in inBookingSystems)
-            {
-                List<Branch> t2Branches = new List<Branch>();
-                foreach (var y in item.Services)
-                {
-                    if (!t2Branches.Contains(y.Branch))
-                    {
-                        t2Branches.Add(y.Branch);
-                    }
-                }
-                t1Branches.AddRange(t2Branches);
-            }
+        //public string GetBrachesCount(List<BookingSystem> inBookingSystems)
+        //{
+        //    string branchesGrouped = "";
+        //    List<Branch> t1Branches = new List<Branch>();
+        //    foreach (var item in inBookingSystems)
+        //    {
+        //        List<Branch> t2Branches = new List<Branch>();
+        //        foreach (var y in item.Services)
+        //        {
+        //            if (!t2Branches.Contains(y.Branch))
+        //            {
+        //                t2Branches.Add(y.Branch);
+        //            }
+        //        }
+        //        t1Branches.AddRange(t2Branches);
+        //    }
 
-            foreach (var item in t1Branches.GroupBy(x => x.BranchName))
-            {
-                branchesGrouped += item.Key + " " + item.Count() + "\n";
-            }
-            return branchesGrouped;
-        }
+        //    foreach (var item in t1Branches.GroupBy(x => x.BranchName))
+        //    {
+        //        branchesGrouped += item.Key + " " + item.Count() + "\n";
+        //    }
+        //    return branchesGrouped;
+        //}
+
+
+
+
+
         List<BookingSystemOfInterest> DistBooking = new List<BookingSystemOfInterest>();
         //används för att koppla distans och bokninssystem, utan att behöva ändra i modellen då distansen är olika i varje sökning. 
         private class BookingSystemOfInterest
@@ -167,7 +185,7 @@ namespace SUPEN_Projekt.Repositories
 
             foreach (var aBookingSystem in inBookingSystems.Where(x => x.Services != null))
             {
-                List<Service> servi = aBookingSystem.Services.Where(x => x.Branch.BranchName.ToString() != selectedService.Branch.BranchName).ToList<Service>();
+                List<Service> servi = aBookingSystem.Services.Where(x => x.BranchName != selectedService.BranchName).ToList<Service>();
                 if (servi.Count() != 0)
                 {
                     keep.Add(aBookingSystem);
@@ -175,12 +193,12 @@ namespace SUPEN_Projekt.Repositories
             }
             return keep;
         }
-        public List<Branch> GetBranchesInBookingSystem(BookingSystem bookingSystem)
+        public List<string> GetBranchesInBookingSystem(BookingSystem bookingSystem)
         {
-            List<Branch> branchesInBookingSystem = new List<Branch>();
+            List<string> branchesInBookingSystem = new List<string>();
             foreach (var item in bookingSystem.Services)
             {
-                branchesInBookingSystem.Add(item.Branch);
+                branchesInBookingSystem.Add(item.BranchName);
                 
             }
             return branchesInBookingSystem;

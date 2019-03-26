@@ -14,7 +14,7 @@ namespace SUPEN_Projekt.Models {
 		public virtual int Duration { get; set; }
         public virtual double Price { get; set; }
         public string BranchName { get; set; }
-        public virtual Branch Branch { get; set; }
+        //public virtual Branch Branch { get; set; }
 
         public virtual ICollection<BookingSystem> BookingSystems { get; set; }
     }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 
 namespace SUPEN_Projekt.Repositories
@@ -15,7 +16,7 @@ namespace SUPEN_Projekt.Repositories
 
         public IEnumerable<Service> GetAllServices()
         {
-            return ApplicationDbContext.Set<Service>().ToList();
+            return ApplicationDbContext.Set<Service>();
         }
 
 
