@@ -31,7 +31,7 @@ namespace SUPEN_Projekt.Models {
 		public double Longitude { get; set; }
 		public string PostalCode { get; set; }
 		public string City { get; set; }
-        //public bool c { get; set; }
+        public bool c { get; set; }
 
         public virtual ICollection<Service> Services { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; }

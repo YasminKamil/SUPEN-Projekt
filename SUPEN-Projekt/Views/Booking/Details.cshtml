@@ -84,8 +84,10 @@
                 @Html.ActionLink("Exit", "ABookingSystem", new { id = Model.BookingSystemId })
             </p>
         </div>
-        <div class="col-sm-8" style="background-color:lavenderblush;">.col-sm-8
-        <h4>Services in the neighborhood</h4>
+        <div class="col-sm-8" style="background-color:lavenderblush;">
+            .col-sm-8
+            <h4>Services in the neighborhood</h4>
+            @{Html.RenderAction("RelevantBookingSystems", "BookingSystem", new { bookingSystemId = Model.BookingSystemId, serviceId = Model.ServiceId});}
         </div>
     </div>
 </div>

@@ -30,8 +30,13 @@ namespace SUPEN_Projekt {
             routes.MapRoute(
             "CreateBooking",                                              // Route name
             "{controller}/{action}/{Id},{name}",                           // URL with parameters
-            new { controller = "Repo", action = "CreateBooking"}  // Parameter defaults
-        );
+            new { controller = "Repo", action = "CreateBooking", Id = UrlParameter.Optional, name = UrlParameter.Optional });
+
+            /* routes.MapRoute(
+            "RelevantBookingSystems",                                              // Route name
+            "{controller}/{action}/{Id},{name}",                           // URL with parameters
+            new { controller = "BookingSystem", action = "RelevantBookingSystems" } // Parameter defaults
+        );*/
         }
         
 	}

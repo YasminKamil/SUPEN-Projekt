@@ -15,7 +15,7 @@ namespace SUPEN_Projekt.Models
 
 		public DbSet<BookingSystem> BookingSystems { get; set; }
         public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Branch> Branches { get; set; }
+        //public DbSet<Branch> Branches { get; set; }
         public DbSet<Service> Services { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -35,49 +35,41 @@ namespace SUPEN_Projekt.Models
         protected override void Seed(ApplicationDbContext context)
         {
             
-            var branches = new List<Branch>() {
-                new Branch {
-            BranchName = "Frisör"},
-                new Branch {
-            BranchName = "Besiktning"  },
-                new Branch {
-            BranchName = "Däck" },
-                new Branch {
-            BranchName = "Café"  },
-            }; branches.ForEach(x => context.Branches.Add(x));
-            //context.Branches.AddRange(branches);
-            context.SaveChanges();
+            //var branches = new List<Branch>() {
+            //    new Branch {
+            //BranchName = "Frisör"},
+            //    new Branch {
+            //BranchName = "Besiktning"  },
+            //    new Branch {
+            //BranchName = "Däck" },
+            //    new Branch {
+            //BranchName = "Café"  },
+            //}; branches.ForEach(x => context.Branches.Add(x));
+            ////context.Branches.AddRange(branches);
+            //context.SaveChanges();
 
             var services = new List<Service>() {
                 new Service{
                 ServiceName = "Klippning",
                 Duration = 1,
                 Price = 100,
-                BranchName = branches.Single(x => x.BranchId == 1).BranchName },
+                BranchName = "Frisör" },
                 new Service {ServiceName = "Färgning",
                 Duration = 2,
                 Price = 200,
-                BranchName = branches.Single(x => x.BranchId == 1).BranchName},
+                BranchName = "Frisör"},
                 new Service { ServiceName = "Däckbyte",
                 Duration = 3,
                 Price = 300,
-                BranchName = branches.Single(x => x.BranchId == 3).BranchName},
+                BranchName = "Däck"},
                 new Service { ServiceName = "Bullfika",
                 Duration = 4,
                 Price = 70,
-                BranchName = branches.Single(x => x.BranchId == 4).BranchName},
+                BranchName = "Café"},
             
             };
-            foreach (Service s in services)
-            {
-                var serviceInDataBase = context.Services.Where(
-                    d =>
-                         d.Branch.BranchName == s.BranchName).SingleOrDefault();
-                if (serviceInDataBase == null)
-                {
-                    context.Services.Add(s);
-                }
-            }
+            services.ForEach(x => context.Services.Add(x));
+
             context.SaveChanges();
           
             var bookingSystems = new List<BookingSystem>() {
