@@ -30,11 +30,11 @@ namespace SUPEN_Projekt.Repositories
             booking.UserMail = bookingSystem.ContactEmail;
             booking.UserMobile = bookingSystem.ContactPhone;
             booking.Subject = serv.ServiceName;
-            booking.StartTime = DateTime.Today;
-            booking.EndTime = DateTime.Today;
-            booking.Date = DateTime.Today;
-            booking.BookingSystem = bookingSystem;
-            booking.Service = serv;
+            //booking.StartTime = DateTime.Today;
+            //booking.EndTime = DateTime.Today;
+            //booking.Date = DateTime.Today;
+          //  booking.BookingSystem = bookingSystem;
+            booking.Services = new List<Service>{ serv};
 
             Add(booking);
             return booking;
