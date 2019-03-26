@@ -1,9 +1,12 @@
-﻿using SUPEN_Projekt.Models;
+﻿using Newtonsoft.Json;
+using SUPEN_Projekt.Models;
 using SUPEN_Projekt.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,14 +19,25 @@ namespace SUPEN_Projekt.Controllers
 			uw = unitofwork;
 		}
 
-        // GET: Booking
-        public ActionResult Index()
-        {
+		//GET: Booking
+		public ActionResult Index() {
 			ViewModel myModel = new ViewModel();
 			myModel.Bookings = uw.Bookings.GetAllBookings();
-		//	myModel.Services = uw.Services.GetAllServices();
-            return View(myModel);
-        }
+			//	myModel.Services = uw.Services.GetAllServices();
+			return View(myModel);
+		}
+
+		public async Task<ActionResult> Index2() {
+			string list = "";
+			HttpClient client = new HttpClient();
+			var result = client.GetAsync("http://localhost:55341/api/getstrbooking").Result;
+			if (result.IsSuccessStatusCode) {
+				list = await result.Content.ReadAsStringAsync();
+			}
+
+			List<Booking> objects = JsonConvert.DeserializeObject<List<Booking>>(list);
+			return View(objects);
+		}
 
         [Route("BookingSystem/{id:int}")]
         public ActionResult ABookingSystem(int id)

@@ -22,7 +22,15 @@ namespace SUPEN_Projekt.Controllers
 		[HttpGet]
 		public IEnumerable<Booking> Get()
         {
-			return uw.Bookings.GetAll();
+			IEnumerable<Booking> list = uw.Bookings.GetAll();
+			return list;
+		}
+
+		[Route("api/getstrbooking")]
+		[HttpGet]
+		public IEnumerable<Booking> GetStr() {
+			IEnumerable<Booking> list = uw.Bookings.GetAll();
+			return list;
 		}
 
         /*[Route("api/post")]
