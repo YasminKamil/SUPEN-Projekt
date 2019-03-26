@@ -3,81 +3,90 @@
 @{
     ViewBag.Title = "Details2";
 }
+<div class="container-fluid">
+    <h4>Booking details</h4>
+    <p>Resize the browser window to see the effect.</p>
+    <p>The columns will automatically stack on top of each other when the screen is less than 768px wide.</p>
+    <div class="row">
+        <div class="col-sm-4" style="background-color:lavender;">
+            .col-sm-4
+            <div>
+                <hr />
+                <dl class="dl-horizontal">
 
-<h2>Details2</h2>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserName)
+                    </dt>
 
-<div>
-    <h4>Booking</h4>
-    <hr />
-    <dl class="dl-horizontal">
+                    <dd>
+                        @Html.DisplayFor(model => model.UserName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserMail)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.UserMail)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserMail)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserMobile)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserMail)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.UserMobile)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserMobile)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Subject)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserMobile)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Subject)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Subject)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.StartTime)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Subject)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.StartTime)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StartTime)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EndTime)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.StartTime)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.EndTime)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.EndTime)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Date)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Price)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-
-    </dl>
+                </dl>
+            </div>
+            <p>
+                @Html.ActionLink("Exit", "ABookingSystem", new { id = Model.BookingSystemId })
+            </p>
+        </div>
+        <div class="col-sm-8" style="background-color:lavenderblush;">.col-sm-8
+        <h4>Services in the neighborhood</h4>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Exit", "ABookingSystem", new { id = Model.BookingSystemId})
-</p>
 
