@@ -22,7 +22,7 @@
             @i.ServiceName
         </td>
         <td>
-            <div id="createbooking">
+            
                 @Ajax.ActionLink("Book here", "CreateBooking", new { id = Model.bookingSystem.BookingSystemId, name = i.ServiceName},
             new AjaxOptions {
                 UpdateTargetId = "createbooking",
@@ -30,7 +30,7 @@
                 HttpMethod = "GET" },
             new { @class = "btn bnt-primary"})
 
-            </div>
+            
         </td>
         @*<td>@Html.ActionLink("Book Here", "CreateBooking", new { id = Model.bookingSystem.BookingSystemId, name = i.ServiceName }, null)</td>*@
 
@@ -39,6 +39,8 @@
     }
 
 </table>
+<div id="createbooking">
+</div>
 
 
 
