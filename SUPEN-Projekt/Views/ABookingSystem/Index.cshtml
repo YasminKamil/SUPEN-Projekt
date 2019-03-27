@@ -1,12 +1,12 @@
 ﻿@model SUPEN_Projekt.Models.BookingSystem
 
-<h2>@ViewBag.Message</h2>
 
+<div class="list-group">
+    <a href="#" class="list-group-item"><h4>@Html.DisplayFor(model => model.CompanyName)</h4></a>
+    <a href="#" class="list-group-item"><h4>@Html.DisplayFor(model => model.SystemDescription)</h4></a>
+    
+</div>
 
-<h4>@Html.DisplayFor(model => model.SystemDescription)</h4>
-<h4>@Html.DisplayFor(model => model.Address)</h4>
-<h4>@Html.DisplayFor(model => model.ContactPhone)</h4>
-<h4>@Html.DisplayFor(model => model.ContactEmail)</h4>
 
 
 

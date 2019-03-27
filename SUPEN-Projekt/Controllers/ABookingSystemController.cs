@@ -12,7 +12,6 @@ namespace SUPEN_Projekt.Controllers
     {
         UnitOfWork uw;
 
-
         public ABookingSystemController(UnitOfWork unityOfWork)
         {
             uw = unityOfWork;

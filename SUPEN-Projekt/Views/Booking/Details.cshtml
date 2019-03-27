@@ -1,94 +1,44 @@
 ﻿@model SUPEN_Projekt.Models.Booking
 
-@{
-    ViewBag.Title = "Details2";
-}
+
 <div class="container-fluid">
-    <h4>Booking details</h4>
-    <p>Resize the browser window to see the effect.</p>
-    <p>The columns will automatically stack on top of each other when the screen is less than 768px wide.</p>
+    <div class=" row"></div>
     <div class="row">
-        <div class="col-sm-4" style="background-color:lavender;">
-            .col-sm-4
+        
+        <hr />
+        <div class="col-lg-4" style="background-color:white;">
+            <h4>Booking details</h4>
             <div>
                 <hr />
-                <dl class="dl-horizontal">
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.UserName)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.UserName)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.UserMail)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.UserMail)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.UserMobile)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.UserMobile)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Subject)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Subject)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.StartTime)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.StartTime)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.EndTime)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.EndTime)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Date)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Date)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Price)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Price)
-                    </dd>
-
-                </dl>
+                <div class="list-group">
+                    <a href="#" class="list-group-item">
+                        <p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.UserName)</p>
+                        <p class="list-group-item-text">@Html.DisplayFor(model => model.UserMail)</p>
+                        <p class="list-group-item-text">@Html.DisplayFor(model => model.UserMobile)</p>
+                        <p class="list-group-item-text">@Html.DisplayFor(model => model.Subject)</p>
+                        <p class="list-group-item-text">@Html.DisplayFor(model => model.StartTime)</p>
+                        <p class="list-group-item-text">@Html.DisplayFor(model => model.EndTime)</p>
+                        <p class="list-group-item-text">@Html.DisplayFor(model => model.Date)</p>
+                    </a>
+                    <p>
+                        @Html.ActionLink("Exit", "ABookingSystem", new { id = Model.BookingSystemId })
+                    </p>
+                </div>
             </div>
-            <p>
-                @Html.ActionLink("Exit", "ABookingSystem", new { id = Model.BookingSystemId })
-            </p>
         </div>
-        <div class="col-sm-8" style="background-color:lavenderblush;">
-            .col-sm-8
+        <div class="col-lg-2" style="background-color:white">
+        </div>
+
+        <div class="col-lg-6" style="background-color:white;">
             <h4>Services in the neighborhood</h4>
-            @{Html.RenderAction("RelevantBookingSystems", "BookingSystem", new { bookingSystemId = Model.BookingSystemId, serviceId = Model.ServiceId});}
+            <div>
+                @{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
+                                      new { bookingSystemId = Model.BookingSystemId, serviceId = Model.ServiceId });}
+                </div>
+            </div>
+            <div class="row"></div>
+
         </div>
-    </div>
-</div>
+  </div>
+
 

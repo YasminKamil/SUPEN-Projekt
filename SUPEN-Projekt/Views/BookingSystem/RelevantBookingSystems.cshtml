@@ -1,44 +1,45 @@
 ﻿@model IEnumerable<SUPEN_Projekt.Models.BookingSystem>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    @foreach (var item in Model)
-    {
-        <tr>
-        <tr>
-            <b>
-                @Html.RouteLink(item.CompanyName, new { controller = "ABookingSystem", action = "Index", id = item.BookingSystemId }, null)
-                @Html.DisplayFor(modelItem => item.CompanyName)
-            </b>
-            <br />
-        </tr>
-        <tr>
-            
-            <br />
-            @Html.DisplayFor(modelItem => item.Address)
-            <br />
-            @Html.DisplayFor(modelItem => item.PostalCode) @Html.DisplayFor(modelItem => item.City)
-            <br />
-        </tr>
-        <tr>
-            @Html.DisplayNameFor(model => model.Email): @Html.DisplayFor(modelItem => item.Email)
-            <br />
-        </tr>
-        <tr>
-            @Html.DisplayNameFor(model => model.PhoneNumber): @Html.DisplayFor(modelItem => item.PhoneNumber)
+@*<table class="table">*@
 
-            <br />
-        </tr>
-        <b> @Html.DisplayNameFor(model => model.Services)</b><br />
+@foreach (var item in Model)
+{
+
+<div class="list-group" style="background-color:lavender">
+    <a href="#" class="list-group-item"><h4 class="list-group-item-heading" style="font-weight: bold"> 
+        @Html.DisplayFor(modelItem => item.CompanyName)</h4> 
+    
         @foreach (var i in item.Services)
         {
-            @i.ServiceName <br />
+            <p class="list-group-item-text" >@i.ServiceName</p>
         }
-        </tr>
-        <br />
-        <br />
-    }
+    </a>
+    <p>
+         @Html.ActionLink("For available service - click here!", "ABookingSystem", "Booking", new { id = item.BookingSystemId }, null)
+    </p>
+</div>               
+}
 
-</table>
+
+@*<tr>
+            @Html.RouteLink(item.CompanyName, new { controller = "ABookingSystem", action = "Index", id = item.BookingSystemId }, null)
+            @Html.DisplayFor(modelItem => item.CompanyName)
+    </tr>
+    <tr>
+
+        <br />
+        @Html.DisplayFor(modelItem => item.Address)
+        <br />
+        @Html.DisplayFor(modelItem => item.PostalCode) @Html.DisplayFor(modelItem => item.City)
+        <br />
+    </tr>
+    <tr>
+        @Html.DisplayNameFor(model => model.Email): @Html.DisplayFor(modelItem => item.Email)
+        <br />
+    </tr>
+    <tr>>
+        @Html.DisplayNameFor(model => model.PhoneNumber): @Html.DisplayFor(modelItem => item.PhoneNumber)
+
+        <br />
+    </tr>*@
+
