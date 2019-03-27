@@ -15,19 +15,19 @@ namespace SUPEN_Projekt.Models {
         public string UserMobile { get; set; }
 
         public string Subject { get; set; }
-  //      public DateTime StartTime { get; set; }
-  //      public DateTime EndTime { get; set; }
-		//public DateTime Date { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public DateTime Date { get; set; }
         public int Price { get; set; }
 
-        //[ForeignKey("Service")]
-        //public virtual int ServiceId { get; set; }
-        //public virtual Service Service { get; set; }
-		public virtual ICollection<Service> Services { get; set; }
+        [ForeignKey("Service")]
+        public virtual int ServiceId { get; set; }
+        public virtual Service Service { get; set; }
+        [ForeignKey("BookingSystem")]
+        public virtual int BookingSystemId { get; set; }
+        public virtual BookingSystem BookingSystem { get; set; }
 
-        //////////////[ForeignKey("BookingSystem")]
-        //////////////public virtual int BookingSystemId { get; set; }
-        //////////////public virtual BookingSystem BookingSystem { get; set; }
+     
 
     }
 }

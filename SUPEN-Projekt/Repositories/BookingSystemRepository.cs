@@ -20,20 +20,10 @@ namespace SUPEN_Projekt.Repositories
 
         public IEnumerable<BookingSystem> GetAllBookingSystems()
         {
-            //var servs = ApplicationDbContext.Set<Service>().Include(x => x.Branch).ToList();
-
-            //return ApplicationDbContext.Set<BookingSystem>().Include(x=> x.Services);
+            
 
             return ApplicationDbContext.Set<BookingSystem>().Include(i => i.Services);
-            /*db.BookingSystems
-                            .Include(i => i.Services.Select(s => s.Branch))
-                            .Include(i => i.Lab)
-                            .Single(x => x.Id == id);*/
-
-            //Course course = db.Courses
-            //    .Include(i => i.Modules.Select(s => s. ))
-            //    .Include(i => i.Lab)
-            //    .Single(x => x.Id == id);
+           
         }
 
         public void EditBookingSystem(BookingSystem bookingSystem)

@@ -36,29 +36,29 @@ namespace SUPEN_Projekt.Controllers
 		}
 
 
-		[Route("api/postbooking")]
-		public IHttpActionResult Post(JObject inbooking) {
-			if (!ModelState.IsValid) {
-				return BadRequest("Invalid data");
-			}
+		//[Route("api/postbooking")]
+		//public IHttpActionResult Post(JObject inbooking) {
+		//	if (!ModelState.IsValid) {
+		//		return BadRequest("Invalid data");
+		//	}
 
-			//Booking booking = uw.Bookings.Include(x => x.ServiceId);
+		//	//Booking booking = uw.Bookings.Include(x => x.ServiceId);
 
-			Booking booking = JsonConvert.DeserializeObject<Booking>(inbooking.ToString());
+		//	Booking booking = JsonConvert.DeserializeObject<Booking>(inbooking.ToString());
 
 
-			uw.Bookings.Add(new Booking() {
-				BookingId = booking.BookingId,
-				UserName = booking.UserName,
-				UserMobile = booking.UserMobile,
-				Subject = booking.Subject,
-				//StartTime = booking.StartTime,
-				//EndTime = booking.EndTime,
-				Price = booking.Price,
-				//ServiceId = booking.ServiceId,
-				//BookingSystemId = booking.BookingSystemId,
-				Services= new List<Service> { uw.Services.Get(1) }
-			});
+		//	uw.Bookings.Add(new Booking() {
+		//		BookingId = booking.BookingId,
+		//		UserName = booking.UserName,
+		//		UserMobile = booking.UserMobile,
+		//		Subject = booking.Subject,
+		//		//StartTime = booking.StartTime,
+		//		//EndTime = booking.EndTime,
+		//		Price = booking.Price,
+		//		//ServiceId = booking.ServiceId,
+		//		//BookingSystemId = booking.BookingSystemId,
+		//		//Services= new List<Service> { uw.Services.Get(1) }
+		//	});
 
 
 			//var bookings = uw.Bookings.Include(x => x.Services);
@@ -74,9 +74,9 @@ namespace SUPEN_Projekt.Controllers
 
 
 
-			uw.Complete();
-			return Ok();
-		}
+		//	uw.Complete();
+		//	return Ok();
+		//}
 
   //      /*[Route("api/post")]
   //      public IHttpActionResult PostBooking(Booking booking)
