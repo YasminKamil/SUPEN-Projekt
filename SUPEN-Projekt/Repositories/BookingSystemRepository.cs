@@ -20,9 +20,10 @@ namespace SUPEN_Projekt.Repositories
 
         public IEnumerable<BookingSystem> GetAllBookingSystems()
         {
-            
 
-            return ApplicationDbContext.Set<BookingSystem>().Include(i => i.Services);
+
+            return ApplicationDbContext.Set<BookingSystem>().Include(i => i.Services.Select(s=> s.Branch));
+       
            
         }
 
@@ -54,10 +55,10 @@ namespace SUPEN_Projekt.Repositories
         }
 
 
-        public void AddBooking(Booking booking, int id)
-        {
-            Get(id).Bookings.Add(booking);
-        }
+        //public void AddBooking(Booking booking, int id)
+        //{
+        //    Get(id).Bookings.Add(booking);
+        //}
 
         public Service BookingSystemService(int id, int ServiceId)
         {
@@ -175,7 +176,7 @@ namespace SUPEN_Projekt.Repositories
 
             foreach (var aBookingSystem in inBookingSystems.Where(x => x.Services != null))
             {
-                List<Service> servi = aBookingSystem.Services.Where(x => x.BranchName != selectedService.BranchName).ToList<Service>();
+                List<Service> servi = aBookingSystem.Services.Where(x => x.Branch.BranchName != selectedService.Branch.BranchName).ToList<Service>();
                 if (servi.Count() != 0)
                 {
                     keep.Add(aBookingSystem);
@@ -188,7 +189,7 @@ namespace SUPEN_Projekt.Repositories
             List<string> branchesInBookingSystem = new List<string>();
             foreach (var item in bookingSystem.Services)
             {
-                branchesInBookingSystem.Add(item.BranchName);
+                branchesInBookingSystem.Add(item.Branch.BranchName);
                 
             }
             return branchesInBookingSystem;

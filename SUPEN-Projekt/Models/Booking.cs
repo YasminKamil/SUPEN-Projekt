@@ -19,6 +19,7 @@ namespace SUPEN_Projekt.Models {
         public DateTime EndTime { get; set; }
         public DateTime Date { get; set; }
         public int Price { get; set; }
+    
 
         [ForeignKey("Service")]
         public virtual int ServiceId { get; set; }

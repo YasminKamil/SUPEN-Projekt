@@ -16,7 +16,7 @@ namespace SUPEN_Projekt.Repositories
 
         public IEnumerable<Service> GetAllServices()
         {
-            return ApplicationDbContext.Set<Service>();
+            return ApplicationDbContext.Set<Service>().Include(x=> x.Branch);
         }
 
 

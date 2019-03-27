@@ -10,7 +10,7 @@ namespace SUPEN_Projekt.Models {
         public BookingSystem()
         {
             Services = new HashSet<Service>();
-            Bookings = new HashSet<Booking>();
+            //Bookings = new HashSet<Booking>();
         }
 
 
@@ -34,7 +34,7 @@ namespace SUPEN_Projekt.Models {
         //public bool c { get; set; }
 
         public virtual ICollection<Service> Services { get; set; }
-        public virtual ICollection<Booking> Bookings { get; set; }
+        //public virtual ICollection<Booking> Bookings { get; set; }
         
 	}
 }
