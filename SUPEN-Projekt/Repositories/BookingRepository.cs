@@ -33,7 +33,7 @@ namespace SUPEN_Projekt.Repositories
             booking.StartTime = DateTime.Today;
             booking.EndTime = DateTime.Today;
             booking.Date = DateTime.Today;
-           booking.BookingSystem = bookingSystem;
+            booking.BookingSystem = bookingSystem;
             booking.Service = serv;
             
 
@@ -41,6 +41,8 @@ namespace SUPEN_Projekt.Repositories
             return booking;
             
         }
+
+
 
         public ApplicationDbContext ApplicationDbContext
         {
