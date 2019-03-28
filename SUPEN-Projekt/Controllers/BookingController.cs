@@ -109,29 +109,39 @@ namespace SUPEN_Projekt.Controllers
         [HttpPost, ActionName("CreateBooking")]
         public ActionResult CreateBookingConf(int id, string name)
         {
+            var serviceId = uw.Services.Find(x => x.ServiceName == name).Single().ServiceId;
             if (id != 0)
             {
                 Booking booking = uw.Bookings.CreateBooking(id, name);
                 uw.Complete();
-                return RedirectToAction("Details", new { id = booking.BookingId });
+                return RedirectToAction("Details", new { InBookingSystemId = id, inServiceId=serviceId, inBookingId = booking.BookingId });
             }
             return RedirectToAction("ABookingSystem", new { id });
         }
 
-        public ActionResult Details(int? id)
+        public ActionResult Details(int inBookingSystemId, int inServiceId, int inBookingId)
         {
-            if (id == null)
+
+
+            if (inBookingSystemId == null || inServiceId == null || inBookingSystemId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Booking booking = uw.Bookings.Get(id);
+            //Booking booking = uw.Bookings.Get(id);
 
-            if (booking == null)
+
+            ViewModel4 vm4 = new ViewModel4();
+
+            vm4.bookingSystem = uw.BookingSystems.GetTheBookingSystem(inBookingSystemId);
+            vm4.service = vm4.bookingSystem.Services.Single(x=>x.ServiceId == inServiceId);
+            vm4.booking = vm4.service.Bookings.Single(x=>x.BookingId == inBookingId);
+
+            if (vm4.service == null|| vm4.booking == null|| vm4.bookingSystem == null)
             {
                 return HttpNotFound();
             }
 
-            return View(booking);
+            return View(vm4);
         }
 
     }
