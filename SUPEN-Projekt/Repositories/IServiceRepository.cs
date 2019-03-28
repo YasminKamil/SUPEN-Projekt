@@ -10,5 +10,6 @@ namespace SUPEN_Projekt.Repositories
     public interface IServiceRepository : IRepository<Service>
     {
         IEnumerable<Service> GetAllServices();
+        void AddBooking(Booking booking, int id);
     }
 }

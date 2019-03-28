@@ -114,6 +114,9 @@ namespace SUPEN_Projekt.Controllers
             if (id != 0)
             {
                 Booking booking = uw.Bookings.CreateBooking(id, name);
+               
+                uw.Complete();
+                uw.Services.AddBooking(booking, serviceId);
                 uw.Complete();
                 return RedirectToAction("Details", new { InBookingSystemId = id, inServiceId=serviceId, inBookingId = booking.BookingId });
             }

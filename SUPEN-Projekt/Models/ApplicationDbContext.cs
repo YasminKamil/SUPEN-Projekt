@@ -311,7 +311,7 @@ namespace SUPEN_Projekt.Models
             {
                 var booking = new Booking();
 
-                booking.Available = false;
+                booking.Available = true;
                 if (i == 0) booking.StartTime = DateTime.Today.AddHours(i + 8);
                 else booking.StartTime = previousEndTime;
 
