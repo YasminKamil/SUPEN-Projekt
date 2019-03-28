@@ -29,8 +29,8 @@ namespace SUPEN_Projekt {
             routes.MapMvcAttributeRoutes();
             routes.MapRoute(
             "CreateBooking",                                              // Route name
-            "{controller}/{action}/{Id},{name}",                           // URL with parameters
-            new { controller = "Repo", action = "CreateBooking", Id = UrlParameter.Optional, name = UrlParameter.Optional });
+            "{controller}/{action}/{Id},{name}, {Id2}",                           // URL with parameters
+            new { controller = "Repo", action = "CreateBooking", Id = UrlParameter.Optional, name = UrlParameter.Optional, Id2 = UrlParameter.Optional });
 
             /* routes.MapRoute(
             "RelevantBookingSystems",                                              // Route name

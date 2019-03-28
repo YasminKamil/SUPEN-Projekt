@@ -1,4 +1,4 @@
-﻿@model SUPEN_Projekt.Models.Booking
+﻿@model SUPEN_Projekt.Models.ViewModel4
 
 
 <div class="container-fluid">
@@ -12,16 +12,15 @@
                 <hr />
                 <div class="list-group">
                     <a href="#" class="list-group-item">
-                        <p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.UserName)</p>
-                        <p class="list-group-item-text">@Html.DisplayFor(model => model.UserMail)</p>
-                        <p class="list-group-item-text">@Html.DisplayFor(model => model.UserMobile)</p>
-                        <p class="list-group-item-text">@Html.DisplayFor(model => model.Subject)</p>
-                        <p class="list-group-item-text">@Html.DisplayFor(model => model.StartTime)</p>
-                        <p class="list-group-item-text">@Html.DisplayFor(model => model.EndTime)</p>
-                        <p class="list-group-item-text">@Html.DisplayFor(model => model.Date)</p>
+                        <p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.UserName)</p>
+                        <p class="list-group-item-text">@Html.DisplayFor(model => model.booking.UserMail)</p>
+                        <p class="list-group-item-text">@Html.DisplayFor(model => model.booking.UserMobile)</p>
+                        <p class="list-group-item-text">@Html.DisplayFor(model => model.booking.StartTime)</p>
+                        <p class="list-group-item-text">@Html.DisplayFor(model => model.booking.EndTime)</p>
+                        <p class="list-group-item-text">@Html.DisplayFor(model => model.booking.Date)</p>
                     </a>
                     <p>
-                        @Html.ActionLink("Exit", "ABookingSystem", new { id = Model.BookingSystemId })
+                        @Html.ActionLink("Exit", "ABookingSystem", new { id = Model.bookingSystem.BookingSystemId })
                     </p>
                 </div>
             </div>
@@ -33,7 +32,7 @@
             <h4>Services in the neighborhood</h4>
             <div>
                 @{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
-                                      new { bookingSystemId = Model.BookingSystemId, serviceId = Model.ServiceId });}
+                                      new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId });}
                 </div>
             </div>
             <div class="row"></div>
