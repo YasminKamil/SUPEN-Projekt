@@ -29,12 +29,12 @@ namespace SUPEN_Projekt.Repositories
             booking.UserName = bookingSystem.CompanyName;
             booking.UserMail = bookingSystem.ContactEmail;
             booking.UserMobile = bookingSystem.ContactPhone;
-            booking.Subject = serv.ServiceName;
+          
             booking.StartTime = DateTime.Today;
             booking.EndTime = DateTime.Today;
             booking.Date = DateTime.Today;
-            booking.BookingSystem = bookingSystem;
-            booking.Service = serv;
+         //   booking.BookingSystem = bookingSystem;
+         //   booking.Service = serv;
             
 
             Add(booking);

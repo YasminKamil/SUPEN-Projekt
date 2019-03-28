@@ -48,25 +48,61 @@ namespace SUPEN_Projekt.Models
             //context.Branches.AddRange(branches);
             context.SaveChanges();
 
+
+
+
+
+
+
+
+
+            getBookings(15, 200, 6);
+
+
+
+
+
+
+
+
+
+
+
+            List<Booking> b1 = getBookings(45, 100, 8);
+            context.Bookings.AddRange(b1);
+
+            List<Booking> b2 = getBookings(25, 200, 5);
+            context.Bookings.AddRange(b2);
+
+            List<Booking> b3 = getBookings(45, 300, 9);
+            context.Bookings.AddRange(b3);
+
+            List<Booking> b4 = getBookings(60, 70, 12);
+            context.Bookings.AddRange(b4);
+            context.SaveChanges();
+
             var services = new List<Service>() {
                 new Service{
                 ServiceName = "Klippning",
-                Duration = 1,
+                Duration = 45,
                 Price = 100,
-                Branch= context.Branches.Single(x=> x.BranchName =="Frisör" )},
+                Branch= context.Branches.Single(x=> x.BranchName =="Frisör" ),
+                Bookings = b1},
                 new Service {ServiceName = "Färgning",
-                Duration = 2,
+                Duration = 25,
                 Price = 200,
-                Branch = context.Branches.Single(x=> x.BranchName =="Frisör" )},
+                Branch = context.Branches.Single(x=> x.BranchName =="Frisör" ),
+                Bookings = b2},
                 new Service { ServiceName = "Däckbyte",
-                Duration = 3,
+                Duration = 45,
                 Price = 300,
-                Branch = context.Branches.Single(x=> x.BranchName =="Däck" )},
+                Branch = context.Branches.Single(x=> x.BranchName =="Däck" ),
+                Bookings = b3},
                 new Service { ServiceName = "Bullfika",
-                Duration = 4,
+                Duration = 60,
                 Price = 70,
-                Branch = context.Branches.Single(x=> x.BranchName =="Café" )},
-            
+                Branch = context.Branches.Single(x=> x.BranchName =="Café" ),
+                Bookings = b4},            
             };
             services.ForEach(x => context.Services.Add(x));
 
@@ -258,7 +294,39 @@ namespace SUPEN_Projekt.Models
                 bs.Services.Add(context.Services.Single(i => i.ServiceName == sName));
         }
 
+
+        //returnerar en lista på bokningar under öppentiden, skapar så många som möjligt under öppettiden.
+        public List<Booking> getBookings(int duration, int price, int totalHoursOpen)
+        {
+            var bookings = new List<Booking>();
+
+
+            decimal inHours = Convert.ToDecimal(duration)/Convert.ToDecimal(60) ;
+
+            int iterations = (int)Math.Floor(Convert.ToDecimal(totalHoursOpen) / Convert.ToDecimal(inHours));
+
+            DateTime previousEndTime = new DateTime();
+            int i;
+            for (i = 0; i < iterations; ++i)
+            {
+                var booking = new Booking();
+
+                booking.Available = false;
+                if (i == 0) booking.StartTime = DateTime.Today.AddHours(i + 8);
+                else booking.StartTime = previousEndTime;
+
+                previousEndTime = booking.EndTime = booking.StartTime.AddMinutes(duration);
+                
+                booking.Date = DateTime.Today;
+                booking.Price =price;
+
+                bookings.Add(booking);
+            }
+            return bookings;
+        }
     }
+
+
 
 
 
