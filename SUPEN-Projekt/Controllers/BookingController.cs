@@ -148,9 +148,14 @@ namespace SUPEN_Projekt.Controllers
             return View(vm4);
         }
 
-		public ActionResult Update(int id) {
-			Booking booking = uw.Bookings.Get(id);
-			return View(booking);
+		public ActionResult Update(int inBookingSystemId, int inServiceId, int inBookingId) {
+			
+
+			ViewModel4 vm4 = new ViewModel4();
+			vm4.booking= uw.Bookings.Get(inBookingId);
+			vm4.bookingSystem = uw.BookingSystems.Get(inBookingSystemId);
+			vm4.service = uw.Services.Get(inServiceId);
+			return View(vm4);
 		}
 
 		[HttpPost, ActionName("UpdateBooking")]
