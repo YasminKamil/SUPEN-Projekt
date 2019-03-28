@@ -3,6 +3,7 @@ using SUPEN_Projekt.Models;
 using SUPEN_Projekt.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -133,6 +134,24 @@ namespace SUPEN_Projekt.Controllers
 
             return View(booking);
         }
+
+		public ActionResult Update(int id) {
+			Booking booking = uw.Bookings.Get(id);
+			return View(booking);
+		}
+
+		[HttpPost, ActionName("UpdateBooking")]
+		public ActionResult Update(Booking booking) {
+			try {
+				if (ModelState.IsValid) {
+					uw.Bookings.UpdateBooking(booking);
+					return RedirectToAction("Index");
+				}
+			} catch (DataException) {
+				ModelState.AddModelError("", "Unable to save changes, please try again");
+			}
+			return View(booking);
+		}
 
     }
 }

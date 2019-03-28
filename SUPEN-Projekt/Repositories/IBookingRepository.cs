@@ -13,5 +13,8 @@ namespace SUPEN_Projekt.Repositories
         //fungerar som testmetod tills vidare.
         Booking CreateBooking(int id, string name);
         IEnumerable<Booking> GetAllBookings();
-    }
+
+		void UpdateBooking(Booking booking);
+
+	}
 }

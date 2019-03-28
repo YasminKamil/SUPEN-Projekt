@@ -42,7 +42,34 @@ namespace SUPEN_Projekt.Repositories
             
         }
 
+		//public void Update(Booking booking) {
+		//	Context.Entry(booking).State = EntityState.Modified;
+		//}
 
+		public void UpdateBooking(Booking booking) {
+			//IEnumerable<BookingSystem> allBookingSystems = ApplicationDbContext.Set<BookingSystem>().Include(s => s.Services).ToList();
+			//BookingSystem bookingSystem = allBookingSystems.Single(x => x.BookingSystemId == id);
+
+			//Service service = bookingSystem.Services.Single(s => s.ServiceName == name);
+
+			var existingBookings = ApplicationDbContext.Bookings.Where(b => b.BookingId == booking.BookingId).FirstOrDefault<Booking>();
+			if(existingBookings != null) {
+				existingBookings.UserName = booking.UserName;
+				existingBookings.UserMail = booking.UserMail;
+				existingBookings.UserMobile = booking.UserMobile;
+				existingBookings.Subject = booking.Service.ServiceName;
+				existingBookings.StartTime = booking.StartTime;
+				existingBookings.EndTime = booking.EndTime;
+				existingBookings.Date = booking.Date;
+				existingBookings.Price = booking.Price;
+				//existingBookings.BookingSystem = bookingSystem;
+				//existingBookings.Service = service;
+			}
+
+			//Update(booking);
+			//return booking;
+
+		}
 
         public ApplicationDbContext ApplicationDbContext
         {
