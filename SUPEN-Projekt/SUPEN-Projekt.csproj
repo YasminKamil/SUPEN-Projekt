@@ -212,6 +212,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\BookingSystemApiController.cs" />
     <Compile Include="Controllers\RepoController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -753,6 +754,8 @@
     <Content Include="Views\Booking\CreateBooking.cshtml" />
     <Content Include="Views\Booking\Details.cshtml" />
     <Content Include="Views\Booking\Create.cshtml" />
+    <Content Include="Views\Service\Index.cshtml" />
+    <Content Include="Views\Booking\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiController\" />

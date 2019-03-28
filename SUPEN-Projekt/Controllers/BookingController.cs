@@ -124,10 +124,10 @@ namespace SUPEN_Projekt.Controllers
         {
 
 
-            if (inBookingSystemId == null || inServiceId == null || inBookingSystemId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (inBookingSystemId == null || inServiceId == null || inBookingSystemId == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             //Booking booking = uw.Bookings.Get(id);
 
 

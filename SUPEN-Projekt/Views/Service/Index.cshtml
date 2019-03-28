@@ -1,0 +1,24 @@
+﻿@model SUPEN_Projekt.Models.Service
+
+
+<h2>Välj vilken tid du vill boka @Model.ServiceName</h2>
+<div class="row">
+    <div class="col-sm-6">
+        
+        <table>
+
+            @foreach (var item in Model.Bookings)
+
+            {
+                <tr> 
+                     <th  rowspan =" 2" colspan =" 4"class="container">
+                         @Html.ActionLink(item.StartTime + " " + item.EndTime, "Uppdate", "Booking", new {id = item.BookingId}, new {@class="btn btn-success" })
+                        @*<button type="button" class="btn btn-success">@item.StartTime + " " + @item.EndTime </button>*@
+                    </th>
+                </tr>
+            }
+        </table>
+    </div>
+   
+    <div class="col-sm-6"></div>
+</div>
