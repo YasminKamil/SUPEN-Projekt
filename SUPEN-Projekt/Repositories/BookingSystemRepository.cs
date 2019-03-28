@@ -22,7 +22,8 @@ namespace SUPEN_Projekt.Repositories
         {
 
 
-            return ApplicationDbContext.Set<BookingSystem>().Include(i => i.Services.Select(s=> s.Branch));
+            return ApplicationDbContext.Set<BookingSystem>().Include(i => i.Services.Select(s=> s.Branch))
+                .Include(i => i.Services.Select(b=> b.Bookings));
        
            
         }
