@@ -148,44 +148,43 @@ namespace SUPEN_Projekt.Controllers
             return View(vm4);
         }
 
-        //      [HttpGet]
-        //public ActionResult Update(int inBookingSystemId, int inServiceId, int inBookingId) {
-
-
-        //	ViewModel4 vm4 = new ViewModel4();
-        //	vm4.booking= uw.Bookings.Get(inBookingId);
-        //	vm4.bookingSystem = uw.BookingSystems.Get(inBookingSystemId);
-        //	vm4.service = uw.Services.Get(inServiceId);
-        //	return View(vm4);
-        //}
-
         [HttpGet]
-        public ActionResult Update(int inBookingId)
+        public ActionResult Update(int inBookingSystemId, int inServiceId, int inBookingId)
         {
-            Booking booking = uw.Bookings.Get(inBookingId);
-            return View(booking);
+
+            ViewModel4 vm4 = new ViewModel4();
+
+            vm4.bookingSystem = uw.BookingSystems.GetTheBookingSystem(inBookingSystemId);
+            vm4.service = vm4.bookingSystem.Services.Single(x => x.ServiceId == inServiceId);
+            vm4.booking = vm4.service.Bookings.Single(x=> x.BookingId == inBookingId);
+
+            return View(vm4);
         }
 
+        //[HttpGet]
+        //public ActionResult Update(int inBookingId)
+        //{
+        //    Booking booking = uw.Bookings.Get(inBookingId);
+        //    return View(booking);
+        //}
+
         [HttpPost, ActionName("Update")]
-		public ActionResult UpdateBooking(Booking booking) {
+		public ActionResult UpdateBooking(/*int inBookingSystemId, int inServiceId, int inBookingId,*/ ViewModel4 model) {
 			try {
-				if (ModelState.IsValid) {
-					uw.Bookings.UpdateBooking(booking);
+                
+                
+                if (ModelState.IsValid) {
+                    Booking booking = model.booking;
+                    uw.Bookings.UpdateBooking(booking);
                     uw.Complete();
-                    return RedirectToAction("Index", "BookingSystem");
-                    //ViewModel4 vm4 = new ViewModel4();
-                    //vm4.booking = 
-             
-                    //var serviceid = uw.Services.
-                    //    Find(x => x.Bookings.FirstOrDefault<Booking>() == booking).FirstOrDefault<Service>().ServiceId;
-                    //var systemid = uw.BookingSystems.
-                    //    Find(x => x.Services.FirstOrDefault<Service>().ServiceId == serviceid).FirstOrDefault<BookingSystem>().BookingSystemId;
-                    //return RedirectToAction("details", new { inbookingsystemid = systemid, inserviceid = serviceid, inbookingid = booking.BookingId });
+                    //return RedirectToAction("Index", "BookingSystem");
+                    return RedirectToAction("Details", 
+                        new { inBookingSystemId = model.bookingSystem.BookingSystemId, inServiceId = model.service.ServiceId, inBookingId = model.booking.BookingId });
                 }
 			} catch (DataException) {
 				ModelState.AddModelError("", "Unable to save changes, please try again");
 			}
-			return View(booking);
+			return View(model.booking);
 		}
 
     }

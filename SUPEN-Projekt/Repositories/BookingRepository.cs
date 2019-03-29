@@ -15,7 +15,7 @@ namespace SUPEN_Projekt.Repositories
 
         public IEnumerable<Booking> GetAllBookings()
         {
-            return GetAll();
+            return GetAll(); ;
         }
 
         public Booking CreateBooking(int id, string name)
