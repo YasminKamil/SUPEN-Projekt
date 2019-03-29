@@ -31,6 +31,7 @@ namespace SUPEN_Projekt.Models {
 
     public class ViewModel4
     {
+        public int Id { get; set; }
         public BookingSystem bookingSystem { get; set; }
         public Service service { get; set; }
         public Booking booking { get; set; }

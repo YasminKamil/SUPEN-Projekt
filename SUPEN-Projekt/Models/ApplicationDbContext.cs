@@ -28,6 +28,7 @@ namespace SUPEN_Projekt.Models
                   .ToTable("BookingSystemService"));
         }
 
+        public System.Data.Entity.DbSet<SUPEN_Projekt.Models.ViewModel4> ViewModel4 { get; set; }
     }
     public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
     {

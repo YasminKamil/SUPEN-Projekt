@@ -169,22 +169,22 @@ namespace SUPEN_Projekt.Controllers
         //}
 
         [HttpPost, ActionName("Update")]
-		public ActionResult UpdateBooking(/*int inBookingSystemId, int inServiceId, int inBookingId,*/ ViewModel4 model) {
+		public ActionResult UpdateBooking(int inBookingSystemId, int inServiceId, int inBookingId, Booking booking) {
 			try {
                 
                 
                 if (ModelState.IsValid) {
-                    Booking booking = model.booking;
+                    
                     uw.Bookings.UpdateBooking(booking);
                     uw.Complete();
                     //return RedirectToAction("Index", "BookingSystem");
                     return RedirectToAction("Details", 
-                        new { inBookingSystemId = model.bookingSystem.BookingSystemId, inServiceId = model.service.ServiceId, inBookingId = model.booking.BookingId });
+                        new { inBookingSystemId, inServiceId, inBookingId });
                 }
 			} catch (DataException) {
 				ModelState.AddModelError("", "Unable to save changes, please try again");
 			}
-			return View(model.booking);
+			return View(booking);
 		}
 
     }
