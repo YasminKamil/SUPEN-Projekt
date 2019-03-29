@@ -1,21 +1,25 @@
-﻿@model IEnumerable<SUPEN_Projekt.Models.BookingSystem>
+﻿@model SUPEN_Projekt.Models.ViewModel5
 
 @*<table class="table">*@
 
-@foreach (var item in Model)
+@foreach (var item in Model.BookingsWithDistance)
 {
-
 <div class="list-group" style="background-color:lavender">
-    <a href="#" class="list-group-item"><h4 class="list-group-item-heading" style="font-weight: bold"> 
-        @Html.DisplayFor(modelItem => item.CompanyName)</h4> 
     
-        @foreach (var i in item.Services)
+
+    <p href="#" class="list-group-item">
+        <h4 class="list-group-item-heading" style="font-weight: bold">
+            @Html.DisplayFor(modelItem => item.BookingSystem.CompanyName)
+        </h4>
+        <p class="list-group-item-text">@item.Distance Meter</p>
+        @foreach (var i in item.BookingSystem.Services)
         {
-            <p class="list-group-item-text" >@i.ServiceName</p>
+            <p class="list-group-item-text">@i.ServiceName</p>
         }
-    </a>
+    </p>
     <p>
-         @Html.ActionLink("For available service - click here!", "ABookingSystem", "Booking", new { id = item.BookingSystemId }, null)
+
+        @Html.ActionLink("For available service - click here!", "ABookingSystem", "Booking", new { id = item.BookingSystem.BookingSystemId }, null)
     </p>
 </div>               
 }
