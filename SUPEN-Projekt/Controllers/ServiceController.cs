@@ -1,4 +1,5 @@
-﻿using SUPEN_Projekt.Repositories;
+﻿using SUPEN_Projekt.Models;
+using SUPEN_Projekt.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,15 @@ namespace SUPEN_Projekt.Controllers
         }
 
         // GET: Service
-        public ActionResult Index(int id)
+        public ActionResult Index(int id, int systemId)
         {
-            //returnerar en specifik service
-            //return View(GetTheService(id));
-            return View();
+            ViewModel2 vm2 = new ViewModel2();
+
+            vm2.bookingSystem = uw.BookingSystems.GetTheBookingSystem(systemId);
+            vm2.service = vm2.bookingSystem.Services.Single(x => x.ServiceId == id);//uw.Services.GetTheService(id);
+           
+            return View(vm2);
+           
         }
 
         // GET: Service/Details/5

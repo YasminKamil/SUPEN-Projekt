@@ -23,23 +23,23 @@
 		</td>
 		<td>
 
-			@Ajax.ActionLink("Book here", "CreateBooking", new { id = Model.bookingSystem.BookingSystemId, name = i.ServiceName},
+			@*@Ajax.ActionLink("Book here", "CreateBooking", new { id = Model.bookingSystem.BookingSystemId, name = i.ServiceName},
 		new AjaxOptions {
 			UpdateTargetId = "createbooking",
 			InsertionMode = InsertionMode.Replace,
 			HttpMethod = "GET" },
-		new { @class = "btn bnt-primary"})
+		new { @class = "btn bnt-primary"})*@
 
 
 		</td>
-		@*<td>@Html.ActionLink("Book Here", "CreateBooking", new { id = Model.bookingSystem.BookingSystemId, name = i.ServiceName }, null)</td>*@
+		<td>@Html.ActionLink("Book here", "Index", "Service", new { id = i.ServiceId, systemId = Model.bookingSystem.BookingSystemId}, null)</td>
 
-			@foreach (var y in i.Bookings) {
+			@*@foreach (var y in i.Bookings) {
 
 
 		<td>
 			<button type="button" class="btn btn-secondary btn-sm">@y.StartTime.ToString("HH:mm")<b>-</b>@y.EndTime.ToString("HH:mm")</button>
-		</td>
+		</td>*@
 				
 
 

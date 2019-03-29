@@ -756,6 +756,7 @@
     <Content Include="Views\Booking\Create.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
     <Content Include="Views\Booking\Update.cshtml" />
+    <Content Include="Views\Service\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiController\" />

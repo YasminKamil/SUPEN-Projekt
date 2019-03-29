@@ -53,13 +53,14 @@ namespace SUPEN_Projekt.Repositories
 				existingBookings.UserName = booking.UserName;
 				existingBookings.UserMail = booking.UserMail;
 				existingBookings.UserMobile = booking.UserMobile;
-		//		existingBookings.Subject = booking.Service.ServiceName;
+				existingBookings.Available = false;
 				existingBookings.StartTime = booking.StartTime;
 				existingBookings.EndTime = booking.EndTime;
 				existingBookings.Date = booking.Date;
 				existingBookings.Price = booking.Price;
-				//existingBookings.BookingSystem = bookingSystem;
-				//existingBookings.Service = service;
+                //existingBookings.BookingSystem = bookingSystem;
+                //existingBookings.Service = service;
+                
 			}
 
 		}

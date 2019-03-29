@@ -19,6 +19,13 @@ namespace SUPEN_Projekt.Repositories
             return ApplicationDbContext.Set<Service>().Include(x=> x.Branch).Include(b => b.Bookings);
         }
 
+        public Service GetTheService(int id)    
+        {
+            IEnumerable<Service> services = GetAllServices();
+            Service service = services.Single(x=> x.ServiceId == id);
+            return service;
+        }
+
         public void AddBooking(Booking booking, int id)
         {
            

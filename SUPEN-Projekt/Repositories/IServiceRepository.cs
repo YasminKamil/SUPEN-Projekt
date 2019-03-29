@@ -11,5 +11,6 @@ namespace SUPEN_Projekt.Repositories
     {
         IEnumerable<Service> GetAllServices();
         void AddBooking(Booking booking, int id);
+        Service GetTheService(int id);
     }
 }
