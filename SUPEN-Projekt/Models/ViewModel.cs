@@ -36,5 +36,15 @@ namespace SUPEN_Projekt.Models {
         public Booking booking { get; set; }
     }
 
+    public class ViewModel5
+    {
+        public IEnumerable<BookingSystemAndDistance> BookingsWithDistance { get; set; }
+        public BookingSystem SelectedBookingSystem { get; set; }
+    }
+    public class BookingSystemAndDistance
+    {
+        public BookingSystem BookingSystem { get; set; }
+        public double Distance { get; set; }
+    }
 
 }
