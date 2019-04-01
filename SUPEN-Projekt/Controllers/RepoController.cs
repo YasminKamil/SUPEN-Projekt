@@ -63,18 +63,18 @@ namespace SUPEN_Projekt.Controllers
             return PartialView("CreateBooking", vm2);//en vanlig vy, från början parameter bookingsystem
         }
 
-        //[Route("BookingSystem/{id:int}")]
-        [HttpPost, ActionName("CreateBooking")]
-        public ActionResult CreateBookingConf(int id, string name)
-        {
-            if (id != 0)
-            {
-                Booking booking = uw.Bookings.CreateBooking(id, name);
-                uw.Complete();
-                return RedirectToAction("Details2", new {id = booking.BookingId});
-            }
-                return RedirectToAction("Index3", new { id});
-        }
+        ////[Route("BookingSystem/{id:int}")]
+        //[HttpPost, ActionName("CreateBooking")]
+        //public ActionResult CreateBookingConf(int id, string name)
+        //{
+        //    if (id != 0)
+        //    {
+        //        Booking booking = uw.Bookings.CreateBooking(id, name);
+        //        uw.Complete();
+        //        return RedirectToAction("Details2", new {id = booking.BookingId});
+        //    }
+        //        return RedirectToAction("Index3", new { id});
+        //}
 
         public ActionResult Details(int? id)
         {
