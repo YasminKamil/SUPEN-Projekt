@@ -5,7 +5,49 @@
     @Html.AntiForgeryToken()
     <p>You are now going to book @Model.service.ServiceName</p>
     <div class="form-actions no-color">
-        <input type="submit" value="Confirm" class="btn btn-default" />
+        <table>
+
+            @{
+                int open = 8;
+                decimal inHours = Convert.ToDecimal(Model.service.Duration) / Convert.ToDecimal(60);
+                int iterations = (int)Math.Floor(Convert.ToDecimal(open) / Convert.ToDecimal(inHours));
+                DateTime startTime = DateTime.Today;
+                startTime = startTime.AddHours(8);
+
+                List
+          <DateTime>
+              dt = new List<DateTime>
+                  ();
+
+                for (int i = 0; i < iterations; i++)
+                {
+                    DateTime endTime = startTime;
+                    endTime = endTime.AddMinutes(Model.service.Duration);
+
+                    @: <tr>
+                        @:<th rowspan=" 2" colspan=" 4" class="container">
+
+
+                            if (Model.service.Bookings.Any(x => x.StartTime == startTime && x.Available == false))
+                            {
+
+                            @*@:<button type="button" class="btn btn-danger">@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm") </button>*@
+                            @:<input type="submit" value=" @startTime.ToString("HH:mm") - @endTime.ToString("HH:mm") "class="input bg-danger" @*@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm")*@ />
+
+                            }
+                            else
+                            {
+                            @*@:<button type="button" class="btn btn-info" background ="color:blue">@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm") </button>*@
+                            @:<input type="submit" value= "@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm")" class="input bg-info" />
+                            }
+                            @:</th>
+                        @:</tr>
+
+                    startTime = endTime;
+                }
+
+            }
+        </table>
         @Html.ActionLink("Cancel", "ABookingSystem", new { id = Model.bookingSystem.BookingSystemId }, null)
     </div>
 }

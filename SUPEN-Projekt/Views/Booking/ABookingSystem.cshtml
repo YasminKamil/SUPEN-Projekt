@@ -17,39 +17,39 @@
     @foreach (var i in Model.services)
     {
 
-	<tr>
-		<td>
-			@i.ServiceName
-		</td>
-		<td>
+    <tr>
+        <td>
+            @i.ServiceName
+        </td>
+        <td>
 
-			@*@Ajax.ActionLink("Book here", "CreateBooking", new { id = Model.bookingSystem.BookingSystemId, name = i.ServiceName},
-		new AjaxOptions {
-			UpdateTargetId = "createbooking",
-			InsertionMode = InsertionMode.Replace,
-			HttpMethod = "GET" },
-		new { @class = "btn bnt-primary"})*@
-
-
-		</td>
-		<td>@Html.ActionLink("Book here", "Index", "Service", new { id = i.ServiceId, systemId = Model.bookingSystem.BookingSystemId}, null)</td>
-
-			@*@foreach (var y in i.Bookings) {
+            @*@Ajax.ActionLink("Book here", "CreateBooking", new { id = Model.bookingSystem.BookingSystemId, name = i.ServiceName},
+            new AjaxOptions {
+                UpdateTargetId = "createbooking",
+                InsertionMode = InsertionMode.Replace,
+                HttpMethod = "GET" },
+            new { @class = "btn bnt-primary"})*@
 
 
-		<td>
-			<button type="button" class="btn btn-secondary btn-sm">@y.StartTime.ToString("HH:mm")<b>-</b>@y.EndTime.ToString("HH:mm")</button>
-		</td>*@
-				
+        </td>
+        <td>@Html.ActionLink("Book here", "Index", "Service", new { id = i.ServiceId, systemId = Model.bookingSystem.BookingSystemId }, null)</td>
+        <td>@Html.ActionLink("Book this", "CreateBooking", new { id = Model.bookingSystem.BookingSystemId, name = i.ServiceName }, null)</td>
+        @*@foreach (var y in i.Bookings) {
 
 
-
-			}
+        <td>
+            <button type="button" class="btn btn-secondary btn-sm">@y.StartTime.ToString("HH:mm")<b>-</b>@y.EndTime.ToString("HH:mm")</button>
+        </td>*@
 
 
 
 
-	</tr>
+        }
+
+
+
+
+    </tr>
 
     }
 

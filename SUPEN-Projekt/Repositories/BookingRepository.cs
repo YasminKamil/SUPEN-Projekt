@@ -29,7 +29,7 @@ namespace SUPEN_Projekt.Repositories
             booking.UserName = bookingSystem.CompanyName;
             booking.UserMail = bookingSystem.ContactEmail;
             booking.UserMobile = bookingSystem.ContactPhone;
-          
+            booking.Available = false;
             booking.StartTime = DateTime.Today;
             booking.EndTime = DateTime.Today;
             booking.Date = DateTime.Today;
