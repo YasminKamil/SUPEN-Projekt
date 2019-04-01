@@ -1,53 +1,73 @@
-﻿@model SUPEN_Projekt.Models.ViewModel2
+﻿@model SUPEN_Projekt.Models.ViewModel4
 
-@using (Html.BeginForm(new { id = Model.bookingSystem.BookingSystemId, name = Model.service.ServiceName }))
-{
-    @Html.AntiForgeryToken()
+@*@using (Html.BeginForm(new { id = Model.bookingSystem.BookingSystemId, name = Model.service.ServiceName })) {*@
+
+	@using (Html.BeginForm()) { 
+	@Html.AntiForgeryToken()
     <p>You are now going to book @Model.service.ServiceName</p>
-    <div class="form-actions no-color">
-        <table>
+	<div class="form-horizontal">
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.Id)
+		@Html.HiddenFor(model => Model.booking.BookingId)
+		@Html.HiddenFor(model => Model.booking.Available)
+		@Html.HiddenFor(model => Model.booking.StartTime)
+		@Html.HiddenFor(model => Model.booking.EndTime)
+		@Html.HiddenFor(model => Model.booking.Date)
+		@*@Html.HiddenFor(model => Model.booking.Price)
+		@Html.HiddenFor(model => Model.bookingSystem)
+		@Html.HiddenFor(model => Model.service)*@
 
-            @{
-                int open = 8;
-                decimal inHours = Convert.ToDecimal(Model.service.Duration) / Convert.ToDecimal(60);
-                int iterations = (int)Math.Floor(Convert.ToDecimal(open) / Convert.ToDecimal(inHours));
-                DateTime startTime = DateTime.Today;
-                startTime = startTime.AddHours(8);
+		@Html.HiddenFor(model => Model.bookingSystem)
+		@Html.HiddenFor(model => Model.service)
+	</div>
 
-                List
-          <DateTime>
-              dt = new List<DateTime>
-                  ();
+	<div class="form-group">
+		@Html.LabelFor(model => model.booking.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.EditorFor(model => model.booking.UserName, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(model => Model.booking.UserName, "", new { @class = "text-danger" })
+		</div>
+	</div>
 
-                for (int i = 0; i < iterations; i++)
-                {
-                    DateTime endTime = startTime;
-                    endTime = endTime.AddMinutes(Model.service.Duration);
+    <div class="row">
+		<div class="col-sm-6">
+			<table>
+				@{ 
+					int open = 8;
+					decimal inHours = Convert.ToDecimal(Model.service.Duration) / Convert.ToDecimal(60);
+					int iterations = (int)Math.Floor(Convert.ToDecimal(open) / Convert.ToDecimal(inHours));
+					DateTime startTime = DateTime.Today;
+					startTime = startTime.AddHours(8);
 
-                    @: <tr>
-                        @:<th rowspan=" 2" colspan=" 4" class="container">
+					List<DateTime> dt = new List<DateTime>();
 
+					for (int i = 0; i < iterations; i++) {
+						DateTime endTime = startTime;
+						endTime = endTime.AddMinutes(Model.service.Duration);
+						@:<tr>
+				@:<th rowspan="2" colspan="4" class="container">
+					if (Model.service.Bookings.Any(x => x.StartTime == startTime && x.Available == false)) {
+					@:<input type="submit" value="@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm")" class="input btn-danger" />
+						} else {
+							@:<input type="submit" value="@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm")" class="input btn-info" />
+						}
+				@:</th>		
+				@:</tr>
 
-                            if (Model.service.Bookings.Any(x => x.StartTime == startTime && x.Available == false))
-                            {
+						startTime = endTime;
+					}
+				}
+			</table>
+		</div>
+	</div>
 
-                            @*@:<button type="button" class="btn btn-danger">@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm") </button>*@
-                            @:<input type="submit" value=" @startTime.ToString("HH:mm") - @endTime.ToString("HH:mm") "class="input bg-danger" @*@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm")*@ />
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-10">
+			<input type="submit" value="Save" class="btn btn-default" />
+		</div>
+	</div>
 
-                            }
-                            else
-                            {
-                            @*@:<button type="button" class="btn btn-info" background ="color:blue">@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm") </button>*@
-                            @:<input type="submit" value= "@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm")" class="input bg-info" />
-                            }
-                            @:</th>
-                        @:</tr>
-
-                    startTime = endTime;
-                }
-
-            }
-        </table>
-        @Html.ActionLink("Cancel", "ABookingSystem", new { id = Model.bookingSystem.BookingSystemId }, null)
-    </div>
 }
+
+
+	
