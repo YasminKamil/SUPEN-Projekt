@@ -161,13 +161,6 @@ namespace SUPEN_Projekt.Controllers
             return View(vm4);
         }
 
-        //[HttpGet]
-        //public ActionResult Update(int inBookingId)
-        //{
-        //    Booking booking = uw.Bookings.Get(inBookingId);
-        //    return View(booking);
-        //}
-
         [HttpPost, ActionName("Update")]
 		public ActionResult UpdateBooking(int inBookingSystemId, int inServiceId, int inBookingId, Booking booking) {
 			try {
@@ -187,5 +180,20 @@ namespace SUPEN_Projekt.Controllers
 			return View(booking);
 		}
 
+		public async Task<bool> APIContact (string inUrl, Object inObject) {
+			bool works = false;
+			var url = inUrl;
+
+			using(var client = new HttpClient()) {
+				var content = new StringContent(JsonConvert.SerializeObject(inObject), Encoding.UTF8, "application/json");
+				var result = await client.PostAsync(url, content);
+
+				if (result.IsSuccessStatusCode) {
+					works = true;
+				}
+
+				return works;
+			}
+		}
     }
 }
