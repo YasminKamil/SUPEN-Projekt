@@ -755,7 +755,6 @@
     <Content Include="Views\Booking\Details.cshtml" />
     <Content Include="Views\Booking\Create.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
-    <Content Include="Views\Booking\Update2.cshtml" />
     <Content Include="Views\Service\Edit.cshtml" />
     <Content Include="Views\Booking\Update.cshtml" />
   </ItemGroup>

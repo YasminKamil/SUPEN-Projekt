@@ -18,13 +18,13 @@ namespace SUPEN_Projekt.Models {
       //public string Subject { get; set; }
 
         [Required, DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd MM yyyy HH:mm:ss}")]
+        [DisplayFormat(DataFormatString = "{0:HH:mm}")]
         public DateTime StartTime { get; set; }
         [Required, DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd MM yyyy HH:mm:ss}")]
+        [DisplayFormat(DataFormatString = "{0:HH:mm}")]
         public DateTime EndTime { get; set; }
         [Required, DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd MM yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime Date { get; set; }
         public int Price { get; set; }
         
