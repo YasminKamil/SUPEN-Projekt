@@ -99,21 +99,21 @@ namespace SUPEN_Projekt.Controllers
         public ActionResult CreateBooking(int id, string name)
         {
             BookingSystem bookingSystem = uw.BookingSystems.GetTheBookingSystem(id);
-            ViewModel2 vm2 = new ViewModel2();
-            vm2.bookingSystem = bookingSystem;
-            vm2.service = bookingSystem.Services.Single(x => x.ServiceName == name);
+            ViewModel4 vm4 = new ViewModel4();
+            vm4.bookingSystem = bookingSystem;
+            vm4.service = bookingSystem.Services.Single(x => x.ServiceName == name);
 
 
-            return PartialView("CreateBooking", vm2);//en vanlig vy, från början parameter bookingsystem
+           return View("CreateBooking", vm4);//en vanlig vy, från början parameter bookingsystem
         }
 
         [HttpPost, ActionName("CreateBooking")]
-        public ActionResult CreateBookingConf(int id, string name)
+        public ActionResult CreateBookingConf(int id, string name, Booking inBooking)
         {
             var serviceId = uw.Services.Find(x => x.ServiceName == name).Single().ServiceId;
             if (id != 0)
             {
-                Booking booking = uw.Bookings.CreateBooking(id, name);
+                Booking booking = uw.Bookings.CreateBooking(inBooking);
                 uw.Services.AddBooking(booking, serviceId);
                 uw.Complete();
                 return RedirectToAction("Details", new { InBookingSystemId = id, inServiceId=serviceId, inBookingId = booking.BookingId });

@@ -18,24 +18,24 @@ namespace SUPEN_Projekt.Repositories
             return GetAll(); ;
         }
 
-        public Booking CreateBooking(int id, string name)
+        public Booking CreateBooking(Booking inBooking)
         {
-            IEnumerable<BookingSystem> allBookingSystems = ApplicationDbContext.Set<BookingSystem>().Include(x => x.Services).ToList();
-            BookingSystem bookingSystem = allBookingSystems.Single(x=> x.BookingSystemId == id);
+            //IEnumerable<BookingSystem> allBookingSystems = ApplicationDbContext.Set<BookingSystem>().Include(x => x.Services).ToList();
+            //BookingSystem bookingSystem = allBookingSystems.Single(x=> x.BookingSystemId == systemId);
             
-            Service serv = bookingSystem.Services.Single(x => x.ServiceName == name);
+            //Service serv = bookingSystem.Services.Single(x => x.ServiceName == name);
             
             Booking booking = new Booking();
-            booking.UserName = bookingSystem.CompanyName;
-            booking.UserMail = bookingSystem.ContactEmail;
-            booking.UserMobile = bookingSystem.ContactPhone;
-            booking.Available = false;
-            booking.StartTime = DateTime.Today;
-            booking.EndTime = DateTime.Today;
-            booking.Date = DateTime.Today;
-         //   booking.BookingSystem = bookingSystem;
-         //   booking.Service = serv;
+            booking.UserName = inBooking.UserName;
+            booking.UserMail = inBooking.UserMail;
+            booking.UserMobile = inBooking.UserMobile;
+            booking.Available = true;
+            booking.StartTime = inBooking.StartTime;
+            booking.EndTime = inBooking.EndTime;
+            booking.Date = inBooking.Date;
+            booking.Price = inBooking.Price;
             
+
 
             Add(booking);
             return booking;
