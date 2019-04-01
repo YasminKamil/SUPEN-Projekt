@@ -20,7 +20,7 @@ namespace SUPEN_Projekt.Models {
     {      
         public BookingSystem bookingSystem { get; set; }
         public Service service { get; set; }
-		public Booking booking { get; set; }
+		
               
     }
 

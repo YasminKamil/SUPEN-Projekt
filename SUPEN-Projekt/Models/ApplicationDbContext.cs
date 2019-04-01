@@ -51,22 +51,7 @@ namespace SUPEN_Projekt.Models
 
 
 
-
-
-
-
-
-
             getBookings(15, 200, 6);
-
-
-
-
-
-
-
-
-
 
 
             List<Booking> b1 = getBookings(45, 100, 8);

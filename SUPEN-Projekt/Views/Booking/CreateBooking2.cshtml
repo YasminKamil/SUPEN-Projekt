@@ -1,14 +1,10 @@
 ﻿@model SUPEN_Projekt.Models.ViewModel4
 
-@{
-	ViewBag.Title = "CreateBooking";
-}
+@*@using (Html.BeginForm(new { id = Model.bookingSystem.BookingSystemId, name = Model.service.ServiceName })) {*@
 
-@using (Html.BeginForm()) {
-
+	@using (Html.BeginForm()) { 
 	@Html.AntiForgeryToken()
-
-	<p>You are now going to book @Model.service.ServiceName</p>
+    <p>You are now going to book @Model.service.ServiceName</p>
 	<div class="form-horizontal">
 		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 		@Html.HiddenFor(model => model.Id)
@@ -18,8 +14,8 @@
 		@Html.HiddenFor(model => Model.booking.EndTime)
 		@Html.HiddenFor(model => Model.booking.Date)
 		@*@Html.HiddenFor(model => Model.booking.Price)
-			@Html.HiddenFor(model => Model.bookingSystem)
-			@Html.HiddenFor(model => Model.service)*@
+		@Html.HiddenFor(model => Model.bookingSystem)
+		@Html.HiddenFor(model => Model.service)*@
 
 		@Html.HiddenFor(model => Model.bookingSystem)
 		@Html.HiddenFor(model => Model.service)
@@ -34,7 +30,7 @@
 		</div>
 
 
-		@*<table class=" col-md-10">*@
+		<table>
 			@{
 				int open = 8;
 				decimal inHours = Convert.ToDecimal(Model.service.Duration) / Convert.ToDecimal(60);
@@ -47,58 +43,36 @@
 				for (int i = 0; i < iterations; i++) {
 					DateTime endTime = startTime;
 					endTime = endTime.AddMinutes(Model.service.Duration);
-					@*@:<tr>
-						@:<th rowspan="2" colspan="4" class="container">*@
-
+					@:<tr>
+						@:<th rowspan="2" colspan="4" class="container">
 
 					if (Model.service.Bookings.Any(x => x.StartTime == startTime && x.Available == false)) {
-							 
-							<div class="form-group">
-							  	<div class="col-md-offset-2 col-md-10">
-							  		<input type="submit" value="@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm")" class="input btn-danger" />
-								</div>
-								</div>
-					}
-					else {
 							  <div class="form-group">
-							  	<div class="col-md-offset-2 col-md-10">
-							  		<input type="submit" value="@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm")" class="input btn-info" />
-							  	</div>
-								  </div>
-					 }
-							  	@*@:</th>
-					@:</tr>*@
+							  	<input type="submit" value="@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm")" class="input btn-danger" />
+							  </div>	
+						} 
+						
+						else {
+							  <div class="form-group">
+							  	<input type="submit" value="@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm")" class="input btn-info" />
+							  </div>
+							}
+						@:</th>
+					@:</tr>
+
 
 					startTime = endTime;
 				}
 			}
-		@*</table>*@
+		</table>
 	</div>
-				}
-
-	@*<h2>CreateBooking</h2>
-
-
-		@using (Html.BeginForm())
-		{
-			@Html.AntiForgeryToken()
-
-			<div class="form-horizontal">
-				<h4>ViewModel4</h4>
-				<hr />
-				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-10">
-						<input type="submit" value="Create" class="btn btn-default" />
-					</div>
-				</div>
-			</div>
-		}
-
-		<div>
-			@Html.ActionLink("Back to List", "Index")
+	@*<div class="form-group">
+		<div class="col-md-offset-2 col-md-10">
+			<input type="submit" value="Save" class="btn btn-default" />
 		</div>
+	</div>*@
 
-		@section Scripts {
-			@Scripts.Render("~/bundles/jqueryval")
-		}*@
+}
+
+
+	

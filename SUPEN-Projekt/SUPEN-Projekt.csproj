@@ -751,12 +751,13 @@
     <Content Include="Views\Repo\CreateBooking.cshtml" />
     <Content Include="Views\Repo\IndexService.cshtml" />
     <Content Include="Views\Booking\ABookingSystem.cshtml" />
-    <Content Include="Views\Booking\CreateBooking.cshtml" />
+    <Content Include="Views\Booking\CreateBooking2.cshtml" />
     <Content Include="Views\Booking\Details.cshtml" />
     <Content Include="Views\Booking\Create.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
     <Content Include="Views\Service\Edit.cshtml" />
     <Content Include="Views\Booking\Update.cshtml" />
+    <Content Include="Views\Booking\CreateBooking.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiController\" />

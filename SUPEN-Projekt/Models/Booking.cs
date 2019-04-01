@@ -15,17 +15,17 @@ namespace SUPEN_Projekt.Models {
         public string UserMobile { get; set; }
         public bool Available { get; set; }
 
-      //public string Subject { get; set; }
+		//public string Subject { get; set; }
 
+		[Required, DataType(DataType.DateTime)]
+		[DisplayFormat(DataFormatString = "{0:HH:mm}")]
+		public DateTime StartTime { get; set; } = DateTime.Now;
         [Required, DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:HH:mm}")]
-        public DateTime StartTime { get; set; }
-        [Required, DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:HH:mm}")]
-        public DateTime EndTime { get; set; }
-        [Required, DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
-        public DateTime Date { get; set; }
+        public DateTime EndTime { get; set; } = DateTime.Now;
+		[Required, DataType(DataType.DateTime)]
+		[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+		public DateTime Date { get; set; } = DateTime.Now;
         public int Price { get; set; }
         
 
