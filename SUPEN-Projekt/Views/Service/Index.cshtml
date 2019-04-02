@@ -1,58 +1,10 @@
-﻿@*@model SUPEN_Projekt.Models.ViewModel2
+﻿@model SUPEN_Projekt.Models.ViewModel2
 
 
 <h2>Välj vilken tid du vill boka @Model.service.ServiceName</h2>
 <div class="row">
     <div class="col-sm-6">
         <table>
-
-
-
-            @{
-                int open = 8;
-                decimal inHours = Convert.ToDecimal(Model.service.Duration) / Convert.ToDecimal(60);
-                int iterations = (int)Math.Floor(Convert.ToDecimal(open) / Convert.ToDecimal(inHours));
-                DateTime startTime = DateTime.Today;
-                startTime = startTime.AddHours(8);
-
-                List<DateTime> dt = new List<DateTime>();
-
-                //foreach (var item in Model.service.Bookings)
-                //{
-                //    var start = item.StartTime;
-                //    dt.Add(start);
-                //}
-
-
-                for (int i = 0; i < iterations; i++)
-                {
-                    DateTime endTime = startTime;
-                    endTime = endTime.AddMinutes(Model.service.Duration);
-
-                       @:<tr>
-                       @: <th rowspan=" 2" colspan=" 4" class="container">
-
-                            if (Model.service.Bookings.Any(x => x.StartTime == startTime && x.Available == false))
-                            {
-                           
-                            @:<button type="button" class="btn btn-danger">@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm") </button>
-                           
-                    }
-                    else
-                    {
-                        @:<button type="button" class="btn btn-info">@startTime.ToString("HH:mm") - @endTime.ToString("HH:mm") </button>
-                         }
-                    @:</th>
-                    @:</tr>
-
-                    startTime = endTime;
-
-                    }
-
-                    }
-                </table>
-        <table>
-            -------------------------------------------------------------------------------------------
             @foreach (var item in Model.service.Bookings)
 
             {
@@ -78,4 +30,4 @@
     </div>
 
     <div class="col-sm-6"></div>
-</div>*@
+</div>
