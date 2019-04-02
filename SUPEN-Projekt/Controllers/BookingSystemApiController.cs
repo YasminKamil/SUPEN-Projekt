@@ -10,6 +10,7 @@ using SUPEN_Projekt.Repositories;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
+using System.Data.Entity;
 
 namespace SUPEN_Projekt.Controllers
 {
@@ -37,7 +38,29 @@ namespace SUPEN_Projekt.Controllers
            
             return list;
         }
-      
+        [Route("api/getRelevant/{bookingSystemId:int}/{serviceId:int}")]
+        [HttpGet]
+        public IEnumerable<BookingSystem> GetRelevant(int bookingSystemId, int serviceId)
+        {
+            try
+            {
+
+            BookingSystem selectedBookingSystem = uw.BookingSystems.GetTheBookingSystem(bookingSystemId);
+            Service selectedService = uw.Services.Get(serviceId);
+            List<BookingSystem> bookingSystemsInRange = uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
+            List<BookingSystem> bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
+            List<BookingSystem> orderedByDistance = uw.BookingSystems.OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
+
+                
+            return orderedByDistance;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         [Route("api/post")]
 		public IHttpActionResult Post(JObject insystem) {
 			if (!ModelState.IsValid) {

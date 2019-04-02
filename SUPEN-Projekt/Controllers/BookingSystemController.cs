@@ -79,38 +79,45 @@ namespace SUPEN_Projekt.Controllers
         }
 
         //GET: BookingSystem/RelevantBookingSystems/?BookingSystemId=1&serviceId=1
-        public ActionResult RelevantBookingSystems(int bookingSystemId, int serviceId)//(int? BookingSystemId, int? serviceId)
+        public async Task<ActionResult> RelevantBookingSystems(int bookingSystemId, int serviceId)
         {
-
-            //var serviceId = uw.Services.Find(x => x.ServiceName == serviceID).Single().ServiceId;
-
-           if(uw.BookingSystems.Get(bookingSystemId) == null || uw.Services.Get(serviceId) == null)//uw.Services.Get(serviceId) == null
+           if(uw.BookingSystems.Get(bookingSystemId) == null || uw.Services.Get(serviceId) == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            //BookingSystem selectedBookingSystem = uw.BookingSystems.GetTheBookingSystem(bookingSystemId);
+            //Service selectedService = uw.Services.Get(serviceId);
+            //List<BookingSystem> bookingSystemsInRange = uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
+            //List<BookingSystem> bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
+            //List<BookingSystem> orderedByDistance = uw.BookingSystems.OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
             BookingSystem selectedBookingSystem = uw.BookingSystems.GetTheBookingSystem(bookingSystemId);
-            Service selectedService = uw.Services.Get(serviceId);
-            List<BookingSystem> bookingSystemsInRange = uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
-            List<BookingSystem> bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
-            List<BookingSystem> orderedByDistance = uw.BookingSystems.OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
-
+            List<BookingSystem> orderedByDistance = new List<BookingSystem>();
             
+                        string list = "";
+            HttpClient client = new HttpClient();
+            string url = "http://localhost:55341/api/getRelevant/"+bookingSystemId.ToString()+"/"+ serviceId.ToString() ;
+            var result = client.GetAsync(url).Result;
+            if (result.IsSuccessStatusCode)
+            {
+                list = await result.Content.ReadAsStringAsync();
+            }
+            orderedByDistance = JsonConvert.DeserializeObject<List<BookingSystem>>(list);
+            
+
+
 ViewModel5 vm5 = new ViewModel5();
-            List<BookingSystemAndDistance> listOfBs = new List<BookingSystemAndDistance>();
+            List<BookingSystemAndDistance> listOfBookingSystems = new List<BookingSystemAndDistance>();
             foreach (var item in orderedByDistance)
             {
-                
-
         BookingSystemAndDistance pairedObject = new BookingSystemAndDistance();
-
                 pairedObject.BookingSystem = item;
                 pairedObject.Distance =Math.Round(uw.BookingSystems.GetDistanceTo(uw.BookingSystems.GetTheBookingSystem(bookingSystemId), item));
-                listOfBs.Add(pairedObject);
+                listOfBookingSystems.Add(pairedObject);
             
             }
             vm5.SelectedBookingSystem = selectedBookingSystem;
-            vm5.BookingsWithDistance = listOfBs;
+            vm5.BookingsWithDistance = listOfBookingSystems;
             return PartialView(vm5);
         }
  
