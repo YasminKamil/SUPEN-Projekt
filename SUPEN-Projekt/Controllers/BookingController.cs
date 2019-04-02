@@ -160,18 +160,15 @@ namespace SUPEN_Projekt.Controllers
         }
 
         [HttpPost, ActionName("Update")]
-		public ActionResult UpdateBooking(int inBookingSystemId, int inServiceId, int inBookingId, Booking booking) {
+		public async Task<ActionResult> UpdateBooking(int inBookingSystemId, int inServiceId, int inBookingId, Booking booking) {
 			try {
-                
-                
-                if (ModelState.IsValid) {
-                    
-                    uw.Bookings.UpdateBooking(booking);
-                    uw.Complete();
-                    //return RedirectToAction("Index", "BookingSystem");
-                    return RedirectToAction("Details", 
-                        new { inBookingSystemId, inServiceId, inBookingId });
-                }
+				var url = "http://localhost:55341/api/postBooking";
+
+				if(await APIContact(url, booking)) {
+					return RedirectToAction("Details",
+						new { inBookingSystemId, inServiceId, inBookingId });
+				}
+
 			} catch (DataException) {
 				ModelState.AddModelError("", "Unable to save changes, please try again");
 			}

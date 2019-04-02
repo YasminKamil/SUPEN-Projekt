@@ -35,94 +35,19 @@ namespace SUPEN_Projekt.Controllers
 			return list;
 		}
 
+		[Route("api/postBooking")]
+		public IHttpActionResult Post(JObject inBookning) {
+			if (!ModelState.IsValid) {
+				return BadRequest("Invalid data");
+			}
 
-		//[Route("api/postbooking")]
-		//public IHttpActionResult Post(JObject inbooking) {
-		//	if (!ModelState.IsValid) {
-		//		return BadRequest("Invalid data");
-		//	}
+			Booking booking = JsonConvert.DeserializeObject<Booking>(inBookning.ToString());
 
-		//	//Booking booking = uw.Bookings.Include(x => x.ServiceId);
+			uw.Bookings.UpdateBooking(booking);
+			uw.Complete();
 
-		//	Booking booking = JsonConvert.DeserializeObject<Booking>(inbooking.ToString());
-
-
-		//	uw.Bookings.Add(new Booking() {
-		//		BookingId = booking.BookingId,
-		//		UserName = booking.UserName,
-		//		UserMobile = booking.UserMobile,
-		//		Subject = booking.Subject,
-		//		//StartTime = booking.StartTime,
-		//		//EndTime = booking.EndTime,
-		//		Price = booking.Price,
-		//		//ServiceId = booking.ServiceId,
-		//		//BookingSystemId = booking.BookingSystemId,
-		//		//Services= new List<Service> { uw.Services.Get(1) }
-		//	});
-
-
-			//var bookings = uw.Bookings.Include(x => x.Services);
-			//foreach (Booking b in bookings) {
-			//	foreach(Service s in b.Services) {
-			//		uw.Bookings.Add(b.BookingId + b.UserName + b.UserMobile + b.Subject + b.StartTime + b.EndTime + b.Price + s.ServiceId + s.ServiceName);
-			//	}
-			//}
-
-
-
-
-
-
-
-		//	uw.Complete();
-		//	return Ok();
-		//}
-
-  //      /*[Route("api/post")]
-  //      public IHttpActionResult PostBooking(Booking booking)
-  //      {
-		//	if (!ModelState.IsValid)
-  //          {
-		//		throw new HttpResponseException(HttpStatusCode.BadRequest);
-		//	}
-
-		//	uw.Bookings.Add(booking);
-		//	uw.Complete();
-
-		//	return Created(booking);
-		//}*/
-
-		//public void Update(int id, Booking booking) {
-		//	if (!ModelState.IsValid) {
-		//		throw new HttpResponseException(HttpStatusCode.BadRequest);
-		//	}
-
-		//	Booking bookings = uw.Bookings.Get(id);
-		//	if(bookings == null) {
-		//		throw new HttpResponseException(HttpStatusCode.NotFound);
-		//	}
-
-		//	bookings.UserName = booking.UserName;
-		//	bookings.UserMobile = booking.UserMobile;
-		//	bookings.UserMail = booking.UserMail;
-		//	bookings.Subject = booking.Subject;
-		//	bookings.StartTime = booking.StartTime;
-		//	bookings.EndTime = booking.EndTime;
-		//	bookings.Price = booking.Price;
-
-		//	uw.Complete();
-		//}
-
-		//[HttpDelete]
-		//public void Delete(int id) {
-  //          Booking booking = uw.Bookings.Get(id);// SingleOrDefault(x => x.BookingId == id);
-		//	if(booking == null) {
-		//		throw new HttpResponseException(HttpStatusCode.NotFound);
-		//	}
-
-		//	uw.Bookings.Remove(booking);
-		//	uw.Complete();
-		//}
+			return Ok();
 		}
-    }
+	}
+}
 

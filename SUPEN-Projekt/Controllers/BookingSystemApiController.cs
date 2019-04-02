@@ -24,18 +24,17 @@ namespace SUPEN_Projekt.Controllers
         [HttpGet]
         public IEnumerable<BookingSystem> Get()
         {
-
-            IEnumerable<BookingSystem> list = uw.BookingSystems.GetAll();
+            IEnumerable<BookingSystem> list = uw.BookingSystems.GetAllBookingSystems();
             return list;
         }
+
         [Route("api/getstr")]
         [HttpGet]
         public IEnumerable<BookingSystem> GetStr()
         {
 
           IEnumerable<BookingSystem> list = uw.BookingSystems.GetAll();
-                  //   var a=  JsonConvert.SerializeObject(list);
-           
+                  //   var a=  JsonConvert.SerializeObject(list); 
             return list;
         }
         [Route("api/getRelevant/{bookingSystemId:int}/{serviceId:int}")]
