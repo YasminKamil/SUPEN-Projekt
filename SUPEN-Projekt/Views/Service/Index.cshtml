@@ -16,7 +16,7 @@
 
                             @Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "Update", "Booking",
                                     new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inBookingId = item.BookingId }, new { @class = "btn btn-success" })
-                            <button type="button" class="btn btn-success">@item.StartTime + " " + @item.EndTime </button>
+                            @*<button type="button" class="btn btn-success">@item.StartTime.ToString("HH:mm") + "" + @item.EndTime.ToString("HH:mm") </button>*@
 
                         }
                         else
