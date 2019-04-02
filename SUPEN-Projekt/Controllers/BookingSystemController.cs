@@ -81,20 +81,26 @@ namespace SUPEN_Projekt.Controllers
         //GET: BookingSystem/RelevantBookingSystems/?BookingSystemId=1&serviceId=1
         public async Task<ActionResult> RelevantBookingSystems(int bookingSystemId, int serviceId)
         {
-           if(uw.BookingSystems.Get(bookingSystemId) == null || uw.Services.Get(serviceId) == null)
+
+            string list1 = "";
+            HttpClient client1 = new HttpClient();
+            string url1 = "http://localhost:55341/api/GetBookingSystem/" + bookingSystemId.ToString();
+            var result1 = client1.GetAsync(url1).Result;
+            if (result1.IsSuccessStatusCode)
+            {
+                list1 = await result1.Content.ReadAsStringAsync();
+            }
+            BookingSystem selectedBookingSystem = JsonConvert.DeserializeObject<BookingSystem>(list1);
+
+
+            if (selectedBookingSystem == null || !selectedBookingSystem.Services.Any(x=> x.ServiceId == serviceId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            //BookingSystem selectedBookingSystem = uw.BookingSystems.GetTheBookingSystem(bookingSystemId);
-            //Service selectedService = uw.Services.Get(serviceId);
-            //List<BookingSystem> bookingSystemsInRange = uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
-            //List<BookingSystem> bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
-            //List<BookingSystem> orderedByDistance = uw.BookingSystems.OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
-            BookingSystem selectedBookingSystem = uw.BookingSystems.GetTheBookingSystem(bookingSystemId);
-            List<BookingSystem> orderedByDistance = new List<BookingSystem>();
+       List<BookingSystem> orderedByDistance = new List<BookingSystem>();
             
-                        string list = "";
+            string list = "";
             HttpClient client = new HttpClient();
             string url = "http://localhost:55341/api/getRelevant/"+bookingSystemId.ToString()+"/"+ serviceId.ToString() ;
             var result = client.GetAsync(url).Result;
@@ -104,13 +110,11 @@ namespace SUPEN_Projekt.Controllers
             }
             orderedByDistance = JsonConvert.DeserializeObject<List<BookingSystem>>(list);
             
-
-
-ViewModel5 vm5 = new ViewModel5();
+            ViewModel5 vm5 = new ViewModel5();
             List<BookingSystemAndDistance> listOfBookingSystems = new List<BookingSystemAndDistance>();
             foreach (var item in orderedByDistance)
             {
-        BookingSystemAndDistance pairedObject = new BookingSystemAndDistance();
+                BookingSystemAndDistance pairedObject = new BookingSystemAndDistance();
                 pairedObject.BookingSystem = item;
                 pairedObject.Distance =Math.Round(uw.BookingSystems.GetDistanceTo(uw.BookingSystems.GetTheBookingSystem(bookingSystemId), item));
                 listOfBookingSystems.Add(pairedObject);

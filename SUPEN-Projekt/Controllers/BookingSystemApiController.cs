@@ -43,19 +43,30 @@ namespace SUPEN_Projekt.Controllers
         {
             try
             {
-
             BookingSystem selectedBookingSystem = uw.BookingSystems.GetTheBookingSystem(bookingSystemId);
             Service selectedService = uw.Services.Get(serviceId);
             List<BookingSystem> bookingSystemsInRange = uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
             List<BookingSystem> bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
             List<BookingSystem> orderedByDistance = uw.BookingSystems.OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
-
-                
             return orderedByDistance;
             }
             catch (Exception)
             {
 
+                throw;
+            }
+        }
+        [Route("api/GetBookingSystem/{bookingSystemId:int}")]
+        [HttpGet]
+        public BookingSystem GetBookingSystem(int bookingSystemId)
+        {
+            try
+            {
+              BookingSystem selectedBookingSystem = uw.BookingSystems.GetTheBookingSystem(bookingSystemId);
+              return selectedBookingSystem;
+            }
+            catch (Exception)
+            {
                 throw;
             }
         }
