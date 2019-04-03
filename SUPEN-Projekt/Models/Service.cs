@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,6 +17,7 @@ namespace SUPEN_Projekt.Models {
         //public string BranchName { get; set; }
         public virtual Branch Branch { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<BookingSystem> BookingSystems { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; }
     }
