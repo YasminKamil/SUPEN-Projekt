@@ -28,11 +28,29 @@ namespace SUPEN_Projekt.Controllers
 			return list;
 		}
 
-		[Route("api/getstrbooking")]
-		[HttpGet]
-		public IEnumerable<Booking> GetStr() {
+        [Route("api/GetSystem/{id}")]
+        [HttpGet]
+        public IHttpActionResult GetSystem(int id)
+        {
+
+            BookingSystem bookingSystem = uw.BookingSystems.GetTheBookingSystem(id);
+            //Service service = uw.BookingSystems.Get(Servic);
+			//IEnumerable<Service> listServcies = uw.BookingSystems.GetAllServices(id);
+            //
+
+            //ViewModel3 vm3 = new ViewModel3();
+            //vm3.bookingSystem = bookingSystem;
+            //vm3.services = listServices;
+            //ViewBag.Message = vm3.bookingSystem.CompanyName;
+
+            return Ok(bookingSystem);
+        }
+
+        [Route("api/getstrbooking")]
+		[HttpGet]//utan IHttpActionResult får man inte med bra statuskoder
+		public IHttpActionResult GetStr() {
 			IEnumerable<Booking> list = uw.Bookings.GetAll();
-			return list;
+			return Ok(list);
 		}
 
 		[Route("api/postBooking")]

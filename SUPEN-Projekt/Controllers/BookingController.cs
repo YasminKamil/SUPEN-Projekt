@@ -42,58 +42,77 @@ namespace SUPEN_Projekt.Controllers
 		}
 
 
-		//[HttpPost]
-		//public async Task<ActionResult> Create(Booking booking) {
-		//	var url = "http://localhost:55341/api/postbooking";
-		//	if(await APIContact(url, booking)) {
-		//		return RedirectToAction("Index");
-		//	}
+        //[HttpPost]
+        //public async Task<ActionResult> Create(Booking booking) {
+        //	var url = "http://localhost:55341/api/postbooking";
+        //	if(await APIContact(url, booking)) {
+        //		return RedirectToAction("Index");
+        //	}
 
-		//	return View(booking);
-		//}
+        //	return View(booking);
+        //}
 
-		//public async Task<bool> APIContact(string inUrl, Object inObject) {
-		//	bool works = false;
-		//	var url = inUrl;
-			 
-		//	using(var client = new HttpClient()) {
-		//		var content = new StringContent(JsonConvert.SerializeObject(inObject), Encoding.UTF8, "application/json");
-		//		var result = await client.PostAsync(url, content);
+        //public async Task<bool> APIContact(string inUrl, Object inObject) {
+        //	bool works = false;
+        //	var url = inUrl;
 
-		//		if (result.IsSuccessStatusCode) {
-		//			works = true;
-		//		}
-		//	}
+        //	using(var client = new HttpClient()) {
+        //		var content = new StringContent(JsonConvert.SerializeObject(inObject), Encoding.UTF8, "application/json");
+        //		var result = await client.PostAsync(url, content);
 
-		//	return works;
-		//}
+        //		if (result.IsSuccessStatusCode) {
+        //			works = true;
+        //		}
+        //	}
 
-		//[HttpPost]
-		//public async Task<ActionResult> Create(BookingSystem booking) {
-		//	var url = "https://localhost:55341/api/post";
-		//	using (var client = new HttpClient()) {
-		//		var content = new StringContent(JsonConvert.SerializeObject(booking), Encoding.UTF8, "application/json");
-		//		var result = await client.PostAsync(url, content);
-		//		if (result.IsSuccessStatusCode) {
-		//			return RedirectToAction("Index");
-		//		}
-		//		return View(booking);
-		//	}
-		//}
+        //	return works;
+        //}
 
-		[Route("BookingSystem/{id:int}")]
-        public ActionResult ABookingSystem(int id)
+        //[HttpPost]
+        //public async Task<ActionResult> Create(BookingSystem booking) {
+        //	var url = "https://localhost:55341/api/post";
+        //	using (var client = new HttpClient()) {
+        //		var content = new StringContent(JsonConvert.SerializeObject(booking), Encoding.UTF8, "application/json");
+        //		var result = await client.PostAsync(url, content);
+        //		if (result.IsSuccessStatusCode) {
+        //			return RedirectToAction("Index");
+        //		}
+        //		return View(booking);
+        //	}
+        //}
+
+        //[Route("BookingSystem/{id:int}")]
+        //public ActionResult ABookingSystem(int id)
+        //{
+
+        //    BookingSystem bookingSystem = uw.BookingSystems.GetTheBookingSystem(id);
+
+        //    ViewModel3 vm3 = new ViewModel3();
+        //    vm3.bookingSystem = bookingSystem;
+        //    vm3.services = bookingSystem.Services.ToList();
+        //    ViewBag.Message = vm3.bookingSystem.CompanyName;
+
+        //    return View(vm3);
+        //}
+
+        public async Task<ActionResult> ABookingSystem(int id)
         {
+            string system = "";
+            HttpClient client = new HttpClient();
+            var result = client.GetAsync("http://localhost:55341/api/GetSystem/" + id).Result;
+            if (result.IsSuccessStatusCode)
+            {
+                system = await result.Content.ReadAsStringAsync();
+            }
 
-            BookingSystem bookingSystem = uw.BookingSystems.GetTheBookingSystem(id);
-
+            var bs = JsonConvert.DeserializeObject<BookingSystem>(system);
             ViewModel3 vm3 = new ViewModel3();
-            vm3.bookingSystem = bookingSystem;
-            vm3.services = bookingSystem.Services.ToList();
-            ViewBag.Message = vm3.bookingSystem.CompanyName;
-
+            vm3.bookingSystem = bs;
+            vm3.services = bs.Services;
             return View(vm3);
         }
+
+
 
         //[Route("BookingSystem/{id:int}")]
         public ActionResult CreateBooking(int id, string name)
