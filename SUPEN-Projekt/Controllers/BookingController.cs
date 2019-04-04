@@ -39,60 +39,6 @@ namespace SUPEN_Projekt.Controllers {
 			return View(objects);
 		}
 
-
-        //[HttpPost]
-        //public async Task<ActionResult> Create(Booking booking) {
-        //	var url = "http://localhost:55341/api/postbooking";
-        //	if(await APIContact(url, booking)) {
-        //		return RedirectToAction("Index");
-        //	}
-
-        //	return View(booking);
-        //}
-
-        //public async Task<bool> APIContact(string inUrl, Object inObject) {
-        //	bool works = false;
-        //	var url = inUrl;
-
-        //	using(var client = new HttpClient()) {
-        //		var content = new StringContent(JsonConvert.SerializeObject(inObject), Encoding.UTF8, "application/json");
-        //		var result = await client.PostAsync(url, content);
-
-        //		if (result.IsSuccessStatusCode) {
-        //			works = true;
-        //		}
-        //	}
-
-        //	return works;
-        //}
-
-        //[HttpPost]
-        //public async Task<ActionResult> Create(BookingSystem booking) {
-        //	var url = "https://localhost:55341/api/post";
-        //	using (var client = new HttpClient()) {
-        //		var content = new StringContent(JsonConvert.SerializeObject(booking), Encoding.UTF8, "application/json");
-        //		var result = await client.PostAsync(url, content);
-        //		if (result.IsSuccessStatusCode) {
-        //			return RedirectToAction("Index");
-        //		}
-        //		return View(booking);
-        //	}
-        //}
-
-        //[Route("BookingSystem/{id:int}")]
-        //public ActionResult ABookingSystem(int id)
-        //{
-
-        //    BookingSystem bookingSystem = uw.BookingSystems.GetTheBookingSystem(id);
-
-        //    ViewModel3 vm3 = new ViewModel3();
-        //    vm3.bookingSystem = bookingSystem;
-        //    vm3.services = bookingSystem.Services.ToList();
-        //    ViewBag.Message = vm3.bookingSystem.CompanyName;
-
-        //    return View(vm3);
-        //}
-
         public async Task<ActionResult> ABookingSystem(int id)
         {
             string system = "";
@@ -109,8 +55,6 @@ namespace SUPEN_Projekt.Controllers {
             vm3.services = bs.Services;
             return View(vm3);
         }
-
-
 
         //[Route("BookingSystem/{id:int}")]
         public ActionResult CreateBooking(int id, string name)
@@ -159,55 +103,26 @@ namespace SUPEN_Projekt.Controllers {
 			return View(vm4);
 		}
 
-		//public ActionResult Update(int inBookingSystemId, int inServiceId, int inBookingId) {
+		[HttpGet]
+		public async Task<ActionResult> Update(int inBookingSystemId, int inServiceId, int inBookingId) {
+			string list = "";
+			HttpClient client = new HttpClient();
 
-		//	IEnumerable<ViewModel4> vm4 = null;
+			var result = client.GetAsync("http://localhost:55341/api/GetBooking/" + inBookingSystemId + "/" + inServiceId).Result;
+			if (result.IsSuccessStatusCode) {
+				list = await result.Content.ReadAsStringAsync();
+			}
 
-		//	HttpClient client = new HttpClient();
-		////	client.BaseAddress = new Uri("http://localhost:55341/api/UpdateBooking");
-		//	//HTTP GET
-		//	var responseTask = client.GetAsync("http://localhost:55341/api/UpdateBooking");
-		//	responseTask.Wait();
+			BookingSystem bs = JsonConvert.DeserializeObject<BookingSystem>(list);
+			ViewModel4 vm4 = new ViewModel4();
 
-		//	var result = responseTask.Result;
-		//	if (result.IsSuccessStatusCode) {
-		//		var readTask = result.Content.ReadAsAsync<IList<ViewModel4>>();
-		//		readTask.Wait();
+			vm4.bookingSystem = bs;
+			vm4.service = bs.Services.Single(x => x.ServiceId == inServiceId);
+			vm4.booking = vm4.service.Bookings.Single(x => x.BookingId == inBookingId);
 
-		//		vm4 = readTask.Result;
-		//	} else //web api sent error response 
-		//	  {
-		//		//log response status here..
+			return View(vm4);
 
-		//		vm4 = Enumerable.Empty<ViewModel4>();
-
-		//		ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-		//	}
-		//	return View(vm4);
-		//}
-
-
-		//public async Task<ActionResult> Update() {
-		//	string list = "";
-		//	HttpClient client = new HttpClient();
-
-		//	var result = client.GetAsync("http://localhost:55341/api/UpdateBooking").Result;
-		//	if (result.IsSuccessStatusCode) {
-		//		list = await result.Content.ReadAsStringAsync();
-		//	}
-
-		//	List<Booking> objects = JsonConvert.DeserializeObject<List<Booking>>(list);
-		//	return View(objects);
-
-
-		//	//ViewModel4 vm4 = new ViewModel4();
-
-		//	//vm4.bookingSystem = uw.BookingSystems.GetTheBookingSystem(inBookingSystemId);
-		//	//vm4.service = vm4.bookingSystem.Services.Single(x => x.ServiceId == inServiceId);
-		//	//vm4.booking = vm4.service.Bookings.Single(x=> x.BookingId == inBookingId);
-
-		//	//return View(vm4);
-		//}
+	}
 
 		[HttpPost, ActionName("Update")]
 		public async Task<ActionResult> UpdateBooking(int inBookingSystemId, int inServiceId, int inBookingId, Booking booking) {

@@ -42,6 +42,14 @@ namespace SUPEN_Projekt.Repositories
             return bookingSystem;
         }
 
+		public Service GetService(int BookingSystemId, int serviceId) {
+
+			var bookingSystem = Get(BookingSystemId);
+			var service = bookingSystem.Services.Single(x => x.ServiceId == serviceId);//här behövs en inlcude för att det ska fungera
+			return service;
+		
+		}
+
         public void RemoveBookingSystem(int id)
         {
             BookingSystem bookingSystem = Get(id);
