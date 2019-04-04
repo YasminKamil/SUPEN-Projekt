@@ -70,6 +70,21 @@ namespace SUPEN_Projekt.Controllers
                 throw;
             }
         }
+        [Route("api/GetBookingSystem/{bookingSystemAId:int}/{bookingSystemBId:int}")]
+        [HttpGet]
+        public double GetDistanceBetweenBookingSystems(int bookingSystemAId, int BookingSystemBId)
+        {
+            try
+            {
+                return uw.BookingSystems.GetDistanceTo(uw.BookingSystems.Get(bookingSystemAId),uw.BookingSystems.Get(BookingSystemBId)); 
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
 
         [Route("api/post")]
 		public IHttpActionResult Post(JObject insystem) {
