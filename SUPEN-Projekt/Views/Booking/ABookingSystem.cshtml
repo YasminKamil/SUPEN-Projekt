@@ -13,8 +13,9 @@
             Name
         </th>
     </tr>
-
-    @foreach (var i in Model.services)
+    @if (Model.services.Count() > 0)
+    {
+    foreach (var i in Model.services)
     {
     <tr>
         <td>
@@ -27,6 +28,7 @@
             <button type="button" class="btn btn-secondary btn-sm">@y.StartTime.ToString("HH:mm")<b>-</b>@y.EndTime.ToString("HH:mm")</button>
         </td>*@
     </tr>
+    }
     }
 </table>
 <div id="createbooking">

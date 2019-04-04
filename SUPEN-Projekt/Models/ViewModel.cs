@@ -16,7 +16,7 @@ namespace SUPEN_Projekt.Models {
 		public int Duration { get; set; }
 	}
 
-    public class ViewModel2
+    public class ViewModel2//BookingSystemServiceViewModel överflödig
     {      
         public BookingSystem bookingSystem { get; set; }
         public Service service { get; set; }
@@ -24,13 +24,13 @@ namespace SUPEN_Projekt.Models {
               
     }
 
-    public class ViewModel3
+    public class ViewModel3//BookingSystemServicesViewModel
     {
         public BookingSystem bookingSystem { get; set; }
         public IEnumerable<Service> services { get; set; }
     }
 
-    public class ViewModel4
+    public class ViewModel4//BookingSystemServiceBookingViewModel
     {
         public int Id { get; set; }
         public BookingSystem bookingSystem { get; set; }
@@ -38,7 +38,7 @@ namespace SUPEN_Projekt.Models {
         public Booking booking { get; set; }
     }
 
-    public class ViewModel5
+    public class ViewModel5//BookingsWithDistanceViewModel
     {
         public IEnumerable<BookingSystemAndDistance> BookingsWithDistance { get; set; }
         public BookingSystem SelectedBookingSystem { get; set; }
