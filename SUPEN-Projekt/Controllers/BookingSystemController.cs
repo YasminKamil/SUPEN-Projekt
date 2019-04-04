@@ -20,11 +20,11 @@ namespace SUPEN_Projekt.Controllers
     public class BookingSystemController : Controller
     {
 
-        IUnitOfWork uw;
-        public BookingSystemController(IUnitOfWork unitofwork)
-        {
-            uw = unitofwork;
-        }
+        //IUnitOfWork uw;
+        //public BookingSystemController(IUnitOfWork unitofwork)
+        //{
+        //    uw = unitofwork;
+        //}
 
         // GET: BookingSystem
         public async Task<ActionResult> Index()
@@ -116,7 +116,24 @@ namespace SUPEN_Projekt.Controllers
             {
                 BookingSystemAndDistance pairedObject = new BookingSystemAndDistance();
                 pairedObject.BookingSystem = item;
-                pairedObject.Distance =Math.Round(uw.BookingSystems.GetDistanceTo(uw.BookingSystems.GetTheBookingSystem(bookingSystemId), item));
+
+
+
+
+                string list3 = "";
+                HttpClient client3 = new HttpClient();
+                var result3 = client3.GetAsync("http://localhost:55341/api/GetBookingSystem/" + selectedBookingSystem.BookingSystemId + "/" + item.BookingSystemId).Result;
+                if (result3.IsSuccessStatusCode)
+                {
+                    list3 = await result3.Content.ReadAsStringAsync();
+                }
+
+                list3 = list3.Replace('.', ',');
+
+                double distance = double.Parse(list3);
+
+
+                pairedObject.Distance =Math.Round(distance);
                 listOfBookingSystems.Add(pairedObject);
             
             }
