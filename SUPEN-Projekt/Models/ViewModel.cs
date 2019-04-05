@@ -6,6 +6,8 @@ using System.Web;
 
 namespace SUPEN_Projekt.Models {
 
+	//Tänk på properties i Viewmodellerna 
+	//Används denna?
 	public class ViewModel {
 		public IEnumerable<Booking> Bookings { get; set; }
 		public DateTime Date { get; set; }
@@ -16,37 +18,36 @@ namespace SUPEN_Projekt.Models {
 		public int Duration { get; set; }
 	}
 
-    public class ViewModel2//BookingSystemServiceViewModel överflödig
-    {      
-        public BookingSystem bookingSystem { get; set; }
-        public Service service { get; set; }
-		
-              
-    }
+	//BookingSystemServiceViewModel överflödig 
+	//Denna viewmodell kan tas bort och endast använda sig av vm4
+	public class ViewModel2 {
+		public BookingSystem bookingSystem { get; set; }
+		public Service service { get; set; }
+	}
 
-    public class ViewModel3//BookingSystemServicesViewModel
-    {
-        public BookingSystem bookingSystem { get; set; }
-        public IEnumerable<Service> services { get; set; }
-    }
+	//BookingSystemServicesViewModel
+	public class ViewModel3 {
+		public BookingSystem bookingSystem { get; set; }
+		public IEnumerable<Service> services { get; set; }
+	}
 
-    public class ViewModel4//BookingSystemServiceBookingViewModel
-    {
-        public int Id { get; set; }
-        public BookingSystem bookingSystem { get; set; }
-        public Service service { get; set; }
-        public Booking booking { get; set; }
-    }
+	//BookingSystemServiceBookingViewModel
+	public class ViewModel4 {
+		public int Id { get; set; }
+		public BookingSystem bookingSystem { get; set; }
+		public Service service { get; set; }
+		public Booking booking { get; set; }
+	}
 
-    public class ViewModel5//BookingsWithDistanceViewModel
-    {
-        public IEnumerable<BookingSystemAndDistance> BookingsWithDistance { get; set; }
-        public BookingSystem SelectedBookingSystem { get; set; }
-    }
-    public class BookingSystemAndDistance
-    {
-        public BookingSystem BookingSystem { get; set; }
-        public double Distance { get; set; }
-    }
+	//BookingsWithDistanceViewModel 
+	public class ViewModel5 {
+		public IEnumerable<BookingSystemAndDistance> BookingsWithDistance { get; set; }
+		public BookingSystem SelectedBookingSystem { get; set; }
+	}
+
+	public class BookingSystemAndDistance {
+		public BookingSystem BookingSystem { get; set; }
+		public double Distance { get; set; }
+	}
 
 }

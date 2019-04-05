@@ -15,11 +15,11 @@ using System.Web.Mvc;
 namespace SUPEN_Projekt.Controllers {
 	public class BookingController : Controller {
 		IUnitOfWork uw;
-		public BookingController(IUnitOfWork unitofwork) {
-			uw = unitofwork;
+		public BookingController(IUnitOfWork unitOfWork) {
+			uw = unitOfWork;
 		}
 
-		//GET: Booking
+		//GET: Booking detat kan tas bort
 		public ActionResult Index() {
 			ViewModel myModel = new ViewModel();
 			myModel.Bookings = uw.Bookings.GetAllBookings();
@@ -27,6 +27,7 @@ namespace SUPEN_Projekt.Controllers {
 			return View(myModel);
 		}
 
+		//döpas om till Index när ovanstående är borta
 		public async Task<ActionResult> Index2() {
 			string list = "";
 			HttpClient client = new HttpClient();
@@ -35,41 +36,40 @@ namespace SUPEN_Projekt.Controllers {
 				list = await result.Content.ReadAsStringAsync();
 			}
 
+			//objects till bookings
 			List<Booking> objects = JsonConvert.DeserializeObject<List<Booking>>(list);
 			return View(objects);
 		}
 
-        public async Task<ActionResult> ABookingSystem(int id)
-        {
-            string system = "";
-            HttpClient client = new HttpClient();
-            var result = client.GetAsync("http://localhost:55341/api/GetSystem/" + id).Result;
-            if (result.IsSuccessStatusCode)
-            {
-                system = await result.Content.ReadAsStringAsync();
-            }
+		//Denna ska flyttas till bookingsystemcontroller och namnsättas till BookingSystem
+		public async Task<ActionResult> ABookingSystem(int id) {
+			string bookingsystem = "";
+			HttpClient client = new HttpClient();
+			var result = client.GetAsync("http://localhost:55341/api/GetSystem/" + id).Result;
+			if (result.IsSuccessStatusCode) {
+				bookingsystem = await result.Content.ReadAsStringAsync();
+			}
 
-            var bs = JsonConvert.DeserializeObject<BookingSystem>(system);
-            ViewModel3 vm3 = new ViewModel3();
-            vm3.bookingSystem = bs;
-            vm3.services = bs.Services;
-            return View(vm3);
-        }
+			var bs = JsonConvert.DeserializeObject<BookingSystem>(bookingsystem);
+			ViewModel3 vm3 = new ViewModel3();
+			vm3.bookingSystem = bs;
+			vm3.services = bs.Services;
+			return View(vm3);
+		}
 
-        //[Route("BookingSystem/{id:int}")]
-        public ActionResult CreateBooking(int id, string name)
-        {
-            BookingSystem bookingSystem = uw.BookingSystems.GetTheBookingSystem(id);
-            ViewModel4 vm4 = new ViewModel4();
-            vm4.bookingSystem = bookingSystem;
-            vm4.service = bookingSystem.Services.Single(x => x.ServiceName == name);
+		//[Route("BookingSystem/{id:int}")]
+		public ActionResult CreateBooking(int id, string name) {
+			BookingSystem bookingSystem = uw.BookingSystems.GetTheBookingSystem(id);
+			ViewModel4 vm4 = new ViewModel4();
+			vm4.bookingSystem = bookingSystem;
+			vm4.service = bookingSystem.Services.Single(x => x.ServiceName == name);
 
 
 			return View("CreateBooking", vm4);//en vanlig vy, från början parameter bookingsystem
 		}
 
 		[HttpPost, ActionName("CreateBooking")]
-		public ActionResult CreateBookingConf(int id, string name, Booking inBooking) {
+		public ActionResult CreateBookingConfirmed(int id, string name, Booking inBooking) {
 			var serviceId = uw.Services.Find(x => x.ServiceName == name).Single().ServiceId;
 			if (id != 0) {
 				Booking booking = uw.Bookings.CreateBooking(inBooking);
@@ -77,7 +77,7 @@ namespace SUPEN_Projekt.Controllers {
 				uw.Complete();
 				return RedirectToAction("Details", new { InBookingSystemId = id, inServiceId = serviceId, inBookingId = booking.BookingId });
 			}
-			return RedirectToAction("ABookingSystem", new { id });
+			return RedirectToAction("ABookingSystem", new { id });//när abookingsystem är flyttad ändrad, ändra här också
 		}
 
 		public ActionResult Details(int inBookingSystemId, int inServiceId, int inBookingId) {
@@ -90,7 +90,7 @@ namespace SUPEN_Projekt.Controllers {
 			//Booking booking = uw.Bookings.Get(id);
 
 
-			ViewModel4 vm4 = new ViewModel4();
+			ViewModel4 vm4 = new ViewModel4();//
 
 			vm4.bookingSystem = uw.BookingSystems.GetTheBookingSystem(inBookingSystemId);
 			vm4.service = vm4.bookingSystem.Services.Single(x => x.ServiceId == inServiceId);
@@ -103,12 +103,13 @@ namespace SUPEN_Projekt.Controllers {
 			return View(vm4);
 		}
 
-		[HttpGet]
+		[HttpGet]//BookService
 		public async Task<ActionResult> Update(int inBookingSystemId, int inServiceId, int inBookingId) {
 			string list = "";
 			HttpClient client = new HttpClient();
 
 			var result = client.GetAsync("http://localhost:55341/api/GetBooking/" + inBookingSystemId + "/" + inServiceId).Result;
+
 			if (result.IsSuccessStatusCode) {
 				list = await result.Content.ReadAsStringAsync();
 			}
@@ -122,14 +123,14 @@ namespace SUPEN_Projekt.Controllers {
 
 			return View(vm4);
 
-	}
+		}
 
-		[HttpPost, ActionName("Update")]
+		[HttpPost, ActionName("Update")]//BookService alternativt BookServiceConfirmed
 		public async Task<ActionResult> UpdateBooking(int inBookingSystemId, int inServiceId, int inBookingId, Booking booking) {
 			try {
 				var url = "http://localhost:55341/api/postBooking";
 
-				if(await APIContact(url, booking)) {
+				if (await APIContact(url, booking)) {
 					return RedirectToAction("Details",
 						new { inBookingSystemId, inServiceId, inBookingId });
 				}
@@ -140,11 +141,13 @@ namespace SUPEN_Projekt.Controllers {
 			return View(booking);
 		}
 
-		public async Task<bool> APIContact (string inUrl, Object inObject) {
+		public async Task<bool> APIContact(string inUrl, Object inObject) {
 			bool works = false;
 			var url = inUrl;
 
-			using(var client = new HttpClient()) {
+
+			//HttpClient client = new HttpClient();
+			using (var client = new HttpClient()) {
 				var content = new StringContent(JsonConvert.SerializeObject(inObject), Encoding.UTF8, "application/json");
 				var result = await client.PostAsync(url, content);
 
@@ -155,5 +158,5 @@ namespace SUPEN_Projekt.Controllers {
 				return works;
 			}
 		}
-    }
+	}
 }

@@ -7,14 +7,13 @@ using System.Web;
 namespace SUPEN_Projekt.Models {
 	public class BookingSystem {
 
-        public BookingSystem()
-        {
-            Services = new HashSet<Service>();
-            //Bookings = new HashSet<Booking>();
-        }
+		public BookingSystem() {
+			Services = new HashSet<Service>();
+			//Bookings = new HashSet<Booking>();
+		}
 
 
-        [Key]
+		[Key]
 		public int BookingSystemId { get; set; }
 		public string SystemName { get; set; }
 		public string SystemDescription { get; set; }
@@ -22,7 +21,7 @@ namespace SUPEN_Projekt.Models {
 		public string PhoneNumber { get; set; }
 		public string Website { get; set; }
 
-        public string CompanyName { get; set; }
+		public string CompanyName { get; set; }
 		public string ContactEmail { get; set; }
 		public string ContactPhone { get; set; }
 
@@ -31,10 +30,10 @@ namespace SUPEN_Projekt.Models {
 		public double Longitude { get; set; }
 		public string PostalCode { get; set; }
 		public string City { get; set; }
-        //public bool c { get; set; }
+		//public bool c { get; set; }
 
-        public virtual ICollection<Service> Services { get; set; }
-        //public virtual ICollection<Booking> Bookings { get; set; }
-        
+		public virtual ICollection<Service> Services { get; set; }
+		//public virtual ICollection<Booking> Bookings { get; set; }
+
 	}
 }

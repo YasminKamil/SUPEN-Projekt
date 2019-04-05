@@ -12,89 +12,76 @@ using Newtonsoft.Json.Linq;
 using System.Text;
 using System.Data.Entity;
 
-namespace SUPEN_Projekt.Controllers
-{
-    public class BookingSystemApiController : ApiController{
-       IUnitOfWork uw;
+namespace SUPEN_Projekt.Controllers {
+	public class BookingSystemApiController : ApiController {
+		IUnitOfWork uw;
 
-        public BookingSystemApiController(IUnitOfWork unitofwork) {
-            uw = unitofwork;
-        }
-       
-        [HttpGet]
-        public IEnumerable<BookingSystem> Get()
-        {
-            IEnumerable<BookingSystem> list = uw.BookingSystems.GetAllBookingSystems();
-            return list;
-        }
+		public BookingSystemApiController(IUnitOfWork unitOfWork) {
+			uw = unitOfWork;
+		}
 
-        [Route("api/getstr")]
-        [HttpGet]
-        public IEnumerable<BookingSystem> GetStr()
-        {
+		[HttpGet] //IHttpActionResult - detta kan vi ta bort
+		public IEnumerable<BookingSystem> Get() {
+			IEnumerable<BookingSystem> list = uw.BookingSystems.GetAllBookingSystems();
+			return list;
+		}
 
-          IEnumerable<BookingSystem> list = uw.BookingSystems.GetAll();
-                  //   var a=  JsonConvert.SerializeObject(list); 
-            return list;
-        }
-        [Route("api/getRelevant/{bookingSystemId:int}/{serviceId:int}")]
-        [HttpGet]
-        public IEnumerable<BookingSystem> GetRelevant(int bookingSystemId, int serviceId)
-        {
-            try
-            {
-            BookingSystem selectedBookingSystem = uw.BookingSystems.GetTheBookingSystem(bookingSystemId);
-            Service selectedService = uw.Services.Get(serviceId);
-            List<BookingSystem> bookingSystemsInRange = uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
-            List<BookingSystem> bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
-            List<BookingSystem> orderedByDistance = uw.BookingSystems.OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
-            return orderedByDistance;
-            }
-            catch (Exception)
-            {
+		[Route("api/getstr")] //GetSystems både i metod och routen
+		[HttpGet] //IHttpActionResult
+		public IEnumerable<BookingSystem> GetStr() {
 
-                throw;
-            }
-        }
-        [Route("api/GetBookingSystem/{bookingSystemId:int}")]
-        [HttpGet]
-        public BookingSystem GetBookingSystem(int bookingSystemId)
-        {
-            try
-            {
-                BookingSystem selectedBookingSystem = uw.BookingSystems.GetTheBookingSystem(bookingSystemId);
-                return selectedBookingSystem;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        [Route("api/GetBookingSystem/{bookingSystemAId:int}/{bookingSystemBId:int}")]
-        [HttpGet]
-        public double GetDistanceBetweenBookingSystems(int bookingSystemAId, int BookingSystemBId)
-        {
-            try
-            {
-                return uw.BookingSystems.GetDistanceTo(uw.BookingSystems.Get(bookingSystemAId),uw.BookingSystems.Get(BookingSystemBId)); 
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+			IEnumerable<BookingSystem> list = uw.BookingSystems.GetAll();
+			//   var a=  JsonConvert.SerializeObject(list); 
+			return list;
+		}
+		[Route("api/getRelevant/{bookingSystemId:int}/{serviceId:int}")] //GetRelevantSystem i både route och metod
+		[HttpGet] //IHttpActionResult
+		public IEnumerable<BookingSystem> GetRelevant(int bookingSystemId, int serviceId) {
+			try {
+				BookingSystem selectedBookingSystem = uw.BookingSystems.GetTheBookingSystem(bookingSystemId);
+				Service selectedService = uw.Services.Get(serviceId);
+				List<BookingSystem> bookingSystemsInRange = uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
+				List<BookingSystem> bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
+				List<BookingSystem> orderedByDistance = uw.BookingSystems.OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
+				return orderedByDistance;
+			} catch (Exception) {
+
+				throw;
+			}
+		}
+		//testa att lägga till return OK() + byta till IHttpActionResult
+		[Route("api/GetBookingSystem/{bookingSystemId:int}")]
+		[HttpGet]
+		public BookingSystem GetBookingSystem(int bookingSystemId) {
+			try {
+				BookingSystem selectedBookingSystem = uw.BookingSystems.GetTheBookingSystem(bookingSystemId);
+				return selectedBookingSystem;
+			} catch (Exception) {
+				throw;
+			}
+		}
+
+		[Route("api/GetBookingSystem/{bookingSystemAId:int}/{bookingSystemBId:int}")]
+		[HttpGet]
+		public double GetDistanceBetweenBookingSystems(int bookingSystemAId, int BookingSystemBId) {
+			try {
+				return uw.BookingSystems.GetDistanceTo(uw.BookingSystems.Get(bookingSystemAId), uw.BookingSystems.Get(BookingSystemBId));
+			} catch (Exception) {
+				throw;
+			}
+		}
 
 
 
-        [Route("api/post")]
+		[Route("api/post")] //Är denna relevant, kommer man behöva skapa nya bokningsystem?
 		public IHttpActionResult Post(JObject insystem) {
 			if (!ModelState.IsValid) {
 				return BadRequest("Invalid data");
 			}
 
-            BookingSystem system = JsonConvert.DeserializeObject<BookingSystem>(insystem.ToString());
+			BookingSystem system = JsonConvert.DeserializeObject<BookingSystem>(insystem.ToString());
 
-            uw.BookingSystems.Add(new BookingSystem() {
+			uw.BookingSystems.Add(new BookingSystem() {
 				BookingSystemId = system.BookingSystemId,
 				Address = system.Address,
 				City = system.City,
@@ -109,9 +96,9 @@ namespace SUPEN_Projekt.Controllers
 				SystemDescription = system.SystemDescription,
 				SystemName = system.SystemName,
 				Website = system.Website
-		});
+			});
 			uw.Complete();
 			return Ok();
 		}
-    }
+	}
 }

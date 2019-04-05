@@ -5,42 +5,38 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace SUPEN_Projekt.Repositories
-{
-    public class BookingRepository : Repository<Booking>, IBookingRepository
-    {
-        public BookingRepository(ApplicationDbContext context) : base(context)
-        {
-        }
+namespace SUPEN_Projekt.Repositories {
+	public class BookingRepository : Repository<Booking>, IBookingRepository {
+		public BookingRepository(ApplicationDbContext context) : base(context) {
+		}
 
-        public IEnumerable<Booking> GetAllBookings()
-        {
-            return GetAll(); ;
-        }
+		//GetBookings
+		public IEnumerable<Booking> GetAllBookings() {
+			return GetAll(); ;
+		}
 
-        public Booking CreateBooking(Booking inBooking)
-        {
-            //IEnumerable<BookingSystem> allBookingSystems = ApplicationDbContext.Set<BookingSystem>().Include(x => x.Services).ToList();
-            //BookingSystem bookingSystem = allBookingSystems.Single(x=> x.BookingSystemId == systemId);
-            
-            //Service serv = bookingSystem.Services.Single(x => x.ServiceName == name);
-            
-            Booking booking = new Booking();
-            booking.UserName = inBooking.UserName;
-            booking.UserMail = inBooking.UserMail;
-            booking.UserMobile = inBooking.UserMobile;
-            booking.Available = true;
-            booking.StartTime = inBooking.StartTime;
-            booking.EndTime = inBooking.EndTime;
-            booking.Date = inBooking.Date;
-            booking.Price = inBooking.Price;
-            
+		public Booking CreateBooking(Booking inBooking) {
+			//IEnumerable<BookingSystem> allBookingSystems = ApplicationDbContext.Set<BookingSystem>().Include(x => x.Services).ToList();
+			//BookingSystem bookingSystem = allBookingSystems.Single(x=> x.BookingSystemId == systemId);
+
+			//Service serv = bookingSystem.Services.Single(x => x.ServiceName == name);
+
+			Booking booking = new Booking();
+			booking.UserName = inBooking.UserName;
+			booking.UserMail = inBooking.UserMail;
+			booking.UserMobile = inBooking.UserMobile;
+			booking.Available = true;
+			booking.StartTime = inBooking.StartTime;
+			booking.EndTime = inBooking.EndTime;
+			booking.Date = inBooking.Date;
+			booking.Price = inBooking.Price;
 
 
-            Add(booking);
-            return booking;
-            
-        }
+
+			Add(booking);
+			return booking;
+
+		}
 
 		public void UpdateBooking(Booking booking) {
 			//IEnumerable<BookingSystem> allBookingSystems = ApplicationDbContext.Set<BookingSystem>().Include(s => s.Services).ToList();
@@ -49,7 +45,7 @@ namespace SUPEN_Projekt.Repositories
 			//Service service = bookingSystem.Services.Single(s => s.ServiceName == name);
 
 			var existingBookings = ApplicationDbContext.Bookings.Where(b => b.BookingId == booking.BookingId).FirstOrDefault<Booking>();
-			if(existingBookings != null) {
+			if (existingBookings != null) {
 				existingBookings.UserName = booking.UserName;
 				existingBookings.UserMail = booking.UserMail;
 				existingBookings.UserMobile = booking.UserMobile;
@@ -58,19 +54,18 @@ namespace SUPEN_Projekt.Repositories
 				existingBookings.EndTime = booking.EndTime;
 				existingBookings.Date = booking.Date;
 				existingBookings.Price = booking.Price;
-                //existingBookings.BookingSystem = bookingSystem;
-                //existingBookings.Service = service;
-                
+				//existingBookings.BookingSystem = bookingSystem;
+				//existingBookings.Service = service;
+
 			}
 
 		}
 
-        public ApplicationDbContext ApplicationDbContext
-        {
-            get { return Context as ApplicationDbContext; }
-        }
+		public ApplicationDbContext ApplicationDbContext {
+			get { return Context as ApplicationDbContext; }
+		}
 
-    }
+	}
 
-   
+
 }
