@@ -68,5 +68,13 @@ namespace SUPEN_Projekt.Controllers {
 			//vm4.booking = uw.Bookings.Get(bookingId);
 			return Ok(bs);
 		}
+
+
+		[Route("api/GetDetails/{inBookingSystemId}")]
+		[HttpGet]
+		public IHttpActionResult GetDetails(int inBookingSystemId) {
+			BookingSystem bs = uw.BookingSystems.GetTheBookingSystem(inBookingSystemId);
+			return Ok(bs);
+		}
 	}
 }

@@ -80,21 +80,28 @@ namespace SUPEN_Projekt.Controllers {
 			return RedirectToAction("ABookingSystem", new { id });//när abookingsystem är flyttad ändrad, ändra här också
 		}
 
-		public ActionResult Details(int inBookingSystemId, int inServiceId, int inBookingId) {
+		public async Task <ActionResult> Details(int inBookingSystemId, int inServiceId, int inBookingId) {
+			string details = "";
+			HttpClient client = new HttpClient();
 
+			var result = client.GetAsync("http://localhost:55341/api/GetDetails/" + inBookingSystemId).Result;
+
+			if (result.IsSuccessStatusCode) {
+				details = await result.Content.ReadAsStringAsync();
+			}
+
+			BookingSystem bs = JsonConvert.DeserializeObject<BookingSystem>(details);
+
+			ViewModel4 vm4 = new ViewModel4();
+			vm4.bookingSystem = bs;
+			vm4.service = bs.Services.Single(x => x.ServiceId == inServiceId);
+			vm4.booking = vm4.service.Bookings.Single(x => x.BookingId == inBookingId);
 
 			//if (inBookingSystemId == null || inServiceId == null || inBookingSystemId == null)
 			//{
 			//    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			//}
 			//Booking booking = uw.Bookings.Get(id);
-
-
-			ViewModel4 vm4 = new ViewModel4();//
-
-			vm4.bookingSystem = uw.BookingSystems.GetTheBookingSystem(inBookingSystemId);
-			vm4.service = vm4.bookingSystem.Services.Single(x => x.ServiceId == inServiceId);
-			vm4.booking = vm4.service.Bookings.Single(x => x.BookingId == inBookingId);
 
 			if (vm4.service == null || vm4.booking == null || vm4.bookingSystem == null) {
 				return HttpNotFound();
