@@ -59,14 +59,18 @@ namespace SUPEN_Projekt.Controllers {
 		}
 
 		//denna behöver vi arbeta med bör ju ta in bookingid
-		[Route("api/GetBooking/{inBookingSystemId}/{inServiceId}")]
+		[Route("api/GetBooking/{inBookingSystemId}/{inServiceId}/{inBookingId}")]
 		[HttpGet]
-		public IHttpActionResult GetBooking(int inBookingSystemId, int inServiceId) {
-			//ViewModel4 vm4 = new ViewModel4();
+		public IHttpActionResult GetBooking(int inBookingSystemId, int inServiceId, int inBookingId) {
+			
 			BookingSystem bs = uw.BookingSystems.GetTheBookingSystem(inBookingSystemId);
-			//vm4.service = vm4.bookingSystem.Services.Single(x => x.ServiceId == serviceId); //GetService(bookingSystemId, serviceId);
-			//vm4.booking = uw.Bookings.Get(bookingId);
-			return Ok(bs);
+            ViewModel4 vm4 = new ViewModel4();
+
+            vm4.bookingSystem = bs;
+            vm4.service = bs.Services.Single(x => x.ServiceId == inServiceId);
+            vm4.booking = vm4.service.Bookings.Single(x => x.BookingId == inBookingId);
+
+            return Ok(vm4);
 		}
 	}
 }

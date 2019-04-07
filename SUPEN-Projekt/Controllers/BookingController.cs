@@ -105,21 +105,22 @@ namespace SUPEN_Projekt.Controllers {
 
 		[HttpGet]//BookService
 		public async Task<ActionResult> Update(int inBookingSystemId, int inServiceId, int inBookingId) {
-			string list = "";
-			HttpClient client = new HttpClient();
+			ViewModel4 vm4 = null;
 
-			var result = client.GetAsync("http://localhost:55341/api/GetBooking/" + inBookingSystemId + "/" + inServiceId).Result;
+            HttpClient client = new HttpClient();
+
+			var result = client.GetAsync("http://localhost:55341/api/GetBooking/" + inBookingSystemId + "/" + inServiceId + "/" + inBookingId).Result;
 
 			if (result.IsSuccessStatusCode) {
-				list = await result.Content.ReadAsStringAsync();
+				vm4 = await result.Content.ReadAsAsync<ViewModel4>();
 			}
 
-			BookingSystem bs = JsonConvert.DeserializeObject<BookingSystem>(list);
-			ViewModel4 vm4 = new ViewModel4();
+			//BookingSystem bs = JsonConvert.DeserializeObject<BookingSystem>(list);
+			//ViewModel4 vm4 = new ViewModel4();
 
-			vm4.bookingSystem = bs;
-			vm4.service = bs.Services.Single(x => x.ServiceId == inServiceId);
-			vm4.booking = vm4.service.Bookings.Single(x => x.BookingId == inBookingId);
+			//vm4.bookingSystem = bs;
+			//vm4.service = bs.Services.Single(x => x.ServiceId == inServiceId);
+			//vm4.booking = vm4.service.Bookings.Single(x => x.BookingId == inBookingId);
 
 			return View(vm4);
 
