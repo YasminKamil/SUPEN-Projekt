@@ -116,7 +116,8 @@ namespace SUPEN_Projekt.Controllers {
             ViewModel4 vm4 = null;
             HttpClient client = new HttpClient();
 
-            var result = client.GetAsync("http://localhost:55341/api/GetBooking/" + inBookingSystemId + "/" + inServiceId + "/" + inBookingId).Result;
+            var result = client.GetAsync("http://localhost:55341/api/GetBooking/" + inBookingSystemId + 
+                "/" + inServiceId + "/" + inBookingId).Result;
 
             if (result.IsSuccessStatusCode)
             {
