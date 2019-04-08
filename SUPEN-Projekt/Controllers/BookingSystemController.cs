@@ -105,8 +105,6 @@ namespace SUPEN_Projekt.Controllers {
 				pairedObject.BookingSystem = item;
 
 
-
-
 				string list3 = "";
 				HttpClient client3 = new HttpClient();
 				var result3 = client3.GetAsync("http://localhost:55341/api/GetBookingSystem/" + selectedBookingSystem.BookingSystemId + "/" + item.BookingSystemId).Result;

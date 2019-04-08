@@ -43,71 +43,40 @@ namespace SUPEN_Projekt.Controllers {
 
 		//Denna ska flyttas till bookingsystemcontroller och namnsättas till BookingSystem
 		public async Task<ActionResult> ABookingSystem(int id) {
-			string bookingsystem = "";
+            //string bookingsystem = "";
+            ViewModel3 vm3 = null;
 			HttpClient client = new HttpClient();
 			var result = client.GetAsync("http://localhost:55341/api/GetSystem/" + id).Result;
 			if (result.IsSuccessStatusCode) {
-				bookingsystem = await result.Content.ReadAsStringAsync();
+				vm3 = await result.Content.ReadAsAsync<ViewModel3>();
 			}
-
-			var bs = JsonConvert.DeserializeObject<BookingSystem>(bookingsystem);
-			ViewModel3 vm3 = new ViewModel3();
-			vm3.bookingSystem = bs;
-			vm3.services = bs.Services;
-			return View(vm3);
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+            }
+            return View(vm3);
 		}
 
-		//[Route("BookingSystem/{id:int}")]
-		public ActionResult CreateBooking(int id, string name) {
-			BookingSystem bookingSystem = uw.BookingSystems.GetTheBookingSystem(id);
-			ViewModel4 vm4 = new ViewModel4();
-			vm4.bookingSystem = bookingSystem;
-			vm4.service = bookingSystem.Services.Single(x => x.ServiceName == name);
-
-
-			return View("CreateBooking", vm4);//en vanlig vy, från början parameter bookingsystem
-		}
-
-		[HttpPost, ActionName("CreateBooking")]
-		public ActionResult CreateBookingConfirmed(int id, string name, Booking inBooking) {
-			var serviceId = uw.Services.Find(x => x.ServiceName == name).Single().ServiceId;
-			if (id != 0) {
-				Booking booking = uw.Bookings.CreateBooking(inBooking);
-				uw.Services.AddBooking(booking, serviceId);
-				uw.Complete();
-				return RedirectToAction("Details", new { InBookingSystemId = id, inServiceId = serviceId, inBookingId = booking.BookingId });
-			}
-			return RedirectToAction("ABookingSystem", new { id });//när abookingsystem är flyttad ändrad, ändra här också
-		}
+		
 
 		public async Task <ActionResult> Details(int inBookingSystemId, int inServiceId, int inBookingId) {
-			string details = "";
+         
+            ViewModel4 vm4 = null;
 			HttpClient client = new HttpClient();
 
-			var result = client.GetAsync("http://localhost:55341/api/GetDetails/" + inBookingSystemId).Result;
+			var result = client.GetAsync("http://localhost:55341/api/GetBooking/" + inBookingSystemId +
+                "/" + inServiceId + "/" + inBookingId).Result;
 
 			if (result.IsSuccessStatusCode) {
-				details = await result.Content.ReadAsStringAsync();
+				vm4 = await result.Content.ReadAsAsync<ViewModel4>();
 			}
 
-			BookingSystem bs = JsonConvert.DeserializeObject<BookingSystem>(details);
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+            }
 
-			ViewModel4 vm4 = new ViewModel4();
-			vm4.bookingSystem = bs;
-			vm4.service = bs.Services.Single(x => x.ServiceId == inServiceId);
-			vm4.booking = vm4.service.Bookings.Single(x => x.BookingId == inBookingId);
-
-			//if (inBookingSystemId == null || inServiceId == null || inBookingSystemId == null)
-			//{
-			//    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			//}
-			//Booking booking = uw.Bookings.Get(id);
-
-			if (vm4.service == null || vm4.booking == null || vm4.bookingSystem == null) {
-				return HttpNotFound();
-			}
-
-			return View(vm4);
+            return View(vm4);
 		}
 
         [HttpGet]//BookService
@@ -122,6 +91,11 @@ namespace SUPEN_Projekt.Controllers {
             if (result.IsSuccessStatusCode)
             {
                 vm4 = await result.Content.ReadAsAsync<ViewModel4>();
+            }
+
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
             }
 
             return View(vm4);
@@ -147,8 +121,6 @@ namespace SUPEN_Projekt.Controllers {
 			bool works = false;
 			var url = inUrl;
 
-
-			//HttpClient client = new HttpClient();
 			using (var client = new HttpClient()) {
 				var content = new StringContent(JsonConvert.SerializeObject(inObject), Encoding.UTF8, "application/json");
 				var result = await client.PostAsync(url, content);
@@ -160,5 +132,28 @@ namespace SUPEN_Projekt.Controllers {
 				return works;
 			}
 		}
-	}
+
+        ////[Route("BookingSystem/{id:int}")]
+        //public ActionResult CreateBooking(int id, string name) {
+        //	BookingSystem bookingSystem = uw.BookingSystems.GetTheBookingSystem(id);
+        //	ViewModel4 vm4 = new ViewModel4();
+        //	vm4.bookingSystem = bookingSystem;
+        //	vm4.service = bookingSystem.Services.Single(x => x.ServiceName == name);
+
+
+        //	return View("CreateBooking", vm4);//en vanlig vy, från början parameter bookingsystem
+        //}
+
+        //[HttpPost, ActionName("CreateBooking")]
+        //public ActionResult CreateBookingConfirmed(int id, string name, Booking inBooking) {
+        //	var serviceId = uw.Services.Find(x => x.ServiceName == name).Single().ServiceId;
+        //	if (id != 0) {
+        //		Booking booking = uw.Bookings.CreateBooking(inBooking);
+        //		uw.Services.AddBooking(booking, serviceId);
+        //		uw.Complete();
+        //		return RedirectToAction("Details", new { InBookingSystemId = id, inServiceId = serviceId, inBookingId = booking.BookingId });
+        //	}
+        //	return RedirectToAction("ABookingSystem", new { id });//när abookingsystem är flyttad ändrad, ändra här också
+        //}
+    }
 }

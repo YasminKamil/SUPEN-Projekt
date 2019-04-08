@@ -31,7 +31,10 @@ namespace SUPEN_Projekt.Controllers {
 		public IHttpActionResult GetSystem(int id) {
 
 			BookingSystem bookingsystem = uw.BookingSystems.GetTheBookingSystem(id);
-			return Ok(bookingsystem);
+            ViewModel3 vm3 = new ViewModel3();
+            vm3.bookingSystem = bookingsystem;
+            vm3.services = bookingsystem.Services;
+            return Ok(vm3);
 		}
 
 		//Byt namn till GetBookings både i route och metod
@@ -70,15 +73,13 @@ namespace SUPEN_Projekt.Controllers {
             vm4.service = bs.Services.Single(x => x.ServiceId == inServiceId);
             vm4.booking = vm4.service.Bookings.Single(x => x.BookingId == inBookingId);
 
+            if (vm4 == null)
+            {
+                return NotFound();
+            }
+
             return Ok(vm4);
 		}
 
-
-		[Route("api/GetDetails/{inBookingSystemId}")]
-		[HttpGet]
-		public IHttpActionResult GetDetails(int inBookingSystemId) {
-			BookingSystem bs = uw.BookingSystems.GetTheBookingSystem(inBookingSystemId);
-			return Ok(bs);
-		}
 	}
 }
