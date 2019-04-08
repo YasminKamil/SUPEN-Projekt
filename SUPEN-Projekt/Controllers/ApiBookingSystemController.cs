@@ -20,15 +20,10 @@ namespace SUPEN_Projekt.Controllers {
 			uw = unitOfWork;
 		}
 
-		[HttpGet] //IHttpActionResult - detta kan vi ta bort
-		public IEnumerable<BookingSystem> Get() {
-			IEnumerable<BookingSystem> list = uw.BookingSystems.GetBookingSystems();
-			return list;
-		}
-
-		[Route("api/getstr")] //GetSystems både i metod och routen
-		[HttpGet] //IHttpActionResult
-		public IHttpActionResult GetStr() {
+		//Hämtar alla lagrade bokningsystem
+		[Route("api/GetSystems")] 
+		[HttpGet] 
+		public IHttpActionResult GetSystems() {
 
 			IEnumerable<BookingSystem> bookingsystems = uw.BookingSystems.GetAll();
             BookingSystemsViewModel list = new BookingSystemsViewModel();
@@ -39,9 +34,11 @@ namespace SUPEN_Projekt.Controllers {
             }
             return Ok(list);
 		}
-		[Route("api/getRelevant/{bookingSystemId:int}/{serviceId:int}")] //GetRelevantSystem i både route och metod
-		[HttpGet] //IHttpActionResult
-		public IEnumerable<BookingSystem> GetRelevant(int bookingSystemId, int serviceId) {
+
+		//Hämtar det relevanta bokningsystemet inom ett visst område och inom andra branscher ordnat efter avståndet
+		[Route("api/GetRelevantBookingSystem/{bookingSystemId:int}/{serviceId:int}")] 
+		[HttpGet] 
+		public IEnumerable<BookingSystem> GetRelevantBookingSystem(int bookingSystemId, int serviceId) {
 			try {
 				BookingSystem selectedBookingSystem = uw.BookingSystems.GetBookingSystem(bookingSystemId);
 				Service selectedService = uw.Services.Get(serviceId);
@@ -54,19 +51,23 @@ namespace SUPEN_Projekt.Controllers {
 				throw;
 			}
 		}
-		//testa att lägga till return OK() + byta till IHttpActionResult
+		
+		//Hämtar ut det valda bokningsystemet
 		[Route("api/GetBookingSystem/{bookingSystemId:int}")]
 		[HttpGet]
-		public BookingSystem GetBookingSystem(int bookingSystemId) {
-			try {
-				BookingSystem selectedBookingSystem = uw.BookingSystems.GetBookingSystem(bookingSystemId);
-				return selectedBookingSystem;
-			} catch (Exception) {
-				throw;
-			}
+		public IHttpActionResult GetBookingSystem(int bookingSystemId) {
+			BookingSystem bs = uw.BookingSystems.GetBookingSystem(bookingSystemId);
+			return Ok(bs);
+			
+			//try {
+			//	BookingSystem selectedBookingSystem = uw.BookingSystems.GetBookingSystem(bookingSystemId);
+			//	return selectedBookingSystem;
+			//} catch (Exception) {
+			//	throw;
+			//}
 		}
 
-		//när denna funktion fungerar i BookingSystemController tas denna bort
+		//Hämtar bokningsystemet och tjänsten för bokningsystemet
 		[Route("api/GetSystem/{id}")]
 		[HttpGet]
 		public IHttpActionResult GetSystem(int id) {
@@ -78,6 +79,7 @@ namespace SUPEN_Projekt.Controllers {
 			return Ok(vm3);
 		}
 
+		//Hämtar och beräknar avståndet mellan befintliga bokningsystem
 		[Route("api/GetBookingSystem/{bookingSystemAId:int}/{bookingSystemBId:int}")]
 		[HttpGet]
 		public double GetDistanceBetweenBookingSystems(int bookingSystemAId, int BookingSystemBId) {
@@ -88,10 +90,10 @@ namespace SUPEN_Projekt.Controllers {
 			}
 		}
 
-
-
-		[Route("api/post")] //Är denna relevant, kommer man behöva skapa nya bokningsystem?
-		public IHttpActionResult Post(JObject insystem) {
+	
+		//Skapar ett nytt bokningssystem i datakällan - denna metod behöver utvecklas vidare så att den anropas via repository
+		[Route("api/PostBookingSystem")] 
+		public IHttpActionResult PostBookingSystem(JObject insystem) {
 			if (!ModelState.IsValid) {
 				return BadRequest("Invalid data");
 			}
