@@ -19,11 +19,12 @@ namespace SUPEN_Projekt.Controllers {
 			uw = unitOfWork;
 		}
 
-		[HttpGet]
-		public IEnumerable<Booking> Get() {
-			IEnumerable<Booking> list = uw.Bookings.GetAll();
-			return list;
-		}
+        [HttpGet]//ska tas bort
+        public IEnumerable<Booking> Get()
+        {
+            IEnumerable<Booking> list = uw.Bookings.GetAll();
+            return list;
+        }
 
 		//Returnerar alla bokningar som är lagrade
 		[Route("api/GetBookings")]

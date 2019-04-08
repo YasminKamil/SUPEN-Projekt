@@ -24,9 +24,14 @@ namespace SUPEN_Projekt.Models {
 		public BookingSystem bookingSystem { get; set; }
 		public Service service { get; set; }
 	}
+    public class BookingSystemsViewModel
+    {
+        public int Id { get; set; }
+        public IEnumerable<BookingSystem> bookingSystems { get; set; }
+    }
 
-	//BookingSystemServicesViewModel
-	public class ViewModel3 {
+    //BookingSystemServicesViewModel
+    public class ViewModel3 {
 		public int Id { get; set; }
 		public BookingSystem bookingSystem { get; set; }
 		public IEnumerable<Service> services { get; set; }

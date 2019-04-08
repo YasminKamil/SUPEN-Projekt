@@ -28,11 +28,16 @@ namespace SUPEN_Projekt.Controllers {
 
 		[Route("api/getstr")] //GetSystems både i metod och routen
 		[HttpGet] //IHttpActionResult
-		public IEnumerable<BookingSystem> GetStr() {
+		public IHttpActionResult GetStr() {
 
-			IEnumerable<BookingSystem> list = uw.BookingSystems.GetAll();
-			//   var a=  JsonConvert.SerializeObject(list); 
-			return list;
+			IEnumerable<BookingSystem> bookingsystems = uw.BookingSystems.GetAll();
+            BookingSystemsViewModel list = new BookingSystemsViewModel();
+            list.bookingSystems = bookingsystems;
+            if (list == null)
+            {
+                return NotFound();
+            }
+            return Ok(list);
 		}
 		[Route("api/getRelevant/{bookingSystemId:int}/{serviceId:int}")] //GetRelevantSystem i både route och metod
 		[HttpGet] //IHttpActionResult

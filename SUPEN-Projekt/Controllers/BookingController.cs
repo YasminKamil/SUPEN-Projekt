@@ -19,7 +19,7 @@ namespace SUPEN_Projekt.Controllers {
 			uw = unitOfWork;
 		}
 
-		//Returnerar information om bokningarna med ett api-anrop
+		//Returnerar alla bokningar med ett api-anrop
 		public async Task<ActionResult> Index() {
 			BookingsViewModel list = null;
 			HttpClient client = new HttpClient();
@@ -28,8 +28,6 @@ namespace SUPEN_Projekt.Controllers {
 				list = await result.Content.ReadAsAsync<BookingsViewModel>();
 			}
 
-			//objects till bookings
-			//List<Booking> objects = JsonConvert.DeserializeObject<List<Booking>>(list);
 			return View(list);
 		}
 

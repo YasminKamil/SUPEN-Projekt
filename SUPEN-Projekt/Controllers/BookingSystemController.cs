@@ -26,16 +26,18 @@ namespace SUPEN_Projekt.Controllers {
 
 		// GET: BookingSystem
 		public async Task<ActionResult> Index() {
-			string list = "";
+			BookingSystemsViewModel bsVM = null;
 			HttpClient client = new HttpClient();
 			var result = client.GetAsync("http://localhost:55341/api/GetStr").Result; //Måste ändra clienten till GetBookings
 			if (result.IsSuccessStatusCode) {
-				list = await result.Content.ReadAsStringAsync();
+				bsVM = await result.Content.ReadAsAsync<BookingSystemsViewModel>();
 			}
-
-			//ändra objects till bookingsystems
-			List<BookingSystem> objects = JsonConvert.DeserializeObject<List<BookingSystem>>(list);
-			return View(objects);
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+            }
+ 
+            return View(bsVM);
 		}
 
 		//Denna ska flyttas till bookingsystemcontroller och namnsättas till BookingSystem
