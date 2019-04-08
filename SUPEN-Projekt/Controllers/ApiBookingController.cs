@@ -19,15 +19,16 @@ namespace SUPEN_Projekt.Controllers {
 			uw = unitOfWork;
 		}
 
-		[HttpGet]
-		public IEnumerable<Booking> Get() {
-			IEnumerable<Booking> list = uw.Bookings.GetAll();
-			return list;
-		}
+        [HttpGet]//ska tas bort
+        public IEnumerable<Booking> Get()
+        {
+            IEnumerable<Booking> list = uw.Bookings.GetAll();
+            return list;
+        }
 
-		//Byt namn till GetBookings både i route och metod
-		//utan IHttpActionResult får man inte med bra statuskoder
-		[Route("api/getstrbooking")]
+        //Byt namn till GetBookings både i route och metod
+        //utan IHttpActionResult får man inte med bra statuskoder
+        [Route("api/getstrbooking")]
 		[HttpGet]
 		public IHttpActionResult GetStr() {
 			IEnumerable<Booking> bookings = uw.Bookings.GetAll();

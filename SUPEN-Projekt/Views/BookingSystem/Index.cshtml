@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SUPEN_Projekt.Models.BookingSystem>
+﻿@model SUPEN_Projekt.Models.BookingSystemsViewModel
 
 
 
@@ -8,15 +8,15 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CompanyName)
+            @Html.DisplayNameFor(model => model.bookingSystems.Single().CompanyName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.City)
+            @Html.DisplayNameFor(model => model.bookingSystems.Single().CompanyName)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.bookingSystems) {
     <tr>
         <td>
             @Html.RouteLink(item.CompanyName, new { controller = "BookingSystem", action = "BookingSystem", id = item.BookingSystemId }, null)
