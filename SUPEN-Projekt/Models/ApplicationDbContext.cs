@@ -13,22 +13,20 @@ namespace SUPEN_Projekt.Models
         {
             this.Configuration.ProxyCreationEnabled = false;
         }
-
         public DbSet<BookingSystem> BookingSystems { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Service> Services { get; set; }
-
     }
 
-    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+    public class DatabaseInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)
         {
             //Lägger till Branscher via addBranches metoden
            List<string> branches = new List<string> { "Frisör", "Besiktning", "Café", "Fordonsuthyrning", "Massör", "Verkstad",
                "Idrottsförening", "Kontor", "Utbildning", "Restaurang", "Sjukvård", "Transport", "Hotell", "Media", "IT",
-               "Bank", "Bygg", "Konsultation", "Däck" };
+               "Bank", "Bygg", "Konsultation", "Däck", "Tatuering" };
             addBranches(context, branches);
 
             //Lägger till BookingSystems via metoden addBookingSystem
@@ -58,10 +56,40 @@ namespace SUPEN_Projekt.Models
 
             addBookingSystem(context, "boka.se", "Description...", "Besikta@boka.se", "070 - 000 00 00", "boka.se/Besikta", "Besikta", "Besikta@boka.se", 
             "070 - 123 56 78","Källvattengatan 7", 55.6059, 13.0007, "212 23", "Malmö");
+
+            addBookingSystem(context, "boka.se", "Description...", "Bilexpo@boka.se", "070 - 000 00 00", "boka.se/Bilexpo", "Bilexpo", "Bilexpo@boka.se",
+            "070 - 123 56 78", "Karosserigatan 9", 59.296808, 15.234905, "703 69", "Örebro");
+
+            addBookingSystem(context, "boka.se", "Description...", "Bilhusetiorebro@boka.se", "070 - 000 00 00", "boka.se/Bilhusetiorebro", "Bilhuset i Örebro", "Bilhusetiorebro@boka.se",
+            "070 - 123 56 78", "Skjutbanevägen 4", 59.297731, 15.238027, "70369", "Örebro");
+
+            addBookingSystem(context, "boka.se", "Description...", "LillanTennisklubb@boka.se", "070 - 000 00 00", "boka.se/LillanTennisklubb", "Lillån Tennisklubb", "LillanTennisklubb@boka.se",
+            "070 - 123 56 78", "Kyrkvägen 2A", 59.322887, 15.227972, "703 75", "Örebro");
+
+            addBookingSystem(context, "boka.se", "Description...", "Lillavallen@boka.se", "070 - 000 00 00", "boka.se/Lillåvallen", "Lillåvallen", "Lillavallen@boka.se",
+            "070 - 123 56 78", "Kyrkvägen 2A", 59.323670, 15.226550, "70375", "Örebro");
+
+            addBookingSystem(context, "boka.se", "Description...", "CityHotel@boka.se", "070 - 000 00 00", "boka.se/CityHotel", "City Hotel", "CityHotel@boka.se",
+            "070 - 123 56 78", "Kungsgatan 24", 59.268741, 15.212420, "702 24", "Örebro");
+
+            addBookingSystem(context, "boka.se", "Description...", "FirstHotel@boka.se", "070 - 000 00 00", "boka.se/FirstHotel", "First Hotel", "FirstHotel@boka.se",
+            "070 - 123 56 78", "Storgatan 24", 59.277223, 15.216221, "703 61", "Örebro");
+
+            addBookingSystem(context, "boka.se", "Description...", "EliteArtwork@boka.se", "070 - 000 00 00", "boka.se/EliteArtwork", "Elite Artwork", "EliteArtwork@boka.se",
+            "070 - 123 56 78", "Storgatan 20", 59.276952, 15.215910, "703 61", "Örebro");
+
             context.SaveChanges();
+
+            //Lillån Tennisklubb, Lillåvallen har inte tilldelats bransch och service
 
             //Lägger till och skapar services via addService metoden
             //context , servicenamn, t
+
+            addService(context, "Service", 30, 1300, "Verkstad", "Bilexpo");
+            addService(context, "Service", 35, 1260, "Verkstad", "Bilhuset i Örebro");
+            addService(context, "Hotellrum", 25, 1250, "Hotell", "City Hotel");
+            addService(context, "Hotellrum", 25, 1200, "Hotell", "First Hotel");
+            addService(context, "Tatuering", 60, 800, "Tatuering", "Elite Artwork");
             addService(context, "Klippning", 25, 100, "Frisör","Art of Hair");
             addService(context, "Färgning", 45, 200, "Frisör", "Art of Hair");
             addService(context, "Bullfika", 45, 200, "Café", "Bullvivan");
