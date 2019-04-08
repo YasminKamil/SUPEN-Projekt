@@ -70,8 +70,20 @@ namespace SUPEN_Projekt.Controllers {
 		}
 
 		// GET: BookingSystem/Create
-		public ActionResult Create() {
-			return View();
+		public async Task<ActionResult> Create() {
+            ViewModel4 vm4 = null;
+            HttpClient client = new HttpClient();
+            var result = client.GetAsync("http://localhost:55341/api/GetSystem/").Result;
+            if (result.IsSuccessStatusCode)
+            {
+                vm4 = await result.Content.ReadAsAsync<ViewModel4>();
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+            }
+            return View(vm4);
+            //return View();
 		}
 
 		[HttpPost]
@@ -79,7 +91,7 @@ namespace SUPEN_Projekt.Controllers {
 			var url = "http://localhost:55341/api/post";
 
 			if (await APIContact(url, system)) {
-				return RedirectToAction("Index");
+                return RedirectToAction("Index");
 			}
 			return View(system);
 

@@ -78,8 +78,21 @@ namespace SUPEN_Projekt.Controllers {
 			return Ok(bsSVM);
 		}
 
-		//Hämtar och beräknar avståndet mellan befintliga bokningsystem
-		[Route("api/GetBookingSystem/{bookingSystemAId:int}/{bookingSystemBId:int}")]
+        [Route("api/GetSystem/")]
+        [HttpGet]
+        public IHttpActionResult GetSystem()
+        {
+
+            //BookingSystem bookingsystem = uw.BookingSystems.GetBookingSystem(id);
+            ViewModel4 vm4 = new ViewModel4();
+            //vm4.bookingSystem = bookingsystem;
+            //vm4.services = bookingsystem.Services;
+            return Ok(vm4);
+        }
+
+
+        //Hämtar och beräknar avståndet mellan befintliga bokningsystem
+        [Route("api/GetBookingSystem/{bookingSystemAId:int}/{bookingSystemBId:int}")]
 		[HttpGet]
 		public double GetDistanceBetweenBookingSystems(int bookingSystemAId, int BookingSystemBId) {
 			try {

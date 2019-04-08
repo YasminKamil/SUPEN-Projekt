@@ -2,6 +2,10 @@
 
 @*<table class="table">*@
 
+@if (Model.BookingsWithDistance.Count() != 0)
+{
+<h4>Services in the neighborhood</h4>
+}
 @foreach (var item in Model.BookingsWithDistance)
 {
 <div class="list-group" style="background-color:lavender">
