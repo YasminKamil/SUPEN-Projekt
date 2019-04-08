@@ -76,7 +76,7 @@ namespace SUPEN_Projekt.Controllers {
 		}
 
 		[HttpPost]
-		public async Task<ActionResult> Create(BookingSystem system) {
+		public async Task<ActionResult> Create(ViewModel4 system) {
 			var url = "http://localhost:55341/api/post";
 
 			if (await APIContact(url, system)) {

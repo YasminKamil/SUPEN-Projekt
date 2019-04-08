@@ -96,23 +96,23 @@ namespace SUPEN_Projekt.Controllers {
 				return BadRequest("Invalid data");
 			}
 
-			BookingSystem system = JsonConvert.DeserializeObject<BookingSystem>(insystem.ToString());
+			ViewModel4 system = JsonConvert.DeserializeObject<ViewModel4>(insystem.ToString());
 
 			uw.BookingSystems.Add(new BookingSystem() {
-				BookingSystemId = system.BookingSystemId,
-				Address = system.Address,
-				City = system.City,
-				CompanyName = system.CompanyName,
-				ContactEmail = system.ContactEmail,
-				ContactPhone = system.ContactPhone,
-				Email = system.Email,
-				Latitude = system.Latitude,
-				Longitude = system.Longitude,
-				PhoneNumber = system.PhoneNumber,
-				PostalCode = system.PostalCode,
-				SystemDescription = system.SystemDescription,
-				SystemName = system.SystemName,
-				Website = system.Website
+				BookingSystemId = system.bookingSystem.BookingSystemId,
+				Address = system.bookingSystem.Address,
+				City = system.bookingSystem.City,
+				CompanyName = system.bookingSystem.CompanyName,
+				ContactEmail = system.bookingSystem.ContactEmail,
+				ContactPhone = system.bookingSystem.ContactPhone,
+				Email = system.bookingSystem.Email,
+				Latitude = system.bookingSystem.Latitude,
+				Longitude = system.bookingSystem.Longitude,
+				PhoneNumber = system.bookingSystem.PhoneNumber,
+				PostalCode = system.bookingSystem.PostalCode,
+				SystemDescription = system.bookingSystem.SystemDescription,
+				SystemName = system.bookingSystem.SystemName,
+				Website = system.bookingSystem.Website
 			});
 			uw.Complete();
 			return Ok();
