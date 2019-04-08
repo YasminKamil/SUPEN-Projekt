@@ -42,7 +42,9 @@ namespace SUPEN_Projekt.Controllers {
 		[Route("api/getstrbooking")]
 		[HttpGet]
 		public IHttpActionResult GetStr() {
-			IEnumerable<Booking> list = uw.Bookings.GetAll();
+			IEnumerable<Booking> bookings = uw.Bookings.GetAll();
+            BookingsViewModel list = new BookingsViewModel();
+            list.bookings = bookings;
 			return Ok(list);
 		}
 
