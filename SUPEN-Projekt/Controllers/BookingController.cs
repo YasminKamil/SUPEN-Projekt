@@ -29,16 +29,16 @@ namespace SUPEN_Projekt.Controllers {
 
 		//döpas om till Index när ovanstående är borta
 		public async Task<ActionResult> Index2() {
-			string list = "";
+			BookingsViewModel list = null;
 			HttpClient client = new HttpClient();
 			var result = client.GetAsync("http://localhost:55341/api/getstrbooking").Result;
 			if (result.IsSuccessStatusCode) {
-				list = await result.Content.ReadAsStringAsync();
+				list = await result.Content.ReadAsAsync<BookingsViewModel>();
 			}
 
 			//objects till bookings
-			List<Booking> objects = JsonConvert.DeserializeObject<List<Booking>>(list);
-			return View(objects);
+			//List<Booking> objects = JsonConvert.DeserializeObject<List<Booking>>(list);
+			return View(list);
 		}
 
 		//Denna ska flyttas till bookingsystemcontroller och namnsättas till BookingSystem

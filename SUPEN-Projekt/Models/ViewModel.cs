@@ -50,4 +50,9 @@ namespace SUPEN_Projekt.Models {
 		public double Distance { get; set; }
 	}
 
+    public class BookingsViewModel {
+        public int Id { get; set; }
+        public IEnumerable<Booking> bookings { get; set; }
+    }
+
 }
