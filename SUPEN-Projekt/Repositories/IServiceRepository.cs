@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace SUPEN_Projekt.Repositories {
 	public interface IServiceRepository : IRepository<Service> {
-		IEnumerable<Service> GetAllServices();
+		IEnumerable<Service> GetServices();
 		void AddBooking(Booking booking, int id);
-		Service GetTheService(int id);
+		Service GetService(int id);
 	}
 }

@@ -19,7 +19,7 @@ namespace SUPEN_Projekt.Controllers {
 			ViewModel2 vm2 = new ViewModel2();
 
 			vm2.bookingSystem = uw.BookingSystems.GetBookingSystem(systemId);
-			vm2.service = vm2.bookingSystem.Services.Single(x => x.ServiceId == id);//uw.Services.GetTheService(id);
+			vm2.service = vm2.bookingSystem.Services.Single(x => x.ServiceId == id);//uw.Services.GetService(id);
 
 			return View(vm2);
 

@@ -23,7 +23,7 @@ namespace SUPEN_Projekt.Controllers {
 		public ActionResult Index() {
 			ViewModel myModel = new ViewModel();
 			myModel.Bookings = uw.Bookings.GetBookings();
-			//	myModel.Services = uw.Services.GetAllServices();
+			//	myModel.Services = uw.Services.GetServices();
 			return View(myModel);
 		}
 
