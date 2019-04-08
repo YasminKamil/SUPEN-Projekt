@@ -22,7 +22,7 @@ namespace SUPEN_Projekt.Controllers {
 
 		[HttpGet] //IHttpActionResult - detta kan vi ta bort
 		public IEnumerable<BookingSystem> Get() {
-			IEnumerable<BookingSystem> list = uw.BookingSystems.GetAllBookingSystems();
+			IEnumerable<BookingSystem> list = uw.BookingSystems.GetBookingSystems();
 			return list;
 		}
 
@@ -38,7 +38,7 @@ namespace SUPEN_Projekt.Controllers {
 		[HttpGet] //IHttpActionResult
 		public IEnumerable<BookingSystem> GetRelevant(int bookingSystemId, int serviceId) {
 			try {
-				BookingSystem selectedBookingSystem = uw.BookingSystems.GetTheBookingSystem(bookingSystemId);
+				BookingSystem selectedBookingSystem = uw.BookingSystems.GetBookingSystem(bookingSystemId);
 				Service selectedService = uw.Services.Get(serviceId);
 				List<BookingSystem> bookingSystemsInRange = uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
 				List<BookingSystem> bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
@@ -54,7 +54,7 @@ namespace SUPEN_Projekt.Controllers {
 		[HttpGet]
 		public BookingSystem GetBookingSystem(int bookingSystemId) {
 			try {
-				BookingSystem selectedBookingSystem = uw.BookingSystems.GetTheBookingSystem(bookingSystemId);
+				BookingSystem selectedBookingSystem = uw.BookingSystems.GetBookingSystem(bookingSystemId);
 				return selectedBookingSystem;
 			} catch (Exception) {
 				throw;

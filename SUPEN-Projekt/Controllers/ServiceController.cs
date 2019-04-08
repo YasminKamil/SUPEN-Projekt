@@ -18,7 +18,7 @@ namespace SUPEN_Projekt.Controllers {
 		public ActionResult Index(int id, int systemId) {
 			ViewModel2 vm2 = new ViewModel2();
 
-			vm2.bookingSystem = uw.BookingSystems.GetTheBookingSystem(systemId);
+			vm2.bookingSystem = uw.BookingSystems.GetBookingSystem(systemId);
 			vm2.service = vm2.bookingSystem.Services.Single(x => x.ServiceId == id);//uw.Services.GetTheService(id);
 
 			return View(vm2);

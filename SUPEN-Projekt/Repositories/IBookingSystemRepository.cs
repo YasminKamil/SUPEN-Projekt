@@ -13,15 +13,15 @@ namespace SUPEN_Projekt.Repositories {
 		List<BookingSystem> OrderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem);
 		// string GetBrachesCount(List<BookingSystem> inBookingSystems);
 		bool InDistance(double companyALong, double companyALat, double companyBLong, double companyBLat, int maxDistance);
-		IEnumerable<BookingSystem> GetAllBookingSystems();//tas bort?
+		IEnumerable<BookingSystem> GetBookingSystems();//tas bort?
 		List<BookingSystem> GetBookingSystemsInRange(BookingSystem inSelectedBookingSystem);
 		//void AddBookingSystem(BookingSystem bookingsystem);
 		void EditBookingSystem(BookingSystem bookingSystem);
 		void RemoveBookingSystem(int id);
 		//void AddBooking(Booking booking, int id);
-		Service BookingSystemService(int id, int ServiceId);
+		Service GetBookingSystemService(int id, int ServiceId);
 		void AddService(Service service, int id);
-		BookingSystem GetTheBookingSystem(int id);
+		BookingSystem GetBookingSystem(int id);
 		Service GetService(int BookingSystemId, int serviceId);
 
 	}

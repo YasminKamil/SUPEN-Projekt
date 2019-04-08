@@ -16,46 +16,47 @@ namespace SUPEN_Projekt.Repositories {
 		public BookingSystemRepository(ApplicationDbContext context) : base(context) { }
 
 
-		//GetBookingSystems
-		public IEnumerable<BookingSystem> GetAllBookingSystems() {
+		//Retunerar alla bokningsystem
+		public IEnumerable<BookingSystem> GetBookingSystems() {
 
 			return ApplicationDbContext.Set<BookingSystem>().Include(i => i.Services.Select(s => s.Branch))
 				.Include(i => i.Services.Select(b => b.Bookings));
 
 		}
 
+		//Redigerar bokningsystemets information
 		public void EditBookingSystem(BookingSystem bookingSystem) {
 			ApplicationDbContext.Entry(bookingSystem).State = EntityState.Modified;
 			ApplicationDbContext.SaveChanges();
 		}
 
-		//GetBookingSystem
-		public BookingSystem GetTheBookingSystem(int id) {
-			//listBookingSystems
-			IEnumerable<BookingSystem> listAllBookingSystem = GetAllBookingSystems();
-			BookingSystem bookingSystem = listAllBookingSystem.Single(x => x.BookingSystemId == id);
+		//Returnerar det specifika bokningsystemet
+		public BookingSystem GetBookingSystem(int id) {
+			IEnumerable<BookingSystem> listbookingsystems = GetBookingSystems();
+			BookingSystem bookingSystem = listbookingsystems.Single(x => x.BookingSystemId == id);
 
 			return bookingSystem;
 		}
 
+		//Returnerar tjänsten för bokningen
 		public Service GetService(int BookingSystemId, int serviceId) {
-			//bookingsystem
-			var bookingSystem = Get(BookingSystemId);
-			var service = bookingSystem.Services.Single(x => x.ServiceId == serviceId);//här behövs en inlcude för att det ska fungera
+			var bookingsystem = Get(BookingSystemId);
+			var service = bookingsystem.Services.Single(x => x.ServiceId == serviceId);//här behövs en inlcude för att det ska fungera
 			return service;
 
 		}
 
+		//Tar bort bokningsystemet
 		public void RemoveBookingSystem(int id) {
-			//bookingsystem
-			BookingSystem bookingSystem = Get(id);
-			Remove(bookingSystem);
+			BookingSystem bookingsystem = Get(id);
+			Remove(bookingsystem);
 		}
 
+		//Skapar en ny tjänst för bokningsystemet
 		public void AddService(Service service, int id) {
 			Get(id).Services.Add(service);
 
-			//bookingSystem.Services.Add()    
+			//bookingsystem.Services.Add()    
 		}
 
 
@@ -64,9 +65,8 @@ namespace SUPEN_Projekt.Repositories {
 		//    Get(id).Bookings.Add(booking);
 		//}
 
-		//GetBookingSystemService
-		public Service BookingSystemService(int id, int ServiceId) {
-			//bookingsystem
+		//Returnerar tjänsten för bokningsystemet
+		public Service GetBookingSystemService(int id, int ServiceId) {
 			BookingSystem bookingsystem = Get(id);
 			Service service = bookingsystem.Services.Single(x => x.ServiceId == ServiceId);
 			return service;
@@ -76,9 +76,12 @@ namespace SUPEN_Projekt.Repositories {
 			get { return Context as ApplicationDbContext; }
 		}
 
+
+		//Returnerar bokningsystem inom en viss distans inom vald stad
 		public List<BookingSystem> GetBookingSystemsInRange(BookingSystem inSelectedBookingSystem) {
 			var companiesInSelectedCity = ApplicationDbContext.BookingSystems.Where(x => x.City.ToLower() == inSelectedBookingSystem.City.ToLower() && x.CompanyName != inSelectedBookingSystem.CompanyName);
 			List<BookingSystem> companiesInRange = new List<BookingSystem>();
+
 			foreach (var item in companiesInSelectedCity) {
 				if (InDistance(inSelectedBookingSystem.Longitude, inSelectedBookingSystem.Latitude, item.Longitude, item.Latitude, 5000)) {
 					companiesInRange.Add(item);
@@ -88,7 +91,7 @@ namespace SUPEN_Projekt.Repositories {
 			return companiesInRange;
 		}
 
-		//beräknar distansen till andra företag. Returnerar t/f beroende på om avståndet är ok.
+		//Beräknar distansen till andra företag. Returnerar true/false beroende på om avståndet är ok.
 		public bool InDistance(double companyALong, double companyALat, double companyBLong, double companyBLat, int maxDistance) {
 			bool isCloseEnough = false;
 			companyALat = companyALat / 180 * Math.PI;
@@ -130,7 +133,8 @@ namespace SUPEN_Projekt.Repositories {
 		//}
 
 		List<BookingSystemOfInterest> DistBooking = new List<BookingSystemOfInterest>();
-		//används för att koppla distans och bokninssystem, utan att behöva ändra i modellen då distansen är olika i varje sökning. 
+
+		//Används för att koppla distans och bokningssystem, utan att behöva ändra i modellen då distansen är olika i varje sökning. 
 		private class BookingSystemOfInterest {
 			public BookingSystem bookingSystem;
 			public double distance;
@@ -139,7 +143,8 @@ namespace SUPEN_Projekt.Repositories {
 				this.distance = distance;
 			}
 		}
-		//Genom att skicka in en lista av bokningsystem och det valta företaget, sorteras dem efter vilken distans de har till det valda företaget.
+
+		//Genom att skicka in en lista av bokningsystem och det valda företaget, sorteras dem efter vilken distans de har till det valda företaget.
 		public List<BookingSystem> OrderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem) {
 
 			foreach (var item in inBookingSystems) {
@@ -152,26 +157,29 @@ namespace SUPEN_Projekt.Repositories {
 			}
 			return inBookingSystems;
 		}
-		//returnerar distancen mellan 2 företag
+
+		//Returnerar distancen mellan 2 företag
 		public double GetDistanceTo(BookingSystem bookingSystemA, BookingSystem bookingSystemB) {
 			var aCoord = new GeoCoordinate(bookingSystemA.Latitude, bookingSystemA.Longitude);
 			var bCoord = new GeoCoordinate(bookingSystemB.Latitude, bookingSystemB.Longitude);
 			return aCoord.GetDistanceTo(bCoord);
 		}
-		//Returnerar bookingsystems som har services inom andra brancher, kan även returnera selectedBookingService
+
+		//Returnerar bookingsystem som har services inom andra brancher, kan även returnera selectedBookingService
 		public List<BookingSystem> GetBookingSystemsInOtherBranches(List<BookingSystem> inBookingSystems, Service selectedService) {
 			List<BookingSystem> keep = new List<BookingSystem>();
 			BookingSystem tmbBookingSystem = new BookingSystem();
 
 			foreach (var aBookingSystem in inBookingSystems.Where(x => x.Services != null)) {
-				List<Service> servi = aBookingSystem.Services.Where(x => x.Branch.BranchName != selectedService.Branch.BranchName).ToList<Service>();
-				if (servi.Count() != 0) {
+				List<Service> service = aBookingSystem.Services.Where(x => x.Branch.BranchName != selectedService.Branch.BranchName).ToList<Service>();
+				if (service.Count() != 0) {
 					keep.Add(aBookingSystem);
 				}
 			}
 			return keep;
 		}
 
+		//Returnerar brancher för bokningsystemet
 		public List<string> GetBranchesInBookingSystem(BookingSystem bookingSystem) {
 			List<string> branchesInBookingSystem = new List<string>();
 			foreach (var item in bookingSystem.Services) {

@@ -135,7 +135,7 @@ namespace SUPEN_Projekt.Controllers {
 
         ////[Route("BookingSystem/{id:int}")]
         //public ActionResult CreateBooking(int id, string name) {
-        //	BookingSystem bookingSystem = uw.BookingSystems.GetTheBookingSystem(id);
+        //	BookingSystem bookingSystem = uw.BookingSystems.GetBookingSystem(id);
         //	ViewModel4 vm4 = new ViewModel4();
         //	vm4.bookingSystem = bookingSystem;
         //	vm4.service = bookingSystem.Services.Single(x => x.ServiceName == name);
