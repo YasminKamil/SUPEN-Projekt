@@ -22,7 +22,7 @@ namespace SUPEN_Projekt.Models {
 			  .HasMany(c => c.Services).WithMany(i => i.BookingSystems)
 			  .Map(t => t.MapLeftKey("BookingSystemId")
 				  .MapRightKey("ServiceId")
-				  .ToTable("BookingSystemService"));
+				  .ToTable("GetBookingSystemService"));
 		}
 
 		//public System.Data.Entity.DbSet<SUPEN_Projekt.Models.ViewModel4> ViewModel4 { get; set; }

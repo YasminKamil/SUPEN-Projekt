@@ -33,7 +33,7 @@ namespace SUPEN_Projekt.Controllers
 
         public ActionResult Index2()
         {
-            IEnumerable<BookingSystem> listbookingsys = uw.BookingSystems.GetAllBookingSystems();
+            IEnumerable<BookingSystem> listbookingsys = uw.BookingSystems.GetBookingSystems();
             return View(listbookingsys);
         }
 
@@ -41,7 +41,7 @@ namespace SUPEN_Projekt.Controllers
         public ActionResult Index3(int id)
         {
            
-            BookingSystem bookingSystem = uw.BookingSystems.GetTheBookingSystem(id);
+            BookingSystem bookingSystem = uw.BookingSystems.GetBookingSystem(id);
 
             ViewModel3 vm3 = new ViewModel3();
             vm3.bookingSystem = bookingSystem;
@@ -54,7 +54,7 @@ namespace SUPEN_Projekt.Controllers
         //[Route("BookingSystem/{id:int}")]
         public ActionResult CreateBooking(int id, string name)
         {
-           BookingSystem bookingSystem = uw.BookingSystems.GetTheBookingSystem(id);
+           BookingSystem bookingSystem = uw.BookingSystems.GetBookingSystem(id);
             ViewModel2 vm2 = new ViewModel2();
             vm2.bookingSystem = bookingSystem;
             vm2.service = bookingSystem.Services.Single(x=> x.ServiceName == name);
