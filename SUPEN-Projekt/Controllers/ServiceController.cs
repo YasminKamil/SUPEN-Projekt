@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SUPEN_Projekt.Logic;
 
 namespace SUPEN_Projekt.Controllers {
 	public class ServiceController : Controller {

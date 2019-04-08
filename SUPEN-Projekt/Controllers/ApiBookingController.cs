@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using SUPEN_Projekt.Logic;
 
 namespace SUPEN_Projekt.Controllers {
 	public class ApiBookingController : ApiController {

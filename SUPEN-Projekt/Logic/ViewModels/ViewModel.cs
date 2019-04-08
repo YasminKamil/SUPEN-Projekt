@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SUPEN_Projekt.Models;
 
-namespace SUPEN_Projekt.Models {
+namespace SUPEN_Projekt.Logic {
 	public class BookingSystemsViewModel {
 		public int Id { get; set; }
 		public IEnumerable<BookingSystem> bookingSystems { get; set; }
