@@ -24,11 +24,11 @@ namespace SUPEN_Projekt.Controllers {
 		//    uw = unitofwork;
 		//}
 
-		// GET: BookingSystem
+		//Returnerar alla bokningsystem med ett api-anrop
 		public async Task<ActionResult> Index() {
 			BookingSystemsViewModel bsVM = null;
 			HttpClient client = new HttpClient();
-			var result = client.GetAsync("http://localhost:55341/api/GetStr").Result; //Måste ändra clienten till GetBookings
+			var result = client.GetAsync("http://localhost:55341/api/GetSystems").Result; 
 			if (result.IsSuccessStatusCode) {
 				bsVM = await result.Content.ReadAsAsync<BookingSystemsViewModel>();
 			}
@@ -40,7 +40,7 @@ namespace SUPEN_Projekt.Controllers {
             return View(bsVM);
 		}
 
-		//Denna ska flyttas till bookingsystemcontroller och namnsättas till BookingSystem
+		//Returnerar det valda bokningsystemets tjänster
 		public async Task<ActionResult> BookingSystem(int id) {
 			//string bookingsystem = "";
 			ViewModel3 vm3 = null;
@@ -54,6 +54,7 @@ namespace SUPEN_Projekt.Controllers {
 			return View(vm3);
 		}
 
+		//Ett API-anrop till ApiBooking som serialiserar det använda objektet till JSON
 		public async Task<bool> APIContact(string inUrl, Object inObject) {
 			bool works = false;
 			var url = inUrl;
@@ -86,7 +87,7 @@ namespace SUPEN_Projekt.Controllers {
 
 		}
 
-		//GET: BookingSystem/RelevantBookingSystems/?BookingSystemId=1&serviceId=1
+		//Returnerar vilka bokningsystem som finns i närområdet efter att man har bokat en tjänst
 		public async Task<ActionResult> RelevantBookingSystems(int bookingSystemId, int serviceId) {
 
 			string list1 = "";
@@ -107,7 +108,7 @@ namespace SUPEN_Projekt.Controllers {
 
 			string list = "";
 			HttpClient client = new HttpClient();
-			string url = "http://localhost:55341/api/getRelevant/" + bookingSystemId.ToString() + "/" + serviceId.ToString();
+			string url = "http://localhost:55341/api/GetRelevantBookingSystem/" + bookingSystemId.ToString() + "/" + serviceId.ToString();
 			var result = client.GetAsync(url).Result;
 			if (result.IsSuccessStatusCode) {
 				list = await result.Content.ReadAsStringAsync();
