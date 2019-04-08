@@ -19,249 +19,55 @@ namespace SUPEN_Projekt.Models
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Service> Services { get; set; }
 
-		protected override void OnModelCreating(DbModelBuilder modelBuilder) {
-			modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-			modelBuilder.Entity<BookingSystem>()
-			  .HasMany(c => c.Services).WithMany(i => i.BookingSystems)
-			  .Map(t => t.MapLeftKey("BookingSystemId")
-				  .MapRightKey("ServiceId")
-				  .ToTable("GetBookingSystemService"));
-		}
-
-		public System.Data.Entity.DbSet<SUPEN_Projekt.Models.ViewModel3> ViewModel3 { get; set; }
-	}
-	public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> {
-
-        void addBranches(ApplicationDbContext context) {
-            List<String> branchString = new List<string> { "Frisör", "Besiktning", "Café", "Fordonsuthyrning", "Massör", "Verkstad", "Idrottsförening", "Kontor", "Utbildning", "Restaurang", "Sjukvård", "Transport", "Hotell", "Media", "IT", "Bank", "Bygg", "Konsultation", "Däck" };
-            foreach (var item in branchString)
-            {
-                Branch aBranch = new Branch();
-                aBranch.BranchName = item;
-                context.Branches.Add(aBranch);
-            }
-            context.SaveChanges();
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Entity<BookingSystem>()
+              .HasMany(c => c.Services).WithMany(i => i.BookingSystems)
+              .Map(t => t.MapLeftKey("BookingSystemId")
+                  .MapRightKey("ServiceId")
+                  .ToTable("GetBookingSystemService"));
         }
-        List<Booking> getBookings( ApplicationDbContext context) {
+    }
 
-            List<Service> services = new List<Service>();
-            Random randomNumber = new Random();
-            List<int> durations = new List<int> {25,30,35,40,45,50,55,60};
-            int duration = durations.OrderBy(x=> randomNumber.Next()).First();
-            int price = randomNumber.Next(150, 400);
-            int hoursOpen = randomNumber.Next(2,10);
-            List<Booking> listOfBookings = new List<Booking>();
-            listOfBookings = getBookings(duration, price, hoursOpen);
-            context.Bookings.AddRange(listOfBookings);
-            context.SaveChanges();
-
-            return listOfBookings;
-        }
-
+    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+    {
         protected override void Seed(ApplicationDbContext context)
         {
             addBranches(context);
-            
-            //List<Booking> b1 = getBookings(45, 100, 8);
-            //context.Bookings.AddRange(b1);
 
-            //List<Booking> b2 = getBookings(25, 200, 5);
-            //context.Bookings.AddRange(b2);
-
-            //List<Booking> b3 = getBookings(45, 300, 9);
-            //context.Bookings.AddRange(b3);
-
-            //List<Booking> b4 = getBookings(60, 70, 12);
-            //context.Bookings.AddRange(b4);
-            //context.SaveChanges();
-
-            var services = new List<Service>() {
-                new Service{
-                ServiceName = "Klippning",
-                Duration = 45,
-                Price = 100,
-                Branch= context.Branches.Single(x=> x.BranchName =="Frisör" ),
-                Bookings = getBookings(context)
-        },
-                new Service {ServiceName = "Färgning",
-                Duration = 25,
-                Price = 200,
-                Branch = context.Branches.Single(x=> x.BranchName =="Frisör" ),
-                Bookings = getBookings(context)},
-                new Service { ServiceName = "Däckbyte",
-                Duration = 45,
-                Price = 300,
-                Branch = context.Branches.Single(x=> x.BranchName =="Däck" ),
-                Bookings = getBookings(context)},
-                new Service { ServiceName = "Bullfika",
-                Duration = 60,
-                Price = 70,
-                Branch = context.Branches.Single(x=> x.BranchName =="Café" ),
-                Bookings = getBookings(context)},
-            };
-            services.ForEach(x => context.Services.Add(x));
-
+            addService(context, "Klippning", 25, 100, "Frisör");
+            addService(context, "Färgning", 45, 200, "Frisör");
+            addService(context, "Däckbyte", 45, 300, "Däck");
+            addService(context, "Bullfika", 60, 70, "Café");
             context.SaveChanges();
 
-            var bookingSystems = new List<BookingSystem>() {
-                new BookingSystem {
+            addBookingSystem(context, "boka.se", "Description...", "ArtofHair@boka.se", "070 - 000 00 00", "boka.se/ArtofHair", "Art of Hair", "ArtofHair@boka.se",
+            "070 - 123 56 78", "Fabriksgatan 13", 59.2703188, 15.2074733, "702 10", "Örebro");
 
-                    SystemName = "boka.se",
-                    SystemDescription = "Description...",
-                    Email = "ArtofHair@boka.se",
-                    PhoneNumber = "070 - 000 00 00",
-                    Website = "boka.se/ArtofHair",
-                    CompanyName = "Art of Hair",
-                    ContactEmail = "ArtofHair@boka.se",
-                    ContactPhone = "070 - 123 56 78",
-                    Address = " Fabriksgatan 13",
-                    Latitude = 59.2703188,
-                    Longitude = 15.2074733,
-                    PostalCode = "702 10",
-                    City = "Örebro",
-                    Services = new List<Service>() //{ context.Services.Single(x => x.ServiceId == 1), context.Services.Single(x => x.ServiceId == 2) }
-                },
+            addBookingSystem(context, "boka.se", "Description...", "bullvivan@boka.se", "070 - 000 00 00", "boka.se/bullvivan", "Bullvivan", "bullvivan@boka.se", 
+            "070 - 123 56 78", "Kyrkvärdsvägen 17",59.27412, 15.2066, "702 84", "Örebro");
 
-                new BookingSystem {
+            addBookingSystem(context, "boka.se", "Description...","Epiroc@boka.se","070 - 000 00 00", "boka.se/Epiroc","Epiroc","Epiroc@boka.se",
+            "070 - 123 56 78","Tackjärnsgatan 8",59.291713,15.204345, "703 83", "Örebro");
 
-                    SystemName = "boka.se",
-                    SystemDescription = "Description...",
-                    Email = "bullvivan@boka.se",
-                    PhoneNumber = "070 - 000 00 00",
-                    Website = "boka.se/bullvivan",
-                    CompanyName = "Bullvivan",
-                    ContactEmail = "bullvivan@boka.se",
-                    ContactPhone = "070 - 123 56 78",
-                    Address = "Kyrkvärdsvägen 17",
-                    Latitude = 59.27412,
-                    Longitude = 15.2066,
-                    PostalCode = "702 84",
-                    City = "Örebro",
-                    Services = new List<Service>()//{ context.Services.Single(x => x.ServiceId == 4) }
-                },
-                 new BookingSystem {
+            addBookingSystem(context, "boka.se", "Description...", "Frisorkompaniet@boka.se", "070 - 000 00 00", "boka.se/salongfinest", "Frisörkompaniet","Frisörkompaniet@boka.se", 
+            "070 - 123 56 78", "Kristinagatan 10", 59.270042, 15.229628,"602 26", "Norrköping");
 
-                    SystemName = "boka.se",
-                    SystemDescription = "Description...",
-                    Email = "Epiroc@boka.se",
-                    PhoneNumber = "070 - 000 00 00",
-                    Website = "boka.se/Epiroc",
-                    CompanyName = "Epiroc",
-                    ContactEmail = "Epiroc@boka.se",
-                    ContactPhone = "070 - 123 56 78",
-                    Address = "Tackjärnsgatan 8",
-                    Latitude = 59.291713,
-                    Longitude = 15.204345,
-                    PostalCode = "703 83",
-                    City = "Örebro",
-                    Services = new List<Service>()//{ context.Services.Single(x => x.ServiceId == 3) }
-                },
-                 new BookingSystem {
+            addBookingSystem(context, "boka.se", "Description...", "Carspect@boka.se", "070 - 000 00 00", "boka.se/Carspect", "Carspect", "Carspect@boka.se",
+            "070 - 123 56 78", "Bangårdsg. 5", 58.593966, 16.204253, "602 28", "Norrköping");
 
-                    SystemName = "boka.se",
-                    SystemDescription = "Description...",
-                    Email = "Frisorkompaniet@boka.se",
-                    PhoneNumber = "070 - 000 00 00",
-                    Website = "boka.se/salongfinest",
-                    CompanyName = "Frisörkompaniet",
-                    ContactEmail = "Frisörkompaniet@boka.se",
-                    ContactPhone = "070 - 123 56 78",
-                    Address = "Kristinagatan 10",
-                    Latitude = 59.270042,
-                    Longitude = 15.229628,
-                    PostalCode = "602 26",
-                    City = "Norrköping",
-                    Services = new List<Service>()//{ context.Services.Single(x => x.ServiceId == 1), context.Services.Single(x => x.ServiceId == 2) }
-                },
-                 new BookingSystem {
+            addBookingSystem(context, "boka.se", "Description...", "Sodermalmdack@boka.se", "070 - 000 00 00", "boka.se/Sodermalmdack", "Södermalm däck & bilrekond","Sodermalmdack@boka.se", 
+            "070 - 123 56 78", "Rutger Fuchsgatan 4", 59.3079479, 18.0789683, "116 67", "Stockholm");
 
-                    SystemName = "boka.se",
-                    SystemDescription = "Description...",
-                    Email = "Carspect@boka.se",
-                    PhoneNumber = "070 - 000 00 00",
-                    Website = "boka.se/Carspect",
-                    CompanyName = "Carspect",
-                    ContactEmail = "Carspect@boka.se",
-                    ContactPhone = "070 - 123 56 78",
-                    Address = "Bangårdsg. 5",
-                    Latitude = 58.593966,
-                    Longitude = 16.204253,
-                    PostalCode = "602 28",
-                    City = "Norrköping",
-                    Services = new List<Service>()//{ context.Services.Single(x => x.ServiceId == 3)}
-                },
-                 new BookingSystem {
+            addBookingSystem(context, "boka.se", "Description...", "Noir@boka.se", "070 - 000 00 00", "boka.se/Noir", "Noir", "Noir@boka.se", 
+            "070 - 123 56 78","Regeringsgatan 80", 59.3378022, 18.0674249, "111 39", "Stockholm");
 
-                    SystemName = "boka.se",
-                    SystemDescription = "Description...",
-                    Email = "Sodermalmdack@boka.se",
-                    PhoneNumber = "070 - 000 00 00",
-                    Website = "boka.se/Sodermalmdack",
-                    CompanyName = "Södermalm däck & bilrekond",
-                    ContactEmail = "Sodermalmdack@boka.se",
-                    ContactPhone = "070 - 123 56 78",
-                    Address = "Rutger Fuchsgatan 4",
-                    Latitude = 59.3079479,
-                    Longitude = 18.0789683,
-                    PostalCode = "116 67",
-                    City = "Stockholm",
-                    Services = new List<Service>()//{ context.Services.Single(x => x.ServiceId == 3)}
-                },
-                 new BookingSystem {
+            addBookingSystem(context, "boka.se", "Description...", "BodyFace@boka.se", "070 - 000 00 00", "boka.se/BodyFace", "BodyFace", "BodyFace@boka.se",
+            "070 - 123 56 78", "Fredriksbergsgatan 6", 55.6066851, 13.0183526, "212 11", "Malmö");
 
-                    SystemName = "boka.se",
-                    SystemDescription = "Description...",
-                    Email = "Noir@boka.se",
-                    PhoneNumber = "070 - 000 00 00",
-                    Website = "boka.se/Noir",
-                    CompanyName = "Noir",
-                    ContactEmail = "Noir@boka.se",
-                    ContactPhone = "070 - 123 56 78",
-                    Address = "Regeringsgatan 80",
-                    Latitude = 59.3378022,
-                    Longitude = 18.0674249,
-                    PostalCode = "111 39",
-                    City = "Stockholm",
-                    Services = new List<Service>()//{ context.Services.Single(x => x.ServiceId == 1), context.Services.Single(x => x.ServiceId == 2) }
-                },
-                 new BookingSystem {
-
-                    SystemName = "boka.se",
-                    SystemDescription = "Description...",
-                    Email = "BodyFace@boka.se",
-                    PhoneNumber = "070 - 000 00 00",
-                    Website = "boka.se/BodyFace",
-                    CompanyName = "BodyFace",
-                    ContactEmail = "BodyFace@boka.se",
-                    ContactPhone = "070 - 123 56 78",
-                    Address = "Fredriksbergsgatan 6",
-                    Latitude = 55.6066851,
-                    Longitude = 13.0183526,
-                    PostalCode = "212 11",
-                    City = "Malmö",
-                    Services = new List<Service>()//{ context.Services.Single(x => x.ServiceId == 1), context.Services.Single(x => x.ServiceId == 2) }
-                },
-                  new BookingSystem {
-
-                    SystemName = "boka.se",
-                    SystemDescription = "Description...",
-                    Email = "Besikta@boka.se",
-                    PhoneNumber = "070 - 000 00 00",
-                    Website = "boka.se/Besikta",
-                    CompanyName = "Besikta",
-                    ContactEmail = "Besikta@boka.se",
-                    ContactPhone = "070 - 123 56 78",
-                    Address = "Källvattengatan 7",
-                    Latitude = 55.6059,
-                    Longitude = 13.0007,
-                    PostalCode = "212 23",
-                    City = "Malmö",
-                    Services = new List<Service>()
-                }
-            };
-
-
-            bookingSystems.ForEach(x => context.BookingSystems.Add(x));
+            addBookingSystem(context, "boka.se", "Description...", "Besikta@boka.se", "070 - 000 00 00", "boka.se/Besikta", "Besikta", "Besikta@boka.se", 
+            "070 - 123 56 78","Källvattengatan 7", 55.6059, 13.0007, "212 23", "Malmö");
             context.SaveChanges();
 
             AddServices(context, "Art of Hair", "Klippning");
@@ -273,7 +79,7 @@ namespace SUPEN_Projekt.Models
             AddServices(context, "Södermalm däck & bilrekond", "Däckbyte");
             AddServices(context, "Noir", "Färgning");
             AddServices(context, "BodyFace", "Färgning");
-            //AddServices(context, "BodyFace", "Klippning");
+            AddServices(context, "BodyFace", "Klippning");
             AddServices(context, "Besikta", "Däckbyte");
 
             context.SaveChanges();
@@ -316,6 +122,71 @@ namespace SUPEN_Projekt.Models
                 bookings.Add(booking);
             }
             return bookings;
+        }
+
+        void addBranches(ApplicationDbContext context)
+        {
+            List<String> branchString = new List<string> { "Frisör", "Besiktning", "Café", "Fordonsuthyrning", "Massör", "Verkstad", "Idrottsförening", "Kontor", "Utbildning", "Restaurang", "Sjukvård", "Transport", "Hotell", "Media", "IT", "Bank", "Bygg", "Konsultation", "Däck" };
+            foreach (var item in branchString)
+            {
+                Branch aBranch = new Branch();
+                aBranch.BranchName = item;
+                context.Branches.Add(aBranch);
+            }
+            context.SaveChanges();
+        }
+        List<Booking> getBookings(ApplicationDbContext context, int duration, int price)
+        {
+
+            List<Service> services = new List<Service>();
+            Random randomNumber = new Random();
+            List<int> durations = new List<int> { 25, 30, 35, 40, 45, 50, 55, 60 };
+            //int duration = durations.OrderBy(x=> randomNumber.Next()).First();
+            //int price = randomNumber.Next(150, 400);
+            int hoursOpen = randomNumber.Next(2, 10);
+            List<Booking> listOfBookings = new List<Booking>();
+            listOfBookings = getBookings(duration, price, hoursOpen);
+            context.Bookings.AddRange(listOfBookings);
+            context.SaveChanges();
+
+            return listOfBookings;
+        }
+        void addService(ApplicationDbContext context, string inServiceName, int inDuration, int inPrice, string inBranchName)
+        {
+            Service aService = new Service();
+            aService.ServiceName = inServiceName;
+            aService.Duration = inDuration;
+            aService.Price = inPrice;
+            aService.Branch = context.Branches.Single(x => x.BranchName == inBranchName);
+            aService.Bookings = getBookings(context, inDuration, inPrice);
+            context.Services.Add(aService);
+            context.SaveChanges();
+        }
+        void addBookingSystem(ApplicationDbContext context, string inSystemName, string inSystemDescription, string inEmail, string inPhoneNumber, string inWebsite, string inCompanyName, string inContactEmail, string inContactPhone, string inAddress, double inLatitude, double inLongitude, string inPostalCode, string inCity)
+        {
+
+
+
+            BookingSystem aBookingSystem = new BookingSystem
+            {
+
+                SystemName = inSystemName,
+                SystemDescription = inSystemDescription,
+                Email = inEmail,
+                PhoneNumber = inPhoneNumber,
+                Website = inWebsite,
+                CompanyName = inCompanyName,
+                ContactEmail = inContactEmail,
+                ContactPhone = inContactPhone,
+                Address = inAddress,
+                Latitude = inLatitude,
+                Longitude = inLongitude,
+                PostalCode = inPostalCode,
+                City = inCity,
+                Services = new List<Service>() //{ context.Services.Single(x => x.ServiceId == 1), context.Services.Single(x => x.ServiceId == 2) }
+            };
+            context.BookingSystems.Add(aBookingSystem);
+            context.SaveChanges();
         }
     }
 }
