@@ -58,7 +58,8 @@ namespace SUPEN_Projekt.Models
             "070 - 123 56 78","Källvattengatan 7", 55.6059, 13.0007, "212 23", "Malmö");
             context.SaveChanges();
 
-            //Lägger till och skapar services via addService metoden 
+            //Lägger till och skapar services via addService metoden
+            //context , servicenamn, t
             addService(context, "Klippning", 25, 100, "Frisör","Art of Hair");
             addService(context, "Färgning", 45, 200, "Frisör", "Art of Hair");
             addService(context, "Bullfika", 45, 200, "Café", "Bullvivan");
@@ -83,7 +84,7 @@ namespace SUPEN_Projekt.Models
             aService.Duration = inDuration;
             aService.Price = inPrice;
             aService.Branch = context.Branches.Single(x => x.BranchName == inBranchName);
-            aService.Bookings = getBookings(context);
+            aService.Bookings = getBookings(context,inPrice, inDuration);
             context.Services.Add(aService);
             context.SaveChanges();
 
@@ -95,9 +96,27 @@ namespace SUPEN_Projekt.Models
 
         }
 
+
+        List<Booking> getBookings(ApplicationDbContext context, int inPrice, int inDuration)
+        {
+
+            List<Service> services = new List<Service>();
+            Random randomNumber = new Random();
+            //List<int> durations = new List<int> { 25, 30, 35, 40, 45, 50, 55, 60 };
+            int duration = inDuration; //durations.OrderBy(x=> randomNumber.Next()).First();
+            int price = inPrice; // randomNumber.Next(150, 400);
+            int hoursOpen = randomNumber.Next(2, 10);
+            List<Booking> listOfBookings = new List<Booking>();
+            listOfBookings = seedBookings(duration, price, hoursOpen);
+            context.Bookings.AddRange(listOfBookings);
+            context.SaveChanges();
+
+            return listOfBookings;
+        }
+
         //returnerar en lista på bokningar under öppentiden, skapar så många som möjligt under öppettiden.
         //getBookings -> GetBookings
-        public List<Booking> getBookings(int duration, int price, int totalHoursOpen)
+        public List<Booking> seedBookings(int duration, int price, int totalHoursOpen)
         {
             var bookings = new List<Booking>();
             decimal inHours = Convert.ToDecimal(duration) / Convert.ToDecimal(60);
@@ -134,22 +153,7 @@ namespace SUPEN_Projekt.Models
             }
             context.SaveChanges();
         }
-        List<Booking> getBookings(ApplicationDbContext context)
-        {
 
-            List<Service> services = new List<Service>();
-            Random randomNumber = new Random();
-            List<int> durations = new List<int> { 25, 30, 35, 40, 45, 50, 55, 60 };
-            int duration = durations.OrderBy(x=> randomNumber.Next()).First();
-            int price = randomNumber.Next(150, 400);
-            int hoursOpen = randomNumber.Next(2, 10);
-            List<Booking> listOfBookings = new List<Booking>();
-            listOfBookings = getBookings(duration, price, hoursOpen);
-            context.Bookings.AddRange(listOfBookings);
-            context.SaveChanges();
-
-            return listOfBookings;
-        }
 
         void addBookingSystem(ApplicationDbContext context, string inSystemName, string inSystemDescription, string inEmail, string inPhoneNumber, string inWebsite, string inCompanyName, string inContactEmail, string inContactPhone, string inAddress, double inLatitude, double inLongitude, string inPostalCode, string inCity)
         {
