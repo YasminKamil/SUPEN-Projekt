@@ -73,15 +73,16 @@ namespace SUPEN_Projekt.Controllers {
 
 		// GET: BookingSystem/Create
 		public ActionResult Create() {
+
 			return View();
 		}
 
 		[HttpPost]
 		public async Task<ActionResult> Create(ViewModel4 system) {
-			var url = "http://localhost:55341/api/post";
+			var url = "http://localhost:55341/api/PostBookingSystem";
 
 			if (await APIContact(url, system)) {
-				return RedirectToAction("Index");
+                return RedirectToAction("Index");
 			}
 			return View(system);
 

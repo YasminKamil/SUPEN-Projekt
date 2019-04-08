@@ -79,6 +79,7 @@ namespace SUPEN_Projekt.Controllers {
 			return Ok(vm3);
 		}
 
+
 		//Hämtar och beräknar avståndet mellan befintliga bokningsystem
 		[Route("api/GetBookingSystem/{bookingSystemAId:int}/{bookingSystemBId:int}")]
 		[HttpGet]
