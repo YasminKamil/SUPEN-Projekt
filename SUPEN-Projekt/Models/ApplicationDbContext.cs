@@ -19,29 +19,17 @@ namespace SUPEN_Projekt.Models
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Service> Services { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            modelBuilder.Entity<BookingSystem>()
-              .HasMany(c => c.Services).WithMany(i => i.BookingSystems)
-              .Map(t => t.MapLeftKey("BookingSystemId")
-                  .MapRightKey("ServiceId")
-                  .ToTable("GetBookingSystemService"));
-        }
     }
 
-    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+    public class DatabaseInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)
         {
-            addBranches(context);
+            //Lägger till Branscher via addBranches metoden
+           List<string> branches = new List<string> { "Frisör", "Besiktning", "Café", "Fordonsuthyrning", "Massör", "Verkstad", "Idrottsförening", "Kontor", "Utbildning", "Restaurang", "Sjukvård", "Transport", "Hotell", "Media", "IT", "Bank", "Bygg", "Konsultation", "Däck" };
+            addBranches(context, branches);
 
-            addService(context, "Klippning", 25, 100, "Frisör");
-            addService(context, "Färgning", 45, 200, "Frisör");
-            addService(context, "Däckbyte", 45, 300, "Däck");
-            addService(context, "Bullfika", 60, 70, "Café");
-            context.SaveChanges();
-
+            //Lägger till BookingSystems via metoden addBookingSystem
             addBookingSystem(context, "boka.se", "Description...", "ArtofHair@boka.se", "070 - 000 00 00", "boka.se/ArtofHair", "Art of Hair", "ArtofHair@boka.se",
             "070 - 123 56 78", "Fabriksgatan 13", 59.2703188, 15.2074733, "702 10", "Örebro");
 
@@ -70,31 +58,42 @@ namespace SUPEN_Projekt.Models
             "070 - 123 56 78","Källvattengatan 7", 55.6059, 13.0007, "212 23", "Malmö");
             context.SaveChanges();
 
-            AddServices(context, "Art of Hair", "Klippning");
-            AddServices(context, "Art of Hair", "Färgning");
-            AddServices(context, "Bullvivan", "Bullfika");
-            AddServices(context, "Epiroc", "Däckbyte");
-            AddServices(context, "Frisörkompaniet", "Klippning");
-            AddServices(context, "Carspect", "Däckbyte");
-            AddServices(context, "Södermalm däck & bilrekond", "Däckbyte");
-            AddServices(context, "Noir", "Färgning");
-            AddServices(context, "BodyFace", "Färgning");
-            AddServices(context, "BodyFace", "Klippning");
-            AddServices(context, "Besikta", "Däckbyte");
+            //Lägger till och skapar services via addService metoden 
+            addService(context, "Klippning", 25, 100, "Frisör","Art of Hair");
+            addService(context, "Färgning", 45, 200, "Frisör", "Art of Hair");
+            addService(context, "Bullfika", 45, 200, "Café", "Bullvivan");
+            addService(context, "Hyr en dumper", 45, 200, "Fordonsuthyrning", "Epiroc");
+            addService(context, "Klippning", 45, 200, "Frisör", "Frisörkompaniet");
+            addService(context, "Däckbyte", 45, 200, "Däck", "Carspect");
+            addService(context, "Däckbyte", 45, 200, "Däck", "Södermalm däck & bilrekond");
+            addService(context, "Färgning", 45, 200, "Frisör", "Noir");
+            addService(context, "Färgning", 45, 200, "Frisör", "BodyFace");
+            addService(context, "Klippning", 25, 200, "Frisör", "BodyFace");
+            addService(context, "Besiktning", 25, 200, "Besiktning", "Besikta");
 
             context.SaveChanges();
 
             base.Seed(context);
         }
-
-        void AddServices(ApplicationDbContext context, string cName, string sName)
+        void addService(ApplicationDbContext context, string inServiceName, int inDuration, int inPrice, string inBranchName, string cName)
         {
-            var bs = context.BookingSystems.SingleOrDefault(c => c.CompanyName == cName);
-            var serv = bs.Services.SingleOrDefault(i => i.ServiceName == sName);
-            if (serv == null)
-                bs.Services.Add(context.Services.Single(i => i.ServiceName == sName));
-        }
+            Service aService = new Service();
+            aService.ServiceId = context.Services.Count();
+            aService.ServiceName = inServiceName;
+            aService.Duration = inDuration;
+            aService.Price = inPrice;
+            aService.Branch = context.Branches.Single(x => x.BranchName == inBranchName);
+            aService.Bookings = getBookings(context);
+            context.Services.Add(aService);
+            context.SaveChanges();
 
+            var bs = context.BookingSystems.SingleOrDefault(c => c.CompanyName == cName);
+            var serv = bs.Services.SingleOrDefault(i => i.ServiceId == aService.ServiceId);
+            if (serv == null)
+                bs.Services.Add(context.Services.Single(i => i.ServiceId == aService.ServiceId));
+            context.SaveChanges();
+
+        }
 
         //returnerar en lista på bokningar under öppentiden, skapar så många som möjligt under öppettiden.
         //getBookings -> GetBookings
@@ -124,9 +123,9 @@ namespace SUPEN_Projekt.Models
             return bookings;
         }
 
-        void addBranches(ApplicationDbContext context)
+        void addBranches(ApplicationDbContext context, List<string> inBranchList)
         {
-            List<String> branchString = new List<string> { "Frisör", "Besiktning", "Café", "Fordonsuthyrning", "Massör", "Verkstad", "Idrottsförening", "Kontor", "Utbildning", "Restaurang", "Sjukvård", "Transport", "Hotell", "Media", "IT", "Bank", "Bygg", "Konsultation", "Däck" };
+            List<String> branchString = inBranchList;
             foreach (var item in branchString)
             {
                 Branch aBranch = new Branch();
@@ -135,14 +134,14 @@ namespace SUPEN_Projekt.Models
             }
             context.SaveChanges();
         }
-        List<Booking> getBookings(ApplicationDbContext context, int duration, int price)
+        List<Booking> getBookings(ApplicationDbContext context)
         {
 
             List<Service> services = new List<Service>();
             Random randomNumber = new Random();
             List<int> durations = new List<int> { 25, 30, 35, 40, 45, 50, 55, 60 };
-            //int duration = durations.OrderBy(x=> randomNumber.Next()).First();
-            //int price = randomNumber.Next(150, 400);
+            int duration = durations.OrderBy(x=> randomNumber.Next()).First();
+            int price = randomNumber.Next(150, 400);
             int hoursOpen = randomNumber.Next(2, 10);
             List<Booking> listOfBookings = new List<Booking>();
             listOfBookings = getBookings(duration, price, hoursOpen);
@@ -151,17 +150,7 @@ namespace SUPEN_Projekt.Models
 
             return listOfBookings;
         }
-        void addService(ApplicationDbContext context, string inServiceName, int inDuration, int inPrice, string inBranchName)
-        {
-            Service aService = new Service();
-            aService.ServiceName = inServiceName;
-            aService.Duration = inDuration;
-            aService.Price = inPrice;
-            aService.Branch = context.Branches.Single(x => x.BranchName == inBranchName);
-            aService.Bookings = getBookings(context, inDuration, inPrice);
-            context.Services.Add(aService);
-            context.SaveChanges();
-        }
+
         void addBookingSystem(ApplicationDbContext context, string inSystemName, string inSystemDescription, string inEmail, string inPhoneNumber, string inWebsite, string inCompanyName, string inContactEmail, string inContactPhone, string inAddress, double inLatitude, double inLongitude, string inPostalCode, string inCity)
         {
 
