@@ -22,7 +22,7 @@ namespace SUPEN_Projekt.Controllers {
 		//GET: Booking detat kan tas bort
 		public ActionResult Index() {
 			ViewModel myModel = new ViewModel();
-			myModel.Bookings = uw.Bookings.GetAllBookings();
+			myModel.Bookings = uw.Bookings.GetBookings();
 			//	myModel.Services = uw.Services.GetAllServices();
 			return View(myModel);
 		}

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace SUPEN_Projekt.Repositories {
 	public interface IBookingRepository : IRepository<Booking> {
-		//metoden GetAllBookings är redundant eftersom Irepository redan har en metod för get all.
+		//metoden GetBookings är redundant eftersom Irepository redan har en metod för get all.
 		//fungerar som testmetod tills vidare.
 		Booking CreateBooking(Booking inBooking);
-		IEnumerable<Booking> GetAllBookings();
+		IEnumerable<Booking> GetBookings();
 		void UpdateBooking(Booking booking);
 
 	}
