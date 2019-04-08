@@ -23,22 +23,22 @@ namespace SUPEN_Projekt.Controllers {
 		public ActionResult Index() {
 			ViewModel myModel = new ViewModel();
 			myModel.Bookings = uw.Bookings.GetBookings();
-			//	myModel.Services = uw.Services.GetAllServices();
+			//	myModel.Services = uw.Services.GetServices();
 			return View(myModel);
 		}
 
 		//döpas om till Index när ovanstående är borta
 		public async Task<ActionResult> Index2() {
-			string list = "";
+			BookingsViewModel list = null;
 			HttpClient client = new HttpClient();
 			var result = client.GetAsync("http://localhost:55341/api/getstrbooking").Result;
 			if (result.IsSuccessStatusCode) {
-				list = await result.Content.ReadAsStringAsync();
+				list = await result.Content.ReadAsAsync<BookingsViewModel>();
 			}
 
 			//objects till bookings
-			List<Booking> objects = JsonConvert.DeserializeObject<List<Booking>>(list);
-			return View(objects);
+			//List<Booking> objects = JsonConvert.DeserializeObject<List<Booking>>(list);
+			return View(list);
 		}
 
 		//Denna ska flyttas till bookingsystemcontroller och namnsättas till BookingSystem
@@ -135,7 +135,7 @@ namespace SUPEN_Projekt.Controllers {
 
         ////[Route("BookingSystem/{id:int}")]
         //public ActionResult CreateBooking(int id, string name) {
-        //	BookingSystem bookingSystem = uw.BookingSystems.GetTheBookingSystem(id);
+        //	BookingSystem bookingSystem = uw.BookingSystems.GetBookingSystem(id);
         //	ViewModel4 vm4 = new ViewModel4();
         //	vm4.bookingSystem = bookingSystem;
         //	vm4.service = bookingSystem.Services.Single(x => x.ServiceName == name);

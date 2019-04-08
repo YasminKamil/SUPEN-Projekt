@@ -19,20 +19,19 @@ namespace SUPEN_Projekt.Models
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Service> Services { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            modelBuilder.Entity<BookingSystem>()
-              .HasMany(c => c.Services).WithMany(i => i.BookingSystems)
-              .Map(t => t.MapLeftKey("BookingSystemId")
-                  .MapRightKey("ServiceId")
-                  .ToTable("BookingSystemService"));
-        }
+		protected override void OnModelCreating(DbModelBuilder modelBuilder) {
+			modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+			modelBuilder.Entity<BookingSystem>()
+			  .HasMany(c => c.Services).WithMany(i => i.BookingSystems)
+			  .Map(t => t.MapLeftKey("BookingSystemId")
+				  .MapRightKey("ServiceId")
+				  .ToTable("GetBookingSystemService"));
+		}
 
-        //public System.Data.Entity.DbSet<SUPEN_Projekt.Models.ViewModel4> ViewModel4 { get; set; }
+        
+      
     }
-    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
-    {
+    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> {
 
         void addBranches(ApplicationDbContext context) {
             List<String> branchString = new List<string> { "Frisör", "Besiktning", "Café", "Fordonsuthyrning", "Massör", "Verkstad", "Idrottsförening", "Kontor", "Utbildning", "Restaurang", "Sjukvård", "Transport", "Hotell", "Media", "IT", "Bank", "Bygg", "Konsultation", "Däck" };

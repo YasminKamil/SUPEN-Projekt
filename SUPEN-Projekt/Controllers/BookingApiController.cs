@@ -30,7 +30,7 @@ namespace SUPEN_Projekt.Controllers {
 		[HttpGet]
 		public IHttpActionResult GetSystem(int id) {
 
-			BookingSystem bookingsystem = uw.BookingSystems.GetTheBookingSystem(id);
+			BookingSystem bookingsystem = uw.BookingSystems.GetBookingSystem(id);
             ViewModel3 vm3 = new ViewModel3();
             vm3.bookingSystem = bookingsystem;
             vm3.services = bookingsystem.Services;
@@ -42,7 +42,9 @@ namespace SUPEN_Projekt.Controllers {
 		[Route("api/getstrbooking")]
 		[HttpGet]
 		public IHttpActionResult GetStr() {
-			IEnumerable<Booking> list = uw.Bookings.GetAll();
+			IEnumerable<Booking> bookings = uw.Bookings.GetAll();
+            BookingsViewModel list = new BookingsViewModel();
+            list.bookings = bookings;
 			return Ok(list);
 		}
 
@@ -66,7 +68,7 @@ namespace SUPEN_Projekt.Controllers {
 		[HttpGet]
 		public IHttpActionResult GetBooking(int inBookingSystemId, int inServiceId, int inBookingId) {
 			
-			BookingSystem bs = uw.BookingSystems.GetTheBookingSystem(inBookingSystemId);
+			BookingSystem bs = uw.BookingSystems.GetBookingSystem(inBookingSystemId);
             ViewModel4 vm4 = new ViewModel4();
 
             vm4.bookingSystem = bs;

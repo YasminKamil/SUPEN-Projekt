@@ -11,21 +11,22 @@ namespace SUPEN_Projekt.Repositories {
 	public class ServiceRepository : Repository<Service>, IServiceRepository {
 		public ServiceRepository(ApplicationDbContext context) : base(context) { }
 
-		//GetServices
-		public IEnumerable<Service> GetAllServices() {
+		//Retunerar tjänster
+		public IEnumerable<Service> GetServices() {
 			return ApplicationDbContext.Set<Service>().Include(x => x.Branch).Include(b => b.Bookings);
 		}
 
-		//GetService
-		public Service GetTheService(int id) {
-			IEnumerable<Service> services = GetAllServices();
+		//Returnerar den specifika tjänsten
+		public Service GetService(int id) {
+			IEnumerable<Service> services = GetServices();
 			Service service = services.Single(x => x.ServiceId == id);
 			return service;
 		}
 
+		//Skapar en ny tjänst för bokning
 		public void AddBooking(Booking booking, int id) {
 
-			IEnumerable<Service> services = GetAllServices();
+			IEnumerable<Service> services = GetServices();
 			Service service = services.Single(x => x.ServiceId == id);
 			service.Bookings.Add(booking);
 
