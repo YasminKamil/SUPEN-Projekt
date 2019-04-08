@@ -84,10 +84,10 @@ namespace SUPEN_Projekt.Controllers {
         {
 
             //BookingSystem bookingsystem = uw.BookingSystems.GetBookingSystem(id);
-            ViewModel4 vm4 = new ViewModel4();
+			BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
             //vm4.bookingSystem = bookingsystem;
             //vm4.services = bookingsystem.Services;
-            return Ok(vm4);
+            return Ok(bsSBVM);
         }
 
 
