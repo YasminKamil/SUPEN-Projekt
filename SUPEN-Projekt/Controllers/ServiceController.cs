@@ -16,12 +16,11 @@ namespace SUPEN_Projekt.Controllers {
 
 		// GET: Service
 		public ActionResult Index(int id, int systemId) {
-			ViewModel2 vm2 = new ViewModel2();
+			BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
+			bsSBVM.bookingSystem = uw.BookingSystems.GetBookingSystem(systemId);
+			bsSBVM.service = bsSBVM.bookingSystem.Services.Single(x => x.ServiceId == id);//uw.Services.GetService(id);
 
-			vm2.bookingSystem = uw.BookingSystems.GetBookingSystem(systemId);
-			vm2.service = vm2.bookingSystem.Services.Single(x => x.ServiceId == id);//uw.Services.GetService(id);
-
-			return View(vm2);
+			return View(bsSBVM);
 
 		}
 

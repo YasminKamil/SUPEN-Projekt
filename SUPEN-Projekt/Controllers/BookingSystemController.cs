@@ -28,30 +28,28 @@ namespace SUPEN_Projekt.Controllers {
 		public async Task<ActionResult> Index() {
 			BookingSystemsViewModel bsVM = null;
 			HttpClient client = new HttpClient();
-			var result = client.GetAsync("http://localhost:55341/api/GetSystems").Result; 
+			var result = client.GetAsync("http://localhost:55341/api/GetSystems").Result;
 			if (result.IsSuccessStatusCode) {
 				bsVM = await result.Content.ReadAsAsync<BookingSystemsViewModel>();
+			} else {
+				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
 			}
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-            }
- 
-            return View(bsVM);
+
+			return View(bsVM);
 		}
 
 		//Returnerar det valda bokningsystemets tjänster
 		public async Task<ActionResult> BookingSystem(int id) {
 			//string bookingsystem = "";
-			ViewModel3 vm3 = null;
+			BookingSystemServicesViewModel bsSVM = null;
 			HttpClient client = new HttpClient();
 			var result = client.GetAsync("http://localhost:55341/api/GetSystem/" + id).Result;
 			if (result.IsSuccessStatusCode) {
-				vm3 = await result.Content.ReadAsAsync<ViewModel3>();
+				bsSVM = await result.Content.ReadAsAsync<BookingSystemServicesViewModel>();
 			} else {
 				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
 			}
-			return View(vm3);
+			return View(bsSVM);
 		}
 
 		//Ett API-anrop till ApiBooking som serialiserar det använda objektet till JSON
@@ -77,7 +75,7 @@ namespace SUPEN_Projekt.Controllers {
 		}
 
 		[HttpPost]
-		public async Task<ActionResult> Create(ViewModel4 system) {
+		public async Task<ActionResult> Create(BookingSystemServiceBookingViewModel system) {
 			var url = "http://localhost:55341/api/post";
 
 			if (await APIContact(url, system)) {
@@ -115,10 +113,10 @@ namespace SUPEN_Projekt.Controllers {
 			}
 			orderedByDistance = JsonConvert.DeserializeObject<List<BookingSystem>>(list);
 
-			ViewModel5 vm5 = new ViewModel5();
-			List<BookingSystemAndDistance> listOfBookingSystems = new List<BookingSystemAndDistance>();
+			BookingsWithDistanceViewModel bWDVM = new BookingsWithDistanceViewModel();
+			List<BookingSystemAndDistanceViewModel> listOfBookingSystems = new List<BookingSystemAndDistanceViewModel>();
 			foreach (var item in orderedByDistance) {
-				BookingSystemAndDistance pairedObject = new BookingSystemAndDistance();
+				BookingSystemAndDistanceViewModel pairedObject = new BookingSystemAndDistanceViewModel();
 				pairedObject.BookingSystem = item;
 
 
@@ -138,9 +136,9 @@ namespace SUPEN_Projekt.Controllers {
 				listOfBookingSystems.Add(pairedObject);
 
 			}
-			vm5.SelectedBookingSystem = selectedBookingSystem;
-			vm5.BookingsWithDistance = listOfBookingSystems;
-			return PartialView(vm5);
+			bWDVM.SelectedBookingSystem = selectedBookingSystem;
+			bWDVM.BookingsWithDistance = listOfBookingSystems;
+			return PartialView(bWDVM);
 		}
 
 

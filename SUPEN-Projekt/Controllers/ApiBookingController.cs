@@ -50,17 +50,17 @@ namespace SUPEN_Projekt.Controllers {
 		public IHttpActionResult GetBooking(int inBookingSystemId, int inServiceId, int inBookingId) {
 
 			BookingSystem bs = uw.BookingSystems.GetBookingSystem(inBookingSystemId);
-			ViewModel4 vm4 = new ViewModel4();
+			BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
 
-			vm4.bookingSystem = bs;
-			vm4.service = bs.Services.Single(x => x.ServiceId == inServiceId);
-			vm4.booking = vm4.service.Bookings.Single(x => x.BookingId == inBookingId);
+			bsSBVM.bookingSystem = bs;
+			bsSBVM.service = bs.Services.Single(x => x.ServiceId == inServiceId);
+			bsSBVM.booking = bsSBVM.service.Bookings.Single(x => x.BookingId == inBookingId);
 
-			if (vm4 == null) {
+			if (bsSBVM == null) {
 				return NotFound();
 			}
 
-			return Ok(vm4);
+			return Ok(bsSBVM);
 		}
 
 	}
