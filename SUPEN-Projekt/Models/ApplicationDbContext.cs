@@ -26,7 +26,9 @@ namespace SUPEN_Projekt.Models
         protected override void Seed(ApplicationDbContext context)
         {
             //Lägger till Branscher via addBranches metoden
-           List<string> branches = new List<string> { "Frisör", "Besiktning", "Café", "Fordonsuthyrning", "Massör", "Verkstad", "Idrottsförening", "Kontor", "Utbildning", "Restaurang", "Sjukvård", "Transport", "Hotell", "Media", "IT", "Bank", "Bygg", "Konsultation", "Däck" };
+           List<string> branches = new List<string> { "Frisör", "Besiktning", "Café", "Fordonsuthyrning", "Massör", "Verkstad",
+               "Idrottsförening", "Kontor", "Utbildning", "Restaurang", "Sjukvård", "Transport", "Hotell", "Media", "IT",
+               "Bank", "Bygg", "Konsultation", "Däck" };
             addBranches(context, branches);
 
             //Lägger till BookingSystems via metoden addBookingSystem
