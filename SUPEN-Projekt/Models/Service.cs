@@ -16,8 +16,8 @@ namespace SUPEN_Projekt.Models {
 		//public string BranchName { get; set; }
 		public virtual Branch Branch { get; set; }
 
-		[JsonIgnore]
-		public virtual ICollection<BookingSystem> BookingSystems { get; set; }
+		//[JsonIgnore]
+		//public virtual ICollection<BookingSystem> BookingSystems { get; set; }
 		public virtual ICollection<Booking> Bookings { get; set; }
 	}
 	public class stt {

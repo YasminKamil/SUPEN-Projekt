@@ -205,13 +205,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\ABookingSystemController.cs" />
     <Compile Include="Controllers\ApiBookingController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\BookingSystemController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ApiBookingSystemController.cs" />
-    <Compile Include="Controllers\RepoController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -732,10 +730,6 @@
     <Content Include="Views\BookingSystem\Details.cshtml" />
     <Content Include="Views\BookingSystem\Edit.cshtml" />
     <Content Include="Views\BookingSystem\Index.cshtml" />
-    <Content Include="Views\Repo\Index.cshtml" />
-    <Content Include="Views\Repo\Index2.cshtml" />
-    <Content Include="Views\Repo\Index3.cshtml" />
-    <Content Include="Views\ABookingSystem\Index.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Scripts\js\.eslintrc.json" />
     <Content Include="Scripts\js\.gitignore" />
@@ -744,12 +738,7 @@
     <Content Include="Scripts\js\jt.timepicker.jquery.json" />
     <Content Include="Scripts\js\package.json" />
     <Content Include="Scripts\js\README.md" />
-    <Content Include="Views\Repo\Create.cshtml" />
-    <Content Include="Views\Repo\Details.cshtml" />
     <Content Include="Views\BookingSystem\RelevantBookingSystems.cshtml" />
-    <Content Include="Views\Repo\Details2.cshtml" />
-    <Content Include="Views\Repo\CreateBooking.cshtml" />
-    <Content Include="Views\Repo\IndexService.cshtml" />
     <Content Include="Views\Booking\ABookingSystem.cshtml" />
     <Content Include="Views\Booking\CreateBooking2.cshtml" />
     <Content Include="Views\Booking\Details.cshtml" />
