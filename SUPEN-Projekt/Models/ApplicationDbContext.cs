@@ -31,7 +31,7 @@ namespace SUPEN_Projekt.Models
 
         //public System.Data.Entity.DbSet<SUPEN_Projekt.Models.ViewModel4> ViewModel4 { get; set; }
     }
-    public class DatabaseInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
+    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
     {
 
         void addBranches(ApplicationDbContext context) {
@@ -44,13 +44,13 @@ namespace SUPEN_Projekt.Models
             }
             context.SaveChanges();
         }
-        List<Booking> getBookings( ApplicationDbContext context) {
+        List<Booking> getBookings( ApplicationDbContext context, int duration, int price) {
 
             List<Service> services = new List<Service>();
             Random randomNumber = new Random();
             List<int> durations = new List<int> {25,30,35,40,45,50,55,60};
-            int duration = durations.OrderBy(x=> randomNumber.Next()).First();
-            int price = randomNumber.Next(150, 400);
+            //int duration = durations.OrderBy(x=> randomNumber.Next()).First();
+            //int price = randomNumber.Next(150, 400);
             int hoursOpen = randomNumber.Next(2,10);
             List<Booking> listOfBookings = new List<Booking>();
             listOfBookings = getBookings(duration, price, hoursOpen);
@@ -59,11 +59,21 @@ namespace SUPEN_Projekt.Models
 
             return listOfBookings;
         }
+        void addService(ApplicationDbContext context, string inServiceName, int inDuration, int inPrice, string inBranchName) {
+            Service aService = new Service();
+            aService.ServiceName = inServiceName;
+            aService.Duration = inDuration;
+            aService.Price = inPrice;
+            aService.Branch = context.Branches.Single(x => x.BranchName == inBranchName);
+            aService.Bookings = getBookings(context, inDuration,inPrice);
+            context.Services.Add(aService);
+            context.SaveChanges();
+                           }
 
         protected override void Seed(ApplicationDbContext context)
         {
             addBranches(context);
-            
+
             //List<Booking> b1 = getBookings(45, 100, 8);
             //context.Bookings.AddRange(b1);
 
@@ -77,31 +87,11 @@ namespace SUPEN_Projekt.Models
             //context.Bookings.AddRange(b4);
             //context.SaveChanges();
 
-            var services = new List<Service>() {
-                new Service{
-                ServiceName = "Klippning",
-                Duration = 45,
-                Price = 100,
-                Branch= context.Branches.Single(x=> x.BranchName =="Frisör" ),
-                Bookings = getBookings(context)
-        },
-                new Service {ServiceName = "Färgning",
-                Duration = 25,
-                Price = 200,
-                Branch = context.Branches.Single(x=> x.BranchName =="Frisör" ),
-                Bookings = getBookings(context)},
-                new Service { ServiceName = "Däckbyte",
-                Duration = 45,
-                Price = 300,
-                Branch = context.Branches.Single(x=> x.BranchName =="Däck" ),
-                Bookings = getBookings(context)},
-                new Service { ServiceName = "Bullfika",
-                Duration = 60,
-                Price = 70,
-                Branch = context.Branches.Single(x=> x.BranchName =="Café" ),
-                Bookings = getBookings(context)},
-            };
-            services.ForEach(x => context.Services.Add(x));
+            //           addService(ApplicationDbContext context, string inServiceName, int inDuration, int inPrice, string inBranchName)
+            addService(context, "Klippning", 25, 100, "Frisör");
+            addService(context, "Färgning", 45, 200, "Frisör");
+            addService(context, "Däckbyte", 45, 300, "Däck");
+            addService(context, "Bullfika", 60, 70, "Café");
 
             context.SaveChanges();
 
