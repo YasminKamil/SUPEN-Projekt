@@ -21,7 +21,7 @@ namespace SUPEN_Projekt.Models {
 			//Lägger till Branscher via addBranches metoden
 			List<string> branches = new List<string> { "Frisör", "Besiktning", "Café", "Fordonsuthyrning", "Massör", "Verkstad",
 			   "Idrottsförening", "Kontor", "Utbildning", "Restaurang", "Sjukvård", "Transport", "Hotell", "Media", "IT",
-			   "Bank", "Bygg", "Konsultation", "Däck", "Tatuering" };
+			   "Bank", "Bygg", "Konsultation", "Däck", "Tatuering", "Sport" };
 			AddBranches(context, branches);
 
 			//Lägger till BookingSystems via metoden addBookingSystem
@@ -75,19 +75,28 @@ namespace SUPEN_Projekt.Models {
 
 			context.SaveChanges();
 
-			//Lillån Tennisklubb, Lillåvallen har inte tilldelats bransch och service
 
-			//Lägger till och skapar services via addService metoden
-			//context , servicenamn, t
 
-			AddService(context, "Service", 30, 1300, "Verkstad", "Bilexpo");
-			AddService(context, "Service", 35, 1260, "Verkstad", "Bilhuset i Örebro");
-			AddService(context, "Hotellrum", 25, 1250, "Hotell", "City Hotel");
-			AddService(context, "Hotellrum", 25, 1200, "Hotell", "First Hotel");
-			AddService(context, "Tatuering", 60, 800, "Tatuering", "Elite Artwork");
+            //Lägger till och skapar services via addService metoden
+            //context , servicenamn, t
+            AddService(context, "Hyr fotbollsplanen", 60, 180, "Sport", "Lillåvallen");
+            AddService(context, "Fotbollsträning med PT", 60, 180, "Sport", "Lillåvallen");
+            AddService(context, "Hyr en bana", 60, 70, "Sport", "Lillån Tennisklubb");
+            AddService(context, "Träna tennis med PT", 60, 70, "Sport", "Lillån Tennisklubb");
+            AddService(context, "Service", 30, 1300, "Verkstad", "Bilexpo");
+            AddService(context, "Felsökning", 60, 1700, "Verkstad", "Bilexpo");
+            AddService(context, "Service", 35, 1260, "Verkstad", "Bilhuset i Örebro");
+            AddService(context, "Hyr en bil", 35, 1260, "Fordonsuthyrning", "Bilhuset i Örebro");
+            AddService(context, "Standard", 60, 1250, "Hotell", "City Hotel");
+            AddService(context, "Svit", 60, 1250, "Hotell", "City Hotel");
+            AddService(context, "Standard double", 60, 1250, "Hotell", "City Hotel");
+            AddService(context, "Superior double", 60, 1250, "Hotell", "City Hotel");
+            AddService(context, "Standard", 60, 1200, "Hotell", "First Hotel");
+            AddService(context, "Familjerum", 60, 1200, "Hotell", "First Hotel");
+            AddService(context, "Tatuering", 60, 800, "Tatuering", "Elite Artwork");
 			AddService(context, "Klippning", 25, 100, "Frisör", "Art of Hair");
 			AddService(context, "Färgning", 45, 200, "Frisör", "Art of Hair");
-			AddService(context, "Bullfika", 45, 200, "Café", "Bullvivan");
+			AddService(context, "Fika", 45, 200, "Café", "Bullvivan");
 			AddService(context, "Hyr en dumper", 45, 200, "Fordonsuthyrning", "Epiroc");
 			AddService(context, "Klippning", 45, 200, "Frisör", "Frisörkompaniet");
 			AddService(context, "Däckbyte", 45, 200, "Däck", "Carspect");
