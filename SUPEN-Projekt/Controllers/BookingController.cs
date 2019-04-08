@@ -34,38 +34,38 @@ namespace SUPEN_Projekt.Controllers {
 		//Returnerar information om bokningen
 		public async Task<ActionResult> Details(int inBookingSystemId, int inServiceId, int inBookingId) {
 
-			ViewModel4 vm4 = null;
+			BookingSystemServiceBookingViewModel bsSBVM = null;
 			HttpClient client = new HttpClient();
 
 			var result = client.GetAsync("http://localhost:55341/api/GetBooking/" + inBookingSystemId +
 				"/" + inServiceId + "/" + inBookingId).Result;
 
 			if (result.IsSuccessStatusCode) {
-				vm4 = await result.Content.ReadAsAsync<ViewModel4>();
+				bsSBVM = await result.Content.ReadAsAsync<BookingSystemServiceBookingViewModel>();
 			} else {
 				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
 			}
 
-			return View(vm4);
+			return View(bsSBVM);
 		}
 
 		//Hämtar information för en bokning innan det går att genomföra en bokning
 		[HttpGet]
 		public async Task<ActionResult> BookService(int inBookingSystemId, int inServiceId, int inBookingId) {
 
-			ViewModel4 vm4 = null;
+			BookingSystemServiceBookingViewModel bsSBVM = null;
 			HttpClient client = new HttpClient();
 
 			var result = client.GetAsync("http://localhost:55341/api/GetBooking/" + inBookingSystemId +
 				"/" + inServiceId + "/" + inBookingId).Result;
 
 			if (result.IsSuccessStatusCode) {
-				vm4 = await result.Content.ReadAsAsync<ViewModel4>();
+				bsSBVM = await result.Content.ReadAsAsync<BookingSystemServiceBookingViewModel>();
 			} else {
 				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
 			}
 
-			return View(vm4);
+			return View(bsSBVM);
 		}
 
 		//Bokar en tillgänglig tjänst
@@ -105,7 +105,7 @@ namespace SUPEN_Projekt.Controllers {
 		////[Route("BookingSystem/{id:int}")]
 		//public ActionResult CreateBooking(int id, string name) {
 		//	BookingSystem bookingSystem = uw.BookingSystems.GetBookingSystem(id);
-		//	ViewModel4 vm4 = new ViewModel4();
+		//	BookingSystemServiceBookingViewModel vm4 = new BookingSystemServiceBookingViewModel();
 		//	vm4.bookingSystem = bookingSystem;
 		//	vm4.service = bookingSystem.Services.Single(x => x.ServiceName == name);
 

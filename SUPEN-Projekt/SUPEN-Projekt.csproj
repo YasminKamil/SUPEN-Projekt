@@ -726,9 +726,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\BookingSystem\Create.cshtml" />
-    <Content Include="Views\BookingSystem\Delete.cshtml" />
-    <Content Include="Views\BookingSystem\Details.cshtml" />
-    <Content Include="Views\BookingSystem\Edit.cshtml" />
     <Content Include="Views\BookingSystem\Index.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Scripts\js\.eslintrc.json" />
@@ -740,9 +737,7 @@
     <Content Include="Scripts\js\README.md" />
     <Content Include="Views\BookingSystem\RelevantBookingSystems.cshtml" />
     <Content Include="Views\Booking\ABookingSystem.cshtml" />
-    <Content Include="Views\Booking\CreateBooking2.cshtml" />
     <Content Include="Views\Booking\Details.cshtml" />
-    <Content Include="Views\Booking\Create.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
     <Content Include="Views\Service\Edit.cshtml" />
     <Content Include="Views\Booking\BookService.cshtml">

@@ -21,23 +21,22 @@ namespace SUPEN_Projekt.Controllers {
 		}
 
 		//Hämtar alla lagrade bokningsystem
-		[Route("api/GetSystems")] 
-		[HttpGet] 
+		[Route("api/GetSystems")]
+		[HttpGet]
 		public IHttpActionResult GetSystems() {
 
 			IEnumerable<BookingSystem> bookingsystems = uw.BookingSystems.GetAll();
-            BookingSystemsViewModel list = new BookingSystemsViewModel();
-            list.bookingSystems = bookingsystems;
-            if (list == null)
-            {
-                return NotFound();
-            }
-            return Ok(list);
+			BookingSystemsViewModel list = new BookingSystemsViewModel();
+			list.bookingSystems = bookingsystems;
+			if (list == null) {
+				return NotFound();
+			}
+			return Ok(list);
 		}
 
 		//Hämtar det relevanta bokningsystemet inom ett visst område och inom andra branscher ordnat efter avståndet
-		[Route("api/GetRelevantBookingSystem/{bookingSystemId:int}/{serviceId:int}")] 
-		[HttpGet] 
+		[Route("api/GetRelevantBookingSystem/{bookingSystemId:int}/{serviceId:int}")]
+		[HttpGet]
 		public IEnumerable<BookingSystem> GetRelevantBookingSystem(int bookingSystemId, int serviceId) {
 			try {
 				BookingSystem selectedBookingSystem = uw.BookingSystems.GetBookingSystem(bookingSystemId);
@@ -51,14 +50,14 @@ namespace SUPEN_Projekt.Controllers {
 				throw;
 			}
 		}
-		
+
 		//Hämtar ut det valda bokningsystemet
 		[Route("api/GetBookingSystem/{bookingSystemId:int}")]
 		[HttpGet]
 		public IHttpActionResult GetBookingSystem(int bookingSystemId) {
 			BookingSystem bs = uw.BookingSystems.GetBookingSystem(bookingSystemId);
 			return Ok(bs);
-			
+
 			//try {
 			//	BookingSystem selectedBookingSystem = uw.BookingSystems.GetBookingSystem(bookingSystemId);
 			//	return selectedBookingSystem;
@@ -73,14 +72,27 @@ namespace SUPEN_Projekt.Controllers {
 		public IHttpActionResult GetSystem(int id) {
 
 			BookingSystem bookingsystem = uw.BookingSystems.GetBookingSystem(id);
-			ViewModel3 vm3 = new ViewModel3();
-			vm3.bookingSystem = bookingsystem;
-			vm3.services = bookingsystem.Services;
-			return Ok(vm3);
+			BookingSystemServicesViewModel bsSVM = new BookingSystemServicesViewModel();
+			bsSVM.bookingSystem = bookingsystem;
+			bsSVM.services = bookingsystem.Services;
+			return Ok(bsSVM);
 		}
 
-		//Hämtar och beräknar avståndet mellan befintliga bokningsystem
-		[Route("api/GetBookingSystem/{bookingSystemAId:int}/{bookingSystemBId:int}")]
+        [Route("api/GetSystem/")]
+        [HttpGet]
+        public IHttpActionResult GetSystem()
+        {
+
+            //BookingSystem bookingsystem = uw.BookingSystems.GetBookingSystem(id);
+            ViewModel4 vm4 = new ViewModel4();
+            //vm4.bookingSystem = bookingsystem;
+            //vm4.services = bookingsystem.Services;
+            return Ok(vm4);
+        }
+
+
+        //Hämtar och beräknar avståndet mellan befintliga bokningsystem
+        [Route("api/GetBookingSystem/{bookingSystemAId:int}/{bookingSystemBId:int}")]
 		[HttpGet]
 		public double GetDistanceBetweenBookingSystems(int bookingSystemAId, int BookingSystemBId) {
 			try {
@@ -90,31 +102,31 @@ namespace SUPEN_Projekt.Controllers {
 			}
 		}
 
-	
+
 		//Skapar ett nytt bokningssystem i datakällan - denna metod behöver utvecklas vidare så att den anropas via repository
-		[Route("api/PostBookingSystem")] 
+		[Route("api/PostBookingSystem")]
 		public IHttpActionResult PostBookingSystem(JObject insystem) {
 			if (!ModelState.IsValid) {
 				return BadRequest("Invalid data");
 			}
 
-			ViewModel4 system = JsonConvert.DeserializeObject<ViewModel4>(insystem.ToString());
+			BookingSystemServiceBookingViewModel bsSBVM = JsonConvert.DeserializeObject<BookingSystemServiceBookingViewModel>(insystem.ToString());
 
 			uw.BookingSystems.Add(new BookingSystem() {
-				BookingSystemId = system.bookingSystem.BookingSystemId,
-				Address = system.bookingSystem.Address,
-				City = system.bookingSystem.City,
-				CompanyName = system.bookingSystem.CompanyName,
-				ContactEmail = system.bookingSystem.ContactEmail,
-				ContactPhone = system.bookingSystem.ContactPhone,
-				Email = system.bookingSystem.Email,
-				Latitude = system.bookingSystem.Latitude,
-				Longitude = system.bookingSystem.Longitude,
-				PhoneNumber = system.bookingSystem.PhoneNumber,
-				PostalCode = system.bookingSystem.PostalCode,
-				SystemDescription = system.bookingSystem.SystemDescription,
-				SystemName = system.bookingSystem.SystemName,
-				Website = system.bookingSystem.Website
+				BookingSystemId = bsSBVM.bookingSystem.BookingSystemId,
+				Address = bsSBVM.bookingSystem.Address,
+				City = bsSBVM.bookingSystem.City,
+				CompanyName = bsSBVM.bookingSystem.CompanyName,
+				ContactEmail = bsSBVM.bookingSystem.ContactEmail,
+				ContactPhone = bsSBVM.bookingSystem.ContactPhone,
+				Email = bsSBVM.bookingSystem.Email,
+				Latitude = bsSBVM.bookingSystem.Latitude,
+				Longitude = bsSBVM.bookingSystem.Longitude,
+				PhoneNumber = bsSBVM.bookingSystem.PhoneNumber,
+				PostalCode = bsSBVM.bookingSystem.PostalCode,
+				SystemDescription = bsSBVM.bookingSystem.SystemDescription,
+				SystemName = bsSBVM.bookingSystem.SystemName,
+				Website = bsSBVM.bookingSystem.Website
 			});
 			uw.Complete();
 			return Ok();
