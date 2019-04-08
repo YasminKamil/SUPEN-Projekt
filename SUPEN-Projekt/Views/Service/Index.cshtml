@@ -14,7 +14,7 @@
                         {
 
 
-                            @Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "Update", "Booking",
+                            @Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "BookService", "Booking",
                                     new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inBookingId = item.BookingId }, new { @class = "btn btn-success" })
                             @*<button type="button" class="btn btn-success">@item.StartTime.ToString("HH:mm") + "" + @item.EndTime.ToString("HH:mm") </button>*@
 

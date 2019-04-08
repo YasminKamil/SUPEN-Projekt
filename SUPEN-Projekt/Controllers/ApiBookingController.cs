@@ -10,12 +10,12 @@ using System.Net.Http;
 using System.Web.Http;
 
 namespace SUPEN_Projekt.Controllers {
-	public class BookingApiController : ApiController {
+	public class ApiBookingController : ApiController {
 
 		//private readonly ApplicationDbContext db;
 		IUnitOfWork uw;
 
-		public BookingApiController(IUnitOfWork unitOfWork) {
+		public ApiBookingController(IUnitOfWork unitOfWork) {
 			uw = unitOfWork;
 		}
 
@@ -23,18 +23,6 @@ namespace SUPEN_Projekt.Controllers {
 		public IEnumerable<Booking> Get() {
 			IEnumerable<Booking> list = uw.Bookings.GetAll();
 			return list;
-		}
-
-		//när denna funktion fungerar i BookingSystemController tas denna bort
-		[Route("api/GetSystem/{id}")]
-		[HttpGet]
-		public IHttpActionResult GetSystem(int id) {
-
-			BookingSystem bookingsystem = uw.BookingSystems.GetBookingSystem(id);
-            ViewModel3 vm3 = new ViewModel3();
-            vm3.bookingSystem = bookingsystem;
-            vm3.services = bookingsystem.Services;
-            return Ok(vm3);
 		}
 
 		//Byt namn till GetBookings både i route och metod

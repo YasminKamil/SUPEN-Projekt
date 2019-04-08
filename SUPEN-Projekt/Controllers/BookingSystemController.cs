@@ -38,6 +38,20 @@ namespace SUPEN_Projekt.Controllers {
 			return View(objects);
 		}
 
+		//Denna ska flyttas till bookingsystemcontroller och namnsättas till BookingSystem
+		public async Task<ActionResult> BookingSystem(int id) {
+			//string bookingsystem = "";
+			ViewModel3 vm3 = null;
+			HttpClient client = new HttpClient();
+			var result = client.GetAsync("http://localhost:55341/api/GetSystem/" + id).Result;
+			if (result.IsSuccessStatusCode) {
+				vm3 = await result.Content.ReadAsAsync<ViewModel3>();
+			} else {
+				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+			}
+			return View(vm3);
+		}
+
 		public async Task<bool> APIContact(string inUrl, Object inObject) {
 			bool works = false;
 			var url = inUrl;

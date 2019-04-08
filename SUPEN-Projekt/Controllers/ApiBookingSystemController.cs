@@ -13,10 +13,10 @@ using System.Text;
 using System.Data.Entity;
 
 namespace SUPEN_Projekt.Controllers {
-	public class BookingSystemApiController : ApiController {
+	public class ApiBookingSystemController : ApiController {
 		IUnitOfWork uw;
 
-		public BookingSystemApiController(IUnitOfWork unitOfWork) {
+		public ApiBookingSystemController(IUnitOfWork unitOfWork) {
 			uw = unitOfWork;
 		}
 
@@ -59,6 +59,18 @@ namespace SUPEN_Projekt.Controllers {
 			} catch (Exception) {
 				throw;
 			}
+		}
+
+		//när denna funktion fungerar i BookingSystemController tas denna bort
+		[Route("api/GetSystem/{id}")]
+		[HttpGet]
+		public IHttpActionResult GetSystem(int id) {
+
+			BookingSystem bookingsystem = uw.BookingSystems.GetBookingSystem(id);
+			ViewModel3 vm3 = new ViewModel3();
+			vm3.bookingSystem = bookingsystem;
+			vm3.services = bookingsystem.Services;
+			return Ok(vm3);
 		}
 
 		[Route("api/GetBookingSystem/{bookingSystemAId:int}/{bookingSystemBId:int}")]

@@ -28,10 +28,9 @@ namespace SUPEN_Projekt.Models
 				  .ToTable("GetBookingSystemService"));
 		}
 
-        
-      
-    }
-    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> {
+		public System.Data.Entity.DbSet<SUPEN_Projekt.Models.ViewModel3> ViewModel3 { get; set; }
+	}
+	public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> {
 
         void addBranches(ApplicationDbContext context) {
             List<String> branchString = new List<string> { "Frisör", "Besiktning", "Café", "Fordonsuthyrning", "Massör", "Verkstad", "Idrottsförening", "Kontor", "Utbildning", "Restaurang", "Sjukvård", "Transport", "Hotell", "Media", "IT", "Bank", "Bygg", "Konsultation", "Däck" };

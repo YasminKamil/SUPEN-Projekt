@@ -206,11 +206,11 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ABookingSystemController.cs" />
-    <Compile Include="Controllers\BookingApiController.cs" />
+    <Compile Include="Controllers\ApiBookingController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\BookingSystemController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\BookingSystemApiController.cs" />
+    <Compile Include="Controllers\ApiBookingSystemController.cs" />
     <Compile Include="Controllers\RepoController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Global.asax.cs">
@@ -756,9 +756,12 @@
     <Content Include="Views\Booking\Create.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
     <Content Include="Views\Service\Edit.cshtml" />
-    <Content Include="Views\Booking\Update.cshtml" />
+    <Content Include="Views\Booking\BookService.cshtml">
+      <BrowseToURL>~/Booking/BookService</BrowseToURL>
+    </Content>
     <Content Include="Views\Booking\CreateBooking.cshtml" />
     <Content Include="Views\Booking\Index2.cshtml" />
+    <Content Include="Views\BookingSystem\BookingSystem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiController\" />
