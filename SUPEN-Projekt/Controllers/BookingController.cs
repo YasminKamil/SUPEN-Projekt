@@ -23,7 +23,7 @@ namespace SUPEN_Projekt.Controllers {
 		public async Task<ActionResult> Index() {
 			BookingsViewModel list = null;
 			HttpClient client = new HttpClient();
-			var result = client.GetAsync("http://localhost:55341/api/getstrbooking").Result;
+			var result = client.GetAsync("http://localhost:55341/api/GetBookings").Result;
 			if (result.IsSuccessStatusCode) {
 				list = await result.Content.ReadAsAsync<BookingsViewModel>();
 			}
@@ -74,7 +74,7 @@ namespace SUPEN_Projekt.Controllers {
 		[HttpPost, ActionName("BookService")]
 		public async Task<ActionResult> BookServiceConfirmed(int inBookingSystemId, int inServiceId, int inBookingId, Booking booking) {
 			try {
-				var url = "http://localhost:55341/api/postBooking";
+				var url = "http://localhost:55341/api/PostBooking";
 
 				if (await APIContact(url, booking)) {
 					return RedirectToAction("Details",

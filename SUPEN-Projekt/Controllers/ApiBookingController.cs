@@ -25,20 +25,19 @@ namespace SUPEN_Projekt.Controllers {
 			return list;
 		}
 
-		//Byt namn till GetBookings både i route och metod
-		//utan IHttpActionResult får man inte med bra statuskoder
-		[Route("api/getstrbooking")]
+		//Returnerar alla bokningar som är lagrade
+		[Route("api/GetBookings")]
 		[HttpGet]
-		public IHttpActionResult GetStr() {
+		public IHttpActionResult GetBookings() {
 			IEnumerable<Booking> bookings = uw.Bookings.GetAll();
-            BookingsViewModel list = new BookingsViewModel();
-            list.bookings = bookings;
+			BookingsViewModel list = new BookingsViewModel();
+			list.bookings = bookings;
 			return Ok(list);
 		}
 
-		//Byt namn till PostBooking både i routing och metod
-		[Route("api/postBooking")]
-		public IHttpActionResult Post(JObject inBookning) {
+		//Skapar en ny bokning i datakällan
+		[Route("api/PostBooking")]
+		public IHttpActionResult PostBooking(JObject inBookning) {
 			if (!ModelState.IsValid) {
 				return BadRequest("Invalid data");
 			}
@@ -51,24 +50,23 @@ namespace SUPEN_Projekt.Controllers {
 			return Ok();
 		}
 
-		//denna behöver vi arbeta med bör ju ta in bookingid
+		//Returnerar den specifika bokningen som har skapats
 		[Route("api/GetBooking/{inBookingSystemId}/{inServiceId}/{inBookingId}")]
 		[HttpGet]
 		public IHttpActionResult GetBooking(int inBookingSystemId, int inServiceId, int inBookingId) {
-			
+
 			BookingSystem bs = uw.BookingSystems.GetBookingSystem(inBookingSystemId);
-            ViewModel4 vm4 = new ViewModel4();
+			ViewModel4 vm4 = new ViewModel4();
 
-            vm4.bookingSystem = bs;
-            vm4.service = bs.Services.Single(x => x.ServiceId == inServiceId);
-            vm4.booking = vm4.service.Bookings.Single(x => x.BookingId == inBookingId);
+			vm4.bookingSystem = bs;
+			vm4.service = bs.Services.Single(x => x.ServiceId == inServiceId);
+			vm4.booking = vm4.service.Bookings.Single(x => x.BookingId == inBookingId);
 
-            if (vm4 == null)
-            {
-                return NotFound();
-            }
+			if (vm4 == null) {
+				return NotFound();
+			}
 
-            return Ok(vm4);
+			return Ok(vm4);
 		}
 
 	}
