@@ -10,11 +10,13 @@ namespace SUPEN_Projekt.Repositories {
 		public BookingRepository(ApplicationDbContext context) : base(context) {
 		}
 
-		//GetBookings
-		public IEnumerable<Booking> GetAllBookings() {
+		//Returnerar en list över bokningar
+		public IEnumerable<Booking> GetBookings() {
 			return GetAll(); ;
 		}
 
+
+		//Skapar en hel bokning inklusive tid, datum och pris
 		public Booking CreateBooking(Booking inBooking) {
 			//IEnumerable<BookingSystem> allBookingSystems = ApplicationDbContext.Set<BookingSystem>().Include(x => x.Services).ToList();
 			//BookingSystem bookingSystem = allBookingSystems.Single(x=> x.BookingSystemId == systemId);
@@ -31,19 +33,13 @@ namespace SUPEN_Projekt.Repositories {
 			booking.Date = inBooking.Date;
 			booking.Price = inBooking.Price;
 
-
-
 			Add(booking);
 			return booking;
 
 		}
 
+		//Skapar en bokning med tillgängliga tider som går att bokas
 		public void UpdateBooking(Booking booking) {
-			//IEnumerable<BookingSystem> allBookingSystems = ApplicationDbContext.Set<BookingSystem>().Include(s => s.Services).ToList();
-			//BookingSystem bookingSystem = allBookingSystems.Single(x => x.BookingSystemId == id);
-
-			//Service service = bookingSystem.Services.Single(s => s.ServiceName == name);
-
 			var existingBookings = ApplicationDbContext.Bookings.Where(b => b.BookingId == booking.BookingId).FirstOrDefault<Booking>();
 			if (existingBookings != null) {
 				existingBookings.UserName = booking.UserName;
@@ -54,9 +50,7 @@ namespace SUPEN_Projekt.Repositories {
 				existingBookings.EndTime = booking.EndTime;
 				existingBookings.Date = booking.Date;
 				existingBookings.Price = booking.Price;
-				//existingBookings.BookingSystem = bookingSystem;
-				//existingBookings.Service = service;
-
+	
 			}
 
 		}
