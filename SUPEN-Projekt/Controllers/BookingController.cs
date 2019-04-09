@@ -1,25 +1,15 @@
 ﻿using Newtonsoft.Json;
-using SUPEN_Projekt.Models;
-using SUPEN_Projekt.Repositories;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using SUPEN_Projekt.Logic;
 
 
 namespace SUPEN_Projekt.Controllers {
 	public class BookingController : Controller {
-		IUnitOfWork uw;
-		public BookingController(IUnitOfWork unitOfWork) {
-			uw = unitOfWork;
-		}
 
 		//Returnerar alla bokningar med ett api-anrop
 		public async Task<ActionResult> Index() {
@@ -72,11 +62,11 @@ namespace SUPEN_Projekt.Controllers {
 
 		//Bokar en tillgänglig tjänst
 		[HttpPost, ActionName("BookService")]
-		public async Task<ActionResult> BookServiceConfirmed(int inBookingSystemId, int inServiceId, int inBookingId, Booking booking) {
+		public async Task<ActionResult> BookServiceConfirmed(int inBookingSystemId, int inServiceId, int inBookingId, BookingSystemServiceBookingViewModel model) {
 			try {
 				var url = "http://localhost:55341/api/PostBooking";
 
-				if (await APIContact(url, booking)) {
+				if (await APIContact(url, model.booking)) {
 					return RedirectToAction("Details",
 						new { inBookingSystemId, inServiceId, inBookingId });
 				}
@@ -84,7 +74,7 @@ namespace SUPEN_Projekt.Controllers {
 			} catch (DataException) {
 				ModelState.AddModelError("", "Unable to save changes, please try again");
 			}
-			return View(booking);
+			return View(model);
 		}
 
 		//Ett API-anrop till ApiBooking som serialiserar det använda objektet till JSON

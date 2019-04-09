@@ -1,29 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using SUPEN_Projekt.Models;
-using SUPEN_Projekt.Repositories;
 using SUPEN_Projekt.Logic;
 
 namespace SUPEN_Projekt.Controllers {
 	public class BookingSystemController : Controller {
-
-		//IUnitOfWork uw;
-		//public BookingSystemController(IUnitOfWork unitofwork)
-		//{
-		//    uw = unitofwork;
-		//}
 
 		//Returnerar alla bokningsystem med ett api-anrop
 		public async Task<ActionResult> Index() {
@@ -94,6 +81,7 @@ namespace SUPEN_Projekt.Controllers {
 			if (await APIContact(url, system)) {
                 return RedirectToAction("Index");
 			}
+
 			return View(system);
 
 		}
@@ -102,7 +90,7 @@ namespace SUPEN_Projekt.Controllers {
         public async Task<ActionResult> RelevantBookingSystems(int bookingSystemId, int serviceId)
         {
 
-            BookingSystemServicesViewModel bssvm = null;//string list1 = "";//vm4 
+            BookingSystemServicesViewModel bssvm = null;
             HttpClient client1 = new HttpClient();
             string url1 = "http://localhost:55341/api/GetBookingSystem/" + bookingSystemId.ToString();
             var result1 = client1.GetAsync(url1).Result;
