@@ -143,7 +143,11 @@ namespace SUPEN_Projekt.Repositories {
 				this.distance = distance;
 			}
 		}
-
+        //returnerar endast företag som har lediga tider
+        public List<BookingSystem> GetBookingSystemsWithAvailableBooking(List<BookingSystem> inBookingSystems){
+            inBookingSystems = inBookingSystems.Where(x=>x.Services.Any(y=> y.Bookings.Any(z=> z.Available == true))).ToList();
+            return inBookingSystems;
+        }
 		//Genom att skicka in en lista av bokningsystem och det valda företaget, sorteras dem efter vilken distans de har till det valda företaget.
 		public List<BookingSystem> OrderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem) {
 

@@ -44,8 +44,9 @@ namespace SUPEN_Projekt.Controllers {
 				List<BookingSystem> bookingSystemsInRange = uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
 				List<BookingSystem> bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
 				List<BookingSystem> orderedByDistance = uw.BookingSystems.OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
+                List<BookingSystem> onlyWithAvailableTimes=uw.BookingSystems.GetBookingSystemsWithAvailableBooking(orderedByDistance);
                 BookingSystemsViewModel bookingsystemsvm = new BookingSystemsViewModel();
-                bookingsystemsvm.bookingSystems = orderedByDistance;
+                bookingsystemsvm.bookingSystems = onlyWithAvailableTimes;
                 return Ok(bookingsystemsvm);
 			} catch (Exception) {
 
