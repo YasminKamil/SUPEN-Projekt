@@ -12,6 +12,7 @@ namespace SUPEN_Projekt.Controllers {
 			uw = unitOfWork;
 		}
 
+		//Returnerar alla tjänster via ett api-anrop
 		public async Task<ActionResult> Index() {
 			ServicesViewModel list = null;
 			HttpClient client = new HttpClient();
@@ -24,7 +25,7 @@ namespace SUPEN_Projekt.Controllers {
 			return View(list);
 		}
 
-		// GET: Service
+		//Returnerar tjänster som möjliggör en bokning i ett bokningsystem 
 		public async Task<ActionResult> BookService(int inBookingSystemId, int inServiceId) {
 
 			BookingSystemServiceBookingViewModel bsSBVM = null;

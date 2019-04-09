@@ -13,6 +13,7 @@ namespace SUPEN_Projekt.Controllers
 			uw = unitOfWork;
 		}
       
+		//Hämtar alla lagrade tjänster 
 		[Route("api/GetServices")]
 		[HttpGet]
 		public IHttpActionResult GetServices() {
@@ -28,6 +29,7 @@ namespace SUPEN_Projekt.Controllers
 			return Ok(list);
 		}
 
+		//Hämtar den specifika tjänsten i bokningsystemet som är lagrad
 		[Route("api/GetService/{inBookingSystemId}/{inServiceId}")]
 		[HttpGet]
 		public IHttpActionResult GetService(int inBookingSystemId, int inServiceId) {
