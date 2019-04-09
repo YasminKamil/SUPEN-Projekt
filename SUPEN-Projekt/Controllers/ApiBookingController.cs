@@ -2,18 +2,16 @@
 using Newtonsoft.Json.Linq;
 using SUPEN_Projekt.Models;
 using SUPEN_Projekt.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using SUPEN_Projekt.Logic;
 
 namespace SUPEN_Projekt.Controllers {
 	public class ApiBookingController : ApiController {
 
-		//private readonly ApplicationDbContext db;
+		//IUnitOfWork följer indpendancy injection. Kommunicerar med repository interfaces
+        //Se Repository UnitOfWork för implementation
 		IUnitOfWork uw;
 
 		public ApiBookingController(IUnitOfWork unitOfWork) {
@@ -24,10 +22,14 @@ namespace SUPEN_Projekt.Controllers {
 		[Route("api/GetBookings")]
 		[HttpGet]
 		public IHttpActionResult GetBookings() {
-			IEnumerable<Booking> bookings = uw.Bookings.GetAll();
+			var bookings = uw.Bookings.GetAll();
 			BookingsViewModel list = new BookingsViewModel();
 			list.bookings = bookings;
-			return Ok(list);
+            if (list == null)
+            {
+                return NotFound();
+            }
+            return Ok(list);
 		}
 
 		//Skapar en ny bokning i datakällan

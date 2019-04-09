@@ -1,53 +1,32 @@
-﻿@using SUPEN_Projekt.Models
-@model ViewModel
+﻿@model SUPEN_Projekt.Logic.BookingsViewModel
 
 @{
-	ViewBag.Title = "Index";
+    ViewBag.Title = "Bokningar";
 }
 
-<h2>Index</h2>
+<h2>Bokningar</h2>
 
-@using (Html.BeginForm()) {
-	@Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "datepicker", @Value = "Välj datum" } })
-
-	@Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "starttime", @Value = "Klicka och välj en starttid"} })
-	@Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "endtime", @Value = "Klicka och välj en sluttid"}})
-
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-	<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
-	<link href="~/Scripts/js/jquery.timepicker.min.css" rel="stylesheet" />
-}
-
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+         
+        </th>
+    </tr>
 
 
-@section scripts{
-	<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @foreach (var item in Model.bookings)
+    {
+        if (item.UserName != null) { 
+    <tr>
+        <td>
+            @item.UserName
+        </td>
+    </tr>
+        }
+    }
 
-	<script>
-		$(function () {
-			$(".datepicker").datepicker({
-				dateFormat: "yy-mm-dd",
-				changeMonth: true,
-				changeYear: true,
-				yearRange: "2019:2025",
-				showOn: "both",
-				buttonText: "<i class= 'fa fa-calendar'></>"
-			});
-		})
-	</script>
 
-	<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
-	<script src="~/Scripts/js/jquery.timepicker.js"></script>
-	<script>
-		$(".starttime").timepicker({
-			'minTime': '8:00',
-			'maxTime': '16:30',
-		});
-
-		$(".endtime").timepicker({
-			'minTime': '8:30',
-			'maxTime': '17:00'
-		});
-
-	</script>
-}
+</table>
