@@ -66,7 +66,7 @@ namespace SUPEN_Projekt.Controllers {
 			try {
 				var url = "http://localhost:55341/api/PostBooking";
 
-				if (await APIContact(url, model.booking)) {
+				if (await APIContact(url, model)) {
 					return RedirectToAction("Details",
 						new { inBookingSystemId, inServiceId, inBookingId });
 				}

@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using SUPEN_Projekt.Models;
-using SUPEN_Projekt.Repositories;
-using System.Collections.Generic;
+﻿using SUPEN_Projekt.Repositories;
 using System.Linq;
 using System.Web.Http;
 using SUPEN_Projekt.Logic;
@@ -34,13 +30,12 @@ namespace SUPEN_Projekt.Controllers {
 
 		//Skapar en ny bokning i datakällan
 		[Route("api/PostBooking")]
-		public IHttpActionResult PostBooking(JObject inBookning) {
+		public IHttpActionResult PostBooking(BookingSystemServiceBookingViewModel inBooking) {
 			if (!ModelState.IsValid) {
 				return BadRequest("Invalid data");
 			}
 
-			Booking booking = JsonConvert.DeserializeObject<Booking>(inBookning.ToString());
-
+            var booking = inBooking.booking;
 			uw.Bookings.UpdateBooking(booking);
 			uw.Complete();
 
@@ -52,7 +47,7 @@ namespace SUPEN_Projekt.Controllers {
 		[HttpGet]
 		public IHttpActionResult GetBooking(int inBookingSystemId, int inServiceId, int inBookingId) {
 
-			BookingSystem bs = uw.BookingSystems.GetBookingSystem(inBookingSystemId);
+			var bs = uw.BookingSystems.GetBookingSystem(inBookingSystemId);
 			BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
 
 			bsSBVM.bookingSystem = bs;
