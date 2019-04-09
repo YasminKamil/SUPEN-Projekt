@@ -16,7 +16,7 @@ namespace SUPEN_Projekt.Models {
 		public DbSet<Service> Services { get; set; }
 	}
 
-	public class DatabaseInitializer : DropCreateDatabaseAlways<ApplicationDbContext> {
+	public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> {
 		protected override void Seed(ApplicationDbContext context) {
 			//Lägger till Branscher via addBranches metoden
 			List<string> branches = new List<string> { "Frisör", "Besiktning", "Café", "Fordonsuthyrning", "Massör", "Verkstad",

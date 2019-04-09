@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-
+using SUPEN_Projekt.Logic;
 using SUPEN_Projekt.Repositories;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -37,14 +37,16 @@ namespace SUPEN_Projekt.Controllers {
 		//Hämtar det relevanta bokningsystemet inom ett visst område och inom andra branscher ordnat efter avståndet
 		[Route("api/GetRelevantBookingSystem/{bookingSystemId:int}/{serviceId:int}")]
 		[HttpGet]
-		public IEnumerable<BookingSystem> GetRelevantBookingSystem(int bookingSystemId, int serviceId) {
+		public IHttpActionResult GetRelevantBookingSystem(int bookingSystemId, int serviceId) {
 			try {
 				BookingSystem selectedBookingSystem = uw.BookingSystems.GetBookingSystem(bookingSystemId);
 				Service selectedService = uw.Services.Get(serviceId);
 				List<BookingSystem> bookingSystemsInRange = uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
 				List<BookingSystem> bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
 				List<BookingSystem> orderedByDistance = uw.BookingSystems.OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
-				return orderedByDistance;
+                BookingSystemsViewModel bookingsystemsvm = new BookingSystemsViewModel();
+                bookingsystemsvm.bookingSystems = orderedByDistance;
+                return Ok(bookingsystemsvm);
 			} catch (Exception) {
 
 				throw;
@@ -56,7 +58,9 @@ namespace SUPEN_Projekt.Controllers {
 		[HttpGet]
 		public IHttpActionResult GetBookingSystem(int bookingSystemId) {
 			BookingSystem bs = uw.BookingSystems.GetBookingSystem(bookingSystemId);
-			return Ok(bs);
+            BookingSystemServicesViewModel bssvm = new BookingSystemServicesViewModel();
+            bssvm.bookingSystem = bs;
+			return Ok(bssvm);
 
 			//try {
 			//	BookingSystem selectedBookingSystem = uw.BookingSystems.GetBookingSystem(bookingSystemId);

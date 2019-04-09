@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SUPEN_Projekt.Models;
 using SUPEN_Projekt.Repositories;
+using SUPEN_Projekt.Logic;
 
 namespace SUPEN_Projekt.Controllers {
 	public class BookingSystemController : Controller {
@@ -88,7 +89,7 @@ namespace SUPEN_Projekt.Controllers {
 
 		[HttpPost]
 		public async Task<ActionResult> Create(BookingSystemServiceBookingViewModel system) {
-			var url = "http://localhost:55341/api/post";
+			var url = "http://localhost:55341/api/PostBookingSystem";
 
 			if (await APIContact(url, system)) {
                 return RedirectToAction("Index");
@@ -97,64 +98,65 @@ namespace SUPEN_Projekt.Controllers {
 
 		}
 
-		//Returnerar vilka bokningsystem som finns i närområdet efter att man har bokat en tjänst
-		public async Task<ActionResult> RelevantBookingSystems(int bookingSystemId, int serviceId) {
+        //Returnerar vilka bokningsystem som finns i närområdet efter att man har bokat en tjänst
+        public async Task<ActionResult> RelevantBookingSystems(int bookingSystemId, int serviceId)
+        {
 
-			string list1 = "";
-			HttpClient client1 = new HttpClient();
-			string url1 = "http://localhost:55341/api/GetBookingSystem/" + bookingSystemId.ToString();
-			var result1 = client1.GetAsync(url1).Result;
-			if (result1.IsSuccessStatusCode) {
-				list1 = await result1.Content.ReadAsStringAsync();
-			}
-			BookingSystem selectedBookingSystem = JsonConvert.DeserializeObject<BookingSystem>(list1);
+            BookingSystemServicesViewModel bssvm = null;//string list1 = "";//vm4 
+            HttpClient client1 = new HttpClient();
+            string url1 = "http://localhost:55341/api/GetBookingSystem/" + bookingSystemId.ToString();
+            var result1 = client1.GetAsync(url1).Result;
+            if (result1.IsSuccessStatusCode)
+            {
+                bssvm = await result1.Content.ReadAsAsync<BookingSystemServicesViewModel>();
+            }
+            var selectedBookingSystem = bssvm.bookingSystem;
 
+            if (selectedBookingSystem == null || !selectedBookingSystem.Services.Any(x => x.ServiceId == serviceId))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-			if (selectedBookingSystem == null || !selectedBookingSystem.Services.Any(x => x.ServiceId == serviceId)) {
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
+            BookingSystemsViewModel bookingsystemsvm = null;
+            HttpClient client = new HttpClient();
+            string url = "http://localhost:55341/api/GetRelevantBookingSystem/" + bookingSystemId.ToString() + "/" + serviceId.ToString();
+            var result = client.GetAsync(url).Result;
+            if (result.IsSuccessStatusCode)
+            {
+                bookingsystemsvm = await result.Content.ReadAsAsync<BookingSystemsViewModel>();
+            }
+            var orderedByDistance = bookingsystemsvm.bookingSystems;
 
-			List<BookingSystem> orderedByDistance = new List<BookingSystem>();
-
-			string list = "";
-			HttpClient client = new HttpClient();
-			string url = "http://localhost:55341/api/GetRelevantBookingSystem/" + bookingSystemId.ToString() + "/" + serviceId.ToString();
-			var result = client.GetAsync(url).Result;
-			if (result.IsSuccessStatusCode) {
-				list = await result.Content.ReadAsStringAsync();
-			}
-			orderedByDistance = JsonConvert.DeserializeObject<List<BookingSystem>>(list);
-
-			BookingsWithDistanceViewModel bWDVM = new BookingsWithDistanceViewModel();
-			List<BookingSystemAndDistanceViewModel> listOfBookingSystems = new List<BookingSystemAndDistanceViewModel>();
-			foreach (var item in orderedByDistance) {
-				BookingSystemAndDistanceViewModel pairedObject = new BookingSystemAndDistanceViewModel();
-				pairedObject.BookingSystem = item;
-
-
-				string list3 = "";
-				HttpClient client3 = new HttpClient();
-				var result3 = client3.GetAsync("http://localhost:55341/api/GetBookingSystem/" + selectedBookingSystem.BookingSystemId + "/" + item.BookingSystemId).Result;
-				if (result3.IsSuccessStatusCode) {
-					list3 = await result3.Content.ReadAsStringAsync();
-				}
-
-				list3 = list3.Replace('.', ',');
-
-				double distance = double.Parse(list3);
+            BookingsWithDistanceViewModel bWDVM = new BookingsWithDistanceViewModel();
+            List<BookingSystemAndDistanceViewModel> listOfBookingSystems = new List<BookingSystemAndDistanceViewModel>();
+            foreach (var item in orderedByDistance)
+            {
+                BookingSystemAndDistanceViewModel pairedObject = new BookingSystemAndDistanceViewModel();
+                pairedObject.BookingSystem = item;
 
 
-				pairedObject.Distance = Math.Round(distance);
-				listOfBookingSystems.Add(pairedObject);
+                string list3 = "";
+                HttpClient client3 = new HttpClient();
+                var result3 = client3.GetAsync("http://localhost:55341/api/GetBookingSystem/" + selectedBookingSystem.BookingSystemId + "/" + item.BookingSystemId).Result;
+                if (result3.IsSuccessStatusCode)
+                {
+                    list3 = await result3.Content.ReadAsStringAsync();
+                }
 
-			}
-			bWDVM.SelectedBookingSystem = selectedBookingSystem;
-			bWDVM.BookingsWithDistance = listOfBookingSystems;
-			return PartialView(bWDVM);
-		}
+                list3 = list3.Replace('.', ',');
 
+                double distance = double.Parse(list3);
 
-	}
+                pairedObject.Distance = Math.Round(distance);
+                listOfBookingSystems.Add(pairedObject);
+            }
+
+            bWDVM.SelectedBookingSystem = selectedBookingSystem;
+            bWDVM.BookingsWithDistance = listOfBookingSystems;
+            return PartialView(bWDVM);
+        }
+
+    }
 
 
 }

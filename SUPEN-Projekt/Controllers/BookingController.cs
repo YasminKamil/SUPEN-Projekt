@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using SUPEN_Projekt.Logic;
+
 
 namespace SUPEN_Projekt.Controllers {
 	public class BookingController : Controller {
