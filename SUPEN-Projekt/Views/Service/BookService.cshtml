@@ -1,0 +1,29 @@
+﻿ @model SUPEN_Projekt.Logic.BookingSystemServiceBookingViewModel
+
+
+<h3><b> Välj en ledig tid för att boka @Model.service.ServiceName</b></h3>
+<div class="row">
+	<div class="col-sm-6">
+		<table>
+			@foreach (var item in Model.service.Bookings) {
+				<tr>
+					<th rowspan=" 2" colspan=" 4" class="container">
+						@if (item.Available) {
+
+
+
+							@*<button type="button" class="btn btn-success">@item.StartTime.ToString("HH:mm") + "" + @item.EndTime.ToString("HH:mm") </button>*@
+							@Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "BookService", "Booking",
+									new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inBookingId = item.BookingId }, new { @class = "btn btn-success" })
+
+						} else {
+							<button type="button" class="btn btn-success" aria-disabled="false" style="opacity:0.5;">@item.StartTime.ToString("HH:mm")<b>-</b>@item.EndTime.ToString("HH:mm")</button>
+						}
+					</th>
+				</tr>
+			}
+		</table>
+	</div>
+
+	<div class="col-sm-6"></div>
+</div>
