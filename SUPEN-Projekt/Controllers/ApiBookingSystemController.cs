@@ -35,16 +35,16 @@ namespace SUPEN_Projekt.Controllers {
 		}
 
 		//Hämtar det relevanta bokningsystemet inom ett visst område och inom andra branscher ordnat efter avståndet
-		[Route("api/GetRelevantBookingSystem/{bookingSystemId:int}/{serviceId:int}")]
+		[Route("api/GetRelevantBookingSystem/{bookingSystemId:int}/{serviceId:int}/{bookingId:int}")]
 		[HttpGet]
-		public IHttpActionResult GetRelevantBookingSystem(int bookingSystemId, int serviceId) {
+		public IHttpActionResult GetRelevantBookingSystem(int bookingSystemId, int serviceId, int bookingId) {
 			try {
 				BookingSystem selectedBookingSystem = uw.BookingSystems.GetBookingSystem(bookingSystemId);
 				Service selectedService = uw.Services.Get(serviceId);
 				List<BookingSystem> bookingSystemsInRange = uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
 				List<BookingSystem> bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
 				List<BookingSystem> orderedByDistance = uw.BookingSystems.OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
-                List<BookingSystem> onlyWithAvailableTimes=uw.BookingSystems.GetBookingSystemsWithAvailableBooking(orderedByDistance);
+                List<BookingSystem> onlyWithAvailableTimes=uw.BookingSystems.GetBookingSystemsWithAvailableBooking(orderedByDistance,uw.Bookings.Get(bookingId));
                 BookingSystemsViewModel bookingsystemsvm = new BookingSystemsViewModel();
                 bookingsystemsvm.bookingSystems = onlyWithAvailableTimes;
                 return Ok(bookingsystemsvm);
