@@ -17,7 +17,7 @@
 				<td>
 					@i.ServiceName
 				</td>
-				<td>@Html.ActionLink("Boka", "Index", "Service", new { id = i.ServiceId, systemId = Model.bookingSystem.BookingSystemId }, null)</td>
+				<td>@Html.ActionLink("Boka", "BookService", "Service", new { inServiceId = i.ServiceId, inBookingSystemId = Model.bookingSystem.BookingSystemId }, null)</td>
 				@*<td>@Html.ActionLink("Book this", "CreateBooking", new { id = Model.bookingSystem.BookingSystemId, name = i.ServiceName }, null)</td>*@
 				@*@foreach (var y in i.Bookings) {
 					<td>
