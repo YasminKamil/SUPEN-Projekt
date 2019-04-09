@@ -1,16 +1,9 @@
-﻿using SUPEN_Projekt.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System;
 using System.Web.Http;
 using SUPEN_Projekt.Logic;
 using SUPEN_Projekt.Repositories;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Text;
-using System.Data.Entity;
 
 namespace SUPEN_Projekt.Controllers {
 	public class ApiBookingSystemController : ApiController {
@@ -25,7 +18,7 @@ namespace SUPEN_Projekt.Controllers {
 		[HttpGet]
 		public IHttpActionResult GetSystems() {
 
-			IEnumerable<BookingSystem> bookingsystems = uw.BookingSystems.GetAll();
+			var bookingsystems = uw.BookingSystems.GetAll();
 			BookingSystemsViewModel list = new BookingSystemsViewModel();
 			list.bookingSystems = bookingsystems;
 			if (list == null) {
@@ -35,16 +28,18 @@ namespace SUPEN_Projekt.Controllers {
 		}
 
 		//Hämtar det relevanta bokningsystemet inom ett visst område och inom andra branscher ordnat efter avståndet
+        //bytt till var
 		[Route("api/GetRelevantBookingSystem/{bookingSystemId:int}/{serviceId:int}")]
 		[HttpGet]
 		public IHttpActionResult GetRelevantBookingSystem(int bookingSystemId, int serviceId) {
 			try {
-				BookingSystem selectedBookingSystem = uw.BookingSystems.GetBookingSystem(bookingSystemId);
-				Service selectedService = uw.Services.Get(serviceId);
-				List<BookingSystem> bookingSystemsInRange = uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
-				List<BookingSystem> bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
-				List<BookingSystem> orderedByDistance = uw.BookingSystems.OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
-                List<BookingSystem> onlyWithAvailableTimes=uw.BookingSystems.GetBookingSystemsWithAvailableBooking(orderedByDistance);
+				var selectedBookingSystem = uw.BookingSystems.GetBookingSystem(bookingSystemId);
+				var selectedService = uw.Services.Get(serviceId);
+
+				var bookingSystemsInRange = uw.BookingSystems.GetBookingSystemsInRange(selectedBookingSystem);
+				var bookingSystemsInOtherBranches = uw.BookingSystems.GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
+				var orderedByDistance = uw.BookingSystems.OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
+                var onlyWithAvailableTimes = uw.BookingSystems.GetBookingSystemsWithAvailableBooking(orderedByDistance);
                 BookingSystemsViewModel bookingsystemsvm = new BookingSystemsViewModel();
                 bookingsystemsvm.bookingSystems = onlyWithAvailableTimes;
                 return Ok(bookingsystemsvm);
@@ -58,7 +53,7 @@ namespace SUPEN_Projekt.Controllers {
 		[Route("api/GetBookingSystem/{bookingSystemId:int}")]
 		[HttpGet]
 		public IHttpActionResult GetBookingSystem(int bookingSystemId) {
-			BookingSystem bs = uw.BookingSystems.GetBookingSystem(bookingSystemId);
+			var bs = uw.BookingSystems.GetBookingSystem(bookingSystemId);
             BookingSystemServicesViewModel bssvm = new BookingSystemServicesViewModel();
             bssvm.bookingSystem = bs;
 			return Ok(bssvm);
@@ -76,7 +71,7 @@ namespace SUPEN_Projekt.Controllers {
 		[HttpGet]
 		public IHttpActionResult GetSystem(int id) {
 
-			BookingSystem bookingsystem = uw.BookingSystems.GetBookingSystem(id);
+			var bookingsystem = uw.BookingSystems.GetBookingSystem(id);
 			BookingSystemServicesViewModel bsSVM = new BookingSystemServicesViewModel();
 			bsSVM.bookingSystem = bookingsystem;
 			bsSVM.services = bookingsystem.Services;
@@ -116,23 +111,7 @@ namespace SUPEN_Projekt.Controllers {
 			}
 
 			BookingSystemServiceBookingViewModel bsSBVM = JsonConvert.DeserializeObject<BookingSystemServiceBookingViewModel>(insystem.ToString());
-
-			uw.BookingSystems.Add(new BookingSystem() {
-				BookingSystemId = bsSBVM.bookingSystem.BookingSystemId,
-				Address = bsSBVM.bookingSystem.Address,
-				City = bsSBVM.bookingSystem.City,
-				CompanyName = bsSBVM.bookingSystem.CompanyName,
-				ContactEmail = bsSBVM.bookingSystem.ContactEmail,
-				ContactPhone = bsSBVM.bookingSystem.ContactPhone,
-				Email = bsSBVM.bookingSystem.Email,
-				Latitude = bsSBVM.bookingSystem.Latitude,
-				Longitude = bsSBVM.bookingSystem.Longitude,
-				PhoneNumber = bsSBVM.bookingSystem.PhoneNumber,
-				PostalCode = bsSBVM.bookingSystem.PostalCode,
-				SystemDescription = bsSBVM.bookingSystem.SystemDescription,
-				SystemName = bsSBVM.bookingSystem.SystemName,
-				Website = bsSBVM.bookingSystem.Website
-			});
+            uw.BookingSystems.AddBookingSystem(bsSBVM.bookingSystem);
 			uw.Complete();
 			return Ok();
 		}

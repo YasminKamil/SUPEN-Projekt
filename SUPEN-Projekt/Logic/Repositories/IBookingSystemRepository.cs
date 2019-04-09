@@ -15,7 +15,7 @@ namespace SUPEN_Projekt.Repositories {
 		bool InDistance(double companyALong, double companyALat, double companyBLong, double companyBLat, int maxDistance);
 		IEnumerable<BookingSystem> GetBookingSystems();//tas bort?
 		List<BookingSystem> GetBookingSystemsInRange(BookingSystem inSelectedBookingSystem);
-		//void AddBookingSystem(BookingSystem bookingsystem);
+		void AddBookingSystem(BookingSystem bookingsystem);
 		void EditBookingSystem(BookingSystem bookingSystem);
 		void RemoveBookingSystem(int id);
 		//void AddBooking(Booking booking, int id);

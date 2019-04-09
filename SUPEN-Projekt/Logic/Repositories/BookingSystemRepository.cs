@@ -46,6 +46,27 @@ namespace SUPEN_Projekt.Repositories {
 
 		}
 
+        public void AddBookingSystem(BookingSystem bookingSystem) {
+
+            BookingSystem bs = new BookingSystem();
+            bs.BookingSystemId = bookingSystem.BookingSystemId;
+            bs.Address = bookingSystem.Address;
+            bs.City = bookingSystem.City;
+            bs.CompanyName = bookingSystem.CompanyName;
+            bs.ContactEmail = bookingSystem.ContactEmail;
+            bs.ContactPhone = bookingSystem.ContactPhone;
+            bs.Email = bookingSystem.Email;
+            bs.Latitude = bookingSystem.Latitude;
+            bs.Longitude = bookingSystem.Longitude;
+            bs.PhoneNumber = bookingSystem.PhoneNumber;
+            bs.PostalCode = bookingSystem.PostalCode;
+            bs.SystemDescription = bookingSystem.SystemDescription;
+            bs.SystemName = bookingSystem.SystemName;
+            bs.Website = bookingSystem.Website;
+
+            Add(bs);         
+        }
+
 		//Tar bort bokningsystemet
 		public void RemoveBookingSystem(int id) {
 			BookingSystem bookingsystem = Get(id);
