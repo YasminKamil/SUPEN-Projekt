@@ -28,7 +28,6 @@ namespace SUPEN_Projekt.Controllers {
 
 		//Returnerar det valda bokningsystemets tjänster
 		public async Task<ActionResult> BookingSystem(int id) {
-			//string bookingsystem = "";
 			BookingSystemServicesViewModel bsSVM = null;
 			HttpClient client = new HttpClient();
 			var result = client.GetAsync("http://localhost:55341/api/GetSystem/" + id).Result;
