@@ -736,7 +736,6 @@
     <Content Include="Scripts\js\package.json" />
     <Content Include="Scripts\js\README.md" />
     <Content Include="Views\BookingSystem\RelevantBookingSystems.cshtml" />
-    <Content Include="Views\Booking\ABookingSystem.cshtml" />
     <Content Include="Views\Booking\Details.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
     <Content Include="Views\Service\Edit.cshtml" />
