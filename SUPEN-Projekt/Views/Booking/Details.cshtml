@@ -8,7 +8,7 @@
         
         <hr />
         <div class="col-lg-4" style="background-color:white;">
-            <h4>Booking details</h4>
+            <h4><b>Bokningsinformation</b></h4>
             <div>
                 <hr />
                 <div class="list-group">
@@ -22,7 +22,7 @@
                         <p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.Price)</p>
                     </a>
                     <p>
-                        @Html.ActionLink("Exit", "ABookingSystem", new { id = Model.bookingSystem.BookingSystemId })
+                        @Html.ActionLink("Avsluta", "BookingSystem", "BookingSystem", new { id = Model.bookingSystem.BookingSystemId })
                     </p>
                 </div>
             </div>

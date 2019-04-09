@@ -4,7 +4,7 @@
 
 @if (Model.BookingsWithDistance.Count() != 0)
 {
-<h4>Services in the neighborhood</h4>
+<h4><b>Lediga tider med andra tjänster i närheten</b></h4>
 }
 @foreach (var item in Model.BookingsWithDistance)
 {
@@ -23,7 +23,7 @@
     </p>
     <p>
 
-        @Html.ActionLink("For available service - click here!", "BookingSystem", "BookingSystem", new { id = item.BookingSystem.BookingSystemId }, null)
+        @Html.ActionLink("Boka", "BookingSystem", "BookingSystem", new { id = item.BookingSystem.BookingSystemId }, null)
     </p>
 </div>               
 }

@@ -11,14 +11,14 @@
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>BookingSystem</h4>
+    <h4>Bokningssystem</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => Model.service)
     @Html.HiddenFor(model => Model.booking)
     @Html.HiddenFor(model => Model.Id)
     <div class="form-group">
-        @Html.LabelFor(model => model.bookingSystem.SystemName, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.bookingSystem.SystemName, "Namn på systemet", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.bookingSystem.SystemName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.bookingSystem.SystemName, "", new { @class = "text-danger" })
@@ -26,7 +26,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.bookingSystem.SystemDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.bookingSystem.SystemDescription,"Beskrivning", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.bookingSystem.SystemDescription, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.bookingSystem.SystemDescription, "", new { @class = "text-danger" })
@@ -34,7 +34,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.bookingSystem.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.bookingSystem.Email,"E-post", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.bookingSystem.Email, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.bookingSystem.Email, "", new { @class = "text-danger" })
@@ -42,7 +42,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.bookingSystem.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.bookingSystem.PhoneNumber,"Telefonnummer", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.bookingSystem.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.bookingSystem.PhoneNumber, "", new { @class = "text-danger" })
@@ -50,7 +50,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.bookingSystem.Website, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.bookingSystem.Website,"Webbplats", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.bookingSystem.Website, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.bookingSystem.Website, "", new { @class = "text-danger" })
@@ -58,7 +58,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.bookingSystem.CompanyName, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.bookingSystem.CompanyName,"Företagsnamn", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.bookingSystem.CompanyName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.bookingSystem.CompanyName, "", new { @class = "text-danger" })
@@ -66,7 +66,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.bookingSystem.ContactEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.bookingSystem.ContactEmail, "Kontaktmail", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.bookingSystem.ContactEmail, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.bookingSystem.ContactEmail, "", new { @class = "text-danger" })
@@ -74,7 +74,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.bookingSystem.ContactPhone, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.bookingSystem.ContactPhone, "Kontaktnummer", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.bookingSystem.ContactPhone, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.bookingSystem.ContactPhone, "", new { @class = "text-danger" })
@@ -82,7 +82,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.bookingSystem.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.bookingSystem.Address,"Adress", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.bookingSystem.Address, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.bookingSystem.Address, "", new { @class = "text-danger" })
@@ -106,7 +106,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.bookingSystem.PostalCode, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.bookingSystem.PostalCode,"Postnummer", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.bookingSystem.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.bookingSystem.PostalCode, "", new { @class = "text-danger" })
@@ -114,7 +114,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.bookingSystem.City, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.bookingSystem.City,"Stad", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.bookingSystem.City, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.bookingSystem.City, "", new { @class = "text-danger" })
@@ -123,7 +123,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Skapa" class="btn btn-default" />
         </div>
     </div>
 </div>
