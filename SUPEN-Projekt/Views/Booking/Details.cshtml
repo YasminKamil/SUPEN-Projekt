@@ -34,7 +34,7 @@
             
             <div>
                 @{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
-                                      new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId });}
+                                      new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId });}
                 </div>
             </div>
             <div class="row"></div>

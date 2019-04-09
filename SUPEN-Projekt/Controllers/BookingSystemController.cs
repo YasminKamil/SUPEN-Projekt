@@ -30,7 +30,7 @@ namespace SUPEN_Projekt.Controllers {
 		public async Task<ActionResult> BookingSystem(int id) {
 			BookingSystemServicesViewModel bsSVM = null;
 			HttpClient client = new HttpClient();
-			var result = client.GetAsync("http://localhost:55341/api/GetSystem/" + id).Result;
+			var result = client.GetAsync("http://localhost:55341/api/GetBookingSystem/" + id).Result;
 			if (result.IsSuccessStatusCode) {
 				bsSVM = await result.Content.ReadAsAsync<BookingSystemServicesViewModel>();
 			} else {
@@ -60,7 +60,7 @@ namespace SUPEN_Projekt.Controllers {
 		public async Task<ActionResult> Create() {
             BookingSystemServiceBookingViewModel bsSBVM = null;
             HttpClient client = new HttpClient();
-            var result = client.GetAsync("http://localhost:55341/api/GetSystem/").Result;
+            var result = client.GetAsync("http://localhost:55341/api/GetBookingSystem/").Result;
             if (result.IsSuccessStatusCode)
             {
                 bsSBVM = await result.Content.ReadAsAsync<BookingSystemServiceBookingViewModel>();
@@ -86,7 +86,7 @@ namespace SUPEN_Projekt.Controllers {
 		}
 
         //Returnerar vilka bokningsystem som finns i närområdet efter att man har bokat en tjänst
-        public async Task<ActionResult> RelevantBookingSystems(int bookingSystemId, int serviceId)
+        public async Task<ActionResult> RelevantBookingSystems(int bookingSystemId, int serviceId, int bookingId)
         {
 
             BookingSystemServicesViewModel bssvm = null;
@@ -106,7 +106,7 @@ namespace SUPEN_Projekt.Controllers {
 
             BookingSystemsViewModel bookingsystemsvm = null;
             HttpClient client = new HttpClient();
-            string url = "http://localhost:55341/api/GetRelevantBookingSystem/" + bookingSystemId.ToString() + "/" + serviceId.ToString();
+            string url = "http://localhost:55341/api/GetRelevantBookingSystem/" + bookingSystemId.ToString() + "/" + serviceId.ToString()+"/"+bookingId.ToString();
             var result = client.GetAsync(url).Result;
             if (result.IsSuccessStatusCode)
             {

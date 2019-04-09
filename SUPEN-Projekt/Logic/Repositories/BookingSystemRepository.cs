@@ -164,13 +164,14 @@ namespace SUPEN_Projekt.Repositories {
 				this.distance = distance;
 			}
 		}
-        //returnerar endast företag som har lediga tider
-        public List<BookingSystem> GetBookingSystemsWithAvailableBooking(List<BookingSystem> inBookingSystems){
-            inBookingSystems = inBookingSystems.Where(x=>x.Services.Any(y=> y.Bookings.Any(z=> z.Available == true))).ToList();
+        //returnerar endast företag som har lediga tider som börjar strax efter eller slutar en liten stund före bokad tjänst
+        public List<BookingSystem> GetBookingSystemsWithAvailableBooking(List<BookingSystem> inBookingSystems, Booking inSelectedBooking){
+            inBookingSystems = inBookingSystems.Where(x => x.Services.Any(y => y.Bookings.Any(z => (inSelectedBooking.EndTime.AddMinutes(35) > z.StartTime && z.StartTime > inSelectedBooking.EndTime.AddMinutes(15)) || (z.EndTime > inSelectedBooking.StartTime.AddMinutes(-35) && z.EndTime < inSelectedBooking.StartTime.AddMinutes(-15))))).ToList();
+            inBookingSystems = inBookingSystems.Where(x=>x.Services.Any(y=>y.Bookings.Any(f=>f.Available == true))).ToList();
             return inBookingSystems;
         }
-		//Genom att skicka in en lista av bokningsystem och det valda företaget, sorteras dem efter vilken distans de har till det valda företaget.
-		public List<BookingSystem> OrderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem) {
+        //Genom att skicka in en lista av bokningsystem och det valda företaget, sorteras dem efter vilken distans de har till det valda företaget.
+        public List<BookingSystem> OrderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem) {
 
 			foreach (var item in inBookingSystems) {
 				DistBooking.Add(new BookingSystemOfInterest(item, GetDistanceTo(inSelectedBookingSystem, item)));
