@@ -14,18 +14,22 @@ namespace SUPEN_Projekt.Models {
 		public DbSet<Booking> Bookings { get; set; }
 		public DbSet<Branch> Branches { get; set; }
 		public DbSet<Service> Services { get; set; }
-	}
+	    }
 
 	public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> {
 		protected override void Seed(ApplicationDbContext context) {
 			//Lägger till Branscher via addBranches metoden
+            //Lägg till ,"branschnamn" så skapas en bransch.
 			List<string> branches = new List<string> { "Frisör", "Besiktning", "Café", "Fordonsuthyrning", "Massör", "Verkstad",
 			   "Idrottsförening", "Kontor", "Utbildning", "Restaurang", "Sjukvård", "Transport", "Hotell", "Media", "IT",
 			   "Bank", "Bygg", "Konsultation", "Däck", "Tatuering", "Sport" };
 			AddBranches(context, branches);
 
-			//Lägger till BookingSystems via metoden addBookingSystem
-			AddBookingSystem(context, "boka.se", "Description...", "ArtofHair@boka.se", "070 - 000 00 00", "boka.se/ArtofHair", "Art of Hair", "ArtofHair@boka.se",
+            //Lägger till BookingSystems via metoden addBookingSystem, data skrivs in i ordningen nedan.
+            //context(ApplicationDbContext), systemnamn(string), systembeskrivning(string), epost(string), tel.nr (string), 
+            //webbadress(string), företagsnamn(string), kontakt epost(string), kontakt tel.(string), Address(string), 
+            //Latitude(double), Longitude(double),postnummer(string), stad(string)
+            AddBookingSystem(context, "boka.se", "Description...", "ArtofHair@boka.se", "070 - 000 00 00", "boka.se/ArtofHair", "Art of Hair", "ArtofHair@boka.se",
 			"070 - 123 56 78", "Fabriksgatan 13", 59.2703188, 15.2074733, "702 10", "Örebro");
 
 			AddBookingSystem(context, "boka.se", "Description...", "bullvivan@boka.se", "070 - 000 00 00", "boka.se/bullvivan", "Bullvivan", "bullvivan@boka.se",
@@ -72,13 +76,46 @@ namespace SUPEN_Projekt.Models {
 
 			AddBookingSystem(context, "boka.se", "Description...", "EliteArtwork@boka.se", "070 - 000 00 00", "boka.se/EliteArtwork", "Elite Artwork", "EliteArtwork@boka.se",
 			"070 - 123 56 78", "Storgatan 20", 59.276952, 15.215910, "703 61", "Örebro");
+           
+            AddBookingSystem(context, "boka.se", "Description...", "Fitness24seven@boka.se", "070 - 000 00 00", "boka.se/Fitness24seven", "Fitness24seven", "Fitness24seven@boka.se",
+            "070 - 123 56 78", "Blekingegatan 63", 59.310865, 18.076742, "111 62", "Stockholm");
 
-			context.SaveChanges();
+            AddBookingSystem(context, "boka.se", "Description...", "Gildasrum@boka.se", "070 - 000 00 00", "boka.se/Gildasrum", "Gildas rum", "Gildasrum@boka.se",
+            "070 - 123 56 78", "Skånegatan 80", 59.312875, 18.083208, "111 35", "Stockholm");
 
+            AddBookingSystem(context, "boka.se", "Description...", "PrimeBurger@boka.se", "070 - 000 00 00", "boka.se/PrimeBurger", "Prime Burger", "PrimeBurger@boka.se",
+            "070 - 123 56 78", "Folkungagatan 122", 59.315465, 18.086169, "116 30", "Stockholm");
 
+            AddBookingSystem(context, "boka.se", "Description...", "MosebackeHostel@boka.se", "070 - 000 00 00", "boka.se/MosebackeHostel", "Mosebacke Hostel", "MosebackeHostel@boka.se",
+            "070 - 123 56 78", "Blekingegatan 63", 59.317173, 18.076266, "111 20", "Stockholm");
+            
+            AddBookingSystem(context, "boka.se", "Description...", "HiltonSlussen@boka.se", "070 - 000 00 00", "boka.se/HiltonSlussen", "Hilton Slussen", "HiltonSlussen@boka.se",
+            "070 - 123 56 78", "Guldgränd 8", 59.320569, 18.069208, "104 65", "Stockholm");
 
-            //Lägger till och skapar services via addService metoden
-            //context , servicenamn, t
+            AddBookingSystem(context, "boka.se", "Description...", "TatueringStockholm@boka.se", "070 - 000 00 00", "boka.se/TatueringStockholm", "Tatuering Stockholm", "TatueringStockholm@boka.se",
+            "070 - 123 56 78", "Brännkyrkagatan 48", 59.319217, 18.059823, "118 22", "Stockholm");
+
+            AddBookingSystem(context, "boka.se", "Description...", "CaféMariaberget@boka.se", "070 - 000 00 00", "boka.se/CaféMariaberget", "Café Mariaberget", "CaféMariaberget@boka.se",
+            "070 - 123 56 78", "Bastugatan 19", 59.320178, 18.062243, "118 25", "Stockholm");
+
+            AddBookingSystem(context, "boka.se", "Description...", "GuldgrandHotelApartments@boka.se", "070 - 000 00 00", "boka.se/GuldgrandHotelApartments", "Guldgrand Hotel Apartments", "GuldgrandHotelApartments@boka.se",
+            "070 - 123 56 78", "Guldgränd 5", 59.320200, 18.069490, "118 20", "Stockholm");
+
+            AddBookingSystem(context, "boka.se", "Description...", "BestWesternCapital@boka.se", "070 - 000 00 00", "boka.se/BestWesternCapital", "Best Western Capital", "BestWesternCapital@boka.se",
+            "070 - 123 56 78", "Stadsgården", 59.319575, 18.075197, "116 45", "Stockholm");
+
+            context.SaveChanges();
+            //Lägger till och skapar services via addService metoden, data skrivs in i ordningen nedan.
+            //context(ApplicationDbContext), servicenamn(string), tidsåtgång(int), pris(int), branschnamn(string), företagsnamn(string)
+            AddService(context, "Fika", 45, 200, "Café", "Café Mariaberget");
+            AddService(context, "Tatuering", 60, 1750, "Tatuering", "Tatuering Stockholm");
+            AddService(context, "Standard double", 30, 70, "Hotell", "Hilton Slussen");
+            AddService(context, "Superior double", 30, 70, "Hotell", "Hilton Slussen");
+            AddService(context, "Standard", 30, 70, "Hotell", "Hilton Slussen");
+            AddService(context, "Sovsal", 30, 70, "Hotell", "Mosebacke Hostel");
+            AddService(context, "Boka bord", 60, 180, "Restaurang", "Prime Burger");
+            AddService(context, "Fika", 60, 180, "Café", "Gildas rum");
+            AddService(context, "Gympass", 60, 360, "Sport", "Fitness24seven");
             AddService(context, "Hyr fotbollsplanen", 60, 180, "Sport", "Lillåvallen");
             AddService(context, "Fotbollsträning med PT", 60, 180, "Sport", "Lillåvallen");
             AddService(context, "Hyr en bana", 60, 70, "Sport", "Lillån Tennisklubb");
@@ -101,15 +138,22 @@ namespace SUPEN_Projekt.Models {
 			AddService(context, "Klippning", 45, 200, "Frisör", "Frisörkompaniet");
 			AddService(context, "Däckbyte", 45, 200, "Däck", "Carspect");
 			AddService(context, "Däckbyte", 45, 200, "Däck", "Södermalm däck & bilrekond");
-			AddService(context, "Färgning", 45, 200, "Frisör", "Noir");
-			AddService(context, "Färgning", 45, 200, "Frisör", "BodyFace");
-			AddService(context, "Klippning", 25, 200, "Frisör", "BodyFace");
-			AddService(context, "Besiktning", 25, 200, "Besiktning", "Besikta");
-
-			context.SaveChanges();
-
+			AddService(context, "Färgning", 45, 450, "Frisör", "Noir");
+			AddService(context, "Färgning", 45, 480, "Frisör", "BodyFace");
+			AddService(context, "Klippning", 25, 450, "Frisör", "BodyFace");
+			AddService(context, "Besiktning", 25, 380, "Besiktning", "Besikta");
+            AddService(context, "Standard", 60, 1250, "Hotell", "Guldgrand Hotel Apartments");
+            AddService(context, "Svit", 60, 1250, "Hotell", "Guldgrand Hotel Apartments");
+            AddService(context, "Standard double", 60, 1250, "Hotell", "Guldgrand Hotel Apartments");
+            AddService(context, "Superior double", 60, 1250, "Hotell", "Guldgrand Hotel Apartments");
+            AddService(context, "Standard", 60, 1250, "Hotell", "Best Western Capital");
+            AddService(context, "Svit", 60, 1250, "Hotell", "Best Western Capital");
+            AddService(context, "Standard double", 60, 1250, "Hotell", "Best Western Capital");
+            AddService(context, "Superior double", 60, 1250, "Hotell", "Best Western Capital");
+            context.SaveChanges();
 			base.Seed(context);
 		}
+        //Lägger till en service
 		void AddService(ApplicationDbContext context, string inServiceName, int inDuration, int inPrice, string inBranchName, string cName) {
 			Service service = new Service();
 			service.ServiceId = context.Services.Count();
@@ -120,21 +164,18 @@ namespace SUPEN_Projekt.Models {
 			service.Bookings = GetBookings(context, inPrice, inDuration);
 			context.Services.Add(service);
 			context.SaveChanges();
-
+            //Kollar så att den inte redan finns
 			var bs = context.BookingSystems.SingleOrDefault(c => c.CompanyName == cName);
 			var serv = bs.Services.SingleOrDefault(i => i.ServiceId == service.ServiceId);
 			if (serv == null)
 				bs.Services.Add(context.Services.Single(i => i.ServiceId == service.ServiceId));
 			context.SaveChanges();
-
 		}
-
-
-		List<Booking> GetBookings(ApplicationDbContext context, int inPrice, int inDuration) {
-
+        //skapar en lista av booking och använder sig av SeedBookings för att skapa rätt antal under företagets öppettid
+        List<Booking> GetBookings(ApplicationDbContext context, int inPrice, int inDuration) {
 			List<Service> services = new List<Service>();
 			Random randomNumber = new Random();
-			//List<int> durations = new List<int> { 25, 30, 35, 40, 45, 50, 55, 60 };
+			//List<int> durations = new List<int> { 25, 30, 35, 40, 45, 50, 55, 60 }; 
 			int duration = inDuration; //durations.OrderBy(x=> randomNumber.Next()).First();
 			int price = inPrice; // randomNumber.Next(150, 400);
 			int hoursOpen = randomNumber.Next(2, 10);
@@ -142,35 +183,29 @@ namespace SUPEN_Projekt.Models {
 			listOfBookings = SeedBokings(duration, price, hoursOpen);
 			context.Bookings.AddRange(listOfBookings);
 			context.SaveChanges();
-
 			return listOfBookings;
 		}
-
 		//Returnerar en lista på bokningar under öppentiden, skapar så många som möjligt under öppettiden.
 		public List<Booking> SeedBokings(int duration, int price, int totalHoursOpen) {
 			var bookings = new List<Booking>();
 			decimal inHours = Convert.ToDecimal(duration) / Convert.ToDecimal(60);
 			int iterations = (int)Math.Floor(Convert.ToDecimal(totalHoursOpen) / Convert.ToDecimal(inHours));
-
 			DateTime previousEndTime = new DateTime();
 			int i;
 			for (i = 0; i < iterations; ++i) {
 				var booking = new Booking();
-
 				booking.Available = true;
 				if (i == 0) booking.StartTime = DateTime.Today.AddHours(i + 8);
 				else booking.StartTime = previousEndTime;
 
 				previousEndTime = booking.EndTime = booking.StartTime.AddMinutes(duration);
-
 				booking.Date = DateTime.Today;
 				booking.Price = price;
-
 				bookings.Add(booking);
 			}
 			return bookings;
 		}
-
+        //Skapar en brancsh för varje string i listan som skickas in i metoden
 		void AddBranches(ApplicationDbContext context, List<string> inBranchList) {
 			List<String> branchString = inBranchList;
 			foreach (var item in branchString) {
@@ -180,12 +215,9 @@ namespace SUPEN_Projekt.Models {
 			}
 			context.SaveChanges();
 		}
-
-
+        //Lägger till BookingSystem i databasen
 		void AddBookingSystem(ApplicationDbContext context, string inSystemName, string inSystemDescription, string inEmail, string inPhoneNumber, string inWebsite, string inCompanyName, string inContactEmail, string inContactPhone, string inAddress, double inLatitude, double inLongitude, string inPostalCode, string inCity) {
-
 			BookingSystem bookingsystem = new BookingSystem {
-
 				SystemName = inSystemName,
 				SystemDescription = inSystemDescription,
 				Email = inEmail,
@@ -199,7 +231,7 @@ namespace SUPEN_Projekt.Models {
 				Longitude = inLongitude,
 				PostalCode = inPostalCode,
 				City = inCity,
-				Services = new List<Service>() //{ context.Services.Single(x => x.ServiceId == 1), context.Services.Single(x => x.ServiceId == 2) }
+				Services = new List<Service>()
 			};
 			context.BookingSystems.Add(bookingsystem);
 			context.SaveChanges();
