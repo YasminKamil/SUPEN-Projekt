@@ -23,6 +23,8 @@ namespace SUPEN_Projekt.Repositories {
 		void AddService(Service service, int id);
 		BookingSystem GetBookingSystem(int id);
 		Service GetService(int BookingSystemId, int serviceId);
+        List<BookingSystem> GetBookingSystemsWithAvailableBooking(List<BookingSystem> inBookingSystems);
 
-	}
+
+    }
 }
