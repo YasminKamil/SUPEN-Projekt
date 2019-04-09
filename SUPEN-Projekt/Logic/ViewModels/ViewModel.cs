@@ -1,8 +1,4 @@
-﻿using SUPEN_Projekt.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using SUPEN_Projekt.Models;
 
 namespace SUPEN_Projekt.Logic {
@@ -42,4 +38,8 @@ namespace SUPEN_Projekt.Logic {
 		public IEnumerable<Booking> bookings { get; set; }
 	}
 
+	public class ServicesViewModel {
+		public int Id { get; set; }
+		public IEnumerable<Service> services { get; set; }
+	}
 }

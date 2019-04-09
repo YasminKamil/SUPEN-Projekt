@@ -14,7 +14,11 @@ namespace SUPEN_Projekt.Models {
 		public DbSet<Booking> Bookings { get; set; }
 		public DbSet<Branch> Branches { get; set; }
 		public DbSet<Service> Services { get; set; }
-	    }
+
+		public System.Data.Entity.DbSet<SUPEN_Projekt.Logic.BookingSystemServiceBookingViewModel> BookingSystemServiceBookingViewModels { get; set; }
+
+		public System.Data.Entity.DbSet<SUPEN_Projekt.Logic.ServicesViewModel> ServicesViewModels { get; set; }
+	}
 
 	public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> {
 		protected override void Seed(ApplicationDbContext context) {

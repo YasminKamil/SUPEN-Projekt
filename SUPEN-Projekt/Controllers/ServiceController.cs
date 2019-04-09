@@ -1,11 +1,8 @@
-﻿using SUPEN_Projekt.Models;
-using SUPEN_Projekt.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using SUPEN_Projekt.Repositories;
 using System.Web.Mvc;
 using SUPEN_Projekt.Logic;
+using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace SUPEN_Projekt.Controllers {
 	public class ServiceController : Controller {
@@ -15,70 +12,53 @@ namespace SUPEN_Projekt.Controllers {
 			uw = unitOfWork;
 		}
 
-		// GET: Service
-		public ActionResult Index(int id, int systemId) {
-			BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
-			bsSBVM.bookingSystem = uw.BookingSystems.GetBookingSystem(systemId);
-			bsSBVM.service = bsSBVM.bookingSystem.Services.Single(x => x.ServiceId == id);//uw.Services.GetService(id);
+		//Returnerar alla tjänster via ett api-anrop
+		public async Task<ActionResult> Index() {
+			ServicesViewModel list = null;
+			HttpClient client = new HttpClient();
+
+			var result = client.GetAsync("http://localhost:55341/api/GetBookings").Result;
+			if (result.IsSuccessStatusCode) {
+				list = await result.Content.ReadAsAsync<ServicesViewModel>();
+			}
+
+			return View(list);
+		}
+
+		//Returnerar tjänster som möjliggör en bokning i ett bokningsystem 
+		public async Task<ActionResult> BookService(int inBookingSystemId, int inServiceId) {
+
+			BookingSystemServiceBookingViewModel bsSBVM = null;
+			HttpClient client = new HttpClient();
+
+			var result = client.GetAsync("http://localhost:55341/api/GetService/" + inBookingSystemId + "/" + inServiceId).Result;
+
+			if (result.IsSuccessStatusCode) {
+				bsSBVM = await result.Content.ReadAsAsync<BookingSystemServiceBookingViewModel>();
+			} else {
+				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator");
+			}
 
 			return View(bsSBVM);
-
 		}
 
-		// GET: Service/Details/5
-		public ActionResult Details(int id) {
-			return View();
-		}
+		//// GET: Service/Edit/5
+		//public ActionResult Edit(int id) {
+		//	return View();
+		//}
 
-		// GET: Service/Create
-		public ActionResult Create() {
-			return View();
-		}
+		//// POST: Service/Edit/5
+		//[HttpPost]
+		//public ActionResult Edit(int id, FormCollection collection) {
+		//	try {
+		//		// TODO: Add update logic here
 
-		// POST: Service/Create
-		[HttpPost]
-		public ActionResult Create(FormCollection collection) {
-			try {
-				// TODO: Add insert logic here
+		//		return RedirectToAction("Index");
+		//	} catch {
+		//		return View();
+		//	}
+		//}
 
-				return RedirectToAction("Index");
-			} catch {
-				return View();
-			}
-		}
 
-		// GET: Service/Edit/5
-		public ActionResult Edit(int id) {
-			return View();
-		}
-
-		// POST: Service/Edit/5
-		[HttpPost]
-		public ActionResult Edit(int id, FormCollection collection) {
-			try {
-				// TODO: Add update logic here
-
-				return RedirectToAction("Index");
-			} catch {
-				return View();
-			}
-		}
-
-		// GET: Service/Delete/5
-		public ActionResult Delete(int id) {
-			return View();
-		}
-
-		// POST: Service/Delete/5
-		[HttpPost]
-		public ActionResult Delete(int id, FormCollection collection) {
-			try {
-				// TODO: Add delete logic here
-
-				return RedirectToAction("Index");
-			} catch {
-				return View();
-			}
-		}
 	}
 }
