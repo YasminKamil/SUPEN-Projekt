@@ -35,14 +35,11 @@ namespace SUPEN_Projekt.Controllers {
             BookingSystemServicesViewModel bssvm = new BookingSystemServicesViewModel();
             bssvm.bookingSystem = bs;
             bssvm.services = bs.Services;
-			return Ok(bssvm);
-
-			//try {
-			//	BookingSystem selectedBookingSystem = uw.BookingSystems.GetBookingSystem(bookingSystemId);
-			//	return selectedBookingSystem;
-			//} catch (Exception) {
-			//	throw;
-			//}
+            if (bssvm == null)
+            {
+                return NotFound();
+            }
+            return Ok(bssvm);
 		}
 
         [Route("api/GetBookingSystem/")]
@@ -53,13 +50,14 @@ namespace SUPEN_Projekt.Controllers {
             return Ok(bsSBVM);
         }
 
-
         //Hämtar och beräknar avståndet mellan befintliga bokningsystem
         [Route("api/GetBookingSystem/{bookingSystemAId:int}/{bookingSystemBId:int}")]
 		[HttpGet]
-		public double GetDistanceBetweenBookingSystems(int bookingSystemAId, int BookingSystemBId) {
+		public IHttpActionResult GetDistanceBetweenBookingSystems(int bookingSystemAId, int BookingSystemBId) {
 			try {
-				return uw.BookingSystems.GetDistanceTo(uw.BookingSystems.Get(bookingSystemAId), uw.BookingSystems.Get(BookingSystemBId));
+                double gdbb = uw.BookingSystems.GetDistanceTo(uw.BookingSystems.Get(bookingSystemAId), uw.BookingSystems.Get(BookingSystemBId));
+                return Ok(gdbb);
+
 			} catch (Exception) {
 				throw;
 			}
