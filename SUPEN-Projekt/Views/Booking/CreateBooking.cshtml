@@ -8,7 +8,7 @@
 
 	@Html.AntiForgeryToken()
 
-	<p>You are now going to book @Model.service.ServiceName</p>
+	<p>Du håller just nu på att boka: @Model.service.ServiceName</p>
 	<div class="form-horizontal">
 		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 		@Html.HiddenFor(model => model.Id)
