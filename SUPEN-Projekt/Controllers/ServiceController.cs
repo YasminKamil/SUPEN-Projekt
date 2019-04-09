@@ -17,7 +17,7 @@ namespace SUPEN_Projekt.Controllers {
 			ServicesViewModel list = null;
 			HttpClient client = new HttpClient();
 
-			var result = client.GetAsync("http://localhost:55341/api/GetBookings").Result;
+			var result = client.GetAsync("http://localhost:55341/api/GetServices").Result;
 			if (result.IsSuccessStatusCode) {
 				list = await result.Content.ReadAsAsync<ServicesViewModel>();
 			}
