@@ -81,11 +81,6 @@ namespace SUPEN_Projekt.Repositories {
 		}
 
 
-		//public void AddBooking(Booking booking, int id)
-		//{
-		//    Get(id).Bookings.Add(booking);
-		//}
-
 		//Returnerar tjänsten för bokningsystemet
 		public Service GetBookingSystemService(int id, int ServiceId) {
 			BookingSystem bookingsystem = Get(id);
@@ -97,9 +92,23 @@ namespace SUPEN_Projekt.Repositories {
 			get { return Context as ApplicationDbContext; }
 		}
 
+        public List<BookingSystem> GetRelevantBookingSystemOnlyWithAvailableTimes(int bookingSystemId, int serviceId, int bookingId)
+        {
+            BookingSystem selectedBookingSystem = GetBookingSystem(bookingSystemId);
+            
+            Service selectedService = ApplicationDbContext.Services.Single(x => x.ServiceId == serviceId);
+            Booking booking = ApplicationDbContext.Bookings.Single(x => x.BookingId == bookingId);
 
-		//Returnerar bokningsystem inom en viss distans inom vald stad
-		public List<BookingSystem> GetBookingSystemsInRange(BookingSystem inSelectedBookingSystem) {
+            List<BookingSystem> bookingSystemsInRange = GetBookingSystemsInRange(selectedBookingSystem);
+            List<BookingSystem> bookingSystemsInOtherBranches = GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
+            List<BookingSystem> orderedByDistance = OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
+            List<BookingSystem> onlyWithAvailableTimes = GetBookingSystemsWithAvailableBooking(orderedByDistance, booking);
+
+            return onlyWithAvailableTimes;
+        }
+
+        //Returnerar bokningsystem inom en viss distans inom vald stad
+        public List<BookingSystem> GetBookingSystemsInRange(BookingSystem inSelectedBookingSystem) {
 			var companiesInSelectedCity = ApplicationDbContext.BookingSystems.Where(x => x.City.ToLower() == inSelectedBookingSystem.City.ToLower() && x.CompanyName != inSelectedBookingSystem.CompanyName);
 			List<BookingSystem> companiesInRange = new List<BookingSystem>();
 
@@ -197,7 +206,9 @@ namespace SUPEN_Projekt.Repositories {
 			BookingSystem tmbBookingSystem = new BookingSystem();
 
 			foreach (var aBookingSystem in inBookingSystems.Where(x => x.Services != null)) {
-				List<Service> service = aBookingSystem.Services.Where(x => x.Branch.BranchName != selectedService.Branch.BranchName).ToList<Service>();
+				List<Service> service = aBookingSystem.Services
+                    .Where(x => x.Branch.BranchName != selectedService.Branch.BranchName)
+                    .ToList<Service>();
 				if (service.Count() != 0) {
 					keep.Add(aBookingSystem);
 				}
