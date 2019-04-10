@@ -42,4 +42,11 @@ namespace SUPEN_Projekt.Logic {
 		public int Id { get; set; }
 		public IEnumerable<Service> services { get; set; }
 	}
+
+    public class BookingSystemQuery
+    {
+        public int firstId { get; set; }
+        public int secondId { get; set; }
+        public int thirdId { get; set; }
+    }
 }

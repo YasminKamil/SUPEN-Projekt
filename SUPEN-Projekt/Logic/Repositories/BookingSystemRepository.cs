@@ -38,13 +38,6 @@ namespace SUPEN_Projekt.Repositories {
 			return bookingSystem;
 		}
 
-		//Returnerar tjänsten för bokningen
-		public Service GetService(int BookingSystemId, int serviceId) {
-			var bookingsystem = Get(BookingSystemId);
-			var service = bookingsystem.Services.Single(x => x.ServiceId == serviceId);//här behövs en inlcude för att det ska fungera
-			return service;
-
-		}
 
         public void AddBookingSystem(BookingSystem bookingSystem) {
 
@@ -108,7 +101,7 @@ namespace SUPEN_Projekt.Repositories {
         }
 
         //Returnerar bokningsystem inom en viss distans inom vald stad
-        public List<BookingSystem> GetBookingSystemsInRange(BookingSystem inSelectedBookingSystem) {
+        private List<BookingSystem> GetBookingSystemsInRange(BookingSystem inSelectedBookingSystem) {
 			var companiesInSelectedCity = ApplicationDbContext.BookingSystems.Where(x => x.City.ToLower() == inSelectedBookingSystem.City.ToLower() && x.CompanyName != inSelectedBookingSystem.CompanyName);
 			List<BookingSystem> companiesInRange = new List<BookingSystem>();
 
@@ -122,7 +115,7 @@ namespace SUPEN_Projekt.Repositories {
 		}
 
 		//Beräknar distansen till andra företag. Returnerar true/false beroende på om avståndet är ok.
-		public bool InDistance(double companyALong, double companyALat, double companyBLong, double companyBLat, int maxDistance) {
+		private bool InDistance(double companyALong, double companyALat, double companyBLong, double companyBLat, int maxDistance) {
 			bool isCloseEnough = false;
 			companyALat = companyALat / 180 * Math.PI;
 			companyALong = companyALong / 180 * Math.PI;
@@ -174,13 +167,13 @@ namespace SUPEN_Projekt.Repositories {
 			}
 		}
         //returnerar endast företag som har lediga tider som börjar strax efter eller slutar en liten stund före bokad tjänst
-        public List<BookingSystem> GetBookingSystemsWithAvailableBooking(List<BookingSystem> inBookingSystems, Booking inSelectedBooking){
+        private List<BookingSystem> GetBookingSystemsWithAvailableBooking(List<BookingSystem> inBookingSystems, Booking inSelectedBooking){
             inBookingSystems = inBookingSystems.Where(x => x.Services.Any(y => y.Bookings.Any(z => (inSelectedBooking.EndTime.AddMinutes(35) > z.StartTime && z.StartTime > inSelectedBooking.EndTime.AddMinutes(15)) || (z.EndTime > inSelectedBooking.StartTime.AddMinutes(-35) && z.EndTime < inSelectedBooking.StartTime.AddMinutes(-15))))).ToList();
             inBookingSystems = inBookingSystems.Where(x=>x.Services.Any(y=>y.Bookings.Any(f=>f.Available == true))).ToList();
             return inBookingSystems;
         }
         //Genom att skicka in en lista av bokningsystem och det valda företaget, sorteras dem efter vilken distans de har till det valda företaget.
-        public List<BookingSystem> OrderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem) {
+        private List<BookingSystem> OrderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem) {
 
 			foreach (var item in inBookingSystems) {
 				DistBooking.Add(new BookingSystemOfInterest(item, GetDistanceTo(inSelectedBookingSystem, item)));
@@ -201,7 +194,7 @@ namespace SUPEN_Projekt.Repositories {
 		}
 
 		//Returnerar bookingsystem som har services inom andra brancher, kan även returnera selectedBookingService
-		public List<BookingSystem> GetBookingSystemsInOtherBranches(List<BookingSystem> inBookingSystems, Service selectedService) {
+		private List<BookingSystem> GetBookingSystemsInOtherBranches(List<BookingSystem> inBookingSystems, Service selectedService) {
 			List<BookingSystem> keep = new List<BookingSystem>();
 			BookingSystem tmbBookingSystem = new BookingSystem();
 
@@ -217,7 +210,7 @@ namespace SUPEN_Projekt.Repositories {
 		}
 
 		//Returnerar brancher för bokningsystemet
-		public List<string> GetBranchesInBookingSystem(BookingSystem bookingSystem) {
+		private List<string> GetBranchesInBookingSystem(BookingSystem bookingSystem) {
 			List<string> branchesInBookingSystem = new List<string>();
 			foreach (var item in bookingSystem.Services) {
 				branchesInBookingSystem.Add(item.Branch.BranchName);

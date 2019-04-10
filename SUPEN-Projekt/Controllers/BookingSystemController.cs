@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+//using System.Web.Http;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using SUPEN_Projekt.Logic;
@@ -39,8 +40,10 @@ namespace SUPEN_Projekt.Controllers {
 			return View(bsSVM);
 		}
 
+
 		//Ett API-anrop till ApiBooking som serialiserar det använda objektet till JSON
 		public async Task<bool> APIContact(string inUrl, Object inObject) {
+
 			bool works = false;
 			var url = inUrl;
 
@@ -120,7 +123,6 @@ namespace SUPEN_Projekt.Controllers {
             {
                 BookingSystemAndDistanceViewModel pairedObject = new BookingSystemAndDistanceViewModel();
                 pairedObject.BookingSystem = item;
-
 
                 string list3 = "";
                 HttpClient client3 = new HttpClient();
