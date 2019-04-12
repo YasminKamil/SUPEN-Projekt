@@ -3,25 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Device.Location;
-using System.Net.Http;
-using System.Text;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
 
 namespace SUPEN_Projekt.Repositories {
 	public class BookingSystemRepository : Repository<BookingSystem>, IBookingSystemRepository {
-		//private readonly IUnitOfWork _unitOfWork;
+
 		public BookingSystemRepository(ApplicationDbContext context) : base(context) { }
 
+        public ApplicationDbContext ApplicationDbContext
+        {
+            get { return Context as ApplicationDbContext; }
+        }
 
-		//Retunerar alla bokningsystem
-		public IEnumerable<BookingSystem> GetBookingSystems() {
+        //Retunerar alla bokningsystem
+        public IEnumerable<BookingSystem> GetBookingSystems() {
 
 			return ApplicationDbContext.Set<BookingSystem>().Include(i => i.Services.Select(s => s.Branch))
 				.Include(i => i.Services.Select(b => b.Bookings));
-
 		}
 
 		//Redigerar bokningsystemets information
@@ -81,9 +79,6 @@ namespace SUPEN_Projekt.Repositories {
 			return service;
 		}
 
-		public ApplicationDbContext ApplicationDbContext {
-			get { return Context as ApplicationDbContext; }
-		}
 
         public List<BookingSystem> GetRelevantBookingSystemOnlyWithAvailableTimes(int bookingSystemId, int serviceId, int bookingId)
         {
@@ -168,7 +163,9 @@ namespace SUPEN_Projekt.Repositories {
 		}
         //returnerar endast företag som har lediga tider som börjar strax efter eller slutar en liten stund före bokad tjänst
         private List<BookingSystem> GetBookingSystemsWithAvailableBooking(List<BookingSystem> inBookingSystems, Booking inSelectedBooking){
-            inBookingSystems = inBookingSystems.Where(x => x.Services.Any(y => y.Bookings.Any(z => (inSelectedBooking.EndTime.AddMinutes(35) > z.StartTime && z.StartTime > inSelectedBooking.EndTime.AddMinutes(15)) || (z.EndTime > inSelectedBooking.StartTime.AddMinutes(-35) && z.EndTime < inSelectedBooking.StartTime.AddMinutes(-15))))).ToList();
+            inBookingSystems = inBookingSystems.Where(x => x.Services.Any(y => y.Bookings
+            .Any(z => (inSelectedBooking.EndTime.AddMinutes(35) > z.StartTime && z.StartTime > inSelectedBooking.EndTime.AddMinutes(15)) 
+            || (z.EndTime > inSelectedBooking.StartTime.AddMinutes(-35) && z.EndTime < inSelectedBooking.StartTime.AddMinutes(-15))))).ToList();
             inBookingSystems = inBookingSystems.Where(x=>x.Services.Any(y=>y.Bookings.Any(f=>f.Available == true))).ToList();
             return inBookingSystems;
         }
