@@ -125,7 +125,8 @@ namespace SUPEN_Projekt.Controllers {
 
                 string list3 = "";
                 HttpClient client3 = new HttpClient();
-                var result3 = client3.GetAsync("http://localhost:55341/api/GetBookingSystem/" + selectedBookingSystem.BookingSystemId + "/" + item.BookingSystemId).Result;
+                var result3 = client3.GetAsync("http://localhost:55341/api/GetBookingSystem/" 
+                    + selectedBookingSystem.BookingSystemId + "/" + item.BookingSystemId).Result;
                 if (result3.IsSuccessStatusCode)
                 {
                     list3 = await result3.Content.ReadAsStringAsync();
