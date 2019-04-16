@@ -50,7 +50,7 @@ namespace SUPEN_Projekt.Repositories {
 				existingBookings.EndTime = booking.EndTime;
 				existingBookings.Date = booking.Date;
 				existingBookings.Price = booking.Price;
-	
+
 			}
 
 		}

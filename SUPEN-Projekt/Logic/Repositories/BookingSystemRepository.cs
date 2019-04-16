@@ -39,26 +39,26 @@ namespace SUPEN_Projekt.Repositories {
 		}
 
 
-        public void AddBookingSystem(BookingSystem bookingSystem) {
+		public void AddBookingSystem(BookingSystem bookingSystem) {
 
-            BookingSystem bs = new BookingSystem();
-            bs.BookingSystemId = bookingSystem.BookingSystemId;
-            bs.Address = bookingSystem.Address;
-            bs.City = bookingSystem.City;
-            bs.CompanyName = bookingSystem.CompanyName;
-            bs.ContactEmail = bookingSystem.ContactEmail;
-            bs.ContactPhone = bookingSystem.ContactPhone;
-            bs.Email = bookingSystem.Email;
-            bs.Latitude = bookingSystem.Latitude;
-            bs.Longitude = bookingSystem.Longitude;
-            bs.PhoneNumber = bookingSystem.PhoneNumber;
-            bs.PostalCode = bookingSystem.PostalCode;
-            bs.SystemDescription = bookingSystem.SystemDescription;
-            bs.SystemName = bookingSystem.SystemName;
-            bs.Website = bookingSystem.Website;
+			BookingSystem bs = new BookingSystem();
+			bs.BookingSystemId = bookingSystem.BookingSystemId;
+			bs.Address = bookingSystem.Address;
+			bs.City = bookingSystem.City;
+			bs.CompanyName = bookingSystem.CompanyName;
+			bs.ContactEmail = bookingSystem.ContactEmail;
+			bs.ContactPhone = bookingSystem.ContactPhone;
+			bs.Email = bookingSystem.Email;
+			bs.Latitude = bookingSystem.Latitude;
+			bs.Longitude = bookingSystem.Longitude;
+			bs.PhoneNumber = bookingSystem.PhoneNumber;
+			bs.PostalCode = bookingSystem.PostalCode;
+			bs.SystemDescription = bookingSystem.SystemDescription;
+			bs.SystemName = bookingSystem.SystemName;
+			bs.Website = bookingSystem.Website;
 
-            Add(bs);         
-        }
+			Add(bs);
+		}
 
 		//Tar bort bokningsystemet
 		public void RemoveBookingSystem(int id) {
@@ -85,23 +85,22 @@ namespace SUPEN_Projekt.Repositories {
 			get { return Context as ApplicationDbContext; }
 		}
 
-        public List<BookingSystem> GetRelevantBookingSystemOnlyWithAvailableTimes(int bookingSystemId, int serviceId, int bookingId)
-        {
-            BookingSystem selectedBookingSystem = GetBookingSystem(bookingSystemId);
-            
-            Service selectedService = ApplicationDbContext.Services.Single(x => x.ServiceId == serviceId);
-            Booking booking = ApplicationDbContext.Bookings.Single(x => x.BookingId == bookingId);
+		public List<BookingSystem> GetRelevantBookingSystemOnlyWithAvailableTimes(int bookingSystemId, int serviceId, int bookingId) {
+			BookingSystem selectedBookingSystem = GetBookingSystem(bookingSystemId);
 
-            List<BookingSystem> bookingSystemsInRange = GetBookingSystemsInRange(selectedBookingSystem);
-            List<BookingSystem> bookingSystemsInOtherBranches = GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
-            List<BookingSystem> orderedByDistance = OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
-            List<BookingSystem> onlyWithAvailableTimes = GetBookingSystemsWithAvailableBooking(orderedByDistance, booking);
+			Service selectedService = ApplicationDbContext.Services.Single(x => x.ServiceId == serviceId);
+			Booking booking = ApplicationDbContext.Bookings.Single(x => x.BookingId == bookingId);
 
-            return onlyWithAvailableTimes;
-        }
+			List<BookingSystem> bookingSystemsInRange = GetBookingSystemsInRange(selectedBookingSystem);
+			List<BookingSystem> bookingSystemsInOtherBranches = GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
+			List<BookingSystem> orderedByDistance = OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
+			List<BookingSystem> onlyWithAvailableTimes = GetBookingSystemsWithAvailableBooking(orderedByDistance, booking);
 
-        //Returnerar bokningsystem inom en viss distans inom vald stad
-        private List<BookingSystem> GetBookingSystemsInRange(BookingSystem inSelectedBookingSystem) {
+			return onlyWithAvailableTimes;
+		}
+
+		//Returnerar bokningsystem inom en viss distans inom vald stad
+		private List<BookingSystem> GetBookingSystemsInRange(BookingSystem inSelectedBookingSystem) {
 			var companiesInSelectedCity = ApplicationDbContext.BookingSystems.Where(x => x.City.ToLower() == inSelectedBookingSystem.City.ToLower() && x.CompanyName != inSelectedBookingSystem.CompanyName);
 			List<BookingSystem> companiesInRange = new List<BookingSystem>();
 
@@ -166,14 +165,14 @@ namespace SUPEN_Projekt.Repositories {
 				this.distance = distance;
 			}
 		}
-        //returnerar endast företag som har lediga tider som börjar strax efter eller slutar en liten stund före bokad tjänst
-        private List<BookingSystem> GetBookingSystemsWithAvailableBooking(List<BookingSystem> inBookingSystems, Booking inSelectedBooking){
-            inBookingSystems = inBookingSystems.Where(x => x.Services.Any(y => y.Bookings.Any(z => (inSelectedBooking.EndTime.AddMinutes(35) > z.StartTime && z.StartTime > inSelectedBooking.EndTime.AddMinutes(15)) || (z.EndTime > inSelectedBooking.StartTime.AddMinutes(-35) && z.EndTime < inSelectedBooking.StartTime.AddMinutes(-15))))).ToList();
-            inBookingSystems = inBookingSystems.Where(x=>x.Services.Any(y=>y.Bookings.Any(f=>f.Available == true))).ToList();
-            return inBookingSystems;
-        }
-        //Genom att skicka in en lista av bokningsystem och det valda företaget, sorteras dem efter vilken distans de har till det valda företaget.
-        private List<BookingSystem> OrderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem) {
+		//returnerar endast företag som har lediga tider som börjar strax efter eller slutar en liten stund före bokad tjänst
+		private List<BookingSystem> GetBookingSystemsWithAvailableBooking(List<BookingSystem> inBookingSystems, Booking inSelectedBooking) {
+			inBookingSystems = inBookingSystems.Where(x => x.Services.Any(y => y.Bookings.Any(z => (inSelectedBooking.EndTime.AddMinutes(35) > z.StartTime && z.StartTime > inSelectedBooking.EndTime.AddMinutes(15)) || (z.EndTime > inSelectedBooking.StartTime.AddMinutes(-35) && z.EndTime < inSelectedBooking.StartTime.AddMinutes(-15))))).ToList();
+			inBookingSystems = inBookingSystems.Where(x => x.Services.Any(y => y.Bookings.Any(f => f.Available == true))).ToList();
+			return inBookingSystems;
+		}
+		//Genom att skicka in en lista av bokningsystem och det valda företaget, sorteras dem efter vilken distans de har till det valda företaget.
+		private List<BookingSystem> OrderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem) {
 
 			foreach (var item in inBookingSystems) {
 				DistBooking.Add(new BookingSystemOfInterest(item, GetDistanceTo(inSelectedBookingSystem, item)));
@@ -200,8 +199,8 @@ namespace SUPEN_Projekt.Repositories {
 
 			foreach (var aBookingSystem in inBookingSystems.Where(x => x.Services != null)) {
 				List<Service> service = aBookingSystem.Services
-                    .Where(x => x.Branch.BranchName != selectedService.Branch.BranchName)
-                    .ToList<Service>();
+					.Where(x => x.Branch.BranchName != selectedService.Branch.BranchName)
+					.ToList<Service>();
 				if (service.Count() != 0) {
 					keep.Add(aBookingSystem);
 				}

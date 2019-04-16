@@ -1,8 +1,8 @@
 ﻿using SUPEN_Projekt.Repositories;
 using System.Web.Mvc;
-using SUPEN_Projekt.Logic;
 using System.Threading.Tasks;
 using System.Net.Http;
+using SUPEN_Projekt.Logic.ViewModels;
 
 namespace SUPEN_Projekt.Controllers {
 	public class ServiceController : Controller {

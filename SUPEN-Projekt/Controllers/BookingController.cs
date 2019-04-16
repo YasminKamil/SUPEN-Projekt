@@ -5,8 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using SUPEN_Projekt.Logic;
-
+using SUPEN_Projekt.Logic.ViewModels;
 
 namespace SUPEN_Projekt.Controllers {
 	public class BookingController : Controller {

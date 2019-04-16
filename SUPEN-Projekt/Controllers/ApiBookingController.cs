@@ -1,13 +1,13 @@
 ﻿using SUPEN_Projekt.Repositories;
 using System.Linq;
 using System.Web.Http;
-using SUPEN_Projekt.Logic;
+using SUPEN_Projekt.Logic.ViewModels;
 
 namespace SUPEN_Projekt.Controllers {
 	public class ApiBookingController : ApiController {
 
 		//IUnitOfWork följer indpendancy injection. Kommunicerar med repository interfaces
-        //Se Repository UnitOfWork för implementation
+		//Se Repository UnitOfWork för implementation
 		IUnitOfWork uw;
 
 		public ApiBookingController(IUnitOfWork unitOfWork) {
@@ -21,11 +21,10 @@ namespace SUPEN_Projekt.Controllers {
 			var bookings = uw.Bookings.GetAll();
 			BookingsViewModel list = new BookingsViewModel();
 			list.bookings = bookings;
-            if (list == null)
-            {
-                return NotFound();
-            }
-            return Ok(list);
+			if (list == null) {
+				return NotFound();
+			}
+			return Ok(list);
 		}
 
 		//Skapar en ny bokning i datakällan
@@ -35,7 +34,7 @@ namespace SUPEN_Projekt.Controllers {
 				return BadRequest("Invalid data");
 			}
 
-            var booking = inBooking.booking;
+			var booking = inBooking.booking;
 			uw.Bookings.UpdateBooking(booking);
 			uw.Complete();
 

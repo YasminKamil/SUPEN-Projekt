@@ -20,8 +20,4 @@ namespace SUPEN_Projekt.Models {
 		//public virtual ICollection<BookingSystem> BookingSystems { get; set; }
 		public virtual ICollection<Booking> Bookings { get; set; }
 	}
-	public class stt {
-		public string namn { get; set; }
-
-	}
 }

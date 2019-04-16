@@ -1,18 +1,16 @@
 ﻿using SUPEN_Projekt.Repositories;
 using System.Linq;
 using System.Web.Http;
-using SUPEN_Projekt.Logic;
+using SUPEN_Projekt.Logic.ViewModels;
 
-namespace SUPEN_Projekt.Controllers
-{
-    public class ApiServiceController : ApiController
-    {
+namespace SUPEN_Projekt.Controllers {
+	public class ApiServiceController : ApiController {
 		IUnitOfWork uw;
 
 		public ApiServiceController(IUnitOfWork unitOfWork) {
 			uw = unitOfWork;
 		}
-      
+
 		//Hämtar alla lagrade tjänster 
 		[Route("api/GetServices")]
 		[HttpGet]
@@ -22,7 +20,7 @@ namespace SUPEN_Projekt.Controllers
 
 			list.services = services;
 
-			if(list == null) {
+			if (list == null) {
 				return NotFound();
 			}
 
@@ -47,5 +45,5 @@ namespace SUPEN_Projekt.Controllers
 			return Ok(bsSBVM);
 		}
 
-    }
+	}
 }
