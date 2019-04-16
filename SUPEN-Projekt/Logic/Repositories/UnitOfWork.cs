@@ -25,7 +25,6 @@ namespace SUPEN_Projekt.Repositories {
 			return _context.SaveChanges();
 		}
 
-
 		// This code added to correctly implement the disposable pattern.
 		public void Dispose() {
 			_context.Dispose();

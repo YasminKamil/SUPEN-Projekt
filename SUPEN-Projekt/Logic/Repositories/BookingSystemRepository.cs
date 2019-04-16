@@ -3,25 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Device.Location;
-using System.Net.Http;
-using System.Text;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
 
 namespace SUPEN_Projekt.Repositories {
 	public class BookingSystemRepository : Repository<BookingSystem>, IBookingSystemRepository {
-		//private readonly IUnitOfWork _unitOfWork;
+
 		public BookingSystemRepository(ApplicationDbContext context) : base(context) { }
 
+        public ApplicationDbContext ApplicationDbContext
+        {
+            get { return Context as ApplicationDbContext; }
+        }
 
-		//Retunerar alla bokningsystem
-		public IEnumerable<BookingSystem> GetBookingSystems() {
+        //Retunerar alla bokningsystem
+        public IEnumerable<BookingSystem> GetBookingSystems() {
 
 			return ApplicationDbContext.Set<BookingSystem>().Include(i => i.Services.Select(s => s.Branch))
 				.Include(i => i.Services.Select(b => b.Bookings));
-
 		}
 
 		//Redigerar bokningsystemets information
@@ -81,9 +79,6 @@ namespace SUPEN_Projekt.Repositories {
 			return service;
 		}
 
-		public ApplicationDbContext ApplicationDbContext {
-			get { return Context as ApplicationDbContext; }
-		}
 
 		public List<BookingSystem> GetRelevantBookingSystemOnlyWithAvailableTimes(int bookingSystemId, int serviceId, int bookingId) {
 			BookingSystem selectedBookingSystem = GetBookingSystem(bookingSystemId);

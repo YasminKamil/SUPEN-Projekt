@@ -1,13 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
+
 
 namespace SUPEN_Projekt.Repositories {
 	public class Repository<TEntity> : IRepository<TEntity> where TEntity : class {

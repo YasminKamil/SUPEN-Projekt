@@ -205,12 +205,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\ApiBookingController.cs" />
-    <Compile Include="Controllers\ApiServiceController.cs" />
+    <Compile Include="API\ApiBookingController.cs" />
+    <Compile Include="API\ApiServiceController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\BookingSystemController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ApiBookingSystemController.cs" />
+    <Compile Include="API\ApiBookingSystemController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -755,7 +755,6 @@
     <Content Include="Views\Service\BookService.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ApiController\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
