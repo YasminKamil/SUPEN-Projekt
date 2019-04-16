@@ -111,15 +111,19 @@ namespace SUPEN_Projekt.Repositories {
 		//Beräknar distansen till andra företag. Returnerar true/false beroende på om avståndet är ok.
 		private bool InDistance(double companyALong, double companyALat, double companyBLong, double companyBLat, int maxDistance) {
 			bool isCloseEnough = false;
+			//Gör om koordinater till radian
 			companyALat = companyALat / 180 * Math.PI;
 			companyALong = companyALong / 180 * Math.PI;
 			companyBLong = companyBLong / 180 * Math.PI;
 			companyBLat = companyBLat / 180 * Math.PI;
-			double distanceLatitude = (Math.Abs(companyALat - companyBLat)) / 2;
-			double distanceLongitude = (Math.Abs(companyALong - companyBLong)) / 2;
+			//beräknar distansen mellan de två olika företagen
+			double distanceLatitude = (Math.Abs(companyALat - companyBLat)) /2;
+			double distanceLongitude = (Math.Abs(companyALong - companyBLong)) /2;
 			double x = Math.Sin(distanceLatitude) * Math.Sin(distanceLatitude) + Math.Cos(companyALat) * Math.Cos(companyBLat) * Math.Sin(distanceLongitude) * Math.Sin(distanceLatitude);
 			double y = 2 * Math.Atan2(Math.Sqrt(x), Math.Sqrt(1 - x));
+			//6371000 är jordens radie
 			y = y * 6371000;
+			//Om distansen är längre än maxDistance returneras false
 			if (y <= maxDistance) isCloseEnough = true;
 			return isCloseEnough;
 		}

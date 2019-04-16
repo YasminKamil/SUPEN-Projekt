@@ -87,7 +87,7 @@ namespace SUPEN_Projekt.Controllers {
 
 		//Returnerar vilka bokningsystem som finns i närområdet efter att man har bokat en tjänst
 		public async Task<ActionResult> RelevantBookingSystems(int bookingSystemId, int serviceId, int bookingId) {
-
+			// gör ett api anrop för att hämta BookingSystemServicesViewModel
 			BookingSystemServicesViewModel bssvm = null;
 			HttpClient client1 = new HttpClient();
 			string url1 = "http://localhost:55341/api/GetBookingSystem/" + bookingSystemId.ToString();
@@ -100,7 +100,7 @@ namespace SUPEN_Projekt.Controllers {
 			if (selectedBookingSystem == null || !selectedBookingSystem.Services.Any(x => x.ServiceId == serviceId)) {
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-
+			//gör ett apianrop för att hämta BookingSystemsViewModel
 			BookingSystemsViewModel bookingsystemsvm = null;
 			HttpClient client = new HttpClient();
 			string url = "http://localhost:55341/api/GetRelevantBookingSystem/" + bookingSystemId.ToString() + "/" + serviceId.ToString() + "/" + bookingId.ToString();
@@ -109,7 +109,7 @@ namespace SUPEN_Projekt.Controllers {
 				bookingsystemsvm = await result.Content.ReadAsAsync<BookingSystemsViewModel>();
 			}
 			var orderedByDistance = bookingsystemsvm.bookingSystems;
-
+			//gör ett apianrop för att hämta BookingsWithDistanceViewModel
 			BookingsWithDistanceViewModel bWDVM = new BookingsWithDistanceViewModel();
 			List<BookingSystemAndDistanceViewModel> listOfBookingSystems = new List<BookingSystemAndDistanceViewModel>();
 			foreach (var item in orderedByDistance) {
