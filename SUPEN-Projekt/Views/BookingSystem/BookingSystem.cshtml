@@ -3,30 +3,63 @@
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <h2>@ViewBag.Message</h2>
+<div style="background-color:blue">
+
+
+
+    <div class="panel panel-primary" style="width:30%; height:80%; margin: 2% 7% 2% auto;">
+        <div class="panel-heading"><h4>@Model.bookingSystem.CompanyName </h4></div>
+        <div class="panel-body">
+            </br>
+            @Model.bookingSystem.Address
+            </br>
+            @Model.bookingSystem.PostalCode @Model.bookingSystem.City
+            </br>
+            Epost: @Model.bookingSystem.ContactEmail
+            </br>
+            Tel. @Model.bookingSystem.ContactPhone
+            </br>
+        </div>
+    </div>
+</div>
+
 
 <table class="table">
+    <h2><b>Vad vill du boka?</b></h2>
 
-	<tr>
-		<th>
-			<h3><b>Tjänst</b></h3>
-		</th>
-	</tr>
-	@if (Model.services.Count() > 0) {
-		foreach (var i in Model.services) {
-			<tr>
-				<td>
-					@i.ServiceName
-				</td>
-				<td>@Html.ActionLink("Boka", "BookService", "Service", new { inServiceId = i.ServiceId, inBookingSystemId = Model.bookingSystem.BookingSystemId }, null)</td>
-				@*<td>@Html.ActionLink("Book this", "CreateBooking", new { id = Model.bookingSystem.BookingSystemId, name = i.ServiceName }, null)</td>*@
-				@*@foreach (var y in i.Bookings) {
-					<td>
-						<button type="button" class="btn btn-secondary btn-sm">@y.StartTime.ToString("HH:mm")<b>-</b>@y.EndTime.ToString("HH:mm")</button>
-					</td>*@
-			</tr>
-		}
-	}
+    @if (Model.services.Count() > 0)
+    {
+        foreach (var i in Model.services)
+        {
+            <tr>
+                <td style="border-top:none">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">@i.ServiceName </div>
+                        <div class="panel-body">Tid @i.Duration minuter - @i.Price SEK @Html.ActionLink("Boka", "BookService", "Service", new { inServiceId = i.ServiceId, inBookingSystemId = Model.bookingSystem.BookingSystemId }, new { @class = "btn btn-primary", @style = "float: right" })</div>
+                    </div>
+                </td>
+
+
+                @*<td>@Html.ActionLink("Book this", "CreateBooking", new { id = Model.bookingSystem.BookingSystemId, name = i.ServiceName }, null)</td>*@
+                @*@foreach (var y in i.Bookings) {
+                    <td>
+                        <button type="button" class="btn btn-secondary btn-sm">@y.StartTime.ToString("HH:mm")<b>-</b>@y.EndTime.ToString("HH:mm")</button>
+                    </td>*@
+            </tr>
+        }
+    }
+
+
+
+
+
 </table>
+<div>
+    <h3> Om oss</h3>
+    <div class="panel panel-primary" style="width:30%">
+        <div class="panel-body">@Model.bookingSystem.SystemDescription</div>
+    </div>
+</div>
 <div id="createbooking">
 </div>
 
