@@ -22,3 +22,16 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#firstDiv {
+	width: 200px;
+	height: 200px;
+	float: left;
+}
+
+#secondDiv {
+	width: 200px;
+	height: 400px;
+	float: right;
+	margin-right: 400px;
+}
