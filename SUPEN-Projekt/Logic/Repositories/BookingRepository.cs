@@ -31,7 +31,7 @@ namespace SUPEN_Projekt.Repositories {
 			booking.StartTime = inBooking.StartTime;
 			booking.EndTime = inBooking.EndTime;
 			booking.Date = inBooking.Date;
-			booking.Price = inBooking.Price;
+			//booking.Price = inBooking.Price;
 
 			Add(booking);
 			return booking;
@@ -49,7 +49,7 @@ namespace SUPEN_Projekt.Repositories {
 				existingBookings.StartTime = booking.StartTime;
 				existingBookings.EndTime = booking.EndTime;
 				existingBookings.Date = booking.Date;
-				existingBookings.Price = booking.Price;
+				//existingBookings.Price = booking.Price;
 
 			}
 

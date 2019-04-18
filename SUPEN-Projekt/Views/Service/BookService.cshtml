@@ -1,28 +1,89 @@
-﻿ @model SUPEN_Projekt.Logic.ViewModels.BookingSystemServiceBookingViewModel
+﻿@model SUPEN_Projekt.Logic.ViewModels.BookingSystemServiceBookingViewModel
+<link href="~/Content/Site.css" rel="stylesheet" />
+<br />
+
+<h2><b>@Model.bookingSystem.CompanyName</b></h2>
+
+<div id="ParentDiv">
+	<div id="firstDiv">
+		<h3><b>@Model.service.ServiceName</b></h3>
+
+		<br />
+		<h4><b>Tid:</b> @Model.service.Duration minuter </h4>
+		<h4><b>Pris:</b> @Model.service.Price SEK (inkl. moms)</h4>
+	</div>
 
 
-<h3><b> Välj en ledig tid för att boka @Model.service.ServiceName</b></h3>
-<div class="row">
-	<div class="col-sm-6">
-		<table>
-			@foreach (var item in Model.service.Bookings) {
-				<tr>
-					<th rowspan=" 2" colspan=" 4" class="container">
-						@if (item.Available) {
+
+	<div class="panel panel-primary" style="width:30%; height:80%; margin: 1% 7% 1% auto; top: 0; right: 0 ;  display:inline-block">
+
+		<div class="panel-body">
+			<br />
+			@Model.bookingSystem.Address
+			<br />
+			@Model.bookingSystem.PostalCode @Model.bookingSystem.City
+			<br />
+			Epost: @Model.bookingSystem.ContactEmail
+			<br />
+			Tel. @Model.bookingSystem.ContactPhone
+			<br />
+		</div>
+	</div>
+</div>
 
 
 
-							@*<button type="button" class="btn btn-success">@item.StartTime.ToString("HH:mm") + "" + @item.EndTime.ToString("HH:mm") </button>*@
-							@Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "BookService", "Booking",
-									new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inBookingId = item.BookingId }, new { @class = "btn btn-success" })
+
+<div class="row" style="float:left;">
+
+	<h4><b>Välj en tid</b></h4>
+	<div class="col-md-6" >
+		<table >			
+			<tr style="border-top:none">
+				@{
+					int i = 0;
+					foreach (var item in Model.service.Bookings) {
+
+
+						if (i < 6) {
+
+				<td class="container" style="border-bottom:none">
+
+					@if (item.Available) {
+						@*@Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "BookService", "Booking",
+						new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId }, new { @class = "btn btn-primary" });*@
+
+
+						@Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "BookService", "Booking",
+						new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inBookingId = item.BookingId }, new { @class = "btn btn-primary" })
+
+
+
+					} else {
+
+						<div class="panel panel-primary">
+							<button type="button" class="btn btn-primary">@item.StartTime.ToString("HH:mm") <b>-</b> @item.EndTime.ToString("HH:mm")</button>
+						</div>
+					}
+				</td>
 
 						} else {
-							<button type="button" class="btn btn-success" aria-disabled="false" style="opacity:0.5;">@item.StartTime.ToString("HH:mm")<b>-</b>@item.EndTime.ToString("HH:mm")</button>
+
+
+						<tr style="border-bottom:none">
+							<td style="border-top:none"><br /></td>
+							
+						</tr>
+							i = 1;
 						}
-					</th>
-				</tr>
-			}
-		</table>
+
+						i++;
+					}
+				}
+
+			
+				</table>
+
 	</div>
 
 	<div class="col-sm-6"></div>

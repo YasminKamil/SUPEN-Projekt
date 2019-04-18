@@ -26,7 +26,7 @@ namespace SUPEN_Projekt.Models {
 		[Required, DataType(DataType.DateTime)]
 		[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
 		public DateTime Date { get; set; } = DateTime.Now;
-		public int Price { get; set; }
+		//public int Price { get; set; }
 
 
 		//[ForeignKey("Service")]

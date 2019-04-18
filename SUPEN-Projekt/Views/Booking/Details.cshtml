@@ -1,41 +1,51 @@
 ﻿@model SUPEN_Projekt.Logic.ViewModels.BookingSystemServiceBookingViewModel
+@{
+	ViewBag.Title = "Home Page";
+}
+
+
 
 
 <div class="container-fluid">
-    <div class=" row"></div>
-    <div class="row">
-        
-        <hr />
-        <div class="col-lg-4" style="background-color:white;">
-            <h4><b>Bokningsinformation</b></h4>
-            <div>
-                <hr />
-                <div class="list-group">
-                    <a href="#" class="list-group-item">
-                        <p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.UserName)</p>
-                        <p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.UserMail)</p>
-                        <p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.UserMobile)</p>
-                        <p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.StartTime)</p>
-                        <p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.EndTime)</p>
-                        <p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.Date)</p>
-                        <p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.Price)</p>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2" style="background-color:white">
-        </div>
+	<div class=" row"></div>
+	<div class="row">
 
-        <div class="col-lg-6" style="background-color:white;">
-            
-            <div>
-                @{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
-                                      new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId });}
-                </div>
-            </div>
-            <div class="row"></div>
+		<hr />
+		<div class="col-lg-4" style="background-color:white;">
+			<h4><b>Bokningsinformation</b></h4>
+			<div>
+				<hr />
+				<div class="list-group">
+					<a href="#" class="list-group-item">
+						<p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.UserName)</p>
+						<p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.UserMail)</p>
+						<p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.UserMobile)</p>
+						<p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.StartTime)</p>
+						<p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.EndTime)</p>
+						<p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.Date)</p>
+						<p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.service.Price)</p>
 
-        </div>
-  </div>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-2" style="background-color:white">
+		</div>
+
+		<div class="col-lg-6" style="background-color:white;">
+
+			<div>
+				@{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
+										  new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId });}
+
+
+
+
+			</div>
+		</div>
+		<div class="row"></div>
+
+	</div>
+</div>
 
 
