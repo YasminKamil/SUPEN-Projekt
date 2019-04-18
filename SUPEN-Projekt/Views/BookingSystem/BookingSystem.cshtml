@@ -41,7 +41,7 @@
                 <td style="border-top:none">
                     <div class="panel panel-primary">
                         <div class="panel-heading">@i.ServiceName </div>
-                        <div class="panel-body">Tid @i.Duration minuter - @i.Price SEK @Html.ActionLink("Boka", "BookService", "Service", new { inServiceId = i.ServiceId, inBookingSystemId = Model.bookingSystem.BookingSystemId }, new { @class = "btn btn-primary", @style = "float: right" })</div>
+                        <div class="panel-body"><span class="glyphicon">&#xe023;</span> Tid @i.Duration minuter - @i.Price SEK @Html.ActionLink("Boka", "BookService", "Service", new { inServiceId = i.ServiceId, inBookingSystemId = Model.bookingSystem.BookingSystemId }, new { @class = "btn btn-primary", @style = "float: right" })</div>
                     </div>
                 </td>
 
