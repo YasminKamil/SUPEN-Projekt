@@ -6,25 +6,36 @@
     <!--Html.ActionLink("Skapa nytt bokningssystem", "Create")-->
 </p>
 <table class="table">
-    <tr>
-        <th>
-			<h3><b>Företagsnamn</b></h3>
-        </th>
-        <th>
-			<h3><b>Stad</b></h3>
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model.bookingSystems) {
-    <tr>
-        <td>
-            @Html.RouteLink(item.CompanyName, new { controller = "BookingSystem", action = "BookingSystem", id = item.BookingSystemId }, null)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.City)
-        </td>
-    </tr>
-}
+
+    @foreach (var item in Model.bookingSystems)
+    {
+
+
+
+
+
+
+
+        <tr>
+            <td style="border-top:none">
+                <a href='@Url.Action("BookingSystem","BookingSystem",new { id = item.BookingSystemId})' class='link-icon btn btn-default' style="width:100%; height:inherit;" >
+                    
+                    <div style="top:8px; left:8px;display:inline-block; margin:2% auto 0% 7%;   width:40%; text-align:left" ><b style="font-size:large">@item.CompanyName</b> <br /><span class="glyphicon">&#xe062;</span> @item.Address <br />  @item.PostalCode @item.City</div>
+                    
+                    <div style="top:2px; right:8px;display:inline-block;  margin: 0% 7% 2% auto; width:40%; text-align:right">@item.SystemDescription</div>
+
+                </a>
+
+
+
+
+            </td>
+     
+        </tr>
+        <tr>
+            
+        </tr>
+        }
 
 </table>
