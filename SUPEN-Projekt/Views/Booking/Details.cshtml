@@ -1,51 +1,81 @@
 ﻿@model SUPEN_Projekt.Logic.ViewModels.BookingSystemServiceBookingViewModel
 @{
-	ViewBag.Title = "Home Page";
+    ViewBag.Title = "Home Page";
 }
 
+<script type="text/javascript">
+    $(window).on('load', function () {
+        $('#myModal').modal('show');
+    });
+</script>
+
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Bokningsbekräftelse</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class=" row"></div>
+                    <div class="row">              
+                            <div>
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item">
+                                        <p class="list-group-item-text" style="font-weight: bold"><b>Namn: </b>@Html.DisplayFor(model => model.booking.UserName)</p>
+                                        <p class="list-group-item-text" style="font-weight: bold"><b>E-post: </b>@Html.DisplayFor(model => model.booking.UserMail)</p>
+                                        <p class="list-group-item-text" style="font-weight: bold"><b>Mobilnummer: </b>@Html.DisplayFor(model => model.booking.UserMobile)</p>
+                                        <p class="list-group-item-text" style="font-weight: bold"><b>Datum: </b>@Html.DisplayFor(model => model.booking.Date)</p>
+                                        <p class="list-group-item-text" style="font-weight: bold"><b>Pågår: </b>@Html.DisplayFor(model => model.booking.StartTime) - @Html.DisplayFor(model => model.booking.EndTime)</p>
+                                        <p class="list-group-item-text" style="font-weight: bold"><b>Pris: </b>@Html.DisplayFor(model => model.service.Price) SEK</p>
+
+                                    </a>
+                          
+                            </div>
+                        </div>
+                        <div class="col-lg-2" style="background-color:white">
+                        </div>
+
+
+                        <div class="row"></div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Klar!</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div style="background-color:lightblue; width:100%; top:0; left:0; right: 0; bottom:0; display:inline-block; height:inherit; position:absolute">
+
+    <div style="background-color:transparent; width:20%; height:99%;  overflow:auto; position:relative; margin-left:0; margin-top:0;  display:inline-block; direction:rtl" >
+        
 
 
 
-<div class="container-fluid">
-	<div class=" row"></div>
-	<div class="row">
 
-		<hr />
-		<div class="col-lg-4" style="background-color:white;">
-			<h4><b>Bokningsinformation</b></h4>
-			<div>
-				<hr />
-				<div class="list-group">
-					<a href="#" class="list-group-item">
-						<p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.UserName)</p>
-						<p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.UserMail)</p>
-						<p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.UserMobile)</p>
-						<p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.StartTime)</p>
-						<p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.EndTime)</p>
-						<p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.booking.Date)</p>
-						<p class="list-group-item-text" style="font-weight: bold">@Html.DisplayFor(model => model.service.Price)</p>
-
-					</a>
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-2" style="background-color:white">
-		</div>
-
-		<div class="col-lg-6" style="background-color:white;">
-
-			<div>
-				@{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
-										  new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId });}
+        @{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
+                                            new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId });}
 
 
 
 
-			</div>
-		</div>
-		<div class="row"></div>
+        
+    </div>
 
-	</div>
+
+
+   
 </div>
+
+
 
 
