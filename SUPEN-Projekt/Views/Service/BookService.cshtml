@@ -47,20 +47,25 @@
 
 						if (i < 6) {
 
-							<td class="container" style="border-bottom:none">
+				<td class="container" style="border-bottom:none">
 
-								@if (item.Available) {
-								@Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "BookService", "Booking", new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId }, new { @class = "btn btn-primary" });
+					@if (item.Available) {
+						@*@Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "BookService", "Booking",
+						new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId }, new { @class = "btn btn-primary" });*@
+
+
+						@Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "BookService", "Booking",
+						new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inBookingId = item.BookingId }, new { @class = "btn btn-primary" })
 
 
 
-								} else {
+					} else {
 
-								<div class="panel panel-primary">
-									<button type="button" class="btn btn-primary">@item.StartTime.ToString("HH:mm") <b>-</b> @item.EndTime.ToString("HH:mm")</button>
-								</div>
-								}
-							</td>
+						<div class="panel panel-primary">
+							<button type="button" class="btn btn-primary">@item.StartTime.ToString("HH:mm") <b>-</b> @item.EndTime.ToString("HH:mm")</button>
+						</div>
+					}
+				</td>
 
 						} else {
 
