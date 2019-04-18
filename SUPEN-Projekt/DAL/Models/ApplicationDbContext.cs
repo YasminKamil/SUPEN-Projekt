@@ -200,7 +200,7 @@ namespace SUPEN_Projekt.Models {
 
 				previousEndTime = booking.EndTime = booking.StartTime.AddMinutes(duration);
 				booking.Date = DateTime.Today;
-				booking.Price = price;
+				//booking.Price = price;
 				bookings.Add(booking);
 			}
 			return bookings;
