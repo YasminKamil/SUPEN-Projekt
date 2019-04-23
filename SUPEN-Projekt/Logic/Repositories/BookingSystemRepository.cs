@@ -166,9 +166,30 @@ namespace SUPEN_Projekt.Repositories {
 		}
 		//returnerar endast företag som har lediga tider som börjar strax efter eller slutar en liten stund före bokad tjänst
 		private List<BookingSystem> GetBookingSystemsWithAvailableBooking(List<BookingSystem> inBookingSystems, Booking inSelectedBooking) {
-			inBookingSystems = inBookingSystems.Where(x => x.Services.Any(y => y.Bookings.Any(z => (inSelectedBooking.EndTime.AddMinutes(35) > z.StartTime && z.StartTime > inSelectedBooking.EndTime.AddMinutes(15)) || (z.EndTime > inSelectedBooking.StartTime.AddMinutes(-35) && z.EndTime < inSelectedBooking.StartTime.AddMinutes(-15))))).ToList();
+
+            //ordnar så vi inte behöver iterera genom alla objekt. 
+            inBookingSystems = inBookingSystems.Where(x => x.Services.Any(y => y.Bookings.Any(z => (inSelectedBooking.EndTime.AddMinutes(35) > z.StartTime && z.StartTime > inSelectedBooking.EndTime.AddMinutes(15)) || (z.EndTime > inSelectedBooking.StartTime.AddMinutes(-35) && z.EndTime < inSelectedBooking.StartTime.AddMinutes(-15))))).ToList();
 			inBookingSystems = inBookingSystems.Where(x => x.Services.Any(y => y.Bookings.Any(f => f.Available == true))).ToList();
-			return inBookingSystems;
+
+            List<BookingSystem> onlyBookingSystemsWithRelevantTimes = new List<BookingSystem>();
+
+
+            foreach (var bookingSystemItem in inBookingSystems)
+            { 
+                List<Service> someServices = new List<Service>();
+                foreach (var serviceItem in bookingSystemItem.Services)
+                {
+                    List<Booking> bookings = serviceItem.Bookings.Where(z => (inSelectedBooking.EndTime.AddMinutes(35) > z.StartTime && z.StartTime > inSelectedBooking.EndTime.AddMinutes(15)) || (z.EndTime > inSelectedBooking.StartTime.AddMinutes(-35) && z.EndTime < inSelectedBooking.StartTime.AddMinutes(-15))).ToList();
+                    if (bookings.Count != 0)
+                    {
+                        serviceItem.Bookings = bookings.Where(x=>x.Available == true).ToList();
+                        someServices.Add(serviceItem);
+                    }
+                }
+                bookingSystemItem.Services = someServices;
+                onlyBookingSystemsWithRelevantTimes.Add(bookingSystemItem);
+            }
+			return onlyBookingSystemsWithRelevantTimes.Where(x=>x.Services.Any(y=>y.Bookings.Count != 0)).ToList();
 		}
 		//Genom att skicka in en lista av bokningsystem och det valda företaget, sorteras dem efter vilken distans de har till det valda företaget.
 		private List<BookingSystem> OrderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem) {

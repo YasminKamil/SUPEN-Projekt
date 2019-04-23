@@ -13,19 +13,28 @@
 
 
 
-        <h4 style="font-weight: bold; text-align:center">
-            @Html.DisplayFor(modelItem => item.BookingSystem.CompanyName) <p class="list-group-item-text" style="right:2%"> @item.Distance Meter</p>
-        </h4>  <hr />
+    <h4 style="font-weight: bold; text-align:center">
+        @Html.DisplayFor(modelItem => item.BookingSystem.CompanyName) <p class="list-group-item-text" style="right:2%"> @item.Distance Meter</p>
+    </h4>  <hr />
 
     @foreach (var i in item.BookingSystem.Services)
     {
         <p class="list-group-item-text">@i.ServiceName</p>
-    }
-   
-    
+        foreach (var booking in i.Bookings)
+        {
 
-        @Html.ActionLink("Boka", "BookingSystem", "BookingSystem", new { id = item.BookingSystem.BookingSystemId }, null)
-   
+            @Html.ActionLink(booking.StartTime.ToString("HH:mm") + "-" + booking.EndTime.ToString("HH:mm"), "BookService", "Booking",
+                         new { inBookingSystemId = item.BookingSystem.BookingSystemId, inServiceId = i.ServiceId, inBookingId = booking.BookingId }, new { @class = "btn btn-primary" })
+
+
+        }
+
+    }
+
+
+
+    @Html.ActionLink("Boka", "BookingSystem", "BookingSystem", new { id = item.BookingSystem.BookingSystemId }, null)
+
 </div>               
 }
 
