@@ -1,25 +1,35 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>@ViewBag.Title - Boka</title>
-	@Styles.Render("~/Content/css")
-	@Scripts.Render("~/bundles/modernizr")
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Boka</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 
-	@Styles.Render("~/Content/kendo/css")
-	@Scripts.Render("~/bundles/jquery")
-	@Scripts.Render("~/bundles/kendo")
+    @Styles.Render("~/Content/kendo/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/kendo")
 
-	<link rel="stylesheet" href="~/Content/kendo/kendo.common.min.css">
-	<link rel="stylesheet" href="~/Content/kendo/kendo.rtl.min.css">
-	<link rel="stylesheet" href="~/Content/kendo/kendo.default.min.css">
-	<link rel="stylesheet" href="~/Content/kendo/kendo.mobile.all.min.css">
+    <link rel="stylesheet" href="~/Content/kendo/kendo.common.min.css">
+    <link rel="stylesheet" href="~/Content/kendo/kendo.rtl.min.css">
+    <link rel="stylesheet" href="~/Content/kendo/kendo.default.min.css">
+    <link rel="stylesheet" href="~/Content/kendo/kendo.mobile.all.min.css">
 
-	<script src="~/Scripts/kendo/jquery-1.12.3.min.js"></script>
-	<script src="~/Scripts/kendo/angular.min.js"></script>
-	<script src="~/Scripts/kendo/jszip.min.js"></script>
-	<script src="~/Scripts/kendo/kendo.all.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin="" />
+    <link href="~/Content/leaflet.css" rel="stylesheet" />
+
+    @*//javascript måste ligga efter ovanstående css*@
+    
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+            crossorigin=""></script>
+    <script src="~/Scripts/kendo/jquery-1.12.3.min.js"></script>
+    <script src="~/Scripts/kendo/angular.min.js"></script>
+    <script src="~/Scripts/kendo/jszip.min.js"></script>
+    <script src="~/Scripts/kendo/kendo.all.min.js"></script>
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top">

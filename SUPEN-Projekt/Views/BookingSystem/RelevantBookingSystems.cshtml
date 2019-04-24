@@ -2,32 +2,31 @@
 
 @*<table class="table">*@
 
-@if (Model.BookingsWithDistance.Count() != 0)
-{
-<h4><b>Lediga tider med andra tjänster i närheten</b></h4>
-}
-@foreach (var item in Model.BookingsWithDistance)
-{
-<div class="link-icon btn-default" style="border-radius: 5px; direction:ltr">
 
 
+        @if (Model.BookingsWithDistance.Count() != 0)
+        {
+            <h4><b>Lediga tider med andra tjänster i närheten</b></h4>
+        }
+        @foreach (var item in Model.BookingsWithDistance)
+        {
+            <div class="link-icon btn-default" style="border-radius: 5px; direction:ltr">
 
+                <h4 style="font-weight: bold; text-align:center">
+                    @Html.DisplayFor(modelItem => item.BookingSystem.CompanyName)
+                </h4> <p class="list-group-item-text" style="right:2%"> @item.Distance Meter</p>  <hr />
 
-        <h4 style="font-weight: bold; text-align:center">
-            @Html.DisplayFor(modelItem => item.BookingSystem.CompanyName) <p class="list-group-item-text" style="right:2%"> @item.Distance Meter</p>
-        </h4>  <hr />
+                @foreach (var i in item.BookingSystem.Services)
+                {
+                    <p class="list-group-item-text">@i.ServiceName</p>
+                }
 
-    @foreach (var i in item.BookingSystem.Services)
-    {
-        <p class="list-group-item-text">@i.ServiceName</p>
-    }
-   
+                @Html.ActionLink("Boka", "BookingSystem", "BookingSystem", new { id = item.BookingSystem.BookingSystemId }, null)
+
+            </div>
+        }
     
 
-        @Html.ActionLink("Boka", "BookingSystem", "BookingSystem", new { id = item.BookingSystem.BookingSystemId }, null)
-   
-</div>               
-}
 
 
 @*<tr>
