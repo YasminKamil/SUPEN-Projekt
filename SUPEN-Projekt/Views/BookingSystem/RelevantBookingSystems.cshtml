@@ -8,34 +8,39 @@
 }
 @foreach (var item in Model.BookingsWithDistance)
 {
-<div class="link-icon btn-default" style="border-radius: 5px; direction:ltr">
 
-
-
-
-    <h4 style="font-weight: bold; text-align:center">
-        @Html.DisplayFor(modelItem => item.BookingSystem.CompanyName) <p class="list-group-item-text" style="right:2%"> @item.Distance Meter</p>
-    </h4>  <hr />
-
-    @foreach (var i in item.BookingSystem.Services)
+    foreach (var i in item.BookingSystem.Services)
     {
-        <p class="list-group-item-text">@i.ServiceName</p>
+        
         foreach (var booking in i.Bookings)
         {
+<a href='@Url.Action("BookService","Booking",new {  inBookingSystemId = item.BookingSystem.BookingSystemId, inServiceId = i.ServiceId, inBookingId = booking.BookingId})' class='link-icon btn btn-default' style="width:100%; border-radius: 5px; direction:ltr">
 
-            @Html.ActionLink(booking.StartTime.ToString("HH:mm") + "-" + booking.EndTime.ToString("HH:mm"), "BookService", "Booking",
-                         new { inBookingSystemId = item.BookingSystem.BookingSystemId, inServiceId = i.ServiceId, inBookingId = booking.BookingId }, new { @class = "btn btn-primary" })
-
-
+    <h4 style="font-weight: bold; text-align:center; margin-bottom:2px;">
+        @i.ServiceName
+    
+        @if (item.Distance < 1000)
+        {
+            <p class="list-group-item-text" style="right:2%">  @item.Distance meter</p>
+        }
+        else
+        {
+            double distance = item.Distance / 1000;
+            <p class="list-group-item-text" style="right:2%"> @Math.Round(distance, 2) km</p>
         }
 
-    }
 
+    </h4>  @Html.DisplayFor(modelItem => item.BookingSystem.CompanyName) <hr style="margin-bottom:2px; margin-top:2px" />
+    <p class="list-group-item-text" style="margin-top:5px;"></p>
+    <b>
+        <span class="glyphicon">&#xe023;</span> @booking.StartTime.ToString("HH:mm") - @booking.EndTime.ToString("HH:mm")
+        <br />
+        @i.Duration Minuter
+    </b>
 
-
-    @Html.ActionLink("Boka", "BookingSystem", "BookingSystem", new { id = item.BookingSystem.BookingSystemId }, null)
-
-</div>               
+</a>   
+        }
+    }             
 }
 
 
