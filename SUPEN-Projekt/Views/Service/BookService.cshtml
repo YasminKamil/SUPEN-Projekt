@@ -38,51 +38,60 @@
 
 	<h4><b> <span class="glyphicon">&#xe023;</span> Välj en tid</b></h4>
 	<div class="col-md-6" >
-		<table >			
-			<tr style="border-top:none">
-				@{
-					int i = 0;
-					foreach (var item in Model.service.Bookings) {
+        <table>
+            <tr style="border-top:none">
+                @{
+                    int counter = 0;
+                    foreach (var item in Model.service.Bookings)
+                    {
+                        counter++;
 
 
-						if (i < 6) {
-
-				<td class="container" style="border-bottom:none">
-
-					@if (item.Available) {
-						@*@Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "BookService", "Booking",
-						new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId }, new { @class = "btn btn-primary" });*@
+                        <td class="container" style="border-bottom:none">
 
 
-						@Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "BookService", "Booking",
-						new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inBookingId = item.BookingId }, new { @class = "btn btn-primary" })
+                            @if (counter < 6)
+                            {
+                        <tr style="border-bottom:none">
+                            <td style="border-top:none"><br /></td>
+
+                        </tr>
+                                counter = 1;
+                            }
+
+                           
+
+
+                            @if (item.Available)
+                            {
+                                @*@Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "BookService", "Booking",
+                            new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId }, new { @class = "btn btn-primary" });*@
+
+
+                                @Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "BookService", "Booking",
+                     new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inBookingId = item.BookingId }, new { @class = "btn btn-primary" })
 
 
 
-					} else {
+                            }
+                            else
+                            {
+                        
+                            <div class="panel panel-primary">
+                                <button type="button" class="btn btn-primary">@item.StartTime.ToString("HH:mm") <b>- </b> @item.EndTime.ToString("HH:mm")</button>
+                            </div>
 
-						<div class="panel panel-primary">
-							<button type="button" class="btn btn-primary">@item.StartTime.ToString("HH:mm") <b>-</b> @item.EndTime.ToString("HH:mm")</button>
-						</div>
-					}
-				</td>
+                       
 
-						} else {
+                            }
+
+                            </td>
+                        }
+
+                }
 
 
-						<tr style="border-bottom:none">
-							<td style="border-top:none"><br /></td>
-							
-						</tr>
-							i = 1;
-						}
-
-						i++;
-					}
-				}
-
-			
-				</table>
+            </table>
 
 	</div>
 
