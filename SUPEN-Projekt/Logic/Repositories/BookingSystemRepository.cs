@@ -90,12 +90,39 @@ namespace SUPEN_Projekt.Repositories {
 			List<BookingSystem> bookingSystemsInOtherBranches = GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
 			List<BookingSystem> orderedByDistance = OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
 			List<BookingSystem> onlyWithAvailableTimes = GetBookingSystemsWithAvailableBooking(orderedByDistance, booking);
-
-			return onlyWithAvailableTimes;
+            List<BookingSystem> onlyOneOfEachBranch = GetBookingSystemsWithOnlyOneOfEachBranch(onlyWithAvailableTimes);
+    
+            return onlyOneOfEachBranch;
 		}
+        /*Returnerar en lista av bookingssystem, där vi endast tar med ett företag av varje branch. Detta för att ex inte visa 10 hotell, 
+        utan endast det som är närmst*/
+        private List<BookingSystem> GetBookingSystemsWithOnlyOneOfEachBranch(List<BookingSystem> inBookingSystems) {
+            List<BookingSystem> onlyOneOfEachBranch = new List<BookingSystem>();
+            List<Branch> branches = new List<Branch>();
 
-		//Returnerar bokningsystem inom en viss distans inom vald stad
-		private List<BookingSystem> GetBookingSystemsInRange(BookingSystem inSelectedBookingSystem) {
+            foreach (var item in inBookingSystems)
+            {
+                bool alreadyInList = false;
+                foreach (var y in item.Services)
+                {
+                    if (branches.Where(x => x.BranchName == y.Branch.BranchName).Count() == 0)
+                    {
+                        branches.Add(y.Branch);
+                    }
+                    else
+                    {
+                        alreadyInList = true;
+                    }
+                }
+                if (alreadyInList == false)
+                {
+                    onlyOneOfEachBranch.Add(item);
+                }
+            }
+            return onlyOneOfEachBranch;
+        }
+        //Returnerar bokningsystem inom en viss distans inom vald stad
+        private List<BookingSystem> GetBookingSystemsInRange(BookingSystem inSelectedBookingSystem) {
 			var companiesInSelectedCity = ApplicationDbContext.BookingSystems.Where(x => x.City.ToLower() == inSelectedBookingSystem.City.ToLower() && x.CompanyName != inSelectedBookingSystem.CompanyName);
 			List<BookingSystem> companiesInRange = new List<BookingSystem>();
 
@@ -164,6 +191,8 @@ namespace SUPEN_Projekt.Repositories {
 				this.distance = distance;
 			}
 		}
+       
+
 		//returnerar endast företag som har lediga tider som börjar strax efter eller slutar en liten stund före bokad tjänst
 		private List<BookingSystem> GetBookingSystemsWithAvailableBooking(List<BookingSystem> inBookingSystems, Booking inSelectedBooking) {
 
