@@ -7,7 +7,7 @@ namespace SUPEN_Projekt.Repositories {
 		//fungerar som testmetod tills vidare.
 		Booking CreateBooking(Booking inBooking);
 		IEnumerable<Booking> GetBookings();
-		void UpdateBooking(Booking booking);
+		//void UpdateBooking(Booking booking);
 
 	}
 }

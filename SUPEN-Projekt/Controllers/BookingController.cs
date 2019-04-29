@@ -23,57 +23,117 @@ namespace SUPEN_Projekt.Controllers {
 		}
 
 		//Returnerar information om bokningen
-		public async Task<ActionResult> Details(int inBookingSystemId, int inServiceId, int inBookingId) {
+		public async Task<ActionResult> Details(int inBookingSystemId, int inServiceId) {
 
-			BookingSystemServiceBookingViewModel bsSBVM = null;
+			BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
 			HttpClient client = new HttpClient();
 
-			var result = client.GetAsync("http://localhost:55341/api/GetBooking/" + inBookingSystemId +
-				"/" + inServiceId + "/" + inBookingId).Result;
+			BookingSystemServiceBookingViewModel getSystem = null;
+			HttpClient client1 = new HttpClient();
 
-			if (result.IsSuccessStatusCode) {
-				bsSBVM = await result.Content.ReadAsAsync<BookingSystemServiceBookingViewModel>();
+			var result1 = client1.GetAsync("http://localhost:55341/api/GetBookingSystem/" + inBookingSystemId).Result;
+			if (result1.IsSuccessStatusCode) {
+				getSystem = await result1.Content.ReadAsAsync<BookingSystemServiceBookingViewModel>();
+			} else {
+				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+			}
+			bsSBVM.bookingSystem = getSystem.bookingSystem;
+
+
+			BookingSystemServiceBookingViewModel getService = null;
+			HttpClient client2 = new HttpClient();
+
+			var result2 = client2.GetAsync("http://localhost:55341/api/GetService/" + inBookingSystemId + "/" + inServiceId).Result;
+
+			if (result2.IsSuccessStatusCode) {
+				getService = await result2.Content.ReadAsAsync<BookingSystemServiceBookingViewModel>();
+
+			} else {
+				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator");
+			}
+
+			bsSBVM.service = getService.service;
+
+
+			BookingSystemServiceBookingViewModel getBookingWithMaxId = null;
+			HttpClient client3 = new HttpClient();
+
+			var result3 = client3.GetAsync("http://localhost:55341/api/GetBooking/GetMaxId").Result;
+			if (result3.IsSuccessStatusCode) {
+				getBookingWithMaxId = await result3.Content.ReadAsAsync<BookingSystemServiceBookingViewModel>();
 			} else {
 				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
 			}
 
+			var result = client.GetAsync("http://localhost:55341/api/GetBooking/" + getBookingWithMaxId.booking.BookingId).Result;
+
+			if (result.IsSuccessStatusCode) {
+				getBookingWithMaxId = await result.Content.ReadAsAsync<BookingSystemServiceBookingViewModel>();
+			} else {
+				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+			}
+			bsSBVM.booking = getBookingWithMaxId.booking;
+
 			return View(bsSBVM);
 		}
 
-		//Hämtar information för en bokning innan det går att genomföra en bokning
 		[HttpGet]
-		public async Task<ActionResult> BookService(int inBookingSystemId, int inServiceId, int inBookingId) {
-
+		public async Task<ActionResult> BookService(int inBookingSystemId, int inServiceId) {
 			BookingSystemServiceBookingViewModel bsSBVM = null;
 			HttpClient client = new HttpClient();
 
-			var result = client.GetAsync("http://localhost:55341/api/GetBooking/" + inBookingSystemId +
-				"/" + inServiceId + "/" + inBookingId).Result;
+			var result = client.GetAsync("http://localhost:55341/api/GetBooking/" + inBookingSystemId + "/" + inServiceId).Result;
 
 			if (result.IsSuccessStatusCode) {
 				bsSBVM = await result.Content.ReadAsAsync<BookingSystemServiceBookingViewModel>();
 			} else {
-				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator");
 			}
 
 			return View(bsSBVM);
 		}
 
-		//Bokar en tillgänglig tjänst
 		[HttpPost, ActionName("BookService")]
-		public async Task<ActionResult> BookServiceConfirmed(int inBookingSystemId, int inServiceId, int inBookingId, BookingSystemServiceBookingViewModel model) {
+		public async Task<ActionResult> BookServiceConfirmed(int inBookingSystemId, int inServiceId, BookingSystemServiceBookingViewModel model) {
 			try {
+				BookingSystemServiceBookingViewModel getService = null;
+				HttpClient client = new HttpClient();
+
+				var result = client.GetAsync("http://localhost:55341/api/GetService/" + inBookingSystemId + "/" + inServiceId).Result;
+
+				if (result.IsSuccessStatusCode) {
+					 getService = await result.Content.ReadAsAsync<BookingSystemServiceBookingViewModel>();
+					
+				} else {
+					ModelState.AddModelError(string.Empty, "Server error. Please contact administrator");
+				}
+
+				model.service = getService.service;
+
+
+				BookingSystemServiceBookingViewModel getSystem = null;
+				HttpClient client1 = new HttpClient();
+
+				var result1 = client1.GetAsync("http://localhost:55341/api/GetBookingSystem/" + inBookingSystemId).Result;
+				if (result1.IsSuccessStatusCode) {
+					getSystem = await result1.Content.ReadAsAsync<BookingSystemServiceBookingViewModel>();
+				} else {
+					ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+				}
+				model.bookingSystem = getSystem.bookingSystem;
+
 				var url = "http://localhost:55341/api/PostBooking";
 
-				if (await APIContact(url, model)) {
+				if(await APIContact(url, model)) {
 					return RedirectToAction("Details",
-						new { inBookingSystemId, inServiceId, inBookingId });
+						new { inBookingSystemId, inServiceId});
 				}
 
 			} catch (DataException) {
 				ModelState.AddModelError("", "Unable to save changes, please try again");
 			}
-			return View(model);
+
+		return View(model);
 		}
 
 		//Ett API-anrop till ApiBooking som serialiserar det använda objektet till JSON
@@ -92,28 +152,5 @@ namespace SUPEN_Projekt.Controllers {
 				return works;
 			}
 		}
-
-		////[Route("BookingSystem/{id:int}")]
-		//public ActionResult CreateBooking(int id, string name) {
-		//	BookingSystem bookingSystem = uw.BookingSystems.GetBookingSystem(id);
-		//	BookingSystemServiceBookingViewModel vm4 = new BookingSystemServiceBookingViewModel();
-		//	vm4.bookingSystem = bookingSystem;
-		//	vm4.service = bookingSystem.Services.Single(x => x.ServiceName == name);
-
-
-		//	return View("CreateBooking", vm4);//en vanlig vy, från början parameter bookingsystem
-		//}
-
-		//[HttpPost, ActionName("CreateBooking")]
-		//public ActionResult CreateBookingConfirmed(int id, string name, Booking inBooking) {
-		//	var serviceId = uw.Services.Find(x => x.ServiceName == name).Single().ServiceId;
-		//	if (id != 0) {
-		//		Booking booking = uw.Bookings.CreateBooking(inBooking);
-		//		uw.Services.AddBooking(booking, serviceId);
-		//		uw.Complete();
-		//		return RedirectToAction("Details", new { InBookingSystemId = id, inServiceId = serviceId, inBookingId = booking.BookingId });
-		//	}
-		//	return RedirectToAction("ABookingSystem", new { id });//när abookingsystem är flyttad ändrad, ändra här också
-		//}
 	}
 }

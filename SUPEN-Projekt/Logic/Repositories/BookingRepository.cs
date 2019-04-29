@@ -23,7 +23,10 @@ namespace SUPEN_Projekt.Repositories {
 
 			//Service serv = bookingSystem.Services.Single(x => x.ServiceName == name);
 
+			ApplicationDbContext context = new ApplicationDbContext();
+
 			Booking booking = new Booking();
+			booking.BookingId = context.Bookings.Count();
 			booking.UserName = inBooking.UserName;
 			booking.UserMail = inBooking.UserMail;
 			booking.UserMobile = inBooking.UserMobile;
@@ -36,24 +39,25 @@ namespace SUPEN_Projekt.Repositories {
 			Add(booking);
 			return booking;
 
-		}
+
+	}
 
 		//Skapar en bokning med tillgängliga tider som går att bokas
-		public void UpdateBooking(Booking booking) {
-			var existingBookings = ApplicationDbContext.Bookings.Where(b => b.BookingId == booking.BookingId).FirstOrDefault<Booking>();
-			if (existingBookings != null) {
-				existingBookings.UserName = booking.UserName;
-				existingBookings.UserMail = booking.UserMail;
-				existingBookings.UserMobile = booking.UserMobile;
-				existingBookings.Available = false;
-				existingBookings.StartTime = booking.StartTime;
-				existingBookings.EndTime = booking.EndTime;
-				existingBookings.Date = booking.Date;
-				//existingBookings.Price = booking.Price;
+		//public void UpdateBooking(Booking booking) {
+		//	var existingBookings = ApplicationDbContext.Bookings.Where(b => b.BookingId == booking.BookingId).FirstOrDefault<Booking>();
+		//	if (existingBookings != null) {
+		//		existingBookings.UserName = booking.UserName;
+		//		existingBookings.UserMail = booking.UserMail;
+		//		existingBookings.UserMobile = booking.UserMobile;
+		//		existingBookings.Available = false;
+		//		existingBookings.StartTime = booking.StartTime;
+		//		existingBookings.EndTime = booking.EndTime;
+		//		existingBookings.Date = booking.Date;
+		//		//existingBookings.Price = booking.Price;
 
-			}
+		//	}
 
-		}
+		//}
 
 		public ApplicationDbContext ApplicationDbContext {
 			get { return Context as ApplicationDbContext; }

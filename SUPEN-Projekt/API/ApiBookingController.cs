@@ -27,31 +27,13 @@ namespace SUPEN_Projekt.Controllers {
 			return Ok(list);
 		}
 
-		//Skapar en ny bokning i datakällan
-		[Route("api/PostBooking")]
-		public IHttpActionResult PostBooking(BookingSystemServiceBookingViewModel inBooking) {
-			if (!ModelState.IsValid) {
-				return BadRequest("Invalid data");
-			}
 
-			var booking = inBooking.booking;
-			uw.Bookings.UpdateBooking(booking);
-			uw.Complete();
-
-			return Ok();
-		}
-
-		//Returnerar den specifika bokningen som har skapats
-		[Route("api/GetBooking/{inBookingSystemId}/{inServiceId}/{inBookingId}")]
+		[Route("api/GetBooking/{inBookingId}")]
 		[HttpGet]
-		public IHttpActionResult GetBooking(int inBookingSystemId, int inServiceId, int inBookingId) {
-
-			var bs = uw.BookingSystems.GetBookingSystem(inBookingSystemId);
+		public IHttpActionResult GetBooking(int inBookingId) {
+			
 			BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
-
-			bsSBVM.bookingSystem = bs;
-			bsSBVM.service = bs.Services.Single(x => x.ServiceId == inServiceId);
-			bsSBVM.booking = bsSBVM.service.Bookings.Single(x => x.BookingId == inBookingId);
+			bsSBVM.booking = uw.Bookings.Get(inBookingId);
 
 			if (bsSBVM == null) {
 				return NotFound();
@@ -60,5 +42,63 @@ namespace SUPEN_Projekt.Controllers {
 			return Ok(bsSBVM);
 		}
 
+
+
+		[Route("api/GetBooking/{inBookingSystemId}/{inServiceId}")]
+		[HttpGet]
+		public IHttpActionResult GetBooking(int inBookingSystemId, int inServiceId) {
+			var bs = uw.BookingSystems.GetBookingSystem(inBookingSystemId);
+			BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
+
+			bsSBVM.bookingSystem = bs;
+			bsSBVM.service = bs.Services.Single(x => x.ServiceId == inServiceId);
+			//bsSBVM.booking = bsSBVM.service.Bookings.Single(x => x.BookingId == inBookingId);
+
+			//bsSBVM.booking = uw.Bookings.GetBookings().Single(x=>x.BookingId == inBookingId);
+
+			if (bsSBVM == null) {
+				return NotFound();
+			}
+
+			return Ok(bsSBVM);
+		}
+
+
+
+
+		[Route("api/GetBooking/GetMaxId")]
+		[HttpGet]
+		public IHttpActionResult GetMaxId() {
+			BookingSystemServiceBookingViewModel model = new BookingSystemServiceBookingViewModel();
+
+			var maxId = uw.Bookings.GetBookings();
+			model.booking = maxId.OrderByDescending(i => i.BookingId).Take(1).Single();
+
+			return Ok(model);
+		}
+
+
+
+		[Route("api/PostBooking")]
+		[HttpPost]
+		public IHttpActionResult PostBooking(BookingSystemServiceBookingViewModel inBooking) {
+			if (!ModelState.IsValid) {
+				return BadRequest("Invalid data");
+			}
+
+			var booking = inBooking.booking;
+			uw.Bookings.CreateBooking(booking);
+			uw.Complete();
+
+			return Ok();
+		}
+
+		}
+		
 	}
-}
+
+
+
+
+
+

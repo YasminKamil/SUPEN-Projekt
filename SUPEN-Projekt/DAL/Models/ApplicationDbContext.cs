@@ -181,7 +181,7 @@ namespace SUPEN_Projekt.Models {
 			int hoursOpen = randomNumber.Next(2, 10);
 			List<Booking> listOfBookings = new List<Booking>();
 			listOfBookings = SeedBokings(duration, price, hoursOpen);
-			context.Bookings.AddRange(listOfBookings);
+			//context.Bookings.AddRange(listOfBookings);
 			context.SaveChanges();
 			return listOfBookings;
 		}
@@ -201,7 +201,7 @@ namespace SUPEN_Projekt.Models {
 				previousEndTime = booking.EndTime = booking.StartTime.AddMinutes(duration);
 				booking.Date = DateTime.Today;
 				//booking.Price = price;
-				bookings.Add(booking);
+				//bookings.Add(booking);
 			}
 			return bookings;
 		}
