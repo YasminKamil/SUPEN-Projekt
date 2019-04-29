@@ -1,8 +1,9 @@
 ﻿@model SUPEN_Projekt.Logic.ViewModels.BookingSystemServiceBookingViewModel
+    @using System.Globalization;
 @{
     ViewBag.Title = "Home Page";
 }
-
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 <script type="text/javascript">
     $(window).on('load', function () {
         $('#myModal').modal('show');
@@ -69,20 +70,53 @@
 
 <div id="mapid" style="width:100%; height:99%; margin-top:0;  margin-right: 0;  display:inline-block; position: absolute">
 
-    aa
-
 
 </div>
 <div style=" background-color: white; width:20%; height:95%;  overflow:auto;  left:0; margin-left:0; position:absolute; margin-top:0;  display:inline-block; direction:rtl; background-color:transparent">
 
 
     @{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
-                                                                              new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId });}
+                                                                            new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId });}
 
 </div>
 
 
-<script src="~/Scripts/leafletjs.js"></script>
+@*<script src="~/Scripts/leafletjs.js"></script>*@
+@*<script>
+
+     var mymap = L.map('mapid').setView([parseFloat(@Model.bookingSystem.Latitude.ToString()), parseFloat(@Model.bookingSystem.Longitude.ToString())], 13);
+
+
+     L.tileLayer("'https://tile.mapbox://styles/nehr/cjv0ohv0a0aai1fmyqe6fls6c", {
+             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+         maxZoom: 18,
+         id: 'mapbox.streets',
+
+         }).addTo(mymap);
+
+    var marker = L.marker([parseFloat(@Model.bookingSystem.Latitude.ToString()), parseFloat(@Model.bookingSystem.Longitude.ToString())]).addTo(mymap);
+
+    </script>*@
+@{
+    var culture = new CultureInfo("en-US");
+    var lat = ((decimal)Model.bookingSystem.Latitude).ToString("G",culture);
+    var long1 = ((decimal)Model.bookingSystem.Longitude).ToString("G",culture);
+ }
+
+    <script>
+
+     var map = L.map('mapid').setView([parseFloat(@lat), parseFloat(@long1)], 15);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 18,
+            subdomains: ['a', 'b', 'c']
+        }).addTo(map);
+
+        L.marker([parseFloat(@lat), parseFloat(@long1)]).addTo(map);
+
+    </script>
+
 
 
 
