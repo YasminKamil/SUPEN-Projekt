@@ -10,14 +10,14 @@ namespace SUPEN_Projekt.Repositories {
 		public IBookingRepository Bookings { get; private set; }
 		public IBookingSystemRepository BookingSystems { get; private set; }
 		public IServiceRepository Services { get; private set; }
-		// public IBrancheRepository Branches { get; private set; }
+		public IBrancheRepository Branches { get; private set; }
 
 		public UnitOfWork(ApplicationDbContext context) {
 			_context = context;
 			Bookings = new BookingRepository(_context);
 			BookingSystems = new BookingSystemRepository(_context);
 			Services = new ServiceRepository(_context);
-			//Branches = new BrancheRepository(_context);
+			Branches = new BrancheRepository(_context);
 
 		}
 

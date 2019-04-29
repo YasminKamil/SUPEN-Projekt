@@ -212,6 +212,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="API\ApiBookingSystemController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="DAL\Models\BranchRelation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
