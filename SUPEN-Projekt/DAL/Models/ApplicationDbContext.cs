@@ -30,7 +30,7 @@ namespace SUPEN_Projekt.Models {
 			//webbadress(string), företagsnamn(string), kontakt epost(string), kontakt tel.(string), Address(string), 
 			//Latitude(double), Longitude(double),postnummer(string), stad(string)
 			AddBookingSystem(context, "boka.se", "Description...", "ArtofHair@boka.se", "070 - 000 00 00", "boka.se/ArtofHair", "Art of Hair", "ArtofHair@boka.se",
-			"070 - 123 56 78", "Fabriksgatan 13", 59.2703188, 15.2074733, "702 10", "Örebro");
+			"070 - 123 56 78", "Fabriksgatan 13", 59.272207, 15.208576, "702 10", "Örebro");
 
 			AddBookingSystem(context, "boka.se", "Description...", "bullvivan@boka.se", "070 - 000 00 00", "boka.se/bullvivan", "Bullvivan", "bullvivan@boka.se",
 			"070 - 123 56 78", "Kyrkvärdsvägen 17", 59.27412, 15.2066, "702 84", "Örebro");
@@ -54,7 +54,7 @@ namespace SUPEN_Projekt.Models {
 			"070 - 123 56 78", "Fredriksbergsgatan 6", 55.6066851, 13.0183526, "212 11", "Malmö");
 
 			AddBookingSystem(context, "boka.se", "Description...", "Besikta@boka.se", "070 - 000 00 00", "boka.se/Besikta", "Besikta", "Besikta@boka.se",
-			"070 - 123 56 78", "Källvattengatan 7", 55.6059, 13.0007, "212 23", "Malmö");
+			"070 - 123 56 78", "Källvattengatan 7", 55.60575, 13.07308, "212 23", "Malmö");
 
 			AddBookingSystem(context, "boka.se", "Description...", "Bilexpo@boka.se", "070 - 000 00 00", "boka.se/Bilexpo", "Bilexpo", "Bilexpo@boka.se",
 			"070 - 123 56 78", "Karosserigatan 9", 59.296808, 15.234905, "703 69", "Örebro");
