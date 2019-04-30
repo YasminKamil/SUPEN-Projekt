@@ -30,7 +30,7 @@ namespace SUPEN_Projekt.Repositories {
 			booking.UserName = inBooking.UserName;
 			booking.UserMail = inBooking.UserMail;
 			booking.UserMobile = inBooking.UserMobile;
-			booking.Available = true;
+			booking.Available = false;
 			booking.StartTime = inBooking.StartTime;
 			booking.EndTime = inBooking.EndTime;
 			booking.Date = inBooking.Date;

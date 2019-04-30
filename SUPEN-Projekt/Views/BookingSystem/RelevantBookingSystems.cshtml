@@ -7,7 +7,7 @@
     foreach (var i in item.BookingSystem.Services)
     {
         
-        foreach (var booking in i.Bookings)
+        foreach (var booking in i.Bookings.Where(x=>x.Available == true))
         {
 <a href='@Url.Action("BookService","Booking",new {  inBookingSystemId = item.BookingSystem.BookingSystemId, inServiceId = i.ServiceId, inBookingId = booking.BookingId, inStartTime = booking.StartTime.ToString()})' class='link-icon btn btn-default' style="width:100%; border-radius: 5px; direction:ltr">
 
