@@ -178,7 +178,7 @@ namespace SUPEN_Projekt.Models {
 			//List<int> durations = new List<int> { 25, 30, 35, 40, 45, 50, 55, 60 }; 
 			int duration = inDuration; //durations.OrderBy(x=> randomNumber.Next()).First();
 			int price = inPrice; // randomNumber.Next(150, 400);
-			int hoursOpen = randomNumber.Next(2, 10);
+            int hoursOpen = 8; //randomNumber.Next(2, 10);
 			List<Booking> listOfBookings = new List<Booking>();
 			listOfBookings = SeedBokings(duration, price, hoursOpen);
 			//context.Bookings.AddRange(listOfBookings);
