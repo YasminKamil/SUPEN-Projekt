@@ -78,7 +78,7 @@ namespace SUPEN_Projekt.Controllers {
 		}
 
 		[HttpGet]
-		public async Task<ActionResult> BookService(int inBookingSystemId, int inServiceId) {
+		public async Task<ActionResult> BookService(int inBookingSystemId, int inServiceId, string inDate) {
 			BookingSystemServiceBookingViewModel bsSBVM = null;
 			HttpClient client = new HttpClient();
 
