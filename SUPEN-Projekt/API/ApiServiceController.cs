@@ -37,7 +37,7 @@ namespace SUPEN_Projekt.Controllers {
 
 			bsSBVM.bookingSystem = bs;
 			bsSBVM.service = bsSBVM.bookingSystem.Services.Single(x => x.ServiceId == inServiceId);
-
+           
 			if (bsSBVM == null) {
 				return NotFound();
 			}

@@ -34,9 +34,10 @@ namespace SUPEN_Projekt.Repositories {
 			booking.StartTime = inBooking.StartTime;
 			booking.EndTime = inBooking.EndTime;
 			booking.Date = inBooking.Date;
-			//booking.Price = inBooking.Price;
+            //booking.Price = inBooking.Price;
+            
 
-			Add(booking);
+            Add(booking);
 			return booking;
 
 

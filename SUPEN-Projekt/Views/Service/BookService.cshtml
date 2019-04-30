@@ -55,8 +55,8 @@
 			@*@:<tr>
 				@:<th rowspan="2" colspan="4" class="container">*@
 
-
-			if (Model.service.Bookings.Any(x => x.StartTime == startTime && x.Available == false)) {
+          
+			if (Model.service.Bookings.Any(x => x.StartTime == startTime)) {
 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-10">
