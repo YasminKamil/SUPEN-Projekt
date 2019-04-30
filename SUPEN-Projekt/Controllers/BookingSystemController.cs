@@ -128,12 +128,18 @@ namespace SUPEN_Projekt.Controllers {
 				double distance = double.Parse(list3);
 
 				pairedObject.Distance = Math.Round(distance);
+                pairedObject.Latitude = pairedObject.BookingSystem.Latitude;
+                pairedObject.Longitude = pairedObject.BookingSystem.Longitude;
 				listOfBookingSystems.Add(pairedObject);
-			}
+
+            }
 
 			bWDVM.SelectedBookingSystem = selectedBookingSystem;
 			bWDVM.BookingsWithDistance = listOfBookingSystems;
-			return PartialView(bWDVM);
+           
+           
+
+            return PartialView(bWDVM);
 		}
 
 	}
