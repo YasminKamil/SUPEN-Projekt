@@ -56,9 +56,9 @@
 				@:<th rowspan="2" colspan="4" class="container">*@
 
           
-			if (Model.service.Bookings.Any(x => x.StartTime == startTime)) {
+			if (!Model.service.Bookings.Any(x => x.StartTime == startTime)) {
 
-				<div class="form-group">
+				@*<div class="form-group">
 					<div class="col-md-offset-2 col-md-10">
 
 						@Html.ActionLink(startTime.ToString("HH:mm") + "-" + endTime.ToString("HH:mm"), "BookService", "Booking",
@@ -66,7 +66,7 @@
 
 					</div>
 				</div>
-			} else {
+			} else {*@
 				@Html.ActionLink(startTime.ToString("HH:mm") + "-" + endTime.ToString("HH:mm"), "BookService", "Booking",
          new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inStartTime = startTime.ToString() }, new { @class = "btn btn-primary" })
 			}
