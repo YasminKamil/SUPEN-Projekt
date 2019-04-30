@@ -78,25 +78,26 @@ namespace SUPEN_Projekt.Controllers {
 		}
 
 		[HttpGet]
-		public async Task<ActionResult> BookService(int inBookingSystemId, int inServiceId, string inDate) {
-			BookingSystemServiceBookingViewModel bsSBVM = null;
+		public async Task<ActionResult> BookService(int inBookingSystemId, int inServiceId, string inStartTime) {
+			BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
 			HttpClient client = new HttpClient();
+    
 
-			var result = client.GetAsync("http://localhost:55341/api/GetBooking/" + inBookingSystemId + "/" + inServiceId).Result;
+            var result = client.GetAsync("http://localhost:55341/api/GetBooking/" + inBookingSystemId + "/" + inServiceId).Result;
 
 			if (result.IsSuccessStatusCode) {
 				bsSBVM = await result.Content.ReadAsAsync<BookingSystemServiceBookingViewModel>();
 			} else {
 				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator");
 			}
-
+        bsSBVM.startTime = Convert.ToDateTime(inStartTime);
 			return View(bsSBVM);
 		}
 
 		[HttpPost, ActionName("BookService")]
 		public async Task<ActionResult> BookServiceConfirmed(int inBookingSystemId, int inServiceId, BookingSystemServiceBookingViewModel model) {
 			try {
-				BookingSystemServiceBookingViewModel getService = null;
+				BookingSystemServiceBookingViewModel getService = new BookingSystemServiceBookingViewModel();
 				HttpClient client = new HttpClient();
 
 				var result = client.GetAsync("http://localhost:55341/api/GetService/" + inBookingSystemId + "/" + inServiceId).Result;

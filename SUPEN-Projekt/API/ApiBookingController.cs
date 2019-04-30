@@ -87,7 +87,10 @@ namespace SUPEN_Projekt.Controllers {
 			}
 
 			var booking = inBooking.booking;
-			uw.Bookings.CreateBooking(booking);
+            booking.StartTime = inBooking.startTime;
+            booking.EndTime = inBooking.startTime.AddMinutes(inBooking.service.Duration);
+
+            uw.Bookings.CreateBooking(booking);
 			uw.Complete();
 
 			return Ok();

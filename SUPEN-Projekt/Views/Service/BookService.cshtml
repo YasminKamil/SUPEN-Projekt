@@ -68,7 +68,7 @@
 				</div>
 			} else {
 				@Html.ActionLink(startTime.ToString("HH:mm") + "-" + endTime.ToString("HH:mm"), "BookService", "Booking",
-		 new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId,inDate = startTime.ToString() }, new { @class = "btn btn-primary" })
+         new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inStartTime = startTime.ToString() }, new { @class = "btn btn-primary" })
 			}
 			@*@:</th>
 				@:</tr>*@
