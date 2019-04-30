@@ -37,63 +37,84 @@
 <div class="row" style="float:left;">
 
 	<h4><b> <span class="glyphicon">&#xe023;</span> Välj en tid</b></h4>
-	<div class="col-md-6" >
-        <table>
-            <tr style="border-top:none">
-                @{
-                    int counter = 0;
-                    foreach (var item in Model.service.Bookings)
-                    {
-                        counter++;
 
 
-                        <td class="container" style="border-bottom:none">
+	@*<table class=" col-md-10">*@
+	@{
+		int open = 8;
+		decimal inHours = Convert.ToDecimal(Model.service.Duration) / Convert.ToDecimal(60);
+		int iterations = (int)Math.Floor(Convert.ToDecimal(open) / Convert.ToDecimal(inHours));
+		DateTime startTime = DateTime.Today;
+		startTime = startTime.AddHours(8);
+
+		List<DateTime> dt = new List<DateTime>();
+
+		for (int i = 0; i < iterations; i++) {
+			DateTime endTime = startTime;
+			endTime = endTime.AddMinutes(Model.service.Duration);
+			@*@:<tr>
+				@:<th rowspan="2" colspan="4" class="container">*@
+
+          
+			if (!Model.service.Bookings.Any(x => x.StartTime == startTime)) {
+
+				@*<div class="form-group">
+					<div class="col-md-offset-2 col-md-10">
+
+						@Html.ActionLink(startTime.ToString("HH:mm") + "-" + endTime.ToString("HH:mm"), "BookService", "Booking",
+				 new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId }, new { @class = "btn btn-danger" })
+
+					</div>
+				</div>
+			} else {*@
+				@Html.ActionLink(startTime.ToString("HH:mm") + "-" + endTime.ToString("HH:mm"), "BookService", "Booking",
+         new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inStartTime = startTime.ToString() }, new { @class = "btn btn-primary" })
+			}
+			@*@:</th>
+				@:</tr>*@
+
+			startTime = endTime;
+		}
+	}
+	@*</table>*@
+</div>
 
 
-                            @if (counter < 6)
-                            {
-                        <tr style="border-bottom:none">
-                            <td style="border-top:none"><br /></td>
-
-                        </tr>
-                                counter = 1;
-                            }
-
-                           
+@*<h2>CreateBooking</h2>
 
 
-                            @if (item.Available)
-                            {
-                                @*@Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "BookService", "Booking",
-                            new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId }, new { @class = "btn btn-primary" });*@
+	@using (Html.BeginForm())
+	{
+		@Html.AntiForgeryToken()
 
+		<div class="form-horizontal">
+			<h4>ViewModel4</h4>
+			<hr />
+			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-10">
+					<input type="submit" value="Create" class="btn btn-default" />
+				</div>
+			</div>
+		</div>
+	}
 
-                                @Html.ActionLink(item.StartTime.ToString("HH:mm") + "-" + item.EndTime.ToString("HH:mm"), "BookService", "Booking",
-                     new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inBookingId = item.BookingId }, new { @class = "btn btn-primary" })
-
-
-
-                            }
-                            else
-                            {
-                        
-                            <div class="panel panel-primary">
-                                <button type="button" class="btn btn-primary">@item.StartTime.ToString("HH:mm") <b>- </b> @item.EndTime.ToString("HH:mm")</button>
-                            </div>
-
-                       
-
-                            }
-
-                            </td>
-                        }
-
-                }
-
-
-            </table>
-
+	<div>
+		@Html.ActionLink("Back to List", "Index")
 	</div>
 
-	<div class="col-sm-6"></div>
-</div>
+	@section Scripts {
+		@Scripts.Render("~/bundles/jqueryval")
+	}efault" />*@
+@*</div>
+			</div>
+		</div>
+	}
+
+	<div>
+		@Html.ActionLink("Back to List", "Index")
+	</div>
+
+	@section Scripts {
+		@Scripts.Render("~/bundles/jqueryval")
+	}*@

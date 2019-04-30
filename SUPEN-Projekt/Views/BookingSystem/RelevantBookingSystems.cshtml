@@ -4,12 +4,12 @@
         @foreach (var item in Model.BookingsWithDistance)
         {
 
-            foreach (var i in item.BookingSystem.Services)
-            {
-
-                foreach (var booking in i.Bookings)
-                {
-                    <a href='@Url.Action("BookService", "Booking", new { inBookingSystemId = item.BookingSystem.BookingSystemId, inServiceId = i.ServiceId, inBookingId = booking.BookingId })' class='link-icon btn btn-default' style="width:100%; border-radius: 5px; direction:ltr">
+    foreach (var i in item.BookingSystem.Services)
+    {
+        
+        foreach (var booking in i.Bookings)
+        {
+<a href='@Url.Action("BookService","Booking",new {  inBookingSystemId = item.BookingSystem.BookingSystemId, inServiceId = i.ServiceId, inBookingId = booking.BookingId, inStartTime = booking.StartTime.ToString()})' class='link-icon btn btn-default' style="width:100%; border-radius: 5px; direction:ltr">
 
                         <h4 style="font-weight: bold; text-align:center; margin-bottom:2px;">
                             @i.ServiceName

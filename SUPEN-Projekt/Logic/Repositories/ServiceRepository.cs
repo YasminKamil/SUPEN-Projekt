@@ -13,13 +13,16 @@ namespace SUPEN_Projekt.Repositories {
 
 		//Retunerar tjänster
 		public IEnumerable<Service> GetServices() {
-			return ApplicationDbContext.Set<Service>().Include(x => x.Branch).Include(b => b.Bookings);
+			return ApplicationDbContext.Set<Service>().Include(x => x.Branch).Include(b => b.Bookings).Include(x => x.Bookings);
 		}
 
-		//Returnerar den specifika tjänsten
-		public Service GetService(int id) {
+
+
+        //Returnerar den specifika tjänsten
+        public Service GetService(int id) {
 			IEnumerable<Service> services = GetServices();
 			Service service = services.Single(x => x.ServiceId == id);
+            service.Bookings = ApplicationDbContext.Services.Single(x=>x.ServiceId == id).Bookings;
 			return service;
 		}
 

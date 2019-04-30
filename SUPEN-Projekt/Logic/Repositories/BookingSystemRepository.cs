@@ -196,6 +196,41 @@ namespace SUPEN_Projekt.Repositories {
 		//returnerar endast företag som har lediga tider som börjar strax efter eller slutar en liten stund före bokad tjänst
 		private List<BookingSystem> GetBookingSystemsWithAvailableBooking(List<BookingSystem> inBookingSystems, Booking inSelectedBooking) {
 
+
+            int open = 8; 
+            foreach (var bookingSystem in inBookingSystems)
+            {
+                foreach (var service in bookingSystem.Services)
+                {
+                    decimal inHours = Convert.ToDecimal(service.Duration) / Convert.ToDecimal(60);
+                    int iterations = (int)Math.Floor(Convert.ToDecimal(open) / Convert.ToDecimal(inHours));
+                   
+                    //behöver bytas ut när vi ordnat så att en bokning har ett annat datum. 
+                    DateTime startTime = DateTime.Today;
+                    startTime = startTime.AddHours(8);
+
+                    List<DateTime> dt = new List<DateTime>();
+
+                    for (int i = 0; i < iterations; i++)
+                    {
+                        DateTime endTime = startTime;
+                        endTime = endTime.AddMinutes(service.Duration);
+
+					if (!service.Bookings.Any(x => x.StartTime == startTime)) {
+
+                            Booking aBooking = new Booking();
+                            aBooking.Available = true;
+                            aBooking.Date = DateTime.Today;
+                            aBooking.StartTime = startTime;
+                            aBooking.EndTime = endTime;
+                            service.Bookings.Add(aBooking);
+                        }
+                    startTime = endTime;
+				}
+                }
+            }
+
+
             //ordnar så vi inte behöver iterera genom alla objekt. 
             inBookingSystems = inBookingSystems.Where(x => x.Services.Any(y => y.Bookings.Any(z => (inSelectedBooking.EndTime.AddMinutes(35) > z.StartTime && z.StartTime > inSelectedBooking.EndTime.AddMinutes(15)) || (z.EndTime > inSelectedBooking.StartTime.AddMinutes(-35) && z.EndTime < inSelectedBooking.StartTime.AddMinutes(-15))))).ToList();
 			inBookingSystems = inBookingSystems.Where(x => x.Services.Any(y => y.Bookings.Any(f => f.Available == true))).ToList();
