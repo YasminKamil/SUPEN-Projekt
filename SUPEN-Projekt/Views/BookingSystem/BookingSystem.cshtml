@@ -1,4 +1,11 @@
 ﻿@model SUPEN_Projekt.Logic.ViewModels.BookingSystemServicesViewModel
+<div>
+	<ol class="breadcrumb">
+		<li>@Html.ActionLink("Välj företag", "Index", "BookingSystem")</li>
+		<li class="active">@Html.ActionLink("Boka en tjänst", "BookingSystem", "BookingSystem", new { inBookingSystem = Model.bookingSystem.BookingSystemId})</li>
+	</ol>
+</div>
+
 
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 

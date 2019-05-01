@@ -1,6 +1,14 @@
 ﻿
 @model SUPEN_Projekt.Logic.ViewModels.BookingSystemServiceBookingViewModel
+<div>
+	<ol class="breadcrumb">
+		<li>@Html.ActionLink("Välj företag", "Index", "BookingSystem")</li>
+		<li>@Html.ActionLink("Boka en tjänst", "BookingSystem", "BookingSystem", new { inBookingSystem = Model.bookingSystem.BookingSystemId })</li>
+		<li>@Html.ActionLink("Boka en tid", "BookService", "Service", new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId })</li>
+		<li class="active">@Html.ActionLink("Fyll i information", "BookService", "Booking", new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId })</li>
 
+	</ol>
+</div>
 
 
 @{

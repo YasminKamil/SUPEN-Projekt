@@ -1,4 +1,12 @@
 ﻿@model SUPEN_Projekt.Logic.ViewModels.BookingSystemServiceBookingViewModel
+<div>
+	<ol class="breadcrumb">
+		<li>@Html.ActionLink("Välj företag", "Index", "BookingSystem")</li>
+		<li>@Html.ActionLink("Boka en tjänst", "BookingSystem", "BookingSystem", new { inBookingSystem = Model.bookingSystem.BookingSystemId })</li>
+		<li class="active">@Html.ActionLink("Boka en tid", "BookService", "Service", new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId })</li>
+
+	</ol>
+</div>
 <link href="~/Content/Site.css" rel="stylesheet" />
 <br />
 
@@ -55,20 +63,20 @@
 			@*@:<tr>
 				@:<th rowspan="2" colspan="4" class="container">*@
 
-          
+
 			if (!Model.service.Bookings.Any(x => x.StartTime == startTime)) {
 
 				@*<div class="form-group">
-					<div class="col-md-offset-2 col-md-10">
+							<div class="col-md-offset-2 col-md-10">
 
-						@Html.ActionLink(startTime.ToString("HH:mm") + "-" + endTime.ToString("HH:mm"), "BookService", "Booking",
-				 new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId }, new { @class = "btn btn-danger" })
+								@Html.ActionLink(startTime.ToString("HH:mm") + "-" + endTime.ToString("HH:mm"), "BookService", "Booking",
+						 new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId }, new { @class = "btn btn-danger" })
 
-					</div>
-				</div>
-			} else {*@
+							</div>
+						</div>
+					} else {*@
 				@Html.ActionLink(startTime.ToString("HH:mm") + "-" + endTime.ToString("HH:mm"), "BookService", "Booking",
-         new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inStartTime = startTime.ToString() }, new { @class = "btn btn-primary" })
+		 new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inStartTime = startTime.ToString() }, new { @class = "btn btn-primary" })
 			}
 			@*@:</th>
 				@:</tr>*@
