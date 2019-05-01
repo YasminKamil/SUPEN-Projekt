@@ -16,7 +16,7 @@
 @{
 	ViewBag.Title = "Home Page";
 }
-<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
 <script type="text/javascript">
 	$(window).on('load', function () {
 		$('#myModal').modal('show');
@@ -67,20 +67,17 @@
 						</div>
 						<div class="row"></div>
 
-					</div>
-				</div>
-
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Klar!</button>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Klar!</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
-
-
+@*<div id="mapid" style=" background-color: white; width:inherit; height:inherit; margin-top: 0; margin-right: 0; display:inline-block; position: relative">
+    <div style=" width:20%; height:100%;  overflow:auto;  left:0; margin-left:0; position:absolute; top: 0;  display:inline-block; direction:rtl; background-color:transparent">*@
 <div id="mapid" style="width:100%; height:99%; margin-top:0;  margin-right: 0;  display:inline-block; position: absolute">
 
 
@@ -88,8 +85,9 @@
 <div style=" background-color: white; width:20%; height:95%;  overflow:auto;  left:0; margin-left:0; position:absolute; margin-top:0;  display:inline-block; direction:rtl; background-color:transparent">
 
 
-	@{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
-																			  new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId });}
+    @{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
+                      new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId });
+    }
 
 </div>
 
