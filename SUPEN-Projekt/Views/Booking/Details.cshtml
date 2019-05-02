@@ -1,132 +1,81 @@
 ﻿@model SUPEN_Projekt.Logic.ViewModels.BookingSystemServiceBookingViewModel
 @using System.Globalization;
 
-<div>
-	<ol class="breadcrumb">
-		<li>@Html.ActionLink("Boka en tjänst", "Index", "BookingSystem")</li>
-		<li>@Html.ActionLink("Tjänst", "Index", "BookingSystem")</li>
-		<li>@Html.ActionLink("Boka en tid", "Index", "Service")</li>
-		<li>@Html.ActionLink("Fyll i information", "Index", "Booking")</li>
-		<li class="active">@Html.ActionLink("Relevanta bokningar", "Index", "BookingSystem")</li>
-
-
-	</ol>
-</div>
 
 @{
-	ViewBag.Title = "Home Page";
+        ViewBag.Title = "Home Page";
+        var dateformat = Model.booking.Date.ToString("d MMMM yyyy", new CultureInfo("sv-SE"));
 }
 
 <script type="text/javascript">
-	$(window).on('load', function () {
-		$('#myModal').modal('show');
-	});
+    $(window).on('load', function () {
+        $('#myModal').modal('show');
+    });
 </script>
 
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Bokningsbekräftelse</h4>
-			</div>
-			<div class="modal-body">
-				<div class="container-fluid">
-					<div class=" row"></div>
-					<div class="row">
-						<div>
-							<div class="list-group">
-								<a href="#" class="list-group-item
-                                    <p class="list-group-item-text" style="font-weight: bold"><b>Namn: </b>@Html.DisplayFor(model => model.booking.UserName)</p>
-                                    <p class="list-group-item-text" style="font-weight: bold"><b>E-post: </b>@Html.DisplayFor(model => model.booking.UserMail)</p>
-                                    <p class="list-group-item-text" style="font-weight: bold"><b>Mobilnummer: </b>@Html.DisplayFor(model => model.booking.UserMobile)</p>
-								     <p class="list-group-item-text" style="font-weight: bold"><b>Du har bokat: </b>@Html.DisplayFor(model => model.service.ServiceName)</p>
-                                    <p class="list-group-item-text" style="font-weight: bold"><b>Datum: </b>@Html.DisplayFor(model => model.booking.Date)</p>
-                                    <p class="list-group-item-text" style="font-weight: bold"><b>Pågår: </b>@Html.DisplayFor(model =>  model.booking.StartTime) - @Html.DisplayFor(model => model.booking.EndTime)</p>
-                                    <p class="list-group-item-text" style="font-weight: bold"><b>Pris: </b>@Html.DisplayFor(model => model.service.Price) SEK</p>
-
-		@Html.HiddenFor(model => model.Id)
-		@Html.HiddenFor(model => Model.booking.BookingId)
-		@Html.HiddenFor(model => Model.booking.Available)
-		@Html.HiddenFor(model => Model.booking.StartTime)
-		@Html.HiddenFor(model => Model.booking.EndTime)
-		@Html.HiddenFor(model => Model.booking.Date)
-
-		@Html.HiddenFor(model => Model.bookingSystem)
-		@Html.HiddenFor(model => Model.service)
-
-
-
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Bokningsbekräftelse</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class=" row"></div>
+                    <div class="row">
+                        <div>
+                            <div class="list-group">
+                                <a href="#" class="list-group-item">
+                                    <h5 class="list-group-item-text"><strong>@Html.DisplayFor(model => model.service.ServiceName)</strong> den @Html.DisplayFor(model => dateformat)</h5>
+                                    <p class="list-group-item-text">Kl.: @Html.DisplayFor(model => model.booking.StartTime) - @Html.DisplayFor(model => model.booking.EndTime)</p>
+                                    <p class="list-group-item-text">@Html.DisplayFor(model => model.service.Price) SEK</p>
+                                    <br />
+                                    <h5 class="list-group-item-text text-capitalize"><strong>@Html.DisplayFor(model => model.booking.UserName)</strong></h5>
+                                    <p class="list-group-item-text">@Html.DisplayFor(model => model.booking.UserMail)</p>
+                                    <p class="list-group-item-text">@Html.DisplayFor(model => model.booking.UserMobile)</p>
                                 </a>
-
-							</div>
-						</div>
-						<div class="col-lg-2" style="background-color:white">
-						</div>
-						<div class="row"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2" style="background-color:white">
+                        </div>
+                        <div class="row"></div>
 
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Klar!</button>
+                <div class="booking-confirmation-details">
+                    <p class="text-left">
+                        @Html.DisplayFor(model => model.bookingSystem.CompanyName)<br />@Html.DisplayFor(model => model.bookingSystem.Address), @Html.DisplayFor(model => model.bookingSystem.PostalCode), Tfn @Html.DisplayFor(model => model.bookingSystem.ContactPhone)
+                    </p>
+               </div>
+              <div class="booking-confirmation-company"><button type="button" class="btn btn-primary bottom-right" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Klar!</button>
+                
+              </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-@*<div id="mapid" style=" background-color: white; width:inherit; height:inherit; margin-top: 0; margin-right: 0; display:inline-block; position: relative">
-    <div style=" width:20%; height:100%;  overflow:auto;  left:0; margin-left:0; position:absolute; top: 0;  display:inline-block; direction:rtl; background-color:transparent">*@
-<div id="mapid" style="width:100%; height:99%; margin-top:0;  margin-right: 0;  display:inline-block; position: absolute">
+
+<div id="mapid" class="booking-confirmation-map">
 
 
 </div>
-<div style=" background-color: white; width:20%; height:95%;  overflow:auto;  left:0; margin-left:0; position:absolute; margin-top:0;  display:inline-block; direction:rtl; background-color:transparent">
+<div class="booking-relevantbookings-position">
 
 
     @{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
-                      new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId });
+                            new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId });
     }
-
+    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" style="border-color:ButtonShadow" data-target="#myModal">Bokningsinformation</button>
 </div>
 
 
+
 @*<script src="~/Scripts/leafletjs.js"></script>*@
-@*<script>
 
-	 var mymap = L.map('mapid').setView([parseFloat(@Model.bookingSystem.Latitude.ToString()), parseFloat(@Model.bookingSystem.Longitude.ToString())], 13);
-
-
-	 L.tileLayer("'https://tile.mapbox://styles/nehr/cjv0ohv0a0aai1fmyqe6fls6c", {
-			 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-		 maxZoom: 18,
-		 id: 'mapbox.streets',
-
-		 }).addTo(mymap);
-
-	var marker = L.marker([parseFloat(@Model.bookingSystem.Latitude.ToString()), parseFloat(@Model.bookingSystem.Longitude.ToString())]).addTo(mymap);
-
-	</script>*@
-@{
-	var culture = new CultureInfo("en-US");
-	var lat = ((decimal)Model.bookingSystem.Latitude).ToString("G", culture);
-	var long1 = ((decimal)Model.bookingSystem.Longitude).ToString("G", culture);
-}
-
-<script>
-
-     var map = L.map('mapid').setView([parseFloat(@lat), parseFloat(@long1)], 15);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            maxZoom: 18,
-            subdomains: ['a', 'b', 'c']
-        }).addTo(map);
-
-        L.marker([parseFloat(@lat), parseFloat(@long1)]).addTo(map);
-
-</script>
 
 
 
