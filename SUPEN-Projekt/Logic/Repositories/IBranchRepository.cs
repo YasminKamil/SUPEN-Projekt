@@ -12,7 +12,7 @@ namespace SUPEN_Projekt.Repositories
         void CreateBranchRelation(int branchA, int branchB);
         void AddClickToBranchRelation(int branchA, int branchB);
         BranchRelation GetBranchRelation(int branchA, int branchB);
-
+        IEnumerable<BranchRelation> GetBranchRelations(int branchA);
     }
 
 }

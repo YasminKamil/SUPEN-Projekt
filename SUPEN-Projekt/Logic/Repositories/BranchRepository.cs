@@ -18,7 +18,7 @@ namespace SUPEN_Projekt.Repositories
         //uppdaterar en relation med ett till klick
         public void AddClickToBranchRelation(int branchA, int branchB)
         {
-           Branch fromBranch = ApplicationDbContext.Branches.Single(x=> x.BranchId == branchA);
+            Branch fromBranch = ApplicationDbContext.Branches.Single(x=> x.BranchId == branchA);
             BranchRelation branchRelation = fromBranch.BranchRelations.Single(x=> x.Branch.BranchId == branchB);
             branchRelation.CountClick++;
         }
@@ -57,6 +57,13 @@ namespace SUPEN_Projekt.Repositories
             Branch fromBranch = ApplicationDbContext.Branches.Single(x => x.BranchId == branchA);
             return fromBranch.BranchRelations.Single(x=> x.Branch.BranchId == branchB);
         }
+        //Returnerar en BranchRelation
+        public IEnumerable<BranchRelation> GetBranchRelations(int branchA)
+        {
+            return ApplicationDbContext.Branches.Single(x=>x.BranchId == branchA).BranchRelations;
+        }
+
+
     }
 
 }
