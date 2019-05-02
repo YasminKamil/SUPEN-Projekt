@@ -1,9 +1,10 @@
 ﻿@model SUPEN_Projekt.Logic.ViewModels.BookingSystemServiceBookingViewModel
-
+@using System.Globalization;
 
 
 @{
-    ViewBag.Title = "Home Page";
+        ViewBag.Title = "Home Page";
+        var dateformat = Model.booking.Date.ToString("d MMMM yyyy", new CultureInfo("sv-SE"));
 }
 
 <script type="text/javascript">
@@ -27,15 +28,14 @@
                         <div>
                             <div class="list-group">
                                 <a href="#" class="list-group-item">
-                                    <p class="list-group-item-text" style="font-weight: bold"><b>Namn: </b>@Html.DisplayFor(model => model.booking.UserName)</p>
-                                    <p class="list-group-item-text" style="font-weight: bold"><b>E-post: </b>@Html.DisplayFor(model => model.booking.UserMail)</p>
-                                    <p class="list-group-item-text" style="font-weight: bold"><b>Mobilnummer: </b>@Html.DisplayFor(model => model.booking.UserMobile)</p>
-                                    <p class="list-group-item-text" style="font-weight: bold"><b>Du har bokat: </b>@Html.DisplayFor(model => model.service.ServiceName)</p>
-                                    <p class="list-group-item-text" style="font-weight: bold"><b>Datum: </b>@Html.DisplayFor(model => model.booking.Date)</p>
-                                    <p class="list-group-item-text" style="font-weight: bold"><b>Pågår: </b>@Html.DisplayFor(model => model.booking.StartTime) - @Html.DisplayFor(model => model.booking.EndTime)</p>
-                                    <p class="list-group-item-text" style="font-weight: bold"><b>Pris: </b>@Html.DisplayFor(model => model.service.Price) SEK</p>
+                                    <h5 class="list-group-item-text"><strong>@Html.DisplayFor(model => model.service.ServiceName)</strong> den @Html.DisplayFor(model => dateformat)</h5>
+                                    <p class="list-group-item-text">Kl.: @Html.DisplayFor(model => model.booking.StartTime) - @Html.DisplayFor(model => model.booking.EndTime)</p>
+                                    <p class="list-group-item-text">@Html.DisplayFor(model => model.service.Price) SEK</p>
+                                    <br />
+                                    <h5 class="list-group-item-text text-capitalize"><strong>@Html.DisplayFor(model => model.booking.UserName)</strong></h5>
+                                    <p class="list-group-item-text">@Html.DisplayFor(model => model.booking.UserMail)</p>
+                                    <p class="list-group-item-text">@Html.DisplayFor(model => model.booking.UserMobile)</p>
                                 </a>
-
                             </div>
                         </div>
                         <div class="col-lg-2" style="background-color:white">
@@ -46,21 +46,28 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Klar!</button>
+                <div class="booking-confirmation-details">
+                    <p class="text-left">
+                        @Html.DisplayFor(model => model.bookingSystem.CompanyName)<br />@Html.DisplayFor(model => model.bookingSystem.Address), @Html.DisplayFor(model => model.bookingSystem.PostalCode), Tfn @Html.DisplayFor(model => model.bookingSystem.ContactPhone)
+                    </p>
+               </div>
+              <div class="booking-confirmation-company"><button type="button" class="btn btn-primary bottom-right" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Klar!</button>
+                
+              </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div id="mapid" style="width:100%; height:95%;  margin-right: 0; right:0;  display:inline-block; position: absolute">
+<div id="mapid" class="booking-confirmation-map">
 
 
 </div>
-<div style="background-color: white; width:20%;  overflow:auto;  left:0; margin-left:1%; margin-top: 1%; position:absolute;  display:inline-block; direction:rtl; background-color:transparent">
+<div class="booking-relevantbookings-position">
 
 
     @{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
-                          new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId });
+                            new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId });
     }
     <button type="button" class="btn btn-info btn-sm" data-toggle="modal" style="border-color:ButtonShadow" data-target="#myModal">Bokningsinformation</button>
 </div>

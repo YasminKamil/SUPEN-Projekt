@@ -11,17 +11,17 @@
         {
             <a href='@Url.Action("BookService","Booking",new {  inBookingSystemId = item.BookingSystem.BookingSystemId, inServiceId = i.ServiceId, inBookingId = booking.BookingId, inStartTime = booking.StartTime.ToString()})' class='link-icon btn btn-default' style="width:100%; border-radius: 5px; direction:ltr; margin-bottom: 1%; border-color:ThreeDShadow">
 
-                <h4 style="font-weight: bold; text-align:center; margin-bottom:2px;">
+                <h4 class="service-distance-h4">
                     @i.ServiceName
 
                     @if (item.Distance < 1000)
                     {
-                        <p class="list-group-item-text" style="right:2%">  @item.Distance meter</p>
+                        <b class="list-group-item-text" style="right:2%">  @item.Distance meter</b>
                     }
                     else
                     {
                         double distance = item.Distance / 1000;
-                        <p class="list-group-item-text" style="right:2%"> @Math.Round(distance, 2) km</p>
+                        <b class="list-group-item-text" style="right:2%"> @Math.Round(distance, 2) km</b>
                     }
 
 
@@ -41,15 +41,17 @@
 
 
 
-@*<script src="~/Scripts/leafletjs.js"></script>*@
+
 
 @{
     var culture = new CultureInfo("en-US");
     var latitude = ((decimal)Model.SelectedBookingSystem.Latitude).ToString("G", culture);
     var longitude = ((decimal)Model.SelectedBookingSystem.Longitude).ToString("G", culture);
     var companyName = Model.SelectedBookingSystem.CompanyName;
+    var bookingsWithDistance = Model.BookingsWithDistance;
 
 }
+            @*<script src="~/Scripts/leafletjs.js"></script>*@
 
 <script>
 
