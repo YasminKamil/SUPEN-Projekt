@@ -3,6 +3,9 @@ using System.Web.Mvc;
 using System.Threading.Tasks;
 using System.Net.Http;
 using SUPEN_Projekt.Logic.ViewModels;
+using Newtonsoft.Json;
+using System.Text;
+using System;
 
 namespace SUPEN_Projekt.Controllers {
 	public class ServiceController : Controller {
@@ -38,27 +41,67 @@ namespace SUPEN_Projekt.Controllers {
 			} else {
 				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator");
 			}
+            updateBranchRelation(1, 2);
 
-			return View(bsSBVM);
+            return View(bsSBVM);
 		}
 
-		//// GET: Service/Edit/5
-		//public ActionResult Edit(int id) {
-		//	return View();
-		//}
+        [HttpPost]
+        public void updateBranchRelation(int inBranchA, int inBranchB)
+        {
+            object branchId = new { branchA = inBranchA, branchB = inBranchB };
+            var url = "http://localhost:55341/api/UpdateBranchRelation/" + inBranchA.ToString() + "/" + inBranchB.ToString();
+            APIContact(url, branchId);
+        }
 
-		//// POST: Service/Edit/5
-		//[HttpPost]
-		//public ActionResult Edit(int id, FormCollection collection) {
-		//	try {
-		//		// TODO: Add update logic here
+        public async Task<bool> APIContact(string inUrl, Object inObject)
+        {
 
-		//		return RedirectToAction("Index");
-		//	} catch {
-		//		return View();
-		//	}
-		//}
+            bool works = false;
+            var url = inUrl;
+
+            using (var client = new HttpClient())
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(inObject), Encoding.UTF8, "application/json");
+                var result = await client.PostAsync(url, content);
+
+                if (result.IsSuccessStatusCode)
+                {
+                    works = true;
+                }
+            }
+
+            return works;
+        }
 
 
-	}
+
+
+
+
+
+
+
+
+
+
+        //// GET: Service/Edit/5
+        //public ActionResult Edit(int id) {
+        //	return View();
+        //}
+
+        //// POST: Service/Edit/5
+        //[HttpPost]
+        //public ActionResult Edit(int id, FormCollection collection) {
+        //	try {
+        //		// TODO: Add update logic here
+
+        //		return RedirectToAction("Index");
+        //	} catch {
+        //		return View();
+        //	}
+        //}
+
+
+    }
 }

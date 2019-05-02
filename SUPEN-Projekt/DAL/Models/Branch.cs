@@ -7,6 +7,7 @@ using System.Web;
 namespace SUPEN_Projekt.Models {
 
 	public class Branch {
+
         [Key]
 		public virtual int BranchId { get; set; }
 		public virtual string BranchName { get; set; }

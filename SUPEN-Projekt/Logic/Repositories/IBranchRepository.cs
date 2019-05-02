@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SUPEN_Projekt.Repositories
 {
-    public interface IBrancheRepository : IRepository<Branch>
+    public interface IBranchRepository : IRepository<Branch>
     {
         void CreateBranchRelation(int branchA, int branchB);
         void AddClickToBranchRelation(int branchA, int branchB);
