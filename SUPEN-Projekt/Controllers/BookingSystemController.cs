@@ -86,7 +86,7 @@ namespace SUPEN_Projekt.Controllers {
 		}
 
 		//Returnerar vilka bokningsystem som finns i närområdet efter att man har bokat en tjänst
-		public async Task<ActionResult> RelevantBookingSystems(int bookingSystemId, int serviceId, int bookingId) {
+		public async Task<ActionResult> RelevantBookingSystems(int bookingSystemId, int serviceId, int bookingId, int? branchAId) {
 			// gör ett api anrop för att hämta BookingSystemServicesViewModel
 			BookingSystemServicesViewModel bssvm = null;
 			HttpClient client1 = new HttpClient();
@@ -100,8 +100,12 @@ namespace SUPEN_Projekt.Controllers {
 			if (selectedBookingSystem == null || !selectedBookingSystem.Services.Any(x => x.ServiceId == serviceId)) {
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-			//gör ett apianrop för att hämta BookingSystemsViewModel
-			BookingSystemsViewModel bookingsystemsvm = null;
+
+
+
+
+            //gör ett apianrop för att hämta BookingSystemsViewModel
+            BookingSystemsViewModel bookingsystemsvm = null;
 			HttpClient client = new HttpClient();
 			string url = "http://localhost:55341/api/GetRelevantBookingSystem/" + bookingSystemId.ToString() + "/" + serviceId.ToString() + "/" + bookingId.ToString();
 			var result = client.GetAsync(url).Result;
@@ -111,7 +115,18 @@ namespace SUPEN_Projekt.Controllers {
 			var orderedByDistance = bookingsystemsvm.bookingSystems;
 			//gör ett apianrop för att hämta BookingsWithDistanceViewModel
 			BookingsWithDistanceViewModel bWDVM = new BookingsWithDistanceViewModel();
-			List<BookingSystemAndDistanceViewModel> listOfBookingSystems = new List<BookingSystemAndDistanceViewModel>();
+
+            //Om man nyligen har bokat en tjänst läggs det till ett klick på relationen eller så skapas den
+            if (branchAId != null)
+            {
+                bWDVM.branchAId = branchAId ?? default(int);
+            }
+            else
+            {
+                bWDVM.branchAId = selectedBookingSystem.Services.Single(x => x.ServiceId == serviceId).Branch.BranchId;
+            }
+
+            List<BookingSystemAndDistanceViewModel> listOfBookingSystems = new List<BookingSystemAndDistanceViewModel>();
 			foreach (var item in orderedByDistance) {
 				BookingSystemAndDistanceViewModel pairedObject = new BookingSystemAndDistanceViewModel();
 				pairedObject.BookingSystem = item;
@@ -136,13 +151,27 @@ namespace SUPEN_Projekt.Controllers {
 
 			bWDVM.SelectedBookingSystem = selectedBookingSystem;
 			bWDVM.BookingsWithDistance = listOfBookingSystems;
-           
-           
+
+            
 
             return PartialView(bWDVM);
 		}
 
-	}
+
+
+
+        //[HttpPost]
+        //public async Task updateBranchRelationAsync(int inBranchA, int inBranchB)
+        //{
+        //    object branchId = new { branchA = inBranchA, branchB = inBranchB };
+        //    var url = "http://localhost:55341/api/UpdateBranchRelation/" + inBranchA.ToString() + "/" + inBranchB.ToString();
+        //    await APIContact(url, branchId);
+        //}
+
+
+
+
+    }
 
 
 }

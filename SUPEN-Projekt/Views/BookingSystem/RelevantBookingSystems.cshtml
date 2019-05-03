@@ -9,7 +9,7 @@
 
         foreach (var booking in i.Bookings.Where(x => x.Available == true))
         {
-            <a href='@Url.Action("BookService","Booking",new {  inBookingSystemId = item.BookingSystem.BookingSystemId, inServiceId = i.ServiceId, inBookingId = booking.BookingId, inStartTime = booking.StartTime.ToString()})' class='link-icon btn btn-default' style="width:100%; border-radius: 5px; direction:ltr; margin-bottom: 1%; border-color:ThreeDShadow">
+            <a href='@Url.Action("BookService","Booking",new {  inBookingSystemId = item.BookingSystem.BookingSystemId, inServiceId = i.ServiceId, inBookingId = booking.BookingId, inStartTime = booking.StartTime.ToString(), branchAId = Model.branchAId})' class='link-icon btn btn-default' style="width:100%; border-radius: 5px; direction:ltr; margin-bottom: 1%; border-color:ThreeDShadow">
 
                 <h4 class="service-distance-h4">
                     @i.ServiceName
