@@ -6,3 +6,11 @@
     text-align: center;
     margin-bottom: 2px;
 }
+
+.link-button-bookservice {
+    width: 100%;
+    border-radius: 5px;
+    direction: ltr;
+    margin-bottom: 1%;
+    border-color: ThreeDShadow;
+}

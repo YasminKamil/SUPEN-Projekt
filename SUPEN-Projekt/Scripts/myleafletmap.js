@@ -10,7 +10,7 @@ function myFunc(latitude, longitude, companyName, bookingsWithDistance) {
     this.bWithDistance = bookingsWithDistance;
 }
 
-var obj = myFuncWrapper();
+myFuncWrapper();
 
 var map = L.map('mapid', {
     zoomControl: false
@@ -33,6 +33,7 @@ var popup = L.popup()
     .openOn(map);
 
 var markers = [{ "lat": latitude, "long": longitude }];
+var names = [{ "name": companyName }];
 
 for (var i = 0; i < bookingsWithDistance.length; i++) {
 
@@ -40,10 +41,13 @@ for (var i = 0; i < bookingsWithDistance.length; i++) {
     var longi = bookingsWithDistance[i].Longitude;
 
     markers.push({ "lat": parseFloat(lati), "long": parseFloat(longi) });
+    
 }
+
 
 for (var j = 0; j < markers.length; j++) {
 
     L.marker([parseFloat(markers[j].lat), parseFloat(markers[j].long)]).addTo(map);
-
+    
 }
+
