@@ -17,13 +17,10 @@ namespace SUPEN_Projekt.Controllers {
 		public IHttpActionResult GetBranches() {
 			var Branches = uw.Branches.GetAll();
 			BranchesViewModel list = new BranchesViewModel();
-
 			list.Branches = Branches;
-
 			if (list == null) {
 				return NotFound();
 			}
-
 			return Ok(list);
 		}
 
@@ -31,10 +28,8 @@ namespace SUPEN_Projekt.Controllers {
 		[Route("api/GetBranchRelations/{inBookingSystemId}/{inServiceId}/{inBranchId}")]
 		[HttpGet]
 		public IHttpActionResult GetBranchRelations(int inBookingSystemId,int inServiceId,int inBranchId) {
-
 			var bs = uw.BookingSystems.GetBookingSystem(inBookingSystemId);
             BookingSystemServiceBookingBranchBranchRelationViewModel bsSBVMBBR = new BookingSystemServiceBookingBranchBranchRelationViewModel();
-
             bsSBVMBBR.bookingSystem = bs;
             bsSBVMBBR.service = bsSBVMBBR.bookingSystem.Services.Single(x => x.ServiceId == inServiceId);
             bsSBVMBBR.branch = uw.Branches.Get(inBranchId);
@@ -59,8 +54,5 @@ namespace SUPEN_Projekt.Controllers {
             uw.Complete();
             return Ok();
         }
-
-
-
     }
 }
