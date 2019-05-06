@@ -47,7 +47,6 @@
 	<h4><b> <span class="glyphicon">&#xe023;</span> Välj en tid</b></h4>
 
 
-	@*<table class=" col-md-10">*@
 	@{
 		int open = 8;
 		decimal inHours = Convert.ToDecimal(Model.service.Duration) / Convert.ToDecimal(60);
@@ -60,69 +59,29 @@
 		for (int i = 0; i < iterations; i++) {
 			DateTime endTime = startTime;
 			endTime = endTime.AddMinutes(Model.service.Duration);
-			@*@:<tr>
-				@:<th rowspan="2" colspan="4" class="container">*@
 
-
-			if (!Model.service.Bookings.Any(x => x.StartTime == startTime)) {
-
-				@*<div class="form-group">
-							<div class="col-md-offset-2 col-md-10">
-
-								@Html.ActionLink(startTime.ToString("HH:mm") + "-" + endTime.ToString("HH:mm"), "BookService", "Booking",
-						 new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId }, new { @class = "btn btn-danger" })
-
-							</div>
-						</div>
-					} else {*@
+			if (!Model.service.Bookings.Any(x => x.StartTime == startTime) && startTime > DateTime.Now) {
 				@Html.ActionLink(startTime.ToString("HH:mm") + "-" + endTime.ToString("HH:mm"), "BookService", "Booking",
 		 new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inStartTime = startTime.ToString() }, new { @class = "btn btn-primary" })
 			}
-			@*@:</th>
-				@:</tr>*@
-
 			startTime = endTime;
 		}
 	}
-	@*</table>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
-
-
-@*<h2>CreateBooking</h2>
-
-
-	@using (Html.BeginForm())
-	{
-		@Html.AntiForgeryToken()
-
-		<div class="form-horizontal">
-			<h4>ViewModel4</h4>
-			<hr />
-			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-			<div class="form-group">
-				<div class="col-md-offset-2 col-md-10">
-					<input type="submit" value="Create" class="btn btn-default" />
-				</div>
-			</div>
-		</div>
-	}
-
-	<div>
-		@Html.ActionLink("Back to List", "Index")
-	</div>
-
-	@section Scripts {
-		@Scripts.Render("~/bundles/jqueryval")
-	}efault" />*@
-@*</div>
-			</div>
-		</div>
-	}
-
-	<div>
-		@Html.ActionLink("Back to List", "Index")
-	</div>
-
-	@section Scripts {
-		@Scripts.Render("~/bundles/jqueryval")
-	}*@
