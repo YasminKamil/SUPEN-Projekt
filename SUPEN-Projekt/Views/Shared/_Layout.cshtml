@@ -6,15 +6,9 @@
     <title>@ViewBag.Title - Boka</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
-    @Styles.Render("~/Content/kendo/css")
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/kendo")
 
-    <link rel="stylesheet" href="~/Content/kendo/kendo.common.min.css">
-    <link rel="stylesheet" href="~/Content/kendo/kendo.rtl.min.css">
-    <link rel="stylesheet" href="~/Content/kendo/kendo.default.min.css">
-    <link rel="stylesheet" href="~/Content/kendo/kendo.mobile.all.min.css">
+    
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
@@ -25,14 +19,19 @@
     <link href="~/Content/RelevantBookings.css" rel="stylesheet" />
     @*//javascript måste ligga efter ovanstående css*@
 
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
     <script src='https://static-assets.mapbox.com/gl-pricing/dist/mapbox-gl.js'></script>
 
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
             integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
             crossorigin=""></script>
+    <script data-main="Components/RequireJS" src="~/Scripts/Components/RequireJS/require.js"></script>
     @*<script src="~/Scripts/leaflet-0.7.3.js"></script>*@
     <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
     <script type='text/javascript' src='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js'></script>
+  
+
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top">

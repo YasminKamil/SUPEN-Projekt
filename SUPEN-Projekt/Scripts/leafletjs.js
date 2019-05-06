@@ -1,8 +1,20 @@
-﻿var map = L.map('mapid', {
+﻿var latitude;
+var longitude;
+var companyName;
+var bookingsWithDistance;
+
+function myFunc(latitude, longitude, companyName, bookingsWithDistance) {
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.companyName = companyName;
+    this.bWithDistance = bookingsWithDistance;
+}
+
+var obj = myFuncWrapper();
+
+var map = L.map('mapid', {
     zoomControl: false
 }).setView([parseFloat(latitude), parseFloat(longitude)], 14);
-
-
 L.control.zoom({
     position: 'bottomright'
 }).addTo(map);
@@ -17,17 +29,21 @@ L.marker([parseFloat(latitude), parseFloat(longitude)]).addTo(map);
 
 var popup = L.popup()
     .setLatLng([parseFloat(latitude), parseFloat(longitude)])
-            .setContent("companyName")
+    .setContent(companyName)
     .openOn(map);
 
-var markers = [{ "lat":latitude , "long": longitude}];
+var markers = [{ "lat": latitude, "long": longitude }];
 
+for (var i = 0; i < bookingsWithDistance.length; i++) {
 
+    var lati = bookingsWithDistance[i].Latitude;
+    var longi = bookingsWithDistance[i].Longitude;
+
+    markers.push({ "lat": parseFloat(lati), "long": parseFloat(longi) });
+}
 
 for (var j = 0; j < markers.length; j++) {
 
     L.marker([parseFloat(markers[j].lat), parseFloat(markers[j].long)]).addTo(map);
 
 }
-
-
