@@ -9,5 +9,6 @@ namespace SUPEN_Projekt.Logic.ViewModels {
 		public Booking booking { get; set; }
         public DateTime startTime { get; set; }
         public Branch branch { get; set; }
+        public int? branchAId { get; set; }
     }
 }

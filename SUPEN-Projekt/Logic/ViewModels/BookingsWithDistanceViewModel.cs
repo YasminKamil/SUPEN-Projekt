@@ -5,7 +5,7 @@ namespace SUPEN_Projekt.Logic.ViewModels {
 	public class BookingsWithDistanceViewModel {
 		public IEnumerable<BookingSystemAndDistanceViewModel> BookingsWithDistance { get; set; }
 		public BookingSystem SelectedBookingSystem { get; set; }
-     
-        
-	}
+        public int branchAId { get; set; }
+
+    }
 }
