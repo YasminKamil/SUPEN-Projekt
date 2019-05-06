@@ -78,7 +78,7 @@ namespace SUPEN_Projekt.Controllers {
 		}
 
 		[HttpGet]
-		public async Task<ActionResult> BookService(int inBookingSystemId, int inServiceId, string inStartTime) {
+		public async Task<ActionResult> BookService(int inBookingSystemId, int inServiceId, string inStartTime, int? branchAId) {
 			BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
 			HttpClient client = new HttpClient();
     
@@ -90,11 +90,38 @@ namespace SUPEN_Projekt.Controllers {
 			} else {
 				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator");
 			}
+            bsSBVM.branchAId = branchAId ?? default(int);
         bsSBVM.startTime = Convert.ToDateTime(inStartTime);
 			return View(bsSBVM);
 		}
+        [HttpPost]
+        public async Task updateBranchRelationAsync(int inBranchA, int inBranchB)
+        {
+            object branchId = new { branchA = inBranchA, branchB = inBranchB };
+            var url = "http://localhost:55341/api/UpdateBranchRelation/" + inBranchA.ToString() + "/" + inBranchB.ToString();
+            await APIContact(url, branchId);
+        }
 
-		[HttpPost, ActionName("BookService")]
+        public async Task<bool> APIContact(string inUrl, Object inObject)
+        {
+
+            bool works = false;
+            var url = inUrl;
+
+            using (var client = new HttpClient())
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(inObject), Encoding.UTF8, "application/json");
+                var result = await client.PostAsync(url, content);
+
+                if (result.IsSuccessStatusCode)
+                {
+                    works = true;
+                }
+            }
+
+            return works;
+        }
+        [HttpPost, ActionName("BookService")]
 		public async Task<ActionResult> BookServiceConfirmed(int inBookingSystemId, int inServiceId, BookingSystemServiceBookingViewModel model) {
 			try {
 				BookingSystemServiceBookingViewModel getService = new BookingSystemServiceBookingViewModel();
@@ -112,7 +139,9 @@ namespace SUPEN_Projekt.Controllers {
 				model.service = getService.service;
 
 
-				BookingSystemServiceBookingViewModel getSystem = null;
+
+
+                BookingSystemServiceBookingViewModel getSystem = null;
 				HttpClient client1 = new HttpClient();
 
 				var result1 = client1.GetAsync("http://localhost:55341/api/GetBookingSystem/" + inBookingSystemId).Result;
@@ -123,13 +152,33 @@ namespace SUPEN_Projekt.Controllers {
 				}
 				model.bookingSystem = getSystem.bookingSystem;
 
-				var url = "http://localhost:55341/api/PostBooking";
+               
 
-				if(await APIContact(url, model)) {
+                //Om man nyligen har bokat en tjänst läggs det till ett klick på relationen eller så skapas den
+                if (model.branchAId != 0 && model.branchAId != null)
+                {                   
+                    await updateBranchRelationAsync(model.branchAId ?? default(int), model.service.Branch.BranchId);
+                }
+  
+
+
+
+
+
+
+
+
+
+
+
+                model.branchAId = model.service.Branch.BranchId;
+				var url = "http://localhost:55341/api/PostBooking";
+               
+                if (await APIContact(url, model)) {
 					return RedirectToAction("Details",
 						new { inBookingSystemId, inServiceId});
 				}
-
+                
 			} catch (DataException) {
 				ModelState.AddModelError("", "Unable to save changes, please try again");
 			}
@@ -137,21 +186,7 @@ namespace SUPEN_Projekt.Controllers {
 		return View(model);
 		}
 
-		//Ett API-anrop till ApiBooking som serialiserar det använda objektet till JSON
-		public async Task<bool> APIContact(string inUrl, Object inObject) {
-			bool works = false;
-			var url = inUrl;
 
-			using (var client = new HttpClient()) {
-				var content = new StringContent(JsonConvert.SerializeObject(inObject), Encoding.UTF8, "application/json");
-				var result = await client.PostAsync(url, content);
-
-				if (result.IsSuccessStatusCode) {
-					works = true;
-				}
-
-				return works;
-			}
 		}
 	}
-}
+
