@@ -9,48 +9,51 @@
 
         foreach (var booking in i.Bookings.Where(x => x.Available == true))
         {
-            <a href='@Url.Action("BookService","Booking",new {  inBookingSystemId = item.BookingSystem.BookingSystemId,
-                    inServiceId = i.ServiceId, inBookingId = booking.BookingId, inStartTime = booking.StartTime.ToString()})' class='link-icon btn btn-default' style="width:100%; border-radius: 5px; direction:ltr; margin-bottom: 1%; border-color:ThreeDShadow">
+@*<a href='@Url.Action("BookService","Booking",new {  inBookingSystemId = item.BookingSystem.BookingSystemId,
+                    inServiceId = i.ServiceId, inBookingId = booking.BookingId, inStartTime = booking.StartTime.ToString()})' class='link-icon btn btn-default' style="width:100%; border-radius: 5px; direction:ltr; margin-bottom: 1%; border-color:ThreeDShadow">*@
 
-                <h4 class="service-distance-h4">
-                    @i.ServiceName
 
-                    @if (item.Distance < 1000)
-                    {
-                        <b class="list-group-item-text" style="right:2%">  @item.Distance meter</b>
-                    }
-                    else
-                    {
-                        double distance = item.Distance / 1000;
-                        <b class="list-group-item-text" style="right:2%"> @Math.Round(distance, 2) km</b>
-                    }
+    <a href='@Url.Action("BookService","Booking",new {  inBookingSystemId = item.BookingSystem.BookingSystemId, inServiceId = i.ServiceId, inBookingId = booking.BookingId, inStartTime = booking.StartTime.ToString(), branchAId = Model.branchAId})' class='link-icon btn btn-default' style="width:100%; border-radius: 5px; direction:ltr; margin-bottom: 1%; border-color:ThreeDShadow">
 
-                </h4>
-                @Html.DisplayFor(modelItem => item.BookingSystem.CompanyName) <hr style="margin-bottom:2px; margin-top:2px" />
-                <p id="demo" class="list-group-item-text" style="margin-top:5px;"></p>
-                <b>
-                    <span class="glyphicon">&#xe023;</span> @booking.StartTime.ToString("HH:mm") - @booking.EndTime.ToString("HH:mm")
-                    <br />
-                    @i.Duration Minuter
-                </b>
-            </a>
+        <h4 class="service-distance-h4">
+            
 
-        }
+            @if (item.Distance < 1000)
+            {
+                <b class="list-group-item-text" style="right:2%">  @item.Distance meter</b>
+            }
+            else
+            {
+                double distance = item.Distance / 1000;
+                <b class="list-group-item-text" style="right:2%"> @Math.Round(distance, 2) km</b>
+            }
+
+        </h4>
+        @Html.DisplayFor(modelItem => item.BookingSystem.CompanyName) <hr style="margin-bottom:2px; margin-top:2px" />
+        <p id="demo" class="list-group-item-text" style="margin-top:5px;"></p>
+        <b>
+            <span class="glyphicon">&#xe023;</span> @booking.StartTime.ToString("HH:mm") - @booking.EndTime.ToString("HH:mm")
+            <br />
+            @i.Duration Minuter
+        </b>
+    </a>
+
     }
-}
-@{
-    var culture = new CultureInfo("en-US");
-    var latitude = ((decimal)Model.SelectedBookingSystem.Latitude).ToString("G", culture);
-    var longitude = ((decimal)Model.SelectedBookingSystem.Longitude).ToString("G", culture);
-    var companyName = Model.SelectedBookingSystem.CompanyName;
+    }
+    }
+    @{
+        var culture = new CultureInfo("en-US");
+        var latitude = ((decimal)Model.SelectedBookingSystem.Latitude).ToString("G", culture);
+        var longitude = ((decimal)Model.SelectedBookingSystem.Longitude).ToString("G", culture);
+        var companyName = Model.SelectedBookingSystem.CompanyName;
 
-}
-<script type="text/javascript">
+    }
+    <script type="text/javascript">
 
     var bookingsWithDistance = @Html.Raw(Json.Encode(Model.BookingsWithDistance));
     function myFuncWrapper() {
         myFunc('@(latitude)', '@(longitude)', '@(companyName)', bookingsWithDistance );
     }
 
-</script>
-<script src="~/Scripts/leafletjs.js"></script>
+    </script>
+    <script src="~/Scripts/leafletjs.js"></script>
