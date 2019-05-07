@@ -7,7 +7,7 @@
     foreach (var i in item.BookingSystem.Services)
     {
 
-        foreach (var booking in i.Bookings.Where(x => x.Available == true))
+        foreach (var booking in i.Bookings.Where(x => x.Available == true).Take(2))
         {
 
 
