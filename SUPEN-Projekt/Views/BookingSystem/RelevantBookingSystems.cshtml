@@ -8,8 +8,7 @@
     {
 
         foreach (var booking in i.Bookings.Where(x => x.Available == true).Take(1))
-        {
-            
+        {      
 
             <a href='@Url.Action("BookService", "Booking", new
                 {
@@ -23,15 +22,15 @@
 
                 <h4 class="service-distance-h4">
 
-
+                     
                     @if (item.Distance < 1000)
                     {
-                        <b class="list-group-item-text" style="right:2%">  @item.Distance meter</b>
+                    <b class="list-group-item-text" style="right:2%">@i.ServiceName  @item.Distance meter</b>
                     }
                     else
                     {
                         double distance = item.Distance / 1000;
-                        <b class="list-group-item-text" style="right:2%"> @Math.Round(distance, 2) km</b>
+                    <b class="list-group-item-text" style="right:2%">@i.ServiceName @Math.Round(distance, 2) km</b>
                     }
 
                 </h4>
