@@ -301,6 +301,38 @@ namespace SUPEN_Projekt.Repositories {
 			}
 			return branchesInBookingSystem;
 		}
-	}
+
+        public Service GetBookServiceSuggestion(Booking inbooking, string inServiceName)
+        {//den bokningen vi tar in, det är den bokningen som finns i relevantbookingvyn
+
+            var bookingSystems = GetBookingSystems();
+             // alla services från databasen
+            List<Service> formerBookedServices = new List<Service>();//ny service med lista bokningar
+            List<int> mostBookings = new List<int>();
+
+            foreach (var bookingSystem in bookingSystems) {
+
+                foreach (var service in bookingSystem.Services)
+                {//för varje tjänst i från alla tjänster
+                    if (service.Bookings.Count > 0 && service.ServiceName != inServiceName)
+                    {
+
+                        var selectedService = service.Bookings.Select(x => x.UserName == inbooking.UserName);
+                        var numberOfTimes = selectedService.Count();//antal bokningar
+
+                        mostBookings.Add(numberOfTimes);
+
+                        if (selectedService.Count() == mostBookings.Max())
+                        {
+                            formerBookedServices.Add(service);
+                        }
+                    }
+                }
+            }
+            
+            var serviceSuggestion = formerBookedServices.First();
+            return serviceSuggestion;
+        }
+    }
 }
 

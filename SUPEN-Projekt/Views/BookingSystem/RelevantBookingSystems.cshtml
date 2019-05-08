@@ -4,14 +4,22 @@
 @foreach (var item in Model.BookingsWithDistance)
 {
 
-    foreach (var i in item.BookingSystem.Services)
+    foreach (var i in item.BookingSystem.Services.Take(2))
     {
 
-        foreach (var booking in i.Bookings.Where(x => x.Available == true).Take(2))
+        foreach (var booking in i.Bookings.Where(x => x.Available == true).Take(1))
         {
+            
 
-
-            <a href='@Url.Action("BookService","Booking",new {  inBookingSystemId = item.BookingSystem.BookingSystemId, inServiceId = i.ServiceId, inBookingId = booking.BookingId, inStartTime = booking.StartTime.ToString(), branchAId = Model.branchAId})' class='link-icon btn btn-default link-button-bookservice'>
+            <a href='@Url.Action("BookService", "Booking", new
+                {
+                    inBookingSystemId = item.BookingSystem.BookingSystemId,
+                    inServiceId = i.ServiceId,
+                    inBookingId = booking.BookingId,
+                    inStartTime = booking.StartTime.ToString(),
+                    branchAId = Model.branchAId
+                })' 
+               class='link-icon btn btn-default link-button-bookservice'>
 
                 <h4 class="service-distance-h4">
 
@@ -35,7 +43,7 @@
                     @i.Duration Minuter
                 </b>
             </a>
-
+            
         }
     }
 }

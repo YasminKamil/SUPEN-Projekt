@@ -3,8 +3,20 @@
 
 
 @{
-        ViewBag.Title = "Home Page";
-        var dateformat = Model.booking.Date.ToString("d MMMM yyyy", new CultureInfo("sv-SE"));
+    ViewBag.Title = "Home Page";
+    var dateformat = Model.booking.Date.ToString("d MMMM yyyy", new CultureInfo("sv-SE"));
+}
+
+@if (Model.bookings != null)
+{
+    {
+        Html.RenderAction("ServiceSuggestion", "Service", new
+        {
+            inBookingId = Model.booking.BookingId,
+            inServiceName = Model.service.ServiceName,
+            inBookingSystemName = Model.bookingSystem.CompanyName
+        });
+    }
 }
 
 <script type="text/javascript">
@@ -50,33 +62,27 @@
                     <p class="text-left">
                         @Html.DisplayFor(model => model.bookingSystem.CompanyName)<br />@Html.DisplayFor(model => model.bookingSystem.Address), @Html.DisplayFor(model => model.bookingSystem.PostalCode), Tfn @Html.DisplayFor(model => model.bookingSystem.ContactPhone)
                     </p>
-               </div>
-              <div class="booking-confirmation-company"><button type="button" class="btn btn-primary bottom-right" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Klar!</button>
-                
-              </div>
+                </div>
+                <div class="booking-confirmation-company">
+                    <button type="button" class="btn btn-primary bottom-right" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Klar!</button>
+
+                </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div id="mapid" class="booking-confirmation-map" >
-
+<div id="mapid" class="booking-confirmation-map">
 
 </div>
 <div class="booking-relevantbookings-position">
 
 
     @{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
-                            new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId, branchAId = Model.branchAId });
+                              new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId, branchAId = Model.branchAId });
     }
     <button type="button" class="btn btn-info btn-sm" data-toggle="modal" style="border-color:ButtonShadow" data-target="#myModal">Bokningsinformation</button>
 </div>
-
-
-
-@*<script src="~/Scripts/leafletjs.js"></script>*@
-
-
 
 
 
