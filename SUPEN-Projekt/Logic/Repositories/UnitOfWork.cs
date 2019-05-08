@@ -5,6 +5,9 @@ using System.Linq;
 using System.Web;
 
 namespace SUPEN_Projekt.Repositories {
+
+	/*Klassen innefattar operationen spara och med klassen kan man även återanvända koden. Genom att använda UnitOfWork görs allting i en enda transaktion när man 
+	 * ska spara, istället för att göra flera databastransaktioner. */
 	public class UnitOfWork : IUnitOfWork {
 		private readonly ApplicationDbContext _context;
 		public IBookingRepository Bookings { get; private set; }
@@ -12,6 +15,8 @@ namespace SUPEN_Projekt.Repositories {
 		public IServiceRepository Services { get; private set; }
 		public IBranchRepository Branches { get; private set; }
 
+
+		//Sparar alla tillgänliga repositories som finns i systemet i vår ApplicationDbContext
 		public UnitOfWork(ApplicationDbContext context) {
 			_context = context;
 			Bookings = new BookingRepository(_context);
@@ -21,11 +26,12 @@ namespace SUPEN_Projekt.Repositories {
 
 		}
 
+		//Sparar ändringar i databasen
 		public int Complete() {
 			return _context.SaveChanges();
 		}
 
-		// This code added to correctly implement the disposable pattern.
+		//Koden har implementerats för att på ett korrekt sätt kunna genomföra dispose-mönster
 		public void Dispose() {
 			_context.Dispose();
 
