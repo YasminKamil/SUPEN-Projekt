@@ -112,8 +112,8 @@ namespace SUPEN_Projekt.Repositories {
 
             List<clickOfService> ClickOfServices = new List<clickOfService>();
             ClickOfServices = GetClickOfServices(distanceScoreAndBookingSystem, selectedService, totalClicks);
-
-            List<BookingSystem> orderedByPoints = GetBookingSystemsOrderedByPoints( ClickOfServices,  onlyOneOfEachBranch);
+            
+            List<BookingSystem> orderedByPoints = GetBookingSystemsOrderedByPoints(ClickOfServices.OrderByDescending(x => x.score).ToList(),  onlyOneOfEachBranch);
 
             return orderedByPoints;
 		}
@@ -140,7 +140,8 @@ namespace SUPEN_Projekt.Repositories {
             List<clickOfService> clickOfService = new List<clickOfService>();
             foreach (var item in distanceScoreAndBookingSystem)
             {
-                double räknare = item.distanceScore;
+                //Distanspoäng + baspoäng
+                double räknare = item.distanceScore + 5;
 
                 foreach (var service in item.bookingSystemOfInterest.bookingSystem.Services)
                 {
@@ -154,8 +155,8 @@ namespace SUPEN_Projekt.Repositories {
                     
                     clickOfService aObject = new clickOfService();
                     aObject.service = service;
+                    
                     aObject.score = score * räknare;
-                    aObject.score += 5;
                     clickOfService.Add(aObject);
                 }
 
