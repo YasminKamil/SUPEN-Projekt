@@ -155,6 +155,7 @@ namespace SUPEN_Projekt.Repositories {
                     clickOfService aObject = new clickOfService();
                     aObject.service = service;
                     aObject.score = score * räknare;
+                    aObject.score += 5;
                     clickOfService.Add(aObject);
                 }
 
