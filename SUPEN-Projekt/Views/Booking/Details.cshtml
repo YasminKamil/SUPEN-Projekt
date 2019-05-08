@@ -7,7 +7,7 @@
     var dateformat = Model.booking.Date.ToString("d MMMM yyyy", new CultureInfo("sv-SE"));
 }
 
-@if (Model.bookings != null)
+@if (Model.bookings != null && Model.bookings.Count() > 1)
 {
     {
         Html.RenderAction("ServiceSuggestion", "Service", new

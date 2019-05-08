@@ -418,6 +418,7 @@ namespace SUPEN_Projekt.Repositories {
              // alla services från databasen
             List<Service> formerBookedServices = new List<Service>();//ny service med lista bokningar
             List<int> mostBookings = new List<int>();
+            List<Booking> bookings = new List<Booking>();
 
             foreach (var bookingSystem in bookingSystems) {
 
@@ -426,20 +427,24 @@ namespace SUPEN_Projekt.Repositories {
                     if (service.Bookings.Count > 0 && service.ServiceName != inServiceName)
                     {
 
-                        var selectedService = service.Bookings.Select(x => x.UserName == inbooking.UserName);
-                        var numberOfTimes = selectedService.Count();//antal bokningar
+                        bookings = service.Bookings.Where(x => x.UserName == inbooking.UserName).ToList();
+                        var numberOfTimes = bookings.Count();//antal bokningar
 
                         mostBookings.Add(numberOfTimes);
 
-                        if (selectedService.Count() == mostBookings.Max())
+                        if (bookings.Count() > 0)//== mostBookings.Max())
                         {
                             formerBookedServices.Add(service);
                         }
                     }
                 }
             }
+            Service serviceSuggestion = new Service();
+            if(formerBookedServices != null && formerBookedServices.Count() != 0)
+            {
+                serviceSuggestion = formerBookedServices.Where(x => x.Bookings.Count == mostBookings.Max()).Single();
+            }
             
-            var serviceSuggestion = formerBookedServices.First();
             return serviceSuggestion;
         }
     }
