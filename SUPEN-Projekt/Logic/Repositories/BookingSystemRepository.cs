@@ -439,8 +439,13 @@ namespace SUPEN_Projekt.Repositories {
                     }
                 }
             }
+
+            Service serviceSuggestion = new Service();
+            if (formerBookedServices != null&& formerBookedServices.Count() != 0)
+            {
+             serviceSuggestion =  formerBookedServices.First();
+            }
             
-            var serviceSuggestion = formerBookedServices.First();
             return serviceSuggestion;
         }
     }
