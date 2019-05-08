@@ -2,7 +2,7 @@
 
 namespace SUPEN_Projekt.Repositories {
 
-	//Interface på vilka repositories och metoden som UnitOfWork hanterar för att kunna återanvända koden i Controllerna
+	//Interface på vilka repositories och metoden som UnitOfWork hanterar för att kunna återanvända koden i presentationslagret/API:er
 	public interface IUnitOfWork : IDisposable {
 		IBookingRepository Bookings { get; }
 		IBookingSystemRepository BookingSystems { get; }
