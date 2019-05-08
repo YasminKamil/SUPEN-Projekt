@@ -23,7 +23,7 @@ namespace SUPEN_Projekt.Repositories {
 
 			//Service serv = bookingSystem.Services.Single(x => x.ServiceName == name);
 
-			ApplicationDbContext context = new ApplicationDbContext();
+			var context = ApplicationDbContext;
 
 			Booking booking = new Booking();
 			booking.BookingId = context.Bookings.Count();
@@ -39,8 +39,6 @@ namespace SUPEN_Projekt.Repositories {
 
             Add(booking);
 			return booking;
-
-
 	}
 
 		//Skapar en bokning med tillgängliga tider som går att bokas
