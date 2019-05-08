@@ -78,6 +78,8 @@ namespace SUPEN_Projekt.Controllers
                 ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
             }
             bsSBVM.booking = getBookingWithMaxId.booking;
+            bsSBVM.bookings = getBookingWithMaxId.bookings;
+    
 
             return View(bsSBVM);
         }

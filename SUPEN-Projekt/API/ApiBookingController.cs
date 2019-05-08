@@ -38,6 +38,8 @@ namespace SUPEN_Projekt.Controllers
         {
             BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
             bsSBVM.booking = uw.Bookings.Get(inBookingId);
+            bsSBVM.bookings = uw.Bookings.GetAll();
+
             if (bsSBVM == null)
             {
                 return NotFound();
@@ -70,7 +72,7 @@ namespace SUPEN_Projekt.Controllers
         {
             BookingSystemServiceBookingViewModel model = new BookingSystemServiceBookingViewModel();
             var maxId = uw.Bookings.GetBookings();
-            model.booking = maxId.OrderByDescending(i => i.BookingId).Take(1).Single();
+            model.booking = maxId.OrderByDescending(i => i.BookingId).Take(1).Single();          
             return Ok(model);
         }
 
@@ -92,6 +94,7 @@ namespace SUPEN_Projekt.Controllers
 
             return Ok();
         }
+
     }
 }
 

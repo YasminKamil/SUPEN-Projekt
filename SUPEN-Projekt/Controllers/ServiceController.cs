@@ -42,12 +42,30 @@ namespace SUPEN_Projekt.Controllers {
 			} else {
 				ModelState.AddModelError(string.Empty, "Server error. Please contact administrator");
 			}
-            
-
             return View(bsSBVM);
 		}
 
-      
+        public async Task<ActionResult> ServiceSuggestion(int inBookingId, string inServiceName, string inBookingSystemName)
+        {
+            ServiceViewModel serviceViewModel = null;
+            HttpClient client = new HttpClient();
+
+            var result = client.GetAsync("http://localhost:55341/api/GetService/" +
+                inBookingId + "/" + inServiceName + "/" + inBookingSystemName).Result;
+
+            if (result.IsSuccessStatusCode)
+            {
+                serviceViewModel = await result.Content.ReadAsAsync<ServiceViewModel>();
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Server error. Please contact administrator");
+            }
+
+
+
+            return PartialView(serviceViewModel);
+        }
 
 
 

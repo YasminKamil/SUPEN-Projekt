@@ -1,11 +1,11 @@
 ﻿@model SUPEN_Projekt.Logic.ViewModels.BookingSystemServiceBookingViewModel
 <div>
-	<ol class="breadcrumb">
-		<li>
-			@Html.ActionLink("Välj företag", "Index", "BookingSystem")
-		</li>
-		<li><a href='@Url.Action("BookingSystem","BookingSystem",new { id = Model.bookingSystem.BookingSystemId})'>Boka en tjänst</a></li>
-	</ol>
+    <ol class="breadcrumb">
+        <li>
+            @Html.ActionLink("Välj företag", "Index", "BookingSystem")
+        </li>
+        <li><a href='@Url.Action("BookingSystem", "BookingSystem", new { id = Model.bookingSystem.BookingSystemId })'>Boka en tjänst</a></li>
+    </ol>
 </div>
 <link href="~/Content/Site.css" rel="stylesheet" />
 <br />
@@ -13,52 +13,46 @@
 <h2><b>@Model.bookingSystem.CompanyName</b></h2>
 
 <div id="ParentDiv">
-	<div id="firstDiv">
-		<h3><b>@Model.service.ServiceName</b></h3>
+    <div id="firstDiv">
+        <h3><b>@Model.service.ServiceName</b></h3>
 
-		<br />
-		<h4><b>Tid:</b> @Model.service.Duration minuter </h4>
-		<h4><b>Pris:</b> @Model.service.Price SEK (inkl. moms)</h4>
-	</div>
+        <br />
+        <h4><b>Tid:</b> @Model.service.Duration minuter </h4>
+        <h4><b>Pris:</b> @Model.service.Price SEK (inkl. moms)</h4>
+    </div>
+    <div class="panel panel-primary" style="width:30%; height:80%; margin: 1% 7% 1% auto; top: 0; right: 0 ;  display:inline-block">
 
-
-
-	<div class="panel panel-primary" style="width:30%; height:80%; margin: 1% 7% 1% auto; top: 0; right: 0 ;  display:inline-block">
-
-		<div class="panel-body">
-			<br />
-			@Model.bookingSystem.Address
-			<br />
-			@Model.bookingSystem.PostalCode @Model.bookingSystem.City
-			<br />
-			Epost: @Model.bookingSystem.ContactEmail
-			<br />
-			Tel. @Model.bookingSystem.ContactPhone
-			<br />
-		</div>
-	</div>
+        <div class="panel-body">
+            <br />
+            @Model.bookingSystem.Address
+            <br />
+            @Model.bookingSystem.PostalCode @Model.bookingSystem.City
+            <br />
+            Epost: @Model.bookingSystem.ContactEmail
+            <br />
+            Tel. @Model.bookingSystem.ContactPhone
+            <br />
+        </div>
+    </div>
 </div>
-
-
-
-
 <div class="row" style="float:left;">
 
-	<h4><b> <span class="glyphicon">&#xe023;</span> Välj en tid</b></h4>
+    <h4><b> <span class="glyphicon">&#xe023;</span> Välj en tid</b></h4>
+
+    @{
+        int open = 8;
+        decimal inHours = Convert.ToDecimal(Model.service.Duration) / Convert.ToDecimal(60);
+        int iterations = (int)Math.Floor(Convert.ToDecimal(open) / Convert.ToDecimal(inHours));
+        DateTime startTime = DateTime.Today;
+        startTime = startTime.AddHours(8);
+
+        List<DateTime> dt = new List<DateTime>();
 
 
-	@{
-		int open = 8;
-		decimal inHours = Convert.ToDecimal(Model.service.Duration) / Convert.ToDecimal(60);
-		int iterations = (int)Math.Floor(Convert.ToDecimal(open) / Convert.ToDecimal(inHours));
-		DateTime startTime = DateTime.Today;
-		startTime = startTime.AddHours(8);
-
-		List<DateTime> dt = new List<DateTime>();
-
-		for (int i = 0; i < iterations; i++) {
-			DateTime endTime = startTime;
-			endTime = endTime.AddMinutes(Model.service.Duration);
+        for (int i = 0; i < iterations; i++)
+        {
+            DateTime endTime = startTime;
+            endTime = endTime.AddMinutes(Model.service.Duration);
 
 			if (!Model.service.Bookings.Any(x => x.StartTime == startTime)) {
 				@Html.ActionLink(startTime.ToString("HH:mm") + "-" + endTime.ToString("HH:mm"), "BookService", "Booking",
@@ -85,3 +79,4 @@
 
 
 </div>
+@*&& startTime > DateTime.Now*@

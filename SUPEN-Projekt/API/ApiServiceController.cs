@@ -45,5 +45,24 @@ namespace SUPEN_Projekt.Controllers {
 			return Ok(bsSBVM);
 		}
 
-	}
+        [Route("api/GetService/{inBookingId}/{inServiceName}/{inBookingSystemName}")]
+        [HttpGet]
+        public IHttpActionResult GetServiceSuggestion(int inBookingId, string inServiceName, string inBookingSystemName)
+        {
+
+            ServiceViewModel serviceViewModel = new ServiceViewModel();
+            var inBooking = uw.Bookings.Get(inBookingId);
+            var service = uw.BookingSystems.GetBookServiceSuggestion(inBooking, inServiceName);
+            serviceViewModel.serviceName = service.ServiceName;
+            //serviceViewModel.booking = service.Bookings.Where(x => x.Available && x.StartTime > inBooking.EndTime).Single();
+            if (serviceViewModel == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(serviceViewModel);
+
+        }
+
+    }
 }

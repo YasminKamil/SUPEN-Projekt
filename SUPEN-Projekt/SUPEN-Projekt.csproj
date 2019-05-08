@@ -373,6 +373,7 @@
     <Content Include="Views\BookingSystem\BookingSystem.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
     <Content Include="Views\Service\BookService.cshtml" />
+    <Content Include="Views\Service\ServiceSuggestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
