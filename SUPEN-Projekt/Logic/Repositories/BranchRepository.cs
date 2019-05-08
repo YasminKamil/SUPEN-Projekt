@@ -7,6 +7,7 @@ using System.Data.Entity;
 namespace SUPEN_Projekt.Repositories {
 	//Ett repository för metoder som hanterar brancher.
 	public class BranchRepository : Repository<Branch>, IBranchRepository {
+		
 		//Konstruktor med ApplicationDbContext som parametervärde
 		public BranchRepository(ApplicationDbContext context) : base(context) { }
 

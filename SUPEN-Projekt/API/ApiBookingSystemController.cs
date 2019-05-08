@@ -81,17 +81,17 @@ namespace SUPEN_Projekt.Controllers {
 			}
 		}
 
-		//Skapar ett nytt bokningssystem i datakällan
-		[Route("api/PostBookingSystem")]
-		public IHttpActionResult PostBookingSystem(JObject insystem) {
-			if (!ModelState.IsValid) {
-				return BadRequest("Invalid data");
-			}
-			BookingSystemServiceBookingViewModel bsSBVM = JsonConvert
-				.DeserializeObject<BookingSystemServiceBookingViewModel>(insystem.ToString());
-			uw.BookingSystems.AddBookingSystem(bsSBVM.bookingSystem);
-			uw.Complete();
-			return Ok();
-		}
+		////Skapar ett nytt bokningssystem i datakällan
+		//[Route("api/PostBookingSystem")]
+		//public IHttpActionResult PostBookingSystem(JObject insystem) {
+		//	if (!ModelState.IsValid) {
+		//		return BadRequest("Invalid data");
+		//	}
+		//	BookingSystemServiceBookingViewModel bsSBVM = JsonConvert
+		//		.DeserializeObject<BookingSystemServiceBookingViewModel>(insystem.ToString());
+		//	uw.BookingSystems.AddBookingSystem(bsSBVM.bookingSystem);
+		//	uw.Complete();
+		//	return Ok();
+		//}
 	}
 }
