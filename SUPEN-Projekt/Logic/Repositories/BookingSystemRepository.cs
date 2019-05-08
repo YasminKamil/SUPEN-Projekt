@@ -166,7 +166,7 @@ namespace SUPEN_Projekt.Repositories {
 
         private List<distanceScoreAndBookingSystem> GetBookingSystemsWithDistanceScore(List<BookingSystem> onlyOneOfEachBranch, BookingSystem selectedBookingSystem){
 
-            List<BookingSystemOfInterest> bookingSystemsOfInterest = getBookingsWithDistance(onlyOneOfEachBranch, selectedBookingSystem);
+            List<BookingSystemOfInterest> bookingSystemsOfInterest = GetBookingsWithDistance(onlyOneOfEachBranch, selectedBookingSystem);
             int distanceScore = bookingSystemsOfInterest.Count();
 
             List<distanceScoreAndBookingSystem> distanceScoreAndBookingSystem = new List<distanceScoreAndBookingSystem>();
@@ -186,7 +186,7 @@ namespace SUPEN_Projekt.Repositories {
 
 
         private int GetTotalClicksInBranchRelations(List<BookingSystem> onlyOneOfEachBranch, BookingSystem selectedBookingSystem, Service selectedService) {
-            List<BookingSystemOfInterest> bookingSystemsOfInterest = getBookingsWithDistance(onlyOneOfEachBranch, selectedBookingSystem);
+            List<BookingSystemOfInterest> bookingSystemsOfInterest = GetBookingsWithDistance(onlyOneOfEachBranch, selectedBookingSystem);
             BranchRepository branchRepository = new BranchRepository(ApplicationDbContext);
             int totKlick = 0;
 
@@ -216,7 +216,7 @@ namespace SUPEN_Projekt.Repositories {
         }
 
 
-        private List<BookingSystemOfInterest> getBookingsWithDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem)
+        private List<BookingSystemOfInterest> GetBookingsWithDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem)
         {
             List<BookingSystemOfInterest> DistBooking = new List<BookingSystemOfInterest>();
 
