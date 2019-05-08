@@ -16,14 +16,15 @@ namespace SUPEN_Projekt.Repositories {
         }
 
         //Retunerar alla bokningsystem
-        public IEnumerable<BookingSystem> GetBookingSystems() {
+        public IEnumerable<BookingSystem> GetBookingSystems()
+        {
 
-			return ApplicationDbContext.Set<BookingSystem>().Include(i => i.Services.Select(s => s.Branch))
-				.Include(i => i.Services.Select(b => b.Bookings));
-		}
+            return ApplicationDbContext.Set<BookingSystem>().Include(i => i.Services.Select(s => s.Branch).Select(u => u.BranchRelations))
+                .Include(i => i.Services.Select(b => b.Bookings));
+        }
 
-		//Redigerar bokningsystemets information
-		public void EditBookingSystem(BookingSystem bookingSystem) {
+        //Redigerar bokningsystemets information
+        public void EditBookingSystem(BookingSystem bookingSystem) {
 			ApplicationDbContext.Entry(bookingSystem).State = EntityState.Modified;
 			ApplicationDbContext.SaveChanges();
 		}
@@ -78,9 +79,19 @@ namespace SUPEN_Projekt.Repositories {
 			Service service = bookingsystem.Services.Single(x => x.ServiceId == ServiceId);
 			return service;
 		}
+        class distanceScoreAndBookingSystem
+        {
+            public double distanceScore;
+            public BookingSystemOfInterest bookingSystemOfInterest;
+        }
+        public class clickOfService
+        {
+            public double score;
+            public Service service;
+        }
 
 
-		public List<BookingSystem> GetRelevantBookingSystemOnlyWithAvailableTimes(int bookingSystemId, int serviceId, int bookingId) {
+        public List<BookingSystem> GetRelevantBookingSystemOnlyWithAvailableTimes(int bookingSystemId, int serviceId, int bookingId) {
 			BookingSystem selectedBookingSystem = GetBookingSystem(bookingSystemId);
 
 			Service selectedService = ApplicationDbContext.Services.Single(x => x.ServiceId == serviceId);
@@ -91,9 +102,135 @@ namespace SUPEN_Projekt.Repositories {
 			List<BookingSystem> orderedByDistance = OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
 			List<BookingSystem> onlyWithAvailableTimes = GetBookingSystemsWithAvailableBooking(orderedByDistance, booking);
             List<BookingSystem> onlyOneOfEachBranch = GetBookingSystemsWithOnlyOneOfEachBranch(onlyWithAvailableTimes);
-    
-            return onlyOneOfEachBranch;
+
+
+
+            int totalClicks = GetTotalClicksInBranchRelations(onlyOneOfEachBranch, selectedBookingSystem, selectedService);
+
+            List<distanceScoreAndBookingSystem> distanceScoreAndBookingSystem = new List<distanceScoreAndBookingSystem>();
+            distanceScoreAndBookingSystem = GetBookingSystemsWithDistanceScore(onlyOneOfEachBranch, selectedBookingSystem);
+
+            List<clickOfService> ClickOfServices = new List<clickOfService>();
+            ClickOfServices = GetClickOfServices(distanceScoreAndBookingSystem, selectedService, totalClicks);
+
+            List<BookingSystem> orderedByPoints = GetBookingSystemsOrderedByPoints( ClickOfServices,  onlyOneOfEachBranch);
+
+            return orderedByPoints;
 		}
+
+        private List<BookingSystem> GetBookingSystemsOrderedByPoints(List<clickOfService> ClickOfServices, List<BookingSystem> onlyOneOfEachBranch) {
+            List<BookingSystem> orderedByPoints = new List<BookingSystem>();
+
+            foreach (var item in ClickOfServices)
+            {
+                if (onlyOneOfEachBranch.Count() != 0 && !orderedByPoints.Contains(onlyOneOfEachBranch.Single(x => x.Services.Any(y => y.ServiceId == item.service.ServiceId))))
+                {
+                    if (!orderedByPoints.Contains(onlyOneOfEachBranch.Single(x => x.Services.Any(y => y.ServiceId == item.service.ServiceId))))
+                    {
+                    orderedByPoints.Add( onlyOneOfEachBranch.Single(x=> x.Services.Any(y=>y.ServiceId == item.service.ServiceId)));
+                    } 
+                }
+            }
+            return orderedByPoints;
+        }
+        private List<clickOfService> GetClickOfServices(List<distanceScoreAndBookingSystem> distanceScoreAndBookingSystem, Service selectedService, int totKlick)
+        {
+            BranchRepository branchRepository = new BranchRepository(ApplicationDbContext);
+
+            List<clickOfService> clickOfService = new List<clickOfService>();
+            foreach (var item in distanceScoreAndBookingSystem)
+            {
+                double räknare = item.distanceScore;
+
+                foreach (var service in item.bookingSystemOfInterest.bookingSystem.Services)
+                {
+                    double score = 1;
+                    if (selectedService.Branch.BranchRelations.Any(y => y.branchBId2 == service.Branch.BranchId.ToString()))
+                    {
+                    BranchRelation br = selectedService.Branch.BranchRelations.Single(x=>x.branchBId2 == service.Branch.BranchId.ToString());
+                    int klick = br.CountClick;
+                    score += (double)klick/totKlick;
+                    }
+                    
+                    clickOfService aObject = new clickOfService();
+                    aObject.service = service;
+                    aObject.score = score * räknare;
+                    aObject.score += 5;
+                    clickOfService.Add(aObject);
+                }
+
+            }
+
+            return clickOfService;
+        }
+
+        private List<distanceScoreAndBookingSystem> GetBookingSystemsWithDistanceScore(List<BookingSystem> onlyOneOfEachBranch, BookingSystem selectedBookingSystem){
+
+            List<BookingSystemOfInterest> bookingSystemsOfInterest = getBookingsWithDistance(onlyOneOfEachBranch, selectedBookingSystem);
+            int distanceScore = bookingSystemsOfInterest.Count();
+
+            List<distanceScoreAndBookingSystem> distanceScoreAndBookingSystem = new List<distanceScoreAndBookingSystem>();
+            foreach (var bookingSystemOfInterest in bookingSystemsOfInterest)
+            {
+                distanceScoreAndBookingSystem aObject = new distanceScoreAndBookingSystem();
+                aObject.distanceScore = distanceScore;
+                aObject.bookingSystemOfInterest = bookingSystemOfInterest;
+
+                distanceScoreAndBookingSystem.Add(aObject);
+                distanceScore--;
+            }
+
+            return distanceScoreAndBookingSystem;
+        }
+
+
+
+        private int GetTotalClicksInBranchRelations(List<BookingSystem> onlyOneOfEachBranch, BookingSystem selectedBookingSystem, Service selectedService) {
+            List<BookingSystemOfInterest> bookingSystemsOfInterest = getBookingsWithDistance(onlyOneOfEachBranch, selectedBookingSystem);
+            BranchRepository branchRepository = new BranchRepository(ApplicationDbContext);
+            int totKlick = 0;
+
+
+            List<Service> servicesWithRelationToSelectedService = new List<Service>();
+
+            foreach (var bookingSystemOfInterest in bookingSystemsOfInterest)
+            {
+                foreach (var service in bookingSystemOfInterest.bookingSystem.Services)
+                {
+                    if (selectedService.Branch.BranchRelations.Any(x => x.branchBId2 == service.Branch.BranchId.ToString()))
+                    {
+                        servicesWithRelationToSelectedService.Add(service);
+                    }
+                }
+            }
+
+            foreach (var relation in selectedService.Branch.BranchRelations)
+            {
+                if (servicesWithRelationToSelectedService.Any(x=>x.Branch.BranchId.ToString() == relation.branchBId2))
+                {
+                    totKlick += relation.CountClick;
+                }
+            }
+
+            return totKlick;
+        }
+
+
+        private List<BookingSystemOfInterest> getBookingsWithDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem)
+        {
+            List<BookingSystemOfInterest> DistBooking = new List<BookingSystemOfInterest>();
+
+            foreach (var item in inBookingSystems)
+            {
+                DistBooking.Add(new BookingSystemOfInterest(item, GetDistanceTo(inSelectedBookingSystem, item)));
+            }
+            return DistBooking;
+        }
+
+
+
+
+
         /*Returnerar en lista av bookingssystem, där vi endast tar med ett företag av varje branch. Detta för att ex inte visa 10 hotell, 
         utan endast det som är närmst*/
         private List<BookingSystem> GetBookingSystemsWithOnlyOneOfEachBranch(List<BookingSystem> inBookingSystems) {
@@ -155,31 +292,6 @@ namespace SUPEN_Projekt.Repositories {
 			return isCloseEnough;
 		}
 
-		//löser uppgift 2 i kravspecen
-		//public string GetBrachesCount(List<BookingSystem> inBookingSystems)
-		//{
-		//    string branchesGrouped = "";
-		//    List<Branch> t1Branches = new List<Branch>();
-		//    foreach (var item in inBookingSystems)
-		//    {
-		//        List<Branch> t2Branches = new List<Branch>();
-		//        foreach (var y in item.Services)
-		//        {
-		//            if (!t2Branches.Contains(y.Branch))
-		//            {
-		//                t2Branches.Add(y.Branch);
-		//            }
-		//        }
-		//        t1Branches.AddRange(t2Branches);
-		//    }
-
-		//    foreach (var item in t1Branches.GroupBy(x => x.BranchName))
-		//    {
-		//        branchesGrouped += item.Key + " " + item.Count() + "\n";
-		//    }
-		//    return branchesGrouped;
-		//}
-
 		List<BookingSystemOfInterest> DistBooking = new List<BookingSystemOfInterest>();
 
 		//Används för att koppla distans och bokningssystem, utan att behöva ändra i modellen då distansen är olika i varje sökning. 
@@ -191,11 +303,9 @@ namespace SUPEN_Projekt.Repositories {
 				this.distance = distance;
 			}
 		}
-       
 
 		//returnerar endast företag som har lediga tider som börjar strax efter eller slutar en liten stund före bokad tjänst
 		private List<BookingSystem> GetBookingSystemsWithAvailableBooking(List<BookingSystem> inBookingSystems, Booking inSelectedBooking) {
-
 
             int open = 8; 
             foreach (var bookingSystem in inBookingSystems)
@@ -229,7 +339,6 @@ namespace SUPEN_Projekt.Repositories {
 				}
                 }
             }
-
 
             //ordnar så vi inte behöver iterera genom alla objekt. 
             inBookingSystems = inBookingSystems.Where(x => x.Services.Any(y => y.Bookings.Any(z => (inSelectedBooking.EndTime.AddMinutes(35) > z.StartTime && z.StartTime > inSelectedBooking.EndTime.AddMinutes(15)) || (z.EndTime > inSelectedBooking.StartTime.AddMinutes(-35) && z.EndTime < inSelectedBooking.StartTime.AddMinutes(-15))))).ToList();
