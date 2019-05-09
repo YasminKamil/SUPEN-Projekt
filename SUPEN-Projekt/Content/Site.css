@@ -97,7 +97,7 @@ tr:nth-child(even) {
 .company-info-box-2 {
     height: 80%;
     width: 40%;
-    margin: 2% 0% 2% 2%;
+    margin: 2% 0 2% 2%;
     padding: 10px;
     word-wrap: break-word;
     font-size: 90%;
@@ -111,7 +111,7 @@ tr:nth-child(even) {
         padding: 10px;
         word-wrap: break-word;
         font-size: 90%;
-        display: inline-block;
+      
     }
 
     .company-info-box-1 {
