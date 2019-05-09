@@ -392,7 +392,7 @@ namespace SUPEN_Projekt.Repositories {
             Service serviceSuggestion = new Service();
             if(formerBookedServices != null && formerBookedServices.Count() != 0)
             {
-                serviceSuggestion = formerBookedServices.Where(x => x.Bookings.Count == mostBookings.Max()).Single();
+                serviceSuggestion = formerBookedServices.Where(x => x.Bookings.Count == mostBookings.Max()).First();
             }
             
             return serviceSuggestion;
