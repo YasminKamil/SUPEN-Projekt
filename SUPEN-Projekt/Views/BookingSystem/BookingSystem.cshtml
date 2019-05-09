@@ -42,8 +42,8 @@
     {
         foreach (var i in Model.services)
         {
-            <tr>
-                <td style="border-top:none">
+            <tr class="no-Background">
+                <td class="no-Border">
                     <div class="panel panel-primary">
                         <div class="panel-heading">@i.ServiceName </div>
                         <div class="panel-body"><span class="glyphicon">&#xe023;</span>  @i.Duration minuter - @i.Price SEK @Html.ActionLink("Boka", "BookService", "Service", new { inServiceId = i.ServiceId, inBookingSystemId = Model.bookingSystem.BookingSystemId }, new { @class = "btn btn-primary", @style = "float: right" })</div>
@@ -59,10 +59,6 @@
             </tr>
         }
     }
-
-
-
-
 
 </table>
 <div>
