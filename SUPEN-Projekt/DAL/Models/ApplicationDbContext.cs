@@ -13,10 +13,6 @@ namespace SUPEN_Projekt.Models {
 		public DbSet<Branch> Branches { get; set; }
 		public DbSet<Service> Services { get; set; }
         public DbSet<BranchRelation> BranchRelations { get; set; }
-
-        public System.Data.Entity.DbSet<SUPEN_Projekt.Logic.ViewModels.BranchViewModel> BranchViewModels { get; set; }
-
-        public System.Data.Entity.DbSet<SUPEN_Projekt.Logic.ViewModels.BranchesViewModel> BranchesViewModels { get; set; }
     }
 
     public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> {
