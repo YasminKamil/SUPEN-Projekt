@@ -11,18 +11,18 @@ namespace SUPEN_Projekt.Controllers {
 			uw = unitOfWork;
 		}
 
-		//Hämtar alla lagrade Branscher 
-		[Route("api/GetBranches")]
-		[HttpGet]
-		public IHttpActionResult GetBranches() {
-			var Branches = uw.Branches.GetAll();
-			BranchesViewModel list = new BranchesViewModel();
-			list.Branches = Branches;
-			if (list == null) {
-				return NotFound();
-			}
-			return Ok(list);
-		}
+		////Hämtar alla lagrade Branscher 
+		//[Route("api/GetBranches")]
+		//[HttpGet]
+		//public IHttpActionResult GetBranches() {
+		//	var Branches = uw.Branches.GetAll();
+		//	BranchesViewModel list = new BranchesViewModel();
+		//	list.Branches = Branches;
+		//	if (list == null) {
+		//		return NotFound();
+		//	}
+		//	return Ok(list);
+		//}
 
 		//Returnerar alla relationer en branch har till andra brancher
 		[Route("api/GetBranchRelations/{inBookingSystemId}/{inServiceId}/{inBranchId}")]
@@ -54,5 +54,37 @@ namespace SUPEN_Projekt.Controllers {
             uw.Complete();
             return Ok();
         }
+
+        //Returnerar alla relationer en branch har till andra brancher
+        [Route("api/GetBranch/{inBranchId}")]
+        [HttpGet]
+        public IHttpActionResult GetBranch(int inBranchId)
+        {
+            BranchViewModel bVM = new BranchViewModel();
+            bVM.branch = uw.Branches.GetBranch(inBranchId);
+
+            if (bVM == null)
+            {
+                return NotFound();
+            }
+            return Ok(bVM);
+        }
+
+        [Route("api/GetBranches")]
+        [HttpGet]
+        public IHttpActionResult GetBranches()
+        {
+            BranchesViewModel list = new BranchesViewModel();
+            list.Branches = uw.Branches.GetBranches();
+
+            if (list == null)
+            {
+                return NotFound();
+            }
+            return Ok(list);
+        }
+
+ 
+
     }
 }

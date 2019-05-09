@@ -1,0 +1,43 @@
+﻿@model SUPEN_Projekt.Logic.ViewModels.BranchesViewModel
+<link href="~/Content/Site.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Branches";
+}
+<br />
+<br />
+
+@foreach (var branch in Model.Branches.Where(x => x.BranchRelations.Count() != 0))
+{int totalClick = branch.BranchRelations.Sum(x=> x.CountClick);
+<table style="border:solid; width:40%">
+    <tr>
+        <th>
+            <b>@branch.BranchName</b>
+        </th>
+        <th>
+            <b>Klick</b>
+        </th>
+        <th>
+            <b>Bokningsföljd</b>
+        </th>
+    </tr>
+
+    @foreach (var branchRelation in branch.BranchRelations)
+    {
+        double probability = branchRelation.CountClick / (double)totalClick * 100;
+    <tr>
+        <td>
+            @Model.Branches.Single(x => x.BranchId.ToString() == branchRelation.branchBId2).BranchName
+        </td>
+        <td> <b>@branchRelation.CountClick</b> </td>
+
+        <td> <b>@probability.ToString("0.##") %</b> </td>
+
+
+        
+    </tr>
+    }
+</table>
+<br />
+}
+
+

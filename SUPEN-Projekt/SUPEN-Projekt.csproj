@@ -205,6 +205,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="API\ApiBookingController.cs" />
     <Compile Include="API\ApiServiceController.cs" />
+    <Compile Include="Controllers\BranchController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\BookingSystemController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -224,6 +225,7 @@
     <Compile Include="Logic\ViewModels\BookingsViewModel.cs" />
     <Compile Include="Logic\ViewModels\BookingsWithDistanceViewModel.cs" />
     <Compile Include="Logic\ViewModels\BranchesViewModel.cs" />
+    <Compile Include="Logic\ViewModels\BranchViewModel.cs" />
     <Compile Include="Logic\ViewModels\ServicesViewModel.cs" />
     <Compile Include="Logic\ViewModels\BookingSystemsViewModel.cs" />
     <Compile Include="Logic\Repositories\BookingRepository.cs" />
@@ -374,6 +376,8 @@
     <Content Include="Views\Service\Index.cshtml" />
     <Content Include="Views\Service\BookService.cshtml" />
     <Content Include="Views\Service\ServiceSuggestion.cshtml" />
+    <Content Include="Views\Branch\Branch.cshtml" />
+    <Content Include="Views\Branch\Branches.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

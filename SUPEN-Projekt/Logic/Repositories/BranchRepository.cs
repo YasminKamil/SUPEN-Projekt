@@ -72,6 +72,17 @@ namespace SUPEN_Projekt.Repositories {
 		public IEnumerable<BranchRelation> GetBranchRelations(int branchA) {
 			return ApplicationDbContext.Branches.Single(x => x.BranchId == branchA).BranchRelations;
 		}
-	}
+
+        //Retunerar alla bokningssystem finns lagrade
+		public Branch GetBranch(int branchId) {
+            return ApplicationDbContext.Branches.Include(y => y.BranchRelations).Single(x => x.BranchId == branchId);
+        }
+
+        public IEnumerable<Branch> GetBranches()
+        {
+            return ApplicationDbContext.Branches.Include(x => x.BranchRelations);
+        }
+
+    }
 
 }
