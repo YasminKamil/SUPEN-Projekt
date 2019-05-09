@@ -12,5 +12,21 @@
     border-radius: 5px;
     direction: ltr;
     margin-bottom: 1%;
+    float:left;
     border-color: ThreeDShadow;
+}
+
+
+@media only screen and (max-width: 600px) {
+
+    .link-button-bookservice {
+        width: 100%;
+        border-radius: 5px;
+        direction: ltr;
+        
+        border-color: ThreeDShadow;
+   
+    }
+
+
 }
