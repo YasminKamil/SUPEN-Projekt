@@ -4,14 +4,17 @@
 }
 
 .no-Border {
-border:none !important;
+    border: none !important;
 }
+
 .no-Background {
-background:none !important;
+    background: none !important;
 }
+
 .small-margin {
-margin:4px;
+    margin: 4px;
 }
+
 .right-border-gray {
     border-right: outset;
     border-width: thin;
@@ -29,6 +32,7 @@ margin:4px;
 .dl-horizontal dt {
     white-space: normal;
 }
+
 .elementLink {
     display: block;
 }
@@ -44,16 +48,16 @@ textarea {
 
 
 #firstDiv {
-	width: 200px;
-	height: 200px;
-	float: left;
+    width: 200px;
+    height: 200px;
+    float: left;
 }
 
 #secondDiv {
-	width: 200px;
-	height: 400px;
-	float: right;
-	margin-right: 400px;
+    width: 200px;
+    height: 400px;
+    float: right;
+    margin-right: 400px;
 }
 
 table {
@@ -71,4 +75,23 @@ td, th {
 
 tr:nth-child(even) {
     background-color: #dddddd;
+}
+
+.width-wide {
+    width: 45%;
+    min-width: 300px;
+}
+
+@media only screen and (max-width: 600px) {
+    .width-wide {
+        width: 90%;
+        min-width: 300px;
+        padding: 10px;
+        word-wrap: break-word;
+        font-size: 90%;
+    }
+
+    .align-center {
+        margin: auto;
+    }
 }
