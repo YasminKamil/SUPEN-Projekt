@@ -8,9 +8,9 @@
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <h2>@ViewBag.Message</h2>
-<div style="background-color:blue; padding-bottom:0.1%; padding-top:0.1%">
+<div style="background-color:blue; padding-bottom:0.1%; padding-top:0.1%; min-width:310px;">
 
-    <div style="width:20%; height:80%; margin: auto 35% 2% 2%; background-color:transparent; display:inline-block;">
+    <div style="width:20%; height:80%; min-width:100px; margin: auto 35% 2% 2%; background-color:transparent; display:inline-block;">
         
         <div class="panel-body">
          <h4 style="color : white">@Model.bookingSystem.CompanyName </h4>
@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="panel panel-primary" style="width:30%; height:80%; margin: 1% 7% 1% auto; top: 0; right: 0 ;  display:inline-block">
+    <div class="panel panel-primary company-info-box-2 align-center" style="height:80%; ">
         
         <div class="panel-body">
             </br>
@@ -44,7 +44,7 @@
         {
             <tr class="no-Background">
                 <td class="no-Border">
-                    <div class="panel panel-primary">
+                    <div class="panel panel-primary" style="min-width:300px;">
                         <div class="panel-heading">@i.ServiceName </div>
                         <div class="panel-body"><span class="glyphicon">&#xe023;</span>  @i.Duration minuter - @i.Price SEK @Html.ActionLink("Boka", "BookService", "Service", new { inServiceId = i.ServiceId, inBookingSystemId = Model.bookingSystem.BookingSystemId }, new { @class = "btn btn-primary", @style = "float: right" })</div>
                     </div>
@@ -63,7 +63,7 @@
 </table>
 <div>
     <h3> Om oss</h3>
-    <div class="panel panel-primary" style="width:30%">
+    <div class="panel panel-primary" style="width:30%; min-width:200px;">
         <div class="panel-body">@Model.bookingSystem.SystemDescription</div>
     </div>
 </div>
