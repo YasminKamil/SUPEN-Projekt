@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Http;
 using SUPEN_Projekt.Logic.ViewModels;
+using System.Threading.Tasks;
 
 namespace SUPEN_Projekt.Controllers {
 	public class ApiServiceController : ApiController {
@@ -14,13 +15,14 @@ namespace SUPEN_Projekt.Controllers {
 		//Hämtar alla lagrade tjänster 
 		[Route("api/GetServices")]
 		[HttpGet]
-		public IHttpActionResult GetServices() {
-			var services = uw.Services.GetAll();
+		public async Task<IHttpActionResult> GetServices() {
+			var services = await uw.Services.GetAll();
 			ServicesViewModel list = new ServicesViewModel();
 
-			list.services = services;
+			
+				 list.services = services.ToList();
 
-			if (list == null) {
+					if (list == null) {
 				return NotFound();
 			}
 
