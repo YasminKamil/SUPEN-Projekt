@@ -7,7 +7,7 @@
     var dateformat = Model.booking.Date.ToString("d MMMM yyyy", new CultureInfo("sv-SE"));
 }
 
-@if (Model.bookings != null)
+@if (Model.bookings != null && Model.bookings.Count() > 1 && Model.bookings.Where(x => x.BookingId != Model.booking.BookingId).Count() > 1)
 {
     {
         Html.RenderAction("ServiceSuggestion", "Service", new
@@ -22,7 +22,7 @@
 <script type="text/javascript">
     $(window).on('load', function () {
         $('#myModal').modal('show');
-    });
+});
 </script>
 
 <!-- Modal -->

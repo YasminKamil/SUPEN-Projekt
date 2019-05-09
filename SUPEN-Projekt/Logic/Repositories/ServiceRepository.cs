@@ -17,7 +17,6 @@ namespace SUPEN_Projekt.Repositories {
 		}
 
 
-
         //Returnerar den specifika tjänsten
         public Service GetService(int id) {
 			IEnumerable<Service> services = GetServices();
@@ -34,6 +33,29 @@ namespace SUPEN_Projekt.Repositories {
 			service.Bookings.Add(booking);
 
 		}
+
+        public Service GetServiceSuggestion(BookingSystem bookingSystem) {
+
+            List<int> mostBookings = new List<int>();
+            List<Booking> selectedBookings = new List<Booking>();
+            Service selectedService = new Service();
+
+            foreach (var services in bookingSystem.Services) {
+
+                selectedBookings = services.Bookings.Where(x => x.Available == false).ToList();
+                var numberOfTimes = selectedBookings.Count();//antal bokningar
+
+                mostBookings.Add(numberOfTimes);
+            }
+
+            
+            
+                 selectedService = bookingSystem.Services.Where(x => x.Bookings.Count() == mostBookings.Max()).Single();                
+            
+
+            
+            return selectedService;
+        }
 
 		public ApplicationDbContext ApplicationDbContext {
 			get { return Context as ApplicationDbContext; }

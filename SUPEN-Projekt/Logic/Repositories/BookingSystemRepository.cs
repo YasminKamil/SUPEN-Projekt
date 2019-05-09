@@ -366,35 +366,37 @@ namespace SUPEN_Projekt.Repositories {
 		public Service GetBookServiceSuggestion(Booking inbooking, string inServiceName) {
 			//Den bokningen vi tar in, det är den bokningen som finns i relevantbookingvyn
 
-			var bookingSystems = GetBookingSystems();
-			// alla services från databasen
-			List<Service> formerBookedServices = new List<Service>();//ny service med lista bokningar
-			List<int> mostBookings = new List<int>();
+            var bookingSystems = GetBookingSystems();
+             // alla services från databasen
+            List<Service> formerBookedServices = new List<Service>();//ny service med lista bokningar
+            List<int> mostBookings = new List<int>();
+            List<Booking> bookings = new List<Booking>();
 
 			foreach (var bookingSystem in bookingSystems) {
 
 				foreach (var service in bookingSystem.Services) {//för varje tjänst i från alla tjänster
 					if (service.Bookings.Count > 0 && service.ServiceName != inServiceName) {
 
-						var selectedService = service.Bookings.Select(x => x.UserName == inbooking.UserName);
-						var numberOfTimes = selectedService.Count();//antal bokningar
+                        bookings = service.Bookings.Where(x => x.UserName == inbooking.UserName).ToList();
+                        var numberOfTimes = bookings.Count();//antal bokningar
 
 						mostBookings.Add(numberOfTimes);
 
-						if (selectedService.Count() == mostBookings.Max()) {
-							formerBookedServices.Add(service);
-						}
-					}
-				}
-			}
-
-			Service serviceSuggestion = new Service();
-			if (formerBookedServices != null && formerBookedServices.Count() != 0) {
-				serviceSuggestion = formerBookedServices.First();
-			}
-
-			return serviceSuggestion;
-		}
-	}
+                        if (bookings.Count() > 0)//== mostBookings.Max())
+                        {
+                            formerBookedServices.Add(service);
+                        }
+                    }
+                }
+            }
+            Service serviceSuggestion = new Service();
+            if(formerBookedServices != null && formerBookedServices.Count() != 0)
+            {
+                serviceSuggestion = formerBookedServices.Where(x => x.Bookings.Count == mostBookings.Max()).Single();
+            }
+            
+            return serviceSuggestion;
+        }
+    }
 }
 
