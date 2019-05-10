@@ -1,51 +1,52 @@
 ﻿@model SUPEN_Projekt.Logic.ViewModels.BookingsWithDistanceViewModel
 @using System.Globalization;
 
-@foreach (var item in Model.BookingsWithDistance)
-{
-
-    foreach (var i in item.BookingSystem.Services.Take(2))
+    @foreach (var item in Model.BookingsWithDistance)
     {
 
-        foreach (var booking in i.Bookings.Where(x => x.Available == true).Take(1))
-        {      
+        foreach (var i in item.BookingSystem.Services.Take(2))
+        {
 
-            <a href='@Url.Action("BookService", "Booking", new
+            foreach (var booking in i.Bookings.Where(x => x.Available == true).Take(1))
+            {
+
+                <a href='@Url.Action("BookService", "Booking", new
                 {
                     inBookingSystemId = item.BookingSystem.BookingSystemId,
                     inServiceId = i.ServiceId,
                     inBookingId = booking.BookingId,
                     inStartTime = booking.StartTime.ToString(),
                     branchAId = Model.branchAId
-                })' 
-               class='link-icon btn btn-default link-button-bookservice'>
+                })'
+                   class='link-icon btn btn-default link-button-bookservice'>
 
-                <h4 class="service-distance-h4">
+                    <h4 class="service-distance-h4">
 
-                     
-                    @if (item.Distance < 1000)
-                    {
-                    <b class="list-group-item-text" style="right:2%">@i.ServiceName  @item.Distance meter</b>
-                    }
-                    else
-                    {
-                        double distance = item.Distance / 1000;
-                    <b class="list-group-item-text" style="right:2%">@i.ServiceName @Math.Round(distance, 2) km</b>
-                    }
 
-                </h4>
-                @Html.DisplayFor(modelItem => item.BookingSystem.CompanyName) <hr style="margin-bottom:2px; margin-top:2px" />
-                <p id="demo" class="list-group-item-text" style="margin-top:5px;"></p>
-                <b>
-                    <span class="glyphicon">&#xe023;</span> @booking.StartTime.ToString("HH:mm") - @booking.EndTime.ToString("HH:mm")
-                    <br />
-                    @i.Duration Minuter
-                </b>
-            </a>
-            
+                        @if (item.Distance < 1000)
+                        {
+                            <b class="list-group-item-text" style="right:2%">@i.ServiceName  @item.Distance meter</b>
+                        }
+                        else
+                        {
+                            double distance = item.Distance / 1000;
+                            <b class="list-group-item-text" style="right:2%">@i.ServiceName @Math.Round(distance, 2) km</b>
+                        }
+                    </h4>
+                    @Html.DisplayFor(modelItem => item.BookingSystem.CompanyName) <hr style="margin-bottom:2px; margin-top:2px" />
+                    <p id="demo" class="list-group-item-text" style="margin-top:5px;"></p>
+                    <b>
+                        <span class="glyphicon">&#xe023;</span> @booking.StartTime.ToString("HH:mm") - @booking.EndTime.ToString("HH:mm")
+                        <br />
+                        @i.Duration Minuter
+                    </b>
+                </a>
+
+            }
         }
     }
-}
+
+
 @{
     var culture = new CultureInfo("en-US");
     var latitude = ((decimal)Model.SelectedBookingSystem.Latitude).ToString("G", culture);

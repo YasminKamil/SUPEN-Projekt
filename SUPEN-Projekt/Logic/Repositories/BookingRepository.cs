@@ -1,6 +1,9 @@
 ﻿using SUPEN_Projekt.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace SUPEN_Projekt.Repositories {
 	//Ett repository för metoder som hanterar bokningar.
@@ -16,12 +19,12 @@ namespace SUPEN_Projekt.Repositories {
 		}
 
 		//Returnerar alla bokningar som är lagrade i databasen
-		public IEnumerable<Booking> GetBookings() {
-			return GetAll(); ;
+		public async Task<IEnumerable<Booking>> GetBookings() {
+			return await GetAll(); 
 		}
 
 		//Skapar ett nytt bokningsobjekt
-		public Booking CreateBooking(Booking inBooking) {
+		public async Task<Booking>CreateBooking(Booking inBooking) {
 			//Instansierar ett bokningsobjekt
 			Booking booking = new Booking();
 
@@ -35,9 +38,10 @@ namespace SUPEN_Projekt.Repositories {
 			booking.EndTime = inBooking.EndTime;
 			booking.Date = inBooking.Date;
 
+			
 			//Sparar bokningen i databasen
 			Add(booking);
-			return booking;
+			return await Task.FromResult(booking);
 		}
 
         public Booking GetServiceSuggestionBookings(Service inService, Booking inBooking)

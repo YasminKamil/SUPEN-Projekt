@@ -5,6 +5,9 @@ using SUPEN_Projekt.Repositories;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SUPEN_Projekt.Logic.ViewModels;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SUPEN_Projekt.Controllers {
 	public class ApiBookingSystemController : ApiController {
@@ -17,11 +20,14 @@ namespace SUPEN_Projekt.Controllers {
 		//Hämtar alla lagrade bokningsystem
 		[Route("api/GetSystems")]
 		[HttpGet]
-		public IHttpActionResult GetSystems() {
+		public async Task<IHttpActionResult> GetSystems() {
+			//var bookingsystems = uw.BookingSystems.GetAll();
 
-			var bookingsystems = uw.BookingSystems.GetAll();
+			//IEnumerable<BookingSystemsViewModel> enumerable = Enumerable.Range(1, 300);
+			//List<BookingSystemsViewModel> asList = enumerable.ToList();
+
 			BookingSystemsViewModel list = new BookingSystemsViewModel();
-			list.bookingSystems = bookingsystems;
+			list.bookingSystems = await uw.BookingSystems.GetAll();
 			if (list == null) {
 				return NotFound();
 			}

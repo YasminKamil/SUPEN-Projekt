@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Http;
 using SUPEN_Projekt.Logic.ViewModels;
+using System.Threading.Tasks;
 
 namespace SUPEN_Projekt.Controllers
 {
@@ -14,20 +15,19 @@ namespace SUPEN_Projekt.Controllers
             uw = unitOfWork;
         }
 
-        //Hämtar alla lagrade tjänster 
-        [Route("api/GetServices")]
-        [HttpGet]
-        public IHttpActionResult GetServices()
-        {
-            var services = uw.Services.GetAll();
-            ServicesViewModel list = new ServicesViewModel();
+		//Hämtar alla lagrade tjänster 
+		[Route("api/GetServices")]
+		[HttpGet]
+		public async Task<IHttpActionResult> GetServices() {
+			var services = await uw.Services.GetAll();
+			ServicesViewModel list = new ServicesViewModel();
 
-            list.services = services;
+			
+				 list.services = services.ToList();
 
-            if (list == null)
-            {
-                return NotFound();
-            }
+					if (list == null) {
+				return NotFound();
+			}
 
             return Ok(list);
         }
