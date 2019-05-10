@@ -43,5 +43,31 @@ namespace SUPEN_Projekt.Repositories {
 			Add(booking);
 			return await Task.FromResult(booking);
 		}
-	}
+
+        public Booking GetServiceSuggestionBookings(Service inService, Booking inBooking)
+        {
+            List<Booking> availableBookings = new List<Booking>();
+            Booking serviceSuggestionBooking = new Booking();
+
+            if (inService.Bookings.Count > 0)
+            {
+                foreach (var booking in inService.Bookings)
+                {
+                    if (booking.Available == true)
+                        //booking.StartTime > inBooking.EndTime.AddMinutes(20) && 
+                        //booking.EndTime.AddMinutes(20) < inBooking.StartTime)
+
+                    {
+                        availableBookings.Add(booking);
+                    }
+                    
+                }
+
+                serviceSuggestionBooking = availableBookings.First();
+                //serviceSuggestion = bookingSystem.Services.Where(x => x.Bookings.Count == mostBookings.Max()).First();
+            }
+
+            return serviceSuggestionBooking;
+        }
+    }
 }

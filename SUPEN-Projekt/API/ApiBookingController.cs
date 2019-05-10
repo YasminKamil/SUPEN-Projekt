@@ -38,7 +38,8 @@ namespace SUPEN_Projekt.Controllers
         public async  Task<IHttpActionResult> GetBooking(int inBookingId)
         {
             BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
-            bsSBVM.booking = uw.Bookings.Get(inBookingId);
+            bsSBVM.booking = uw.Bookings.Get(inBookingId); 
+            bsSBVM.bookingSystems =  await uw.BookingSystems.GetAll();
             bsSBVM.bookings = await uw.Bookings.GetAll();
 
             if (bsSBVM == null)

@@ -4,13 +4,16 @@ using System.Web.Http;
 using SUPEN_Projekt.Logic.ViewModels;
 using System.Threading.Tasks;
 
-namespace SUPEN_Projekt.Controllers {
-	public class ApiServiceController : ApiController {
-		IUnitOfWork uw;
+namespace SUPEN_Projekt.Controllers
+{
+    public class ApiServiceController : ApiController
+    {
+        IUnitOfWork uw;
 
-		public ApiServiceController(IUnitOfWork unitOfWork) {
-			uw = unitOfWork;
-		}
+        public ApiServiceController(IUnitOfWork unitOfWork)
+        {
+            uw = unitOfWork;
+        }
 
 		//Hämtar alla lagrade tjänster 
 		[Route("api/GetServices")]
@@ -26,45 +29,57 @@ namespace SUPEN_Projekt.Controllers {
 				return NotFound();
 			}
 
-			return Ok(list);
-		}
+            return Ok(list);
+        }
 
-		//Hämtar den specifika tjänsten i bokningsystemet som är lagrad
-		[Route("api/GetService/{inBookingSystemId}/{inServiceId}")]
-		[HttpGet]
-		public IHttpActionResult GetService(int inBookingSystemId, int inServiceId) {
-
-			var bs = uw.BookingSystems.GetBookingSystem(inBookingSystemId);
-			BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
-
-			bsSBVM.bookingSystem = bs;
-			bsSBVM.service = bsSBVM.bookingSystem.Services.Single(x => x.ServiceId == inServiceId);
-           
-			if (bsSBVM == null) {
-				return NotFound();
-			}
-
-			return Ok(bsSBVM);
-		}
-
-        [Route("api/GetService/{inBookingId}/{inServiceName}/{inBookingSystemName}")]
+        //Hämtar den specifika tjänsten i bokningsystemet som är lagrad
+        [Route("api/GetService/{inBookingSystemId}/{inServiceId}")]
         [HttpGet]
-        public IHttpActionResult GetServiceSuggestion(int inBookingId, string inServiceName, string inBookingSystemName)
+        public IHttpActionResult GetService(int inBookingSystemId, int inServiceId)
         {
 
+            var bs = uw.BookingSystems.GetBookingSystem(inBookingSystemId);
+            BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
+
+            bsSBVM.bookingSystem = bs;
+            bsSBVM.service = bsSBVM.bookingSystem.Services.Single(x => x.ServiceId == inServiceId);
+
+            if (bsSBVM == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(bsSBVM);
+        }
+
+        [Route("api/GetService/{inBookingId}/{inServiceName}/{inBookingSystemId}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetServiceSuggestion(int inBookingId, string inServiceName, int inBookingSystemId)
+        {
             ServiceViewModel serviceViewModel = new ServiceViewModel();
+
             var inBooking = uw.Bookings.Get(inBookingId);
-            var service = uw.BookingSystems.GetBookServiceSuggestion(inBooking, inServiceName);
+            var bookingSystems = await uw.BookingSystems.GetAll();
+
+            var bookingSystem = uw.BookingSystems.GetBookServiceSuggestion(inBooking, inServiceName, inBookingSystemId);
+            var service = uw.Services.GetServiceSuggestion(bookingSystem);
+            var booking = uw.BookingSystems.GetServiceSuggestionBookings(bookingSystems.ToList(), inBooking);
+            
+            serviceViewModel.bookingSystemName = bookingSystem.CompanyName;
             serviceViewModel.serviceName = service.ServiceName;
-            //serviceViewModel.booking = service.Bookings.Where(x => x.Available && x.StartTime > inBooking.EndTime).Single();
+            serviceViewModel.startTime = booking.StartTime;
+            serviceViewModel.endTime = booking.EndTime;
+            serviceViewModel.bookingSystemId = bookingSystem.BookingSystemId;
+            serviceViewModel.serviceId = service.ServiceId;
+            serviceViewModel.branchAId = service.Branch.BranchId;
+            serviceViewModel.bookingId = booking.BookingId;
+
             if (serviceViewModel == null)
             {
                 return NotFound();
             }
 
             return Ok(serviceViewModel);
-
         }
-
     }
 }

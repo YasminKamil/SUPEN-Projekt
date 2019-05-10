@@ -79,6 +79,7 @@ namespace SUPEN_Projekt.Controllers
             }
             bsSBVM.booking = getBookingWithMaxId.booking;
             bsSBVM.bookings = getBookingWithMaxId.bookings;
+            bsSBVM.bookingSystems = getBookingWithMaxId.bookingSystems;
     
 
             return View(bsSBVM);

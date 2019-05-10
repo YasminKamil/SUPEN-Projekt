@@ -14,6 +14,7 @@ namespace SUPEN_Projekt.Logic.ViewModels {
         public Branch branch { get; set; }
         public int? branchAId { get; set; }
         public IEnumerable<Booking> bookings { get; set; }
+        public IEnumerable<BookingSystem> bookingSystems { get; set; }
 
     }  
 }
