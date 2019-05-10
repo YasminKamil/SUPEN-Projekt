@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Device.Location;
+using System.Threading.Tasks;
+
 
 namespace SUPEN_Projekt.Repositories
 {
@@ -21,18 +23,18 @@ namespace SUPEN_Projekt.Repositories
         }
 
         //Retunerar alla bokningssystem finns lagrade
-        public IEnumerable<BookingSystem> GetBookingSystems()
+        public async Task<IEnumerable<BookingSystem>> GetBookingSystems()
         {
 
-            return ApplicationDbContext.Set<BookingSystem>().Include(i => i.Services.Select(s => s.Branch).Select(u => u.BranchRelations))
-                .Include(i => i.Services.Select(b => b.Bookings));
+            return await ApplicationDbContext.Set<BookingSystem>().Include(i => i.Services.Select(s => s.Branch).Select(u => u.BranchRelations))
+                .Include(i => i.Services.Select(b => b.Bookings)).ToListAsync();
         }
 
         //Returnerar det specifika bokningssystemet
-        public BookingSystem GetBookingSystem(int id)
+        public async Task<BookingSystem> GetBookingSystem(int id)
         {
             //Hämtar först alla bokningssystem som är lagrade
-            IEnumerable<BookingSystem> listbookingsystems = GetBookingSystems();
+            IEnumerable<BookingSystem> listbookingsystems = await GetBookingSystems();
 
             //Hämtar ut ett system genom att konrollera att parametervärdet stämmer överens med id:et på bokningssystemet som man försöker hämta
             BookingSystem bookingSystem = listbookingsystems.Single(x => x.BookingSystemId == id);
@@ -40,9 +42,9 @@ namespace SUPEN_Projekt.Repositories
         }
 
         //Returnerar tjänsten för bokningsystemet
-        public Service GetBookingSystemService(int id, int ServiceId)
+        public async Task<Service> GetBookingSystemService(int id, int ServiceId)
         {
-            BookingSystem bookingsystem = Get(id);
+            BookingSystem bookingsystem = await Get(id);
             Service service = bookingsystem.Services.Single(x => x.ServiceId == ServiceId);
             return service;
         }
@@ -59,15 +61,15 @@ namespace SUPEN_Projekt.Repositories
         }
 
         //Hämtar relevanta bokningssystem som endast har lediga tider
-        public List<BookingSystem> GetRelevantBookingSystemOnlyWithAvailableTimes(int bookingSystemId, int serviceId, int bookingId)
+        public async Task <List<BookingSystem>> GetRelevantBookingSystemOnlyWithAvailableTimes(int bookingSystemId, int serviceId, int bookingId)
         {
-            BookingSystem selectedBookingSystem = GetBookingSystem(bookingSystemId);
+            BookingSystem selectedBookingSystem = await GetBookingSystem(bookingSystemId);
             Service selectedService = ApplicationDbContext.Services.Single(x => x.ServiceId == serviceId);
             Booking booking = ApplicationDbContext.Bookings.Single(x => x.BookingId == bookingId);
 
             /*Skapar listor på bokningssystem inom ett visst avstånd, inom andra branscher, ordnade enligt distansen,
 			 med endast lediga tider och hämtar endast en från varje bransch*/
-            List<BookingSystem> bookingSystemsInRange = GetBookingSystemsInRange(selectedBookingSystem);
+            List<BookingSystem> bookingSystemsInRange = await GetBookingSystemsInRange(selectedBookingSystem);
             List<BookingSystem> bookingSystemsInOtherBranches = GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
             List<BookingSystem> orderedByDistance = OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
             List<BookingSystem> onlyWithAvailableTimes = GetBookingSystemsWithAvailableBooking(orderedByDistance, booking);
@@ -239,18 +241,20 @@ namespace SUPEN_Projekt.Repositories
         }
 
         //Returnerar bokningsystem inom en viss distans inom vald stad//ApplicationDbContext.BookingSystems
-        private List<BookingSystem> GetBookingSystemsInRange(BookingSystem inSelectedBookingSystem)
+        private async Task<List<BookingSystem>> GetBookingSystemsInRange(BookingSystem inSelectedBookingSystem)
         {
-            var companiesInSelectedCity = GetBookingSystems().Where(x => x.City.ToLower() == inSelectedBookingSystem.City.ToLower()
-            && x.CompanyName != inSelectedBookingSystem.CompanyName);
+			var companiesInSelectedCity = await GetBookingSystems();
+			companiesInSelectedCity.Where(x => x.City.ToLower() == inSelectedBookingSystem.City.ToLower()
+		   && x.CompanyName != inSelectedBookingSystem.CompanyName);
 
-            List<BookingSystem> companiesInRange = new List<BookingSystem>();
+
+			List<BookingSystem> companiesInRange = new List<BookingSystem>();
 
             foreach (var item in companiesInSelectedCity)
             {
                 if (InDistance(inSelectedBookingSystem.Longitude, inSelectedBookingSystem.Latitude, item.Longitude, item.Latitude, 5000))
                 {
-                    companiesInRange.Add(item);
+                     companiesInRange.Add(item);
                     Console.WriteLine(item.CompanyName);
                 }
             }
@@ -420,13 +424,14 @@ namespace SUPEN_Projekt.Repositories
             return branchesInBookingSystem;
         }
 
-        public BookingSystem GetBookServiceSuggestion(Booking inBooking, string inServiceName, int inBookingSystemId)
+        public async Task <BookingSystem> GetBookServiceSuggestion(Booking inBooking, string inServiceName, int inBookingSystemId)
         {
             //Den bokningen vi tar in, det är den bokningen som finns i relevantbookingvyn
-            var inBookingSystem = Get(inBookingSystemId);
-            var bookingSystemsInCity = GetBookingSystemsInRange(inBookingSystem);
-            // alla services från databasen
-            List<Service> formerBookedServices = new List<Service>();//ny service med lista bokningar
+            var inBookingSystem = await Get(inBookingSystemId);
+            var bookingSystemsInCity = await GetBookingSystemsInRange(inBookingSystem);
+			
+			// alla services från databasen
+			List<Service> formerBookedServices = new List<Service>();//ny service med lista bokningar
             List<int> mostBookings = new List<int>();
             List<Booking> bookings = new List<Booking>();
             List<BookingSystem> otherBookingSystems = new List<BookingSystem>();
