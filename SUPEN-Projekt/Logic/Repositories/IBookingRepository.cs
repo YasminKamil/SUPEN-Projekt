@@ -9,9 +9,9 @@ namespace SUPEN_Projekt.Repositories {
 		//Booking CreateBooking(Booking inBooking);
 		//IEnumerable<Booking> GetBookings();
 		Task<IEnumerable<Booking>> GetBookings();
-	}
-		Booking CreateBooking(Booking inBooking);
-		IEnumerable<Booking> GetBookings();
+	
+		//Booking CreateBooking(Booking inBooking);
+		//IEnumerable<Booking> GetBookings();
         Booking GetServiceSuggestionBookings(Service inService, Booking inBooking);
 
     }

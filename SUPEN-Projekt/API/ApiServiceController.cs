@@ -54,16 +54,16 @@ namespace SUPEN_Projekt.Controllers
 
         [Route("api/GetService/{inBookingId}/{inServiceName}/{inBookingSystemId}")]
         [HttpGet]
-        public IHttpActionResult GetServiceSuggestion(int inBookingId, string inServiceName, int inBookingSystemId)
+        public async Task<IHttpActionResult> GetServiceSuggestion(int inBookingId, string inServiceName, int inBookingSystemId)
         {
             ServiceViewModel serviceViewModel = new ServiceViewModel();
 
             var inBooking = uw.Bookings.Get(inBookingId);
-            var bookingSystems = uw.BookingSystems.GetAll().ToList();
+            var bookingSystems = await uw.BookingSystems.GetAll();
 
             var bookingSystem = uw.BookingSystems.GetBookServiceSuggestion(inBooking, inServiceName, inBookingSystemId);
             var service = uw.Services.GetServiceSuggestion(bookingSystem);
-            var booking = uw.BookingSystems.GetServiceSuggestionBookings(bookingSystems, inBooking);
+            var booking = uw.BookingSystems.GetServiceSuggestionBookings(bookingSystems.ToList(), inBooking);
 
             serviceViewModel.bookingSystemName = bookingSystem.CompanyName;
             serviceViewModel.serviceName = service.ServiceName;
