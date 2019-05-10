@@ -1,19 +1,26 @@
 ﻿@model SUPEN_Projekt.Logic.ViewModels.ServiceViewModel
-  
+
 
 @{
     ViewBag.Title = "ServiceSuggestion";
 }
 @if (Model.serviceName != null)
 {
+    <a href='@Url.Action("BookService", "Booking", new
+                {
+                    inBookingSystemId = Model.bookingSystemId,
+                    inServiceId = Model.serviceId,
+                    inBookingId = Model.bookingId,
+                    inStartTime = Model.startTime.ToString(),
+                    branchAId = Model.branchAId
+                })' class='link-icon btn btn-default link-button-bookservice-suggestion'>
+    <div class ="list-group transbox">
+        <div class="list-group-item">
+            <h4 class="list-group-item-text"><strong class="list-group-item-text" style="right:2%; margin: 2%; font: bold">Vill du boka?</strong></h4>
 
-    <div class="list-group service-distance-h4">
-        <a href="#" class="list-group-item">
-            <h5 class="list-group-item-text text-capitalize"><strong class="list-group-item-text" style="right:2%">@Html.DisplayFor(model => model.bookingSystemName)</strong></h5>
-            <p class="list-group-item-text">@Html.DisplayFor(model => model.serviceName)</p>
-            <p class="list-group-item-text">  @Model.startTime.ToString("HH:mm") -   @Model.endTime.ToString("HH:mm")</p>
-        </a>
-      
+            <p class="list-group-item-text">@Html.DisplayFor(model => model.serviceName): @Model.startTime.ToString("HH:mm") - @Model.endTime.ToString("HH:mm")</p> <br />
+            <p class="list-group-item-text">@Html.DisplayFor(model => model.bookingSystemName)</p>
+        </div>
     </div>
-
+    </a>
 }                     

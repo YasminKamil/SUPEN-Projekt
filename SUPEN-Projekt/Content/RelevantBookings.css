@@ -16,16 +16,49 @@
     border-color: ThreeDShadow;
 }
 
+.link-button-bookservice-suggestion {
+    width: 100%;
+    border-radius: 5px;
+    direction: ltr;
+    margin-bottom: 1%;
+    float: left;
+    border-color: ThreeDShadow;
+    background-color: burlywood;
+}
+
+.transbox {
+    /*background-color: transparent;*/
+    background-color: #ffffff;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-right: 20%;
+    margin-left: 20%;
+}
+
+    .transbox p{
+        font-weight: bold;
+        color: #000000;
+    }
+
 
 @media only screen and (max-width: 600px) {
 
     .link-button-bookservice {
         width: 100%;
         border-radius: 5px;
-        direction: ltr;
-        
+        direction: ltr;       
         border-color: ThreeDShadow;
    
+    }
+
+    .link-button-bookservice-suggestion {
+        width: 100%;
+        border-radius: 5px;
+        direction: ltr;
+        border-color: ThreeDShadow;
+        background-color: aqua;
     }
 
 

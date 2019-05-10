@@ -64,11 +64,15 @@ namespace SUPEN_Projekt.Controllers
             var bookingSystem = uw.BookingSystems.GetBookServiceSuggestion(inBooking, inServiceName, inBookingSystemId);
             var service = uw.Services.GetServiceSuggestion(bookingSystem);
             var booking = uw.BookingSystems.GetServiceSuggestionBookings(bookingSystems.ToList(), inBooking);
-
+            
             serviceViewModel.bookingSystemName = bookingSystem.CompanyName;
             serviceViewModel.serviceName = service.ServiceName;
             serviceViewModel.startTime = booking.StartTime;
             serviceViewModel.endTime = booking.EndTime;
+            serviceViewModel.bookingSystemId = bookingSystem.BookingSystemId;
+            serviceViewModel.serviceId = service.ServiceId;
+            serviceViewModel.branchAId = service.Branch.BranchId;
+            serviceViewModel.bookingId = booking.BookingId;
 
             if (serviceViewModel == null)
             {
