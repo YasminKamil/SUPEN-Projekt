@@ -6,5 +6,7 @@ namespace SUPEN_Projekt.Repositories {
 	public interface IBookingRepository : IRepository<Booking> {
 		Booking CreateBooking(Booking inBooking);
 		IEnumerable<Booking> GetBookings();
-	}
+        Booking GetServiceSuggestionBookings(Service inService, Booking inBooking);
+
+    }
 }

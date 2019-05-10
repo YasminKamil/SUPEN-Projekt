@@ -7,17 +7,7 @@
     var dateformat = Model.booking.Date.ToString("d MMMM yyyy", new CultureInfo("sv-SE"));
 }
 
-@if (Model.bookings != null && Model.bookings.Count() > 1 && Model.bookings.Where(x => x.BookingId != Model.booking.BookingId).Count() > 1)
-{
-    {
-        Html.RenderAction("ServiceSuggestion", "Service", new
-        {
-            inBookingId = Model.booking.BookingId,
-            inServiceName = Model.service.ServiceName,
-            inBookingSystemName = Model.bookingSystem.CompanyName
-        });
-    }
-}
+
 
 <script type="text/javascript">
     $(window).on('load', function () {
@@ -53,7 +43,17 @@
                         <div class="col-lg-2" style="background-color:white">
                         </div>
                         <div class="row"></div>
-
+                        @if (Model.bookings != null && Model.bookings.Count() > 1 && Model.bookings.Where(x => x.BookingId != Model.booking.BookingId).Count() > 1)
+{
+    {
+        Html.RenderAction("ServiceSuggestion", "Service", new
+        {
+            inBookingId = Model.booking.BookingId,
+            inServiceName = Model.service.ServiceName,
+            inBookingSystemName = Model.bookingSystem.CompanyName
+        });
+    }
+}
                     </div>
                 </div>
             </div>

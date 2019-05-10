@@ -11,8 +11,9 @@ namespace SUPEN_Projekt.Logic.ViewModels {
 
     public class ServiceViewModel {
         public int Id { get; set; }
-        public Booking booking { get; set; }
         public string serviceName { get; set; }
         public string bookingSystemName { get; set; }
+        public DateTime startTime { get; set; }
+        public DateTime endTime { get; set; }
     }
 }

@@ -1,54 +1,19 @@
 ﻿@model SUPEN_Projekt.Logic.ViewModels.ServiceViewModel
+  
 
 @{
     ViewBag.Title = "ServiceSuggestion";
 }
+@if (Model.serviceName != null)
+{
 
-<script type="text/javascript">
-    $(window).on('load', function () {
-        $('#myModal1').modal('show');
-    });
-</script>
+    <div class="list-group service-distance-h4">
+        <a href="#" class="list-group-item">
+            <h5 class="list-group-item-text text-capitalize"><strong class="list-group-item-text" style="right:2%">@Html.DisplayFor(model => model.bookingSystemName)</strong></h5>
+            <p class="list-group-item-text">@Html.DisplayFor(model => model.serviceName)</p>
+            <p class="list-group-item-text">  @Model.startTime.ToString("HH:mm") -   @Model.endTime.ToString("HH:mm")</p>
+        </a>
+      
+    </div>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Vill du boka @Model.serviceName?</h4>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <div class=" row"></div>
-                    <div class="row">
-                        <div>
-                            <div class="list-group">
-                                <a href="#" class="list-group-item">
-                                    <h5 class="list-group-item-text text-capitalize"><strong>@Html.DisplayFor(model => model.booking.Date)</strong></h5>
-                                    <p class="list-group-item-text">@Html.DisplayFor(model => model.booking.StartTime)</p>
-                                    <p class="list-group-item-text">@Html.DisplayFor(model => model.booking.EndTime)</p>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-2" style="background-color:white">
-                        </div>
-                        <div class="row"></div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                @*<div class="booking-confirmation-details">
-                    <p class="text-left">
-                        @Html.DisplayFor(model => model.bookingSystem.CompanyName)<br />@Html.DisplayFor(model => model.bookingSystem.Address), @Html.DisplayFor(model => model.bookingSystem.PostalCode), Tfn @Html.DisplayFor(model => model.bookingSystem.ContactPhone)
-                    </p>
-                </div>*@
-                <div class="booking-confirmation-company">
-                    <button type="button" class="btn btn-primary bottom-right" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Stäng!</button>
-
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+}                     

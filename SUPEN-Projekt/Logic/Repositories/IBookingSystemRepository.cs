@@ -8,6 +8,8 @@ namespace SUPEN_Projekt.Repositories {
 		IEnumerable<BookingSystem> GetBookingSystems();
 		BookingSystem GetBookingSystem(int id);
 		List<BookingSystem> GetRelevantBookingSystemOnlyWithAvailableTimes(int bookingSystemId, int serviceId, int bookingId);
-		Service GetBookServiceSuggestion(Booking inbooking, string inServiceName);
-	}
+		BookingSystem GetBookServiceSuggestion(Booking inbooking, string inServiceName, int inBookingSystemId);
+        Booking GetServiceSuggestionBookings(List<BookingSystem> inBookingSystem, Booking inBooking);
+
+    }
 }

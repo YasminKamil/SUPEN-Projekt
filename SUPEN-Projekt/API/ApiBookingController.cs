@@ -39,6 +39,7 @@ namespace SUPEN_Projekt.Controllers
             BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
             bsSBVM.booking = uw.Bookings.Get(inBookingId);
             bsSBVM.bookings = uw.Bookings.GetAll();
+            bsSBVM.bookingSystems = uw.BookingSystems.GetAll();
 
             if (bsSBVM == null)
             {
