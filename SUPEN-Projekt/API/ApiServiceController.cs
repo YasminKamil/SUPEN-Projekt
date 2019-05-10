@@ -55,7 +55,7 @@ namespace SUPEN_Projekt.Controllers {
 			var inBooking = await uw.Bookings.Get(inBookingId);
 			var bookingSystems = await uw.BookingSystems.GetAll();
 
-            var bookingSystem = uw.BookingSystems.GetBookServiceSuggestion(inBooking, inServiceName, inBookingSystemId);
+            var bookingSystem = await uw.BookingSystems.GetBookServiceSuggestion(inBooking, inServiceName, inBookingSystemId);
             var service = uw.Services.GetServiceSuggestion(bookingSystem);
             var booking = uw.BookingSystems.GetServiceSuggestionBookings(bookingSystems.ToList(), inBooking);
             
@@ -67,14 +67,6 @@ namespace SUPEN_Projekt.Controllers {
             serviceViewModel.serviceId = service.ServiceId;
             serviceViewModel.branchAId = service.Branch.BranchId;
             serviceViewModel.bookingId = booking.BookingId;
-			var bookingSystem = await uw.BookingSystems.GetBookServiceSuggestion(inBooking, inServiceName, inBookingSystemId);
-			var service = uw.Services.GetServiceSuggestion(bookingSystem);
-			var booking = uw.BookingSystems.GetServiceSuggestionBookings(bookingSystems.ToList(), inBooking);
-
-			serviceViewModel.bookingSystemName = bookingSystem.CompanyName;
-			serviceViewModel.serviceName = service.ServiceName;
-			serviceViewModel.startTime = booking.StartTime;
-			serviceViewModel.endTime = booking.EndTime;
 
 			if (serviceViewModel == null) {
 				return NotFound();
