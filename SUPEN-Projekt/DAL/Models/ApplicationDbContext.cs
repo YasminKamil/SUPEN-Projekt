@@ -205,12 +205,15 @@ namespace SUPEN_Projekt.Models {
 			return bookings;
 		}
 		//Skapar en brancsh för varje string i listan som skickas in i metoden
-		void AddBranches(ApplicationDbContext context, List<string> inBranchList) {
+		void AddBranches(ApplicationDbContext context, List<string> inBranchList ){
 			List<String> branchString = inBranchList;
 			foreach (var item in branchString) {
 				Branch aBranch = new Branch();
-				aBranch.BranchName = item;
-				context.Branches.Add(aBranch);
+                //aBranch.BranchName = item.Split('$')[1];
+                //aBranch.PictureUrl = item.Split('$')[1];
+                aBranch.BranchName = item;
+                aBranch.PictureUrl = "~/Content/Images/rektangulärlogga.png";
+                context.Branches.Add(aBranch);
 			}
 			context.SaveChanges();
 		}

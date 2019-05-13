@@ -12,6 +12,7 @@ namespace SUPEN_Projekt.Models {
 		public virtual int BranchId { get; set; }
 		public virtual string BranchName { get; set; }
 
+        public virtual string PictureUrl { get; set; }
         public virtual ICollection<BranchRelation> BranchRelations { get; set; }
     }
 }

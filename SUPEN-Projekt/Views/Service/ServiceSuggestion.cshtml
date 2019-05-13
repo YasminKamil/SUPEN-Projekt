@@ -6,6 +6,7 @@
 }
 @if (Model != null && Model.serviceName != null)
 {
+    string aUrl = Model.PictureUrl.Replace(" ", "");
     <a href='@Url.Action("BookService", "Booking", new
                 {
                     inBookingSystemId = Model.bookingSystemId,
@@ -13,9 +14,9 @@
                     inBookingId = Model.bookingId,
                     inStartTime = Model.startTime.ToString(),
                     branchAId = Model.branchAId
-                })' class='link-icon btn btn-default link-button-bookservice-suggestion'>
-    <div class ="list-group transbox">
-        <div class="list-group-item">
+                })' class='link-icon btn btn-default link-button-bookservice-suggestion' style="background-image:url( @Url.Content(aUrl)" >
+    <div class ="list-group transbox" >
+        <div class="list-group-item" >
             <h4 class="list-group-item-text"><strong class="list-group-item-text" style="right:2%; margin: 2%; font: bold">Vill du boka?</strong></h4>
 
             <p class="list-group-item-text">@Html.DisplayFor(model => model.serviceName): @Model.startTime.ToString("HH:mm") - @Model.endTime.ToString("HH:mm")</p> <br />

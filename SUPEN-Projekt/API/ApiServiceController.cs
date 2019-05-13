@@ -67,8 +67,8 @@ namespace SUPEN_Projekt.Controllers {
             serviceViewModel.serviceId = service.ServiceId;
             serviceViewModel.branchAId = service.Branch.BranchId;
             serviceViewModel.bookingId = booking.BookingId;
-
-			if (serviceViewModel == null) {
+            serviceViewModel.PictureUrl = service.Branch.PictureUrl;
+            if (serviceViewModel == null) {
 				return NotFound();
 			}
 

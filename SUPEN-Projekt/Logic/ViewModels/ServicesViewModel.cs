@@ -19,5 +19,6 @@ namespace SUPEN_Projekt.Logic.ViewModels {
         public DateTime startTime { get; set; }
         public DateTime endTime { get; set; }
         public int branchAId { get; set; }
+        public virtual string PictureUrl { get; set; }
     }
 }
