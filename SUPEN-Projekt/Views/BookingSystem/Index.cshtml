@@ -8,11 +8,11 @@
 
         <tr>
             <td class="no-Border">
-                <a href='@Url.Action("BookingSystem","BookingSystem",new { id = item.BookingSystemId})' class='link-icon btn btn-default' style="width:100%; height:inherit;" >
+                <a href='@Url.Action("BookingSystem","BookingSystem",new { id = item.BookingSystemId})' class='link-icon btn btn-default' style="width:100%; height:inherit; text-align:left" >
                     
                     <div style="top:8px; left:8px;display:inline-block; margin:2% auto 0% 7%;   width:40%; text-align:left" ><b style="font-size:large">@item.CompanyName</b> <br /><span class="glyphicon">&#xe062;</span> @item.Address <br />  @item.PostalCode @item.City</div>
                     
-                    <div style="top:2px; right:8px;display:inline-block;  margin: 0% 7% 2% auto; width:40%; text-align:right">@item.SystemDescription</div>
+                    @*<div style="top:2px; right:8px;display:inline-block;  margin: 0% 7% 2% auto; width:40%; text-align:right">@item.SystemDescription</div>*@
 
                 </a>
             </td>
