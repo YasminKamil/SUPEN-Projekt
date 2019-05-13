@@ -9,26 +9,29 @@ namespace SUPEN_Projekt.Repositories {
 	public class ServiceRepository : Repository<Service>, IServiceRepository {
 		public ServiceRepository(ApplicationDbContext context) : base(context) { }
 
-		//Retunerar tjänster
-		public IEnumerable<Service> GetServices() {
-			return ApplicationDbContext.Set<Service>().Include(x => x.Branch).Include(b => b.Bookings).Include(x => x.Bookings);
+		public ApplicationDbContext ApplicationDbContext {
+			get { return Context as ApplicationDbContext; }
 		}
 
+		//Retunerar tjänster
+		public async Task<IEnumerable<Service>> GetServices() {
+			return await ApplicationDbContext.Set<Service>().Include(x => x.Branch).Include(b => b.Bookings).Include(x => x.Bookings).ToListAsync();
+		}
 
 		//Returnerar den specifika tjänsten
-		public Service GetService(int id) {
-			IEnumerable<Service> services = GetServices();
+		public async Task <Service> GetService(int id) {
+			IEnumerable<Service> services =  await GetServices();
 			Service service = services.Single(x => x.ServiceId == id);
 			service.Bookings = ApplicationDbContext.Services.Single(x => x.ServiceId == id).Bookings;
-			return service;
+			return await Task.FromResult(service);
 		}
 
 		//Skapar en ny tjänst för bokning
 		public void AddBooking(Booking booking, int id) {
 
-			IEnumerable<Service> services = GetServices();
+			IEnumerable<Service> services = ApplicationDbContext.Set<Service>().Include(x => x.Branch).Include(b => b.Bookings).Include(x => x.Bookings);
 			Service service = services.Single(x => x.ServiceId == id);
-			service.Bookings.Add(booking);
+			service.Bookings.Add(booking);	 
 		}
 
 		public async Task<Service> GetServiceSuggestion(BookingSystem bookingSystem) {
@@ -50,8 +53,5 @@ namespace SUPEN_Projekt.Repositories {
 			return await Task.FromResult(serviceSuggestion);
 		}
 
-		public ApplicationDbContext ApplicationDbContext {
-			get { return Context as ApplicationDbContext; }
-		}
 	}
 }

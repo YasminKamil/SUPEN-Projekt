@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace SUPEN_Projekt.Repositories {
 	public interface IServiceRepository : IRepository<Service> {
-		IEnumerable<Service> GetServices();
+		Task<IEnumerable<Service>> GetServices();
 		void AddBooking(Booking booking, int id);
-		Service GetService(int id);
+		Task<Service> GetService(int id);
         Task<Service> GetServiceSuggestion(BookingSystem bookingSystem);
 
     }
