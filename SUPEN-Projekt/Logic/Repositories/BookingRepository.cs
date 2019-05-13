@@ -1,9 +1,7 @@
 ﻿using SUPEN_Projekt.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using System.Data.Entity;
 
 namespace SUPEN_Projekt.Repositories {
 	//Ett repository för metoder som hanterar bokningar.
@@ -20,11 +18,11 @@ namespace SUPEN_Projekt.Repositories {
 
 		//Returnerar alla bokningar som är lagrade i databasen
 		public async Task<IEnumerable<Booking>> GetBookings() {
-			return await GetAll(); 
+			return await GetAll();
 		}
 
 		//Skapar ett nytt bokningsobjekt
-		public async Task<Booking>CreateBooking(Booking inBooking) {
+		public async Task<Booking> CreateBooking(Booking inBooking) {
 			//Instansierar ett bokningsobjekt
 			Booking booking = new Booking();
 
@@ -38,36 +36,33 @@ namespace SUPEN_Projekt.Repositories {
 			booking.EndTime = inBooking.EndTime;
 			booking.Date = inBooking.Date;
 
-			
+
 			//Sparar bokningen i databasen
 			Add(booking);
 			return await Task.FromResult(booking);
 		}
 
-        public Booking GetServiceSuggestionBookings(Service inService, Booking inBooking)
-        {
-            List<Booking> availableBookings = new List<Booking>();
-            Booking serviceSuggestionBooking = new Booking();
+		public async Task<Booking> GetServiceSuggestionBookings(Service inService, Booking inBooking) {
+			List<Booking> availableBookings = new List<Booking>();
+			Booking serviceSuggestionBooking = new Booking();
 
-            if (inService.Bookings.Count > 0)
-            {
-                foreach (var booking in inService.Bookings)
-                {
-                    if (booking.Available == true)
-                        //booking.StartTime > inBooking.EndTime.AddMinutes(20) && 
-                        //booking.EndTime.AddMinutes(20) < inBooking.StartTime)
+			if (inService.Bookings.Count > 0) {
+				foreach (var booking in inService.Bookings) {
+					if (booking.Available == true)
+					//booking.StartTime > inBooking.EndTime.AddMinutes(20) && 
+					//booking.EndTime.AddMinutes(20) < inBooking.StartTime)
 
-                    {
-                        availableBookings.Add(booking);
-                    }
-                    
-                }
+					{
+						availableBookings.Add(booking);
+					}
 
-                serviceSuggestionBooking = availableBookings.First();
-                //serviceSuggestion = bookingSystem.Services.Where(x => x.Bookings.Count == mostBookings.Max()).First();
-            }
+				}
 
-            return serviceSuggestionBooking;
-        }
-    }
+				serviceSuggestionBooking = availableBookings.First();
+				//serviceSuggestion = bookingSystem.Services.Where(x => x.Bookings.Count == mostBookings.Max()).First();
+			}
+
+			return await Task.FromResult(serviceSuggestionBooking);
+		}
+	}
 }

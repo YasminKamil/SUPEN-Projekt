@@ -61,8 +61,7 @@ namespace SUPEN_Projekt.Controllers {
 		[HttpGet]
 		public async Task<IHttpActionResult> GetDistanceBetweenBookingSystems(int bookingSystemAId, int BookingSystemBId) {
 			try {
-				double gdbb = uw.BookingSystems
-					.GetDistanceTo(await uw.BookingSystems.Get(bookingSystemAId), await uw.BookingSystems.Get(BookingSystemBId));
+				double gdbb = await uw.BookingSystems.GetDistanceTo(await uw.BookingSystems.Get(bookingSystemAId), await uw.BookingSystems.Get(BookingSystemBId));
 				return Ok(gdbb);
 
 			} catch (Exception) {

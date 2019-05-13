@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SUPEN_Projekt.Repositories {
 	//Ett repository för metoder som hanterar brancher.
 	public class BranchRepository : Repository<Branch>, IBranchRepository {
-		
+
 		//Konstruktor med ApplicationDbContext som parametervärde
 		public BranchRepository(ApplicationDbContext context) : base(context) { }
 
@@ -32,10 +32,10 @@ namespace SUPEN_Projekt.Repositories {
 
 		/*Skapar en ny relation mellan branscher, där branchA är branschen som användaren väljer först och 
 		branchB är den bransch som användaren väljer bland relevanta förslagen*/
-		public  void CreateBranchRelation(int branchA, int branchB) {
+		public void CreateBranchRelation(int branchA, int branchB) {
 			try {
 				//Hämtar första branschen och kontrollerar att den är branchA
-				Branch fromBranch =  ApplicationDbContext.Branches.Include(x => x.BranchRelations).Single(f => f.BranchId == branchA);
+				Branch fromBranch = ApplicationDbContext.Branches.Include(x => x.BranchRelations).Single(f => f.BranchId == branchA);
 
 				//Om branchA inte finns skapas det en ny relation som kan göras mot branchA
 				if (fromBranch.BranchRelations == null) {
@@ -48,7 +48,7 @@ namespace SUPEN_Projekt.Repositories {
 					BranchRelation branchRelation = new BranchRelation();
 					branchRelation.branchBId2 = branchB.ToString();
 					branchRelation.CountClick = 1;
-					 ApplicationDbContext.Branches.Single(x => x.BranchId == branchA).BranchRelations.Add(branchRelation);
+					ApplicationDbContext.Branches.Single(x => x.BranchId == branchA).BranchRelations.Add(branchRelation);
 					ApplicationDbContext.SaveChanges();
 				}
 
@@ -64,26 +64,26 @@ namespace SUPEN_Projekt.Repositories {
 		}
 
 		//Returnerar en branchrelation
-		public BranchRelation GetBranchRelation(int branchA, int branchB) {
-			Branch fromBranch = ApplicationDbContext.Branches.Single(x => x.BranchId == branchA);
+		public async Task<BranchRelation> GetBranchRelation(int branchA, int branchB) {
+			Branch fromBranch = await ApplicationDbContext.Branches.SingleAsync(x => x.BranchId == branchA);
 			return fromBranch.BranchRelations.Single(x => x.branchBId2 == branchB.ToString());
 		}
 
 		//Returnerar en BranchRelation
-		public IEnumerable<BranchRelation> GetBranchRelations(int branchA) {
-			return ApplicationDbContext.Branches.Single(x => x.BranchId == branchA).BranchRelations;
+		public async Task<IEnumerable<BranchRelation>> GetBranchRelations(int branchA) {
+			var responseFromContext = await ApplicationDbContext.Branches.SingleAsync(x => x.BranchId == branchA);
+			return responseFromContext.BranchRelations;
+
 		}
 
-        //R
-		public async Task<Branch>GetBranch(int branchId) {
-            return  await ApplicationDbContext.Branches.Include(y => y.BranchRelations).SingleAsync(x => x.BranchId == branchId);
-        }
+		//Returnerar bransch med branschrelation
+		public async Task<Branch> GetBranch(int branchId) {
+			return await ApplicationDbContext.Branches.Include(y => y.BranchRelations).SingleAsync(x => x.BranchId == branchId);
+		}
 
-        public async Task<IEnumerable<Branch>> GetBranches()
-        {
-            return await ApplicationDbContext.Branches.Include(x => x.BranchRelations).ToListAsync();
-        }
-
-    }
-
+		//Returnerar branscher inom branschrelationer 
+		public async Task<IEnumerable<Branch>> GetBranches() {
+			return await ApplicationDbContext.Branches.Include(x => x.BranchRelations).ToListAsync();
+		}
+	}
 }

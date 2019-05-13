@@ -1,70 +1,57 @@
 ﻿using SUPEN_Projekt.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 
 
-namespace SUPEN_Projekt.Repositories
-{
-    public class ServiceRepository : Repository<Service>, IServiceRepository
-    {
-        public ServiceRepository(ApplicationDbContext context) : base(context) { }
+namespace SUPEN_Projekt.Repositories {
+	public class ServiceRepository : Repository<Service>, IServiceRepository {
+		public ServiceRepository(ApplicationDbContext context) : base(context) { }
 
-        //Retunerar tjänster
-        public IEnumerable<Service> GetServices()
-        {
-            return ApplicationDbContext.Set<Service>().Include(x => x.Branch).Include(b => b.Bookings).Include(x => x.Bookings);
-        }
+		public ApplicationDbContext ApplicationDbContext {
+			get { return Context as ApplicationDbContext; }
+		}
 
+		//Retunerar tjänster
+		public async Task<IEnumerable<Service>> GetServices() {
+			return await ApplicationDbContext.Set<Service>().Include(x => x.Branch).Include(b => b.Bookings).Include(x => x.Bookings).ToListAsync();
+		}
 
-        //Returnerar den specifika tjänsten
-        public Service GetService(int id)
-        {
-            IEnumerable<Service> services = GetServices();
-            Service service = services.Single(x => x.ServiceId == id);
-            service.Bookings = ApplicationDbContext.Services.Single(x => x.ServiceId == id).Bookings;
-            return service;
-        }
+		//Returnerar den specifika tjänsten
+		public async Task <Service> GetService(int id) {
+			IEnumerable<Service> services =  await GetServices();
+			Service service = services.Single(x => x.ServiceId == id);
+			service.Bookings = ApplicationDbContext.Services.Single(x => x.ServiceId == id).Bookings;
+			return await Task.FromResult(service);
+		}
 
-        //Skapar en ny tjänst för bokning
-        public void AddBooking(Booking booking, int id)
-        {
+		//Skapar en ny tjänst för bokning
+		public void AddBooking(Booking booking, int id) {
 
-            IEnumerable<Service> services = GetServices();
-            Service service = services.Single(x => x.ServiceId == id);
-            service.Bookings.Add(booking);
-        }
+			IEnumerable<Service> services = ApplicationDbContext.Set<Service>().Include(x => x.Branch).Include(b => b.Bookings).Include(x => x.Bookings);
+			Service service = services.Single(x => x.ServiceId == id);
+			service.Bookings.Add(booking);	 
+		}
 
-        public Service GetServiceSuggestion(BookingSystem bookingSystem)
-        {
-            List<int> mostBookings = new List<int>();
-            Service serviceSuggestion = new Service();
+		public async Task<Service> GetServiceSuggestion(BookingSystem bookingSystem) {
+			List<int> mostBookings = new List<int>();
+			Service serviceSuggestion = new Service();
 
-            if (bookingSystem.Services.Count > 0)
-            {
-                foreach (var service in bookingSystem.Services)
-                {
-                    if (service.Bookings.Count > 0)
-                    {
-                        var numberOfTimes = service.Bookings.Count();//antal bokningar
-                        mostBookings.Add(numberOfTimes);
-                    }
-                }
+			if (bookingSystem.Services.Count > 0) {
+				foreach (var service in bookingSystem.Services) {
+					if (service.Bookings.Count > 0) {
+						var numberOfTimes = service.Bookings.Count();//antal bokningar
+						mostBookings.Add(numberOfTimes);
+					}
+				}
 
-                
-                serviceSuggestion = bookingSystem.Services.
-                    Where(x => x.Bookings.Count == mostBookings.Max()).
-                    First();
-            }
-            return serviceSuggestion;
-        }
+				serviceSuggestion = bookingSystem.Services.
+					Where(x => x.Bookings.Count == mostBookings.Max()).
+					First();
+			}
+			return await Task.FromResult(serviceSuggestion);
+		}
 
-        public ApplicationDbContext ApplicationDbContext
-        {
-            get { return Context as ApplicationDbContext; }
-        }
-    }
+	}
 }
