@@ -70,8 +70,10 @@ namespace SUPEN_Projekt.Repositories {
 		}
 
 		//Returnerar en BranchRelation
-		public IEnumerable<BranchRelation> GetBranchRelations(int branchA) {
-			return ApplicationDbContext.Branches.Single(x => x.BranchId == branchA).BranchRelations;
+		public async Task<IEnumerable<BranchRelation>> GetBranchRelations(int branchA) {
+			var responseFromContext = await ApplicationDbContext.Branches.SingleAsync(x => x.BranchId == branchA);
+			return responseFromContext.BranchRelations;
+
 		}
 
 		//Returnerar bransch med branschrelation

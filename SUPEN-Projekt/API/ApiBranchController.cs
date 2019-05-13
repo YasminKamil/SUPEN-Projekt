@@ -21,7 +21,8 @@ namespace SUPEN_Projekt.Controllers {
 			bsSBVMBBR.bookingSystem = bs;
 			bsSBVMBBR.service = bsSBVMBBR.bookingSystem.Services.Single(x => x.ServiceId == inServiceId);
 			bsSBVMBBR.branch = await uw.Branches.Get(inBranchId);
-			bsSBVMBBR.branchRelations = uw.Branches.GetBranchRelations(inBranchId).ToList();
+			var branchRelations = await uw.Branches.GetBranchRelations(inBranchId);
+			bsSBVMBBR.branchRelations = branchRelations.ToList();
 
 			if (bsSBVMBBR == null) {
 				return NotFound();
