@@ -260,6 +260,8 @@
     <Content Include="Content\images\marker-icon-2x.png" />
     <Content Include="Content\images\marker-icon.png" />
     <Content Include="Content\images\marker-shadow.png" />
+    <Content Include="Content\images\rektangulärlogga.png" />
+    <Content Include="Content\images\rundLogga.png" />
     <Content Include="Content\leaflet.css" />
     <Content Include="Content\RelevantBookings.css" />
     <Content Include="Content\themes\base\accordion.css" />

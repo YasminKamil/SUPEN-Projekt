@@ -4,16 +4,13 @@ using System.Web.Http;
 using SUPEN_Projekt.Logic.ViewModels;
 using System.Threading.Tasks;
 
-namespace SUPEN_Projekt.Controllers
-{
-    public class ApiServiceController : ApiController
-    {
-        IUnitOfWork uw;
+namespace SUPEN_Projekt.Controllers {
+	public class ApiServiceController : ApiController {
+		IUnitOfWork uw;
 
-        public ApiServiceController(IUnitOfWork unitOfWork)
-        {
-            uw = unitOfWork;
-        }
+		public ApiServiceController(IUnitOfWork unitOfWork) {
+			uw = unitOfWork;
+		}
 
 		//Hämtar alla lagrade tjänster 
 		[Route("api/GetServices")]
@@ -22,46 +19,43 @@ namespace SUPEN_Projekt.Controllers
 			var services = await uw.Services.GetAll();
 			ServicesViewModel list = new ServicesViewModel();
 
-			
-				 list.services = services.ToList();
 
-					if (list == null) {
+			list.services = services.ToList();
+
+			if (list == null) {
 				return NotFound();
 			}
 
-            return Ok(list);
-        }
+			return Ok(list);
+		}
 
-        //Hämtar den specifika tjänsten i bokningsystemet som är lagrad
-        [Route("api/GetService/{inBookingSystemId}/{inServiceId}")]
-        [HttpGet]
-        public IHttpActionResult GetService(int inBookingSystemId, int inServiceId)
-        {
+		//Hämtar den specifika tjänsten i bokningsystemet som är lagrad
+		[Route("api/GetService/{inBookingSystemId}/{inServiceId}")]
+		[HttpGet]
+		public async Task<IHttpActionResult> GetService(int inBookingSystemId, int inServiceId) {
 
-            var bs = uw.BookingSystems.GetBookingSystem(inBookingSystemId);
-            BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
+			var bs = await uw.BookingSystems.GetBookingSystem(inBookingSystemId);
+			BookingSystemServiceBookingViewModel bsSBVM = new BookingSystemServiceBookingViewModel();
 
-            bsSBVM.bookingSystem = bs;
-            bsSBVM.service = bsSBVM.bookingSystem.Services.Single(x => x.ServiceId == inServiceId);
+			bsSBVM.bookingSystem = bs;
+			bsSBVM.service = bsSBVM.bookingSystem.Services.Single(x => x.ServiceId == inServiceId);
 
-            if (bsSBVM == null)
-            {
-                return NotFound();
-            }
+			if (bsSBVM == null) {
+				return NotFound();
+			}
 
-            return Ok(bsSBVM);
-        }
+			return Ok(bsSBVM);
+		}
 
-        [Route("api/GetService/{inBookingId}/{inServiceName}/{inBookingSystemId}")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetServiceSuggestion(int inBookingId, string inServiceName, int inBookingSystemId)
-        {
-            ServiceViewModel serviceViewModel = new ServiceViewModel();
+		[Route("api/GetService/{inBookingId}/{inServiceName}/{inBookingSystemId}")]
+		[HttpGet]
+		public async Task<IHttpActionResult> GetServiceSuggestion(int inBookingId, string inServiceName, int inBookingSystemId) {
+			ServiceViewModel serviceViewModel = new ServiceViewModel();
 
-            var inBooking = uw.Bookings.Get(inBookingId);
-            var bookingSystems = await uw.BookingSystems.GetAll();
+			var inBooking = await uw.Bookings.Get(inBookingId);
+			var bookingSystems = await uw.BookingSystems.GetAll();
 
-            var bookingSystem = uw.BookingSystems.GetBookServiceSuggestion(inBooking, inServiceName, inBookingSystemId);
+            var bookingSystem = await uw.BookingSystems.GetBookServiceSuggestion(inBooking, inServiceName, inBookingSystemId);
             var service = uw.Services.GetServiceSuggestion(bookingSystem);
             var booking = uw.BookingSystems.GetServiceSuggestionBookings(bookingSystems.ToList(), inBooking);
             
@@ -74,12 +68,11 @@ namespace SUPEN_Projekt.Controllers
             serviceViewModel.branchAId = service.Branch.BranchId;
             serviceViewModel.bookingId = booking.BookingId;
 
-            if (serviceViewModel == null)
-            {
-                return NotFound();
-            }
+			if (serviceViewModel == null) {
+				return NotFound();
+			}
 
-            return Ok(serviceViewModel);
-        }
-    }
+			return Ok(serviceViewModel);
+		}
+	}
 }

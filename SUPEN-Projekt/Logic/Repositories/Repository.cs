@@ -14,8 +14,8 @@ namespace SUPEN_Projekt.Repositories {
 			Context = context;
 		}
 
-		public TEntity Get(int? id) {
-			return Context.Set<TEntity>().Find(id);
+		public async Task<TEntity> Get(int? id) {
+			return await Context.Set<TEntity>().FindAsync(id);
 		}
 
 		public async Task<IEnumerable<TEntity>> GetAll() {

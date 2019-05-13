@@ -1,5 +1,6 @@
 ﻿using SUPEN_Projekt.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SUPEN_Projekt.Repositories {
 	//Interface för BranchRepository för att kunna återanvända metoderna i presentationslagret/API:er
@@ -8,8 +9,10 @@ namespace SUPEN_Projekt.Repositories {
 		void AddClickToBranchRelation(int branchA, int branchB);
 		BranchRelation GetBranchRelation(int branchA, int branchB);
 		IEnumerable<BranchRelation> GetBranchRelations(int branchA);
-        Branch GetBranch(int branchId);
-        IEnumerable<Branch> GetBranches();
+		// Branch GetBranch(int branchId);
+		Task<Branch> GetBranch(int branchId);
+		Task<IEnumerable<Branch>> GetBranches();
+		//IEnumerable<Branch> GetBranches();
     }
 
 }

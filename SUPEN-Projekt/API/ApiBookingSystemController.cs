@@ -38,8 +38,8 @@ namespace SUPEN_Projekt.Controllers {
 		//Hämtar ut det valda bokningsystemet
 		[Route("api/GetBookingSystem/{bookingSystemId:int}")]
 		[HttpGet]
-		public IHttpActionResult GetBookingSystem(int bookingSystemId) {
-			var bs = uw.BookingSystems.GetBookingSystem(bookingSystemId);
+		public async Task<IHttpActionResult> GetBookingSystem(int bookingSystemId) {
+			var bs = await uw.BookingSystems.GetBookingSystem(bookingSystemId);
 			BookingSystemServicesViewModel bssvm = new BookingSystemServicesViewModel();
 			bssvm.bookingSystem = bs;
 			bssvm.services = bs.Services;
@@ -59,10 +59,10 @@ namespace SUPEN_Projekt.Controllers {
 		//Hämtar och beräknar avståndet mellan befintliga bokningsystem
 		[Route("api/GetBookingSystem/{bookingSystemAId:int}/{bookingSystemBId:int}")]
 		[HttpGet]
-		public IHttpActionResult GetDistanceBetweenBookingSystems(int bookingSystemAId, int BookingSystemBId) {
+		public async Task<IHttpActionResult> GetDistanceBetweenBookingSystems(int bookingSystemAId, int BookingSystemBId) {
 			try {
 				double gdbb = uw.BookingSystems
-					.GetDistanceTo(uw.BookingSystems.Get(bookingSystemAId), uw.BookingSystems.Get(BookingSystemBId));
+					.GetDistanceTo(await uw.BookingSystems.Get(bookingSystemAId), await uw.BookingSystems.Get(BookingSystemBId));
 				return Ok(gdbb);
 
 			} catch (Exception) {
@@ -74,9 +74,9 @@ namespace SUPEN_Projekt.Controllers {
 		//bytt till var
 		[Route("api/GetRelevantBookingSystem/{bookingSystemId:int}/{serviceId:int}/{bookingId:int}")]
 		[HttpGet]
-		public IHttpActionResult GetRelevantBookingSystem(int bookingSystemId, int serviceId, int bookingId) {
+		public async Task<IHttpActionResult> GetRelevantBookingSystem(int bookingSystemId, int serviceId, int bookingId) {
 			try {
-				var onlyWithAvailableTimes = uw.BookingSystems
+				var onlyWithAvailableTimes = await uw.BookingSystems
 					.GetRelevantBookingSystemOnlyWithAvailableTimes(bookingSystemId, serviceId, bookingId);
 				BookingSystemsViewModel bookingsystemsvm = new BookingSystemsViewModel();
 				bookingsystemsvm.bookingSystems = onlyWithAvailableTimes;
