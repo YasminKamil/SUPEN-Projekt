@@ -154,6 +154,8 @@ namespace SUPEN_Projekt.Controllers
                 pairedObject.Distance = Math.Round(distance);
                 pairedObject.Latitude = pairedObject.BookingSystem.Latitude;
                 pairedObject.Longitude = pairedObject.BookingSystem.Longitude;
+                pairedObject.CompanyName = pairedObject.BookingSystem.CompanyName;
+                pairedObject.Id = pairedObject.BookingSystem.BookingSystemId;
                 listOfBookingSystems.Add(pairedObject);
             }
             bWDVM.SelectedBookingSystem = selectedBookingSystem;

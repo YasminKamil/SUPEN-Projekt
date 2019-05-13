@@ -251,10 +251,12 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Details.css" />
+    <Content Include="Content\images\green.png" />
     <Content Include="Content\images\layers-2x.png" />
     <Content Include="Content\images\layers.png" />
     <Content Include="Content\images\leaflet_green.png" />
     <Content Include="Content\images\leaflet_greenShadow.png" />
+    <Content Include="Content\images\marker-green.png" />
     <Content Include="Content\images\marker-icon-2x.png" />
     <Content Include="Content\images\marker-icon.png" />
     <Content Include="Content\images\marker-shadow.png" />
