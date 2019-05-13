@@ -61,29 +61,29 @@ namespace SUPEN_Projekt.Repositories {
 			/*Skapar listor på bokningssystem inom ett visst avstånd, inom andra branscher, ordnade enligt distansen,
 			 med endast lediga tider och hämtar endast en från varje bransch*/
 			List<BookingSystem> bookingSystemsInRange = await GetBookingSystemsInRange(selectedBookingSystem);
-			List<BookingSystem> bookingSystemsInOtherBranches = GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
-			List<BookingSystem> orderedByDistance = OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
-			List<BookingSystem> onlyWithAvailableTimes = GetBookingSystemsWithAvailableBooking(orderedByDistance, booking);
-			List<BookingSystem> onlyOneOfEachBranch = GetBookingSystemsWithOnlyOneOfEachBranch(onlyWithAvailableTimes);
+			List<BookingSystem> bookingSystemsInOtherBranches = await GetBookingSystemsInOtherBranches(bookingSystemsInRange, selectedService);
+			List<BookingSystem> orderedByDistance = await OrderByDistance(bookingSystemsInOtherBranches, selectedBookingSystem);
+			List<BookingSystem> onlyWithAvailableTimes = await GetBookingSystemsWithAvailableBooking(orderedByDistance, booking);
+			List<BookingSystem> onlyOneOfEachBranch = await GetBookingSystemsWithOnlyOneOfEachBranch(onlyWithAvailableTimes);
 
-			int totalClicks = GetTotalClicksInBranchRelations(onlyOneOfEachBranch, selectedBookingSystem, selectedService);
+			int totalClicks = await GetTotalClicksInBranchRelations(onlyOneOfEachBranch, selectedBookingSystem, selectedService);
 
 			List<DistanceScoreAndBookingSystem> distanceScoreAndBookingSystem = new List<DistanceScoreAndBookingSystem>();
 			//Tilldelar variabeln värdet på bokningssystem det högsta distans poäng.
-			distanceScoreAndBookingSystem = GetBookingSystemsWithDistanceScore(onlyOneOfEachBranch, selectedBookingSystem);
+			distanceScoreAndBookingSystem = await GetBookingSystemsWithDistanceScore(onlyOneOfEachBranch, selectedBookingSystem);
 
 			List<ClickOfService> clickOfServices = new List<ClickOfService>();
 			//Tilldelar variabeln ett värde på antalet klickpoäng som tjänsten har. 
-			clickOfServices = GetClickOfServices(distanceScoreAndBookingSystem, selectedService, totalClicks);
+			clickOfServices = await GetClickOfServices(distanceScoreAndBookingSystem, selectedService, totalClicks);
 
 			//Ordnar tjänsterna från högst till lägst poäng.
-			List<BookingSystem> orderedByPoints = GetBookingSystemsOrderedByPoints(clickOfServices.OrderByDescending(x => x.score).ToList(), onlyOneOfEachBranch);
+			List<BookingSystem> orderedByPoints = GetBookingSystemsOrderedByPoints(clickOfServices.OrderByDescending(x => x.score).ToList(), onlyOneOfEachBranch).Result;
 
 			return orderedByPoints;
 		}
 
 		//Hämtar bokningssystemen som har tjänster som har fått flest bokningar
-		private List<BookingSystem> GetBookingSystemsOrderedByPoints(List<ClickOfService> clickOfServices, List<BookingSystem> onlyOneOfEachBranch) {
+		private async Task<List<BookingSystem>> GetBookingSystemsOrderedByPoints(List<ClickOfService> clickOfServices, List<BookingSystem> onlyOneOfEachBranch) {
 			List<BookingSystem> orderedByPoints = new List<BookingSystem>();
 
 			foreach (var item in clickOfServices) {
@@ -94,11 +94,11 @@ namespace SUPEN_Projekt.Repositories {
 					}
 				}
 			}
-			return orderedByPoints;
+			return await Task.FromResult(orderedByPoints);
 		}
 
 		//Hämtar antalet poäng som den valda tjänsten har fått 
-		private List<ClickOfService> GetClickOfServices(List<DistanceScoreAndBookingSystem> distanceScoreAndBookingSystem, Service selectedService, int totClick) {
+		private async Task<List<ClickOfService>> GetClickOfServices(List<DistanceScoreAndBookingSystem> distanceScoreAndBookingSystem, Service selectedService, int totClick) {
 			BranchRepository branchRepository = new BranchRepository(ApplicationDbContext);
 
 			List<ClickOfService> clickOfService = new List<ClickOfService>();
@@ -125,13 +125,13 @@ namespace SUPEN_Projekt.Repositories {
 
 			}
 
-			return clickOfService;
+			return await Task.FromResult(clickOfService);
 		}
 
 		//Hämtar bokningssystemen beroende på vad de har för distanspoäng
-		private List<DistanceScoreAndBookingSystem> GetBookingSystemsWithDistanceScore(List<BookingSystem> onlyOneOfEachBranch, BookingSystem selectedBookingSystem) {
+		private async Task<List<DistanceScoreAndBookingSystem>> GetBookingSystemsWithDistanceScore(List<BookingSystem> onlyOneOfEachBranch, BookingSystem selectedBookingSystem) {
 			//Skapar en lista på bokningssystem som hämtar ut ett system får varje bransch baserad på vad användaren har valt för bokningsystemet i början
-			List<BookingSystemOfInterest> bookingSystemsOfInterest = GetBookingsWithDistance(onlyOneOfEachBranch, selectedBookingSystem);
+			List<BookingSystemOfInterest> bookingSystemsOfInterest = await GetBookingsWithDistance(onlyOneOfEachBranch, selectedBookingSystem);
 			int distanceScore = bookingSystemsOfInterest.Count();
 
 			//Skapar en lista på bokningssystem med distans poäng.
@@ -147,12 +147,12 @@ namespace SUPEN_Projekt.Repositories {
 				distanceScore--;
 			}
 
-			return distanceScoreAndBookingSystem;
+			return await Task.FromResult(distanceScoreAndBookingSystem);
 		}
 
 		//Hämtar totalt antal klick för bransch relationerna 
-		private int GetTotalClicksInBranchRelations(List<BookingSystem> onlyOneOfEachBranch, BookingSystem selectedBookingSystem, Service selectedService) {
-			List<BookingSystemOfInterest> bookingSystemsOfInterest = GetBookingsWithDistance(onlyOneOfEachBranch, selectedBookingSystem);
+		private async Task<int> GetTotalClicksInBranchRelations(List<BookingSystem> onlyOneOfEachBranch, BookingSystem selectedBookingSystem, Service selectedService) {
+			List<BookingSystemOfInterest> bookingSystemsOfInterest = GetBookingsWithDistance(onlyOneOfEachBranch, selectedBookingSystem).Result;
 			BranchRepository branchRepository = new BranchRepository(ApplicationDbContext);
 			int totClick = 0;
 
@@ -172,21 +172,21 @@ namespace SUPEN_Projekt.Repositories {
 				}
 			}
 
-			return totClick;
+			return await Task.FromResult(totClick);
 		}
 
-		private List<BookingSystemOfInterest> GetBookingsWithDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem) {
+		private async Task<List<BookingSystemOfInterest>> GetBookingsWithDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem) {
 			List<BookingSystemOfInterest> DistBooking = new List<BookingSystemOfInterest>();
 
 			foreach (var item in inBookingSystems) {
-				DistBooking.Add(new BookingSystemOfInterest(item, GetDistanceTo(inSelectedBookingSystem, item)));
+				DistBooking.Add(new BookingSystemOfInterest(item, await GetDistanceTo(inSelectedBookingSystem, item)));
 			}
-			return DistBooking;
+			return await Task.FromResult(DistBooking);
 		}
 
 		/*Returnerar en lista av bookingssystem, där vi endast tar med ett företag av varje bransch. Detta för att ex inte visa 10 hotell, 
         utan endast det som är närmst*/
-		private List<BookingSystem> GetBookingSystemsWithOnlyOneOfEachBranch(List<BookingSystem> inBookingSystems) {
+		private async Task<List<BookingSystem>> GetBookingSystemsWithOnlyOneOfEachBranch(List<BookingSystem> inBookingSystems) {
 			List<BookingSystem> onlyOneOfEachBranch = new List<BookingSystem>();
 			List<Branch> branches = new List<Branch>();
 
@@ -203,7 +203,7 @@ namespace SUPEN_Projekt.Repositories {
 					onlyOneOfEachBranch.Add(item);
 				}
 			}
-			return onlyOneOfEachBranch;
+			return await Task.FromResult(onlyOneOfEachBranch);
 		}
 
 		//Returnerar bokningsystem inom en viss distans inom vald stad//ApplicationDbContext.BookingSystems
@@ -216,7 +216,7 @@ namespace SUPEN_Projekt.Repositories {
 			List<BookingSystem> companiesInRange = new List<BookingSystem>();
 
 			foreach (var item in companiesInSelectedCity) {
-				if (InDistance(inSelectedBookingSystem.Longitude, inSelectedBookingSystem.Latitude, item.Longitude, item.Latitude, 5000)) {
+				if (await InDistance(inSelectedBookingSystem.Longitude, inSelectedBookingSystem.Latitude, item.Longitude, item.Latitude, 5000)) {
 					companiesInRange.Add(item);
 					Console.WriteLine(item.CompanyName);
 				}
@@ -225,7 +225,7 @@ namespace SUPEN_Projekt.Repositories {
 		}
 
 		//Beräknar distansen till andra företag. Returnerar true/false beroende på om avståndet är ok.
-		private bool InDistance(double companyALong, double companyALat, double companyBLong, double companyBLat, int maxDistance) {
+		private async Task<bool> InDistance(double companyALong, double companyALat, double companyBLong, double companyBLat, int maxDistance) {
 			bool isCloseEnough = false;
 			//Gör om koordinater till radian
 			companyALat = companyALat / 180 * Math.PI;
@@ -242,7 +242,7 @@ namespace SUPEN_Projekt.Repositories {
 			y = y * 6371000;
 			//Om distansen är längre än maxDistance returneras false
 			if (y <= maxDistance) isCloseEnough = true;
-			return isCloseEnough;
+			return await Task.FromResult(isCloseEnough);
 		}
 
 		List<BookingSystemOfInterest> DistBooking = new List<BookingSystemOfInterest>();
@@ -258,7 +258,7 @@ namespace SUPEN_Projekt.Repositories {
 		}
 
 		//Returnerar endast företag som har lediga tider som börjar strax efter eller slutar en liten stund före bokad tjänst
-		private List<BookingSystem> GetBookingSystemsWithAvailableBooking(List<BookingSystem> inBookingSystems, Booking inSelectedBooking) {
+		private async Task<List<BookingSystem>> GetBookingSystemsWithAvailableBooking(List<BookingSystem> inBookingSystems, Booking inSelectedBooking) {
 
 			//Bokningssystemen har öppet i 8 timmar
 			int open = 8;
@@ -317,32 +317,32 @@ namespace SUPEN_Projekt.Repositories {
 				bookingSystemItem.Services = someServices;
 				onlyBookingSystemsWithRelevantTimes.Add(bookingSystemItem);
 			}
-			return onlyBookingSystemsWithRelevantTimes.Where(x => x.Services.Any(y => y.Bookings.Count != 0)).ToList();
+			return await Task.FromResult(onlyBookingSystemsWithRelevantTimes.Where(x => x.Services.Any(y => y.Bookings.Count != 0)).ToList());
 		}
 
 		//Genom att skicka in en lista av bokningsystem och det valda företaget, sorteras dem efter vilken distans de har till det valda företaget.
-		private List<BookingSystem> OrderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem) {
+		private async Task<List<BookingSystem>> OrderByDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem) {
 
 			foreach (var item in inBookingSystems) {
-				DistBooking.Add(new BookingSystemOfInterest(item, GetDistanceTo(inSelectedBookingSystem, item)));
+				DistBooking.Add(new BookingSystemOfInterest(item, await GetDistanceTo(inSelectedBookingSystem, item)));
 			}
 			inBookingSystems = new List<BookingSystem>();
 			foreach (var item in DistBooking.OrderBy(x => x.distance)) {
 				inBookingSystems.Add(item.bookingSystem);
 				Console.WriteLine(item.distance + " " + item.bookingSystem.CompanyName);
 			}
-			return inBookingSystems;
+			return await Task.FromResult(inBookingSystems);
 		}
 
 		//Returnerar distancen mellan 2 företag
-		public double GetDistanceTo(BookingSystem bookingSystemA, BookingSystem bookingSystemB) {
+		public async Task<double> GetDistanceTo(BookingSystem bookingSystemA, BookingSystem bookingSystemB) {
 			var aCoord = new GeoCoordinate(bookingSystemA.Latitude, bookingSystemA.Longitude);
 			var bCoord = new GeoCoordinate(bookingSystemB.Latitude, bookingSystemB.Longitude);
-			return aCoord.GetDistanceTo(bCoord);
+			return await Task.FromResult(aCoord.GetDistanceTo(bCoord));
 		}
 
 		//Returnerar bookingsystem som har services inom andra brancher, kan även returnera selectedBookingService
-		private List<BookingSystem> GetBookingSystemsInOtherBranches(List<BookingSystem> inBookingSystems, Service selectedService) {
+		private async Task<List<BookingSystem>> GetBookingSystemsInOtherBranches(List<BookingSystem> inBookingSystems, Service selectedService) {
 			List<BookingSystem> keep = new List<BookingSystem>();
 			BookingSystem tmbBookingSystem = new BookingSystem();
 
@@ -354,17 +354,17 @@ namespace SUPEN_Projekt.Repositories {
 					keep.Add(aBookingSystem);
 				}
 			}
-			return keep;
+			return await Task.FromResult(keep);
 		}
 
 		//Returnerar brancher för bokningsystemet
-		private List<string> GetBranchesInBookingSystem(BookingSystem bookingSystem) {
+		private async Task<List<string>> GetBranchesInBookingSystem(BookingSystem bookingSystem) {
 			List<string> branchesInBookingSystem = new List<string>();
 			foreach (var item in bookingSystem.Services) {
 				branchesInBookingSystem.Add(item.Branch.BranchName);
 
 			}
-			return branchesInBookingSystem;
+			return await Task.FromResult(branchesInBookingSystem);
 		}
 
 		public async Task<BookingSystem> GetBookServiceSuggestion(Booking inBooking, string inServiceName, int inBookingSystemId) {
@@ -412,12 +412,13 @@ namespace SUPEN_Projekt.Repositories {
 				}
 			}
 
-			return bs;//returnerar det företag som har en tjänst som användaren nyttjat flest gånger
+			//Returnerar det företag som har en tjänst som användaren nyttjat flest gånger
+			return await Task.FromResult(bs);
 
 		}
 
-		public Booking GetServiceSuggestionBookings(List<BookingSystem> inBookingSystem, Booking inBooking) {
-			var bookingSystems = GetBookingSystemsWithAvailableBooking(inBookingSystem, inBooking);
+		public async Task<Booking> GetServiceSuggestionBookings(List<BookingSystem> inBookingSystem, Booking inBooking) {
+			var bookingSystems = GetBookingSystemsWithAvailableBooking(inBookingSystem, inBooking).Result;
 			List<Booking> bookings = new List<Booking>();
 			Booking serviceSuggestionBooking = new Booking();
 
@@ -426,7 +427,6 @@ namespace SUPEN_Projekt.Repositories {
 					foreach (var booking in service.Bookings) {
 						bookings.Add(booking);
 					}
-
 				}
 			}
 
@@ -434,7 +434,7 @@ namespace SUPEN_Projekt.Repositories {
 				serviceSuggestionBooking = bookings.First();
 			}
 
-			return serviceSuggestionBooking;
+			return await Task.FromResult(serviceSuggestionBooking);
 		}
 	}
 }

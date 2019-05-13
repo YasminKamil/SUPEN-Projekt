@@ -57,7 +57,7 @@ namespace SUPEN_Projekt.Controllers {
 
             var bookingSystem = await uw.BookingSystems.GetBookServiceSuggestion(inBooking, inServiceName, inBookingSystemId);
             var service = await uw.Services.GetServiceSuggestion(bookingSystem);
-            var booking = uw.BookingSystems.GetServiceSuggestionBookings(bookingSystems.ToList(), inBooking);
+            var booking = await uw.BookingSystems.GetServiceSuggestionBookings(bookingSystems.ToList(), inBooking);
             
             serviceViewModel.bookingSystemName = bookingSystem.CompanyName;
             serviceViewModel.serviceName = service.ServiceName;
