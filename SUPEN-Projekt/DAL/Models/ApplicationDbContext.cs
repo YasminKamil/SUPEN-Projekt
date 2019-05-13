@@ -17,11 +17,12 @@ namespace SUPEN_Projekt.Models {
 
     public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> {
 		protected override void Seed(ApplicationDbContext context) {
-			//Lägger till Branscher via addBranches metoden
-			//Lägg till ,"branschnamn" så skapas en bransch.
-			List<string> branches = new List<string> { "Frisör", "Besiktning", "Café", "Fordonsuthyrning", "Massör", "Verkstad",
-			   "Idrottsförening", "Kontor", "Utbildning", "Restaurang", "Sjukvård", "Transport", "Hotell", "Media", "IT",
-			   "Bank", "Bygg", "Konsultation", "Däck", "Tatuering", "Sport" };
+            //Lägger till Branscher via addBranches metoden
+            //Lägg till ,"branschnamn" så skapas en bransch.
+            string folderPath = "$~/Content/Images/";
+            List<string> branches = new List<string> { "Frisör"+folderPath+"frisör.png", "Besiktning"+folderPath+"bil2.png", "Café"+folderPath+"kaffe.png", "Fordonsuthyrning"+folderPath+"bil1.png", "Massör"+folderPath+"massage1.png", "Verkstad"+folderPath+"bil2.png",
+			   "Idrottsförening"+folderPath+"sport.png", "Kontor"+folderPath+"rektangulärlogga.png", "Utbildning"+folderPath+"rektangulärlogga.png", "Restaurang"+folderPath+"mat.png", "Sjukvård"+folderPath+"rektangulärlogga.png", "Transport"+folderPath+"bil3.png", "Hotell"+folderPath+"hotell.png", "Media"+folderPath+"rektangulärlogga.png", "IT"+folderPath+"rektangulärlogga.png",
+			   "Bank"+folderPath+"rektangulärlogga.png", "Bygg"+folderPath+"rektangulärlogga.png", "Konsultation"+folderPath+"rektangulärlogga.png", "Däck"+folderPath+"bil1.png", "Tatuering"+folderPath+"tatuering.png", "Sport"+folderPath+"gym.png" };
 			AddBranches(context, branches);
 
 			//Lägger till BookingSystems via metoden addBookingSystem, data skrivs in i ordningen nedan.
@@ -209,10 +210,10 @@ namespace SUPEN_Projekt.Models {
 			List<String> branchString = inBranchList;
 			foreach (var item in branchString) {
 				Branch aBranch = new Branch();
-                //aBranch.BranchName = item.Split('$')[1];
-                //aBranch.PictureUrl = item.Split('$')[1];
-                aBranch.BranchName = item;
-                aBranch.PictureUrl = "~/Content/Images/rektangulärlogga.png";
+                aBranch.BranchName = item.Split('$')[0];
+                aBranch.PictureUrl = item.Split('$')[1];
+                //aBranch.BranchName = item;
+                //aBranch.PictureUrl = "~/Content/Images/rektangulärlogga.png";
                 context.Branches.Add(aBranch);
 			}
 			context.SaveChanges();
