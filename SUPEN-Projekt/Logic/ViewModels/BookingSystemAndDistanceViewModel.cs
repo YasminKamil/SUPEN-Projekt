@@ -7,5 +7,7 @@ namespace SUPEN_Projekt.Logic.ViewModels {
 		public double Distance { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public string CompanyName { get; set; }
+        public int Id { get; set; }
 	}
 }
