@@ -25,7 +25,7 @@ namespace SUPEN_Projekt.Controllers {
 			return View(bVM);
 		}
 
-		//Returnerar branscher genom att göra ett api-anrop
+		//Returnerar flera branscher 
 		public async Task<ActionResult> Branches() {
 			BranchesViewModel bVM = null;
 			HttpClient client = new HttpClient();
