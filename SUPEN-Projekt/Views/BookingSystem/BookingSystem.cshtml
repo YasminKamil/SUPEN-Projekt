@@ -1,4 +1,6 @@
 ﻿@model SUPEN_Projekt.Logic.ViewModels.BookingSystemServicesViewModel
+	@using System.Globalization;
+<link href="~/Content/Site.css" rel="stylesheet" />
 <div>
 	<ol class="breadcrumb">
 		<li>@Html.ActionLink("Välj företag", "Index", "BookingSystem")</li>
@@ -47,7 +49,7 @@
 	}
 
 </table>
-<div>
+<div id ="left" style=" width: 35%; float:left;">
 	<h3> Om oss</h3>
 	<div class="panel panel-primary om-oss">
 		<div class="panel-body">@Model.bookingSystem.SystemDescription</div>
@@ -55,12 +57,24 @@
 </div>
 <div id="createbooking">
 </div>
+<div id="right" style="float:right; margin-right: 50%">
+	<h3>Hitta oss</h3>
+	<div id="mapid" style= "display:inline; height:45%; width: 38%; position:absolute;" >
+	
+	</div>
+</div>
 
+	@{
+		var culture = new CultureInfo("en-US");
+		var latitude = ((decimal)Model.bookingSystem.Latitude).ToString("G", culture);
+		var longitude = ((decimal)Model.bookingSystem.Longitude).ToString("G", culture);
+		var companyName = Model.bookingSystem.CompanyName;
+		var companyId = Model.bookingSystem.BookingSystemId;
+	}
+	<script type="text/javascript">
+	function myFuncWrapper() {
+		myFunc('@latitude', '@longitude', '@companyName', '@companyId');
+	}
+	</script>
 
-
-
-
-
-
-
-
+	<script src="~/Scripts/myleafletmap.js"></script>

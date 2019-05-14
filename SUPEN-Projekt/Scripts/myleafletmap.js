@@ -14,6 +14,15 @@ function myFunc(latitude, longitude, companyName, bookingsWithDistance, companyI
 
 myFuncWrapper();
 
+function myFunc(latitude, longitude, companyName, companyId) {
+	this.latitude = latitude;
+	this.longitude = longitude;
+	this.companyName = companyName;
+	this.companyId = companyId;
+}
+
+myFuncWrapper();
+
 var map = L.map('mapid', {
     zoomControl: false
 }).setView([parseFloat(latitude), parseFloat(longitude)], 14);
