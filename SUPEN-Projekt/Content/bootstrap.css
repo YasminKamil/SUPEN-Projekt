@@ -4693,6 +4693,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .breadcrumb {
   padding: 8px 15px;
   margin-bottom: 20px;
+  margin-top:2%;
   list-style: none;
   background-color: #f5f5f5;
   border-radius: 4px;
@@ -6691,6 +6692,14 @@ button.close {
   .hidden-xs {
     display: none !important;
   }
+    .breadcrumb {
+        padding: 8px 15px;
+        margin-bottom: 20px;
+        margin-top: 6%;
+        list-style: none;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+    }
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .hidden-sm {
