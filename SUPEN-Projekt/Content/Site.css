@@ -107,7 +107,16 @@ tr:nth-child(even) {
     background-repeat: no-repeat;
     background-position-x: center;
 }
+.om-oss {
+    width: 60%;
+   
+}
 @media only screen and (max-width: 600px) {
+    .om-oss {
+    width:95%;
+    min-width:200px;
+    margin:auto;
+    }
     .width-wide {
         width: 90%;
         min-width: 300px;
