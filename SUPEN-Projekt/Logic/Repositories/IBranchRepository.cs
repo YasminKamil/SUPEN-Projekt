@@ -8,12 +8,8 @@ namespace SUPEN_Projekt.Repositories {
 		void CreateBranchRelation(int branchA, int branchB);
 		void AddClickToBranchRelation(int branchA, int branchB);
 		Task<BranchRelation> GetBranchRelation(int branchA, int branchB);
-		//BranchRelation GetBranchRelation(int branchA, int branchB);
-		//IEnumerable<BranchRelation> GetBranchRelations(int branchA);
-		// Branch GetBranch(int branchId);
 		Task<Branch> GetBranch(int branchId);
 		Task<IEnumerable<Branch>> GetBranches();
-		//IEnumerable<Branch> GetBranches();
 		Task<IEnumerable<BranchRelation>> GetBranchRelations(int branchA);
 
 	}

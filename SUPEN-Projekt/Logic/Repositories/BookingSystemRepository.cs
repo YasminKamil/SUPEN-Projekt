@@ -175,6 +175,7 @@ namespace SUPEN_Projekt.Repositories {
 			return await Task.FromResult(totClick);
 		}
 
+		//Returnerar avståndet mellan bokningsystem A och B.
 		private async Task<List<BookingSystemOfInterest>> GetBookingsWithDistance(List<BookingSystem> inBookingSystems, BookingSystem inSelectedBookingSystem) {
 			List<BookingSystemOfInterest> DistBooking = new List<BookingSystemOfInterest>();
 
@@ -417,6 +418,7 @@ namespace SUPEN_Projekt.Repositories {
 
 		}
 
+		//Returnerar förslag på tider hos andra bokningssystem 
 		public async Task<Booking> GetServiceSuggestionBookings(List<BookingSystem> inBookingSystem, Booking inBooking) {
 			var bookingSystems = GetBookingSystemsWithAvailableBooking(inBookingSystem, inBooking).Result;
 			List<Booking> bookings = new List<Booking>();
