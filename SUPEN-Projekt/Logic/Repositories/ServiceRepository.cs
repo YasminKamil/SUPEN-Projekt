@@ -34,6 +34,7 @@ namespace SUPEN_Projekt.Repositories {
 			service.Bookings.Add(booking);	 
 		}
 
+		//Returnerar förslag på lediga tider hos ett system som användaren ofta bokar.
 		public async Task<Service> GetServiceSuggestion(BookingSystem bookingSystem) {
 			List<int> mostBookings = new List<int>();
 			Service serviceSuggestion = new Service();
@@ -41,11 +42,14 @@ namespace SUPEN_Projekt.Repositories {
 			if (bookingSystem.Services.Count > 0) {
 				foreach (var service in bookingSystem.Services) {
 					if (service.Bookings.Count > 0) {
-						var numberOfTimes = service.Bookings.Count();//antal bokningar
+						//Räknar antal bokningar
+						var numberOfTimes = service.Bookings.Count();
 						mostBookings.Add(numberOfTimes);
 					}
 				}
 
+				/*Tilldelar variabeln värdet på tjänsten från ett bokningssystem med flest antal 
+				 * bokningar som användaren har gjort*/
 				serviceSuggestion = bookingSystem.Services.
 					Where(x => x.Bookings.Count == mostBookings.Max()).
 					First();
