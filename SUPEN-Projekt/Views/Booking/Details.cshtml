@@ -83,7 +83,7 @@
 </div>
 <div class="booking-relevantbookings-position">
 
-	<button type="button" class="btn btn-info btn-sm booking-Information-button" data-toggle="modal" style="border-color:ButtonShadow" data-target="#myModal">Bokningsinformation</button>
+	<button type="button" class="btn btn-info btn-sm booking-Information-button body-text" data-toggle="modal" style="border-color:ButtonShadow" data-target="#myModal">Bokningsinformation</button>
 
 	@{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
 									new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId, branchAId = Model.branchAId });
