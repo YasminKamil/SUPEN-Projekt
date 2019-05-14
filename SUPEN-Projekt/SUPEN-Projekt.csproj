@@ -359,7 +359,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\BookingSystem\Create.cshtml" />
     <Content Include="Views\BookingSystem\Index.cshtml" />
     <Content Include="Scripts\js\.eslintrc.json" />
     <Content Include="Scripts\js\.gitignore" />
