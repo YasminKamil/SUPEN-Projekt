@@ -114,6 +114,9 @@ tr:nth-child(even) {
 .small-title {
     font-size: 17pt;
 }
+.medium-title {
+    font-size: 20pt;
+}
 .body-text {
     font-size: 15pt;
 }
@@ -121,8 +124,11 @@ tr:nth-child(even) {
     .small-title {
         font-size: 22pt;
     }
+    .medium-title {
+        font-size: 28pt;
+    }
     .body-text {
-        font-size:20pt;
+        font-size:18pt;
     }
 
     .om-oss {
