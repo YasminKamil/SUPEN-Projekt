@@ -1,27 +1,24 @@
 ﻿@model SUPEN_Projekt.Logic.ViewModels.ServiceViewModel
-
-
 @{
-    ViewBag.Title = "ServiceSuggestion";
+	ViewBag.Title = "ServiceSuggestion";
 }
-@if (Model != null && Model.serviceName != null)
-{
-    string aUrl = Model.PictureUrl.Replace(" ", "");
-    <a href='@Url.Action("BookService", "Booking", new
+@if (Model != null && Model.serviceName != null) {
+	string aUrl = Model.PictureUrl.Replace(" ", "");
+	<a href='@Url.Action("BookService", "Booking", new
                 {
                     inBookingSystemId = Model.bookingSystemId,
                     inServiceId = Model.serviceId,
                     inBookingId = Model.bookingId,
                     inStartTime = Model.startTime.ToString(),
                     branchAId = Model.branchAId
-                })' class='link-icon btn btn-default link-button-bookservice-suggestion' style="background-size: cover; background-image:url( @Url.Content(aUrl));" >
-    <div class ="list-group transbox" style="opacity:0.8;" >
-        <div class="list-group-item" >
-            <h4 class="list-group-item-text"><strong class="list-group-item-text" style="right:2%; margin: 2%; font: bold">Vill du boka?</strong></h4>
+                })' class='link-icon btn btn-default link-button-bookservice-suggestion' style="background-size: cover; background-image:url( @Url.Content(aUrl));">
+		<div class="list-group transbox" style="opacity:0.8;">
+			<div class="list-group-item">
+				<h4 class="list-group-item-text"><strong class="list-group-item-text" style="right:2%; margin: 2%; font: bold">Vill du boka?</strong></h4>
 
-            <p class="list-group-item-text">@Html.DisplayFor(model => model.serviceName): @Model.startTime.ToString("HH:mm") - @Model.endTime.ToString("HH:mm")</p> <br />
-            <p class="list-group-item-text">@Html.DisplayFor(model => model.bookingSystemName)</p>
-        </div>
-    </div>
-    </a>
+				<p class="list-group-item-text">@Html.DisplayFor(model => model.serviceName): @Model.startTime.ToString("HH:mm") - @Model.endTime.ToString("HH:mm")</p> <br />
+				<p class="list-group-item-text">@Html.DisplayFor(model => model.bookingSystemName)</p>
+			</div>
+		</div>
+	</a>
 }                     

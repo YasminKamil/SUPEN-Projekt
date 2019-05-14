@@ -371,7 +371,6 @@
       <BrowseToURL>~/Booking/BookService</BrowseToURL>
     </Content>
     <Content Include="Views\BookingSystem\BookingSystem.cshtml" />
-    <Content Include="Views\Service\Index.cshtml" />
     <Content Include="Views\Service\BookService.cshtml" />
     <Content Include="Views\Service\ServiceSuggestion.cshtml" />
     <Content Include="Views\Branch\Branches.cshtml" />
