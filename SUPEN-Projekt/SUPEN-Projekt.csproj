@@ -361,7 +361,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\BookingSystem\Create.cshtml" />
     <Content Include="Views\BookingSystem\Index.cshtml" />
-    <Content Include="Views\Booking\Index1.cshtml" />
     <Content Include="Scripts\js\.eslintrc.json" />
     <Content Include="Scripts\js\.gitignore" />
     <Content Include="Scripts\js\bower.json" />
@@ -374,8 +373,6 @@
     <Content Include="Views\Booking\BookService.cshtml">
       <BrowseToURL>~/Booking/BookService</BrowseToURL>
     </Content>
-    <Content Include="Views\Booking\CreateBooking.cshtml" />
-    <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\BookingSystem\BookingSystem.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
     <Content Include="Views\Service\BookService.cshtml" />
