@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace SUPEN_Projekt.Repositories {
+	//Ett generellt repository interface av typen IEntity
 	public interface IRepository<TEntity> where TEntity : class {
 		Task<TEntity> Get(int? id);
 		Task<IEnumerable<TEntity>> GetAll();

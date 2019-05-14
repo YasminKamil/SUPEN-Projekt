@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace SUPEN_Projekt.Repositories {
+	//En generell repository med dess metoder
 	public class Repository<TEntity> : IRepository<TEntity> where TEntity : class {
 
 		protected readonly DbContext Context;
