@@ -16,7 +16,7 @@ namespace SUPEN_Projekt.Controllers {
 		public async Task<ActionResult> Index() {
 			BookingSystemsViewModel bsVM = null;
 			HttpClient client = new HttpClient();
-			var result = client.GetAsync("http://localhost:55341/api/GetSystems").Result;
+			var result = client.GetAsync("http://localhost:55341/api/GetBookingSystems").Result;
 			if (result.IsSuccessStatusCode) {
 				bsVM = await result.Content.ReadAsAsync<BookingSystemsViewModel>();
 			} else {
