@@ -376,7 +376,6 @@
     <Content Include="Views\Service\Index.cshtml" />
     <Content Include="Views\Service\BookService.cshtml" />
     <Content Include="Views\Service\ServiceSuggestion.cshtml" />
-    <Content Include="Views\Branch\Branch.cshtml" />
     <Content Include="Views\Branch\Branches.cshtml" />
   </ItemGroup>
   <ItemGroup>
