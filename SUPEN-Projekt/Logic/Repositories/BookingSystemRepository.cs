@@ -418,22 +418,63 @@ namespace SUPEN_Projekt.Repositories {
 
 		}
 
-		//Returnerar förslag på tider hos andra bokningssystem 
-		public async Task<Booking> GetServiceSuggestionBookings(List<BookingSystem> inBookingSystem, Booking inBooking) {
-			var bookingSystems = GetBookingSystemsWithAvailableBooking(inBookingSystem, inBooking).Result;
+        private void GetAvailableBookings(Service service)
+        {
+            int open = 8;
+
+            decimal inHours = Convert.ToDecimal(service.Duration) / Convert.ToDecimal(60);
+            int iterations = (int)Math.Floor(Convert.ToDecimal(open) / Convert.ToDecimal(inHours));
+
+            //Presenterar aktuella tider för dagens datum
+            DateTime startTime = DateTime.Today;
+            startTime = startTime.AddHours(8);
+
+            List<DateTime> dt = new List<DateTime>();
+
+            for (int i = 0; i < iterations; i++)
+            {
+                //Starttiden för nästa bokning är sluttiden för föregående bokning.
+                DateTime endTime = startTime;
+                endTime = endTime.AddMinutes(service.Duration);
+
+                if (!service.Bookings.Any(x => x.StartTime == startTime))
+                {
+
+                    Booking booking = new Booking();
+                    booking.Available = true;
+                    booking.Date = DateTime.Today;
+                    booking.StartTime = startTime;
+                    booking.EndTime = endTime;
+                    service.Bookings.Add(booking);
+                }
+                startTime = endTime;
+            }
+        }
+
+
+
+        //Returnerar förslag på tider hos andra bokningssystem 
+        public async Task<Booking> GetServiceSuggestionBookings(List<BookingSystem> inBookingSystem, 
+            Booking inBooking, string inCompanyName, string inServiceName) {
+			//var bookingSystems = GetBookingSystemsWithAvailableBooking(inBookingSystem, inBooking).Result;
 			List<Booking> bookings = new List<Booking>();
 			Booking serviceSuggestionBooking = new Booking();
 
-			foreach (var bookingSystem in bookingSystems) {
-				foreach (var service in bookingSystem.Services) {
+            var bookingSystem = inBookingSystem.Where(x => x.CompanyName == inCompanyName).Single();
+            var service = bookingSystem.Services.Where(x => x.ServiceName == inServiceName).Single();
+            
+                    GetAvailableBookings(service);
+
 					foreach (var booking in service.Bookings) {
 						bookings.Add(booking);
 					}
-				}
-			}
+
+            //var isHalfHourBeforeOrAfter = bookings.Any(x => x.EndTime.AddMinutes(15) < inBooking.StartTime||
+            //inBooking.EndTime.AddMinutes(15) < x.StartTime);
 
 			if (bookings.Count > 0) {
-				serviceSuggestionBooking = bookings.First();
+				serviceSuggestionBooking = bookings.Where(x => x.Available == true && (x.EndTime.AddMinutes(29) < inBooking.StartTime ||
+            inBooking.EndTime.AddMinutes(29) < x.StartTime)).First();
 			}
 
 			return await Task.FromResult(serviceSuggestionBooking);
