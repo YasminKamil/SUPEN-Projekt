@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SUPEN_Projekt.Models {
-    /*Del av maskininlärning, lagrar hur många gånger man navigerat 
+	/*Del av maskininlärning, lagrar hur många gånger man navigerat 
     från bransch A till bransch B efter en utförd bokning.*/
 	public class BranchRelation {
-        [Key]
+		[Key]
 		public virtual int BranchRelationId { get; set; }
 		public virtual int CountClick { get; set; }
-        public virtual string branchBId2 { get; set; }
-    }
+		public virtual string branchBId2 { get; set; }
+	}
 }

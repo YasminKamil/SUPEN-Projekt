@@ -218,7 +218,6 @@
     <Compile Include="DAL\Models\Service.cs" />
     <Compile Include="DAL\Models\Branch.cs" />
     <Compile Include="Logic\ViewModels\BookingSystemAndDistanceViewModel.cs" />
-    <Compile Include="Logic\ViewModels\BookingSystemQueryViewModel.cs" />
     <Compile Include="Logic\ViewModels\BookingSystemServiceBookingBranchBranchRelationViewModel.cs" />
     <Compile Include="Logic\ViewModels\BookingSystemServiceBookingViewModel.cs" />
     <Compile Include="Logic\ViewModels\BookingSystemServicesViewModel.cs" />
@@ -238,6 +237,7 @@
     <Compile Include="DAL\Models\ApplicationDbContext.cs" />
     <Compile Include="DAL\Models\Booking.cs" />
     <Compile Include="DAL\Models\BookingSystem.cs" />
+    <Compile Include="Logic\ViewModels\ServiceViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Logic\Repositories\IServiceRepository.cs" />
     <Compile Include="Logic\Repositories\IUnitOfWork.cs" />

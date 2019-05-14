@@ -1,23 +1,16 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace SUPEN_Projekt.Models {
+	/*En modell för services med sina egenskaper, som representerar en tabell i databasen. 
+	 Med ett till många samband till bokningar*/
 	public class Service {
 
 		public virtual int ServiceId { get; set; }
 		public virtual string ServiceName { get; set; }
 		public virtual int Duration { get; set; }
 		public virtual double Price { get; set; }
-		//public string BranchName { get; set; }
-		public virtual Branch Branch { get; set; }
 
-		//[JsonIgnore]
-		//public virtual ICollection<BookingSystem> BookingSystems { get; set; }
+		public virtual Branch Branch { get; set; }
 		public virtual ICollection<Booking> Bookings { get; set; }
 	}
 }

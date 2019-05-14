@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace SUPEN_Projekt.Models {
 
+	/*En modell för brancher med sina egenskaper, som representerar en tabell i databasen. 
+	 Med ett till många samband till BranchReations*/
 	public class Branch {
 
         [Key]
