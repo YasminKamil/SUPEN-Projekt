@@ -17,8 +17,9 @@ namespace SUPEN_Projekt.Models {
 
     public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> {
 		protected override void Seed(ApplicationDbContext context) {
-            //Lägger till Branscher via addBranches metoden
-            //Lägg till ,"branschnamn" så skapas en bransch.
+            //Lägger till Branscher viaAaddBranches metoden
+            //Lägger till "branschnamn" så skapas en bransch.
+			//Lägger även bilder till bilder för varje bransch med tillhörande bilder
             string folderPath = "$~/Content/Images/";
             List<string> branches = new List<string> { "Frisör"+folderPath+"frisör.png", "Besiktning"+folderPath+"bil2.png", "Café"+folderPath+"kaffe.png", "Fordonsuthyrning"+folderPath+"bil1.png", "Massör"+folderPath+"massage1.png", "Verkstad"+folderPath+"bil2.png",
 			   "Idrottsförening"+folderPath+"sport.png", "Kontor"+folderPath+"rektangulärlogga.png", "Utbildning"+folderPath+"rektangulärlogga.png", "Restaurang"+folderPath+"mat.png", "Sjukvård"+folderPath+"rektangulärlogga.png", "Transport"+folderPath+"bil1.png", "Hotell"+folderPath+"hotell.png", "Media"+folderPath+"rektangulärlogga.png", "IT"+folderPath+"rektangulärlogga.png",
@@ -455,7 +456,7 @@ namespace SUPEN_Projekt.Models {
 			"070 - 123 56 78", "Stadsgården", 59.319575, 18.075197, "116 45", "Stockholm");
 
 			context.SaveChanges();
-			//Lägger till och skapar services via addService metoden, data skrivs in i ordningen nedan.
+			//Lägger till och skapar services via AddService metoden, data skrivs in i ordningen nedan.
 			//context(ApplicationDbContext), servicenamn(string), tidsåtgång(int), pris(int), branschnamn(string), företagsnamn(string)
 			AddService(context, "Fika", 45, 200, "Café", "Café Mariaberget");
 			AddService(context, "Tatuering", 60, 1750, "Tatuering", "Tatuering Stockholm");
@@ -503,6 +504,7 @@ namespace SUPEN_Projekt.Models {
 			context.SaveChanges();
 			base.Seed(context);
 		}
+
 		//Lägger till en service
 		void AddService(ApplicationDbContext context, string inServiceName, int inDuration, int inPrice, string inBranchName, string cName) {
 			Service service = new Service();
@@ -521,20 +523,20 @@ namespace SUPEN_Projekt.Models {
 				bs.Services.Add(context.Services.Single(i => i.ServiceId == service.ServiceId));
 			context.SaveChanges();
 		}
-		//skapar en lista av booking och använder sig av SeedBookings för att skapa rätt antal under företagets öppettid
+
+		//Skapar en lista av bokningar och använder sig av SeedBookings för att skapa rätt antal under företagets öppettid
 		List<Booking> GetBookings(ApplicationDbContext context, int inPrice, int inDuration) {
 			List<Service> services = new List<Service>();
 			Random randomNumber = new Random();
-			//List<int> durations = new List<int> { 25, 30, 35, 40, 45, 50, 55, 60 }; 
-			int duration = inDuration; //durations.OrderBy(x=> randomNumber.Next()).First();
-			int price = inPrice; // randomNumber.Next(150, 400);
-            int hoursOpen = 8; //randomNumber.Next(2, 10);
+			int duration = inDuration;
+			int price = inPrice; 
+            int hoursOpen = 8; 
 			List<Booking> listOfBookings = new List<Booking>();
 			listOfBookings = SeedBokings(duration, price, hoursOpen);
-			//context.Bookings.AddRange(listOfBookings);
 			context.SaveChanges();
 			return listOfBookings;
 		}
+
 		//Returnerar en lista på bokningar under öppentiden, skapar så många som möjligt under öppettiden.
 		public List<Booking> SeedBokings(int duration, int price, int totalHoursOpen) {
 			var bookings = new List<Booking>();
@@ -550,11 +552,10 @@ namespace SUPEN_Projekt.Models {
 
 				previousEndTime = booking.EndTime = booking.StartTime.AddMinutes(duration);
 				booking.Date = DateTime.Today;
-				//booking.Price = price;
-				//bookings.Add(booking);
 			}
 			return bookings;
 		}
+
 		//Skapar en brancsh för varje string i listan som skickas in i metoden
 		void AddBranches(ApplicationDbContext context, List<string> inBranchList ){
 			List<String> branchString = inBranchList;
@@ -562,12 +563,11 @@ namespace SUPEN_Projekt.Models {
 				Branch aBranch = new Branch();
                 aBranch.BranchName = item.Split('$')[0];
                 aBranch.PictureUrl = item.Split('$')[1];
-                //aBranch.BranchName = item;
-                //aBranch.PictureUrl = "~/Content/Images/rektangulärlogga.png";
                 context.Branches.Add(aBranch);
 			}
 			context.SaveChanges();
 		}
+
 		//Lägger till BookingSystem i databasen
 		void AddBookingSystem(ApplicationDbContext context, string inSystemName, string inSystemDescription, string inEmail, string inPhoneNumber, string inWebsite, string inCompanyName, string inContactEmail, string inContactPhone, string inAddress, double inLatitude, double inLongitude, string inPostalCode, string inCity) {
 			BookingSystem bookingsystem = new BookingSystem {
