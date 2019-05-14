@@ -1,12 +1,10 @@
 ﻿@model SUPEN_Projekt.Logic.BookingSystemsViewModel
-<table class="table">
+<table class="table" style="margin-top:1%;">
 	@foreach (var item in Model.bookingSystems) {
 		<tr>
 			<td class="no-Border">
 				<a href='@Url.Action("BookingSystem","BookingSystem",new { id = item.BookingSystemId})' class='link-icon btn btn-default' style="width:100%; height:inherit; text-align:left">
-
-					<div style="top:8px; left:8px;display:inline-block; margin:2% auto 0% 7%;   width:40%; text-align:left"><b style="font-size:large">@item.CompanyName</b> <br /><span class="glyphicon">&#xe062;</span> @item.Address <br />  @item.PostalCode @item.City</div>
-
+					<div style="top:8px; left:8px;display:inline-block; margin:2% auto 0% 7%;   width:40%; text-align:left"><b class="small-title" >@item.CompanyName</b> <br /><text class="body-text"><span class="glyphicon">&#xe062;</span>  @item.Address <br />  @item.PostalCode @item.City</text></div>
 				</a>
 			</td>
 		</tr>

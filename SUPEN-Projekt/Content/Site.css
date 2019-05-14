@@ -111,7 +111,20 @@ tr:nth-child(even) {
     width: 60%;
    
 }
-@media only screen and (max-width: 600px) {
+.small-title {
+    font-size: 17pt;
+}
+.body-text {
+    font-size: 15pt;
+}
+@media only screen and (max-width: 768px) {
+    .small-title {
+        font-size: 22pt;
+    }
+    .body-text {
+        font-size:20pt;
+    }
+
     .om-oss {
     width:95%;
     min-width:200px;
