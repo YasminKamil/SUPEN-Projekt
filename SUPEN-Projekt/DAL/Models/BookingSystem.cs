@@ -2,6 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace SUPEN_Projekt.Models {
+
+	/*En modell för bokningssystem med sina egenskaper, som representerar en tabell i databasen. 
+	 Med ett till många samband till services*/
 	public class BookingSystem {
 
 		public BookingSystem() {
