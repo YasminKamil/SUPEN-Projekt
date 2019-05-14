@@ -11,14 +11,14 @@
     <h2>@ViewBag.Message</h2>
     <div style="padding-bottom:0.1%; padding-top:0.1%; min-width:310px;background-size: cover; background-image:url( @Url.Content(aUrl)); ">
         @*<img src="@Url.Content(aUrl)" style="height:100%; width:100%;"/>*@
-        <div style="width:20%; height:80%; min-width:100px; margin: auto 35% 2% 2%; background-color:white; opacity:0.9; display:inline-block; ">
+        <div class="company-name" style="width:auto; height:80%; min-width:100px; margin: auto 35% 2% 2%; background-color:white; opacity:0.9; display:inline-block; ">
 
-            <div class="panel-body">
+            
                 
-                    <h3 style="color : black; margin:1% 1% 1% 1%;">@Model.bookingSystem.CompanyName</h3>
+                    <h3 >@Model.bookingSystem.CompanyName</h3>
                 
                 
-            </div>
+            
         </div>
 
         <div class="panel panel-primary company-info-box-2 align-center" style="height:80%; ">
