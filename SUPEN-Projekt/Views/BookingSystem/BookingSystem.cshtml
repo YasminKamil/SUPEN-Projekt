@@ -2,7 +2,7 @@
 	@using System.Globalization;
 <link href="~/Content/Site.css" rel="stylesheet" />
 <div>
-	<ol class="breadcrumb">
+	<ol class="breadcrumb body-text">
 		<li>@Html.ActionLink("Välj företag", "Index", "BookingSystem")</li>
 	</ol>
 </div>
@@ -12,12 +12,12 @@
 
 	<h2>@ViewBag.Message</h2>
 	<div style="padding-bottom:0.1%; padding-top:0.1%; min-width:310px;background-size: cover; background-image:url( @Url.Content(aUrl)); ">
-		<div style="width:auto; height:80%; min-width:100px; margin: auto 35% 2% 2%; background-color:white; opacity:0.9; display:inline-block; ">
-			<h3>@Model.bookingSystem.CompanyName</h3>
+		<div  style="width:auto; height:80%; min-width:100px; margin: auto 35% 2% 2%; background-color:white; opacity:0.8; display:inline-block; ">
+			<h3><b class="medium-title"> @Model.bookingSystem.CompanyName</b></h3>
 		</div>
 
 		<div class="panel panel-primary company-info-box-2 align-center" style="height:80%; ">
-			<div class="panel-body">
+			<div class="panel-body body-text">
 				<br />
 				@Model.bookingSystem.Address
 				<br />
@@ -31,7 +31,7 @@
 		</div>
 	</div>
 }
-<h2><b>Vad vill du boka?</b></h2>
+<h2><b class="small-title">Vad vill du boka?</b></h2>
 <table class="table">
 
 
@@ -40,8 +40,8 @@
 			<tr class="no-Background">
 				<td class="no-Border">
 					<div class="panel panel-primary" style="min-width:300px;">
-						<div class="panel-heading">@i.ServiceName </div>
-						<div class="panel-body"><span class="glyphicon">&#xe023;</span>  @i.Duration minuter - @i.Price SEK @Html.ActionLink("Boka", "BookService", "Service", new { inServiceId = i.ServiceId, inBookingSystemId = Model.bookingSystem.BookingSystemId }, new { @class = "btn btn-primary", @style = "float: right" })</div>
+						<div class="panel-heading small-title">@i.ServiceName </div>
+						<div class="panel-body body-text"><span class="glyphicon">&#xe023;</span>  @i.Duration minuter - @i.Price SEK @Html.ActionLink("Boka", "BookService", "Service", new { inServiceId = i.ServiceId, inBookingSystemId = Model.bookingSystem.BookingSystemId }, new { @class = "btn btn-primary", @style = "float: right" })</div>
 					</div>
 				</td>
 			</tr>
@@ -50,15 +50,15 @@
 
 </table>
 <div id ="left" style=" width: 35%; float:left;">
-	<h3> Om oss</h3>
+	<h3 class="small-title"> Om oss</h3>
 	<div class="panel panel-primary om-oss">
-		<div class="panel-body">@Model.bookingSystem.SystemDescription</div>
+		<div class="panel-body body-text">@Model.bookingSystem.SystemDescription</div>
 	</div>
 </div>
 <div id="createbooking">
 </div>
 <div id="right" style="float:right; margin-right: 50%">
-	<h3>Hitta oss</h3>
+	<h3 class="small-title">Hitta oss</h3>
 	<div id="mapid" style= "display:inline; height:45%; width: 38%; position:absolute;" >
 	
 	</div>
