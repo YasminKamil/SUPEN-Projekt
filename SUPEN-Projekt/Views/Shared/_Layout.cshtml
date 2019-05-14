@@ -8,11 +8,6 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
 
-    
-
-    @*<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
-          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-          crossorigin="" />*@
     <link href="~/Content/leaflet.css" rel="stylesheet" />
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
     <link href="~/Content/Details.css" rel="stylesheet" />
@@ -21,13 +16,6 @@
 
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 
-    @*<script src='https://static-assets.mapbox.com/gl-pricing/dist/mapbox-gl.js'></script>*@
-
-    @*<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
-            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-            crossorigin=""></script>*@
-    
-    @*<script src="~/Scripts/leaflet-0.7.3.js"></script>*@
     <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
     <script type='text/javascript' src='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js'></script>
   
@@ -53,7 +41,7 @@
          
                     <li class="right-border-gray" >@Html.ActionLink("Boka", "Index", "BookingSystem")</li>
                     <li class="right-border-gray">@Html.ActionLink("Info", "Branches", "Branch", new { inBranchId = 1 }, new { @class = "" })</li>
-                    <!--  <li>//Html.ActionLink("Contact", "Contact", "Home")</li> -->
+ 
                 </ul>
 			</div>
 		</div>
