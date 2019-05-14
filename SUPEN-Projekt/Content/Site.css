@@ -103,7 +103,10 @@ tr:nth-child(even) {
     font-size: 90%;
     display: inline-block;
 }
-
+.about-us-image {
+    background-repeat: no-repeat;
+    background-position-x: center;
+}
 @media only screen and (max-width: 600px) {
     .width-wide {
         width: 90%;
@@ -111,9 +114,15 @@ tr:nth-child(even) {
         padding: 10px;
         word-wrap: break-word;
         font-size: 90%;
-      
+        margin: auto;
     }
-
+    .about-us-image {
+        background-repeat: no-repeat;
+        background-position-x: center;
+        width:80%;
+        height:auto;
+        margin:auto;
+    }
     .company-info-box-1 {
         width: 90%;
         min-width: 300px;
