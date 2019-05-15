@@ -374,6 +374,7 @@
     <Content Include="Views\Service\BookService.cshtml" />
     <Content Include="Views\Service\ServiceSuggestion.cshtml" />
     <Content Include="Views\Branch\Branches.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
