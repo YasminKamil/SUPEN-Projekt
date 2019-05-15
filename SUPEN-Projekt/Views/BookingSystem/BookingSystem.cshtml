@@ -12,22 +12,21 @@
 
 	<h2>@ViewBag.Message</h2>
 	<div style="padding-bottom:0.1%; padding-top:0.1%; min-width:310px;background-size: cover; display:flex; align-content:space-between; background-image:url( @Url.Content(aUrl)); ">
-		<div  style="width:auto; height:80%; min-width:100px; margin: auto 35% 2% 2%; background-color:white; opacity:0.8; display:inline-block; ">
-			<h3><b class="medium-title" style="margin-left:2%;"> @Model.bookingSystem.CompanyName</b></h3>
-		</div>
 
-		<div class="panel panel-primary company-info-box-2 align-center" style="height:80%;  ">
-			<div class="panel-body body-text">
-				<br />
-				@Model.bookingSystem.Address
-				<br />
-				@Model.bookingSystem.PostalCode @Model.bookingSystem.City
-				<br />
-				Epost: @Model.bookingSystem.ContactEmail
-				<br />
-				Tel. @Model.bookingSystem.ContactPhone
-				<br />
-			</div>
+
+		<div class="panel panel-primary company-info-box-2 " style="height:80%;  ">
+            <div class="panel-body body-text">
+                <h3><b class="medium-title" > @Model.bookingSystem.CompanyName</b></h3>
+                
+                @Model.bookingSystem.Address
+                <br />
+                @Model.bookingSystem.PostalCode @Model.bookingSystem.City
+                <br />
+                Epost: @Model.bookingSystem.ContactEmail
+                <br />
+                Tel. @Model.bookingSystem.ContactPhone
+                <br />
+            </div>
 		</div>
 	</div>
 }
