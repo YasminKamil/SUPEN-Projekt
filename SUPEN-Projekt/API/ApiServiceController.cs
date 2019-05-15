@@ -55,12 +55,13 @@ namespace SUPEN_Projekt.Controllers {
 			ServiceViewModel sVM = new ServiceViewModel();
 
 			var inBooking = await uw.Bookings.Get(inBookingId);
-			var bookingSystems = await uw.BookingSystems.GetAll();
+			var bookingSystems = await uw.BookingSystems.GetBookingSystems();
 
 			//Tilldelar respektive variabel ett värde genom att anropa på metoder från repository
 			var bookingSystem = await uw.BookingSystems.GetBookServiceSuggestion(inBooking, inServiceName, inBookingSystemId);
 			var service = await uw.Services.GetServiceSuggestion(bookingSystem);
-			var booking = await uw.BookingSystems.GetServiceSuggestionBookings(bookingSystems.ToList(), inBooking);
+			var booking = await uw.BookingSystems.GetServiceSuggestionBookings(bookingSystems.ToList(), 
+                inBooking, bookingSystem.CompanyName, service.ServiceName);
 
 			sVM.bookingSystemName = bookingSystem.CompanyName;
 			sVM.serviceName = service.ServiceName;

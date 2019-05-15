@@ -1,6 +1,6 @@
 ﻿@model SUPEN_Projekt.Logic.BookingSystemsViewModel
 <table class="table" style="margin-top:1%;">
-	@foreach (var item in Model.bookingSystems) {
+	@foreach (var item in Model.bookingSystems.OrderBy(x=>x.City)) {
 		<tr>
 			<td class="no-Border">
 				<a href='@Url.Action("BookingSystem","BookingSystem",new { id = item.BookingSystemId})' class='link-icon btn btn-default' style="width:100%; height:inherit; text-align:left">

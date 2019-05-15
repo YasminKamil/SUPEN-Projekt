@@ -1,6 +1,6 @@
 ﻿@model SUPEN_Projekt.Logic.ViewModels.BookingSystemServiceBookingViewModel
 <div>
-	<ol class="breadcrumb">
+	<ol class="breadcrumb body-text">
 		<li>
 			@Html.ActionLink("Välj företag", "Index", "BookingSystem")
 		</li>
@@ -10,21 +10,21 @@
 <link href="~/Content/Site.css" rel="stylesheet" />
 <br />
 
-<h2><b>@Model.bookingSystem.CompanyName</b></h2>
+<h2><b class="medium-title">@Model.bookingSystem.CompanyName</b></h2>
 
 
 <div id="ParentDiv">
 	<div id="firstDiv">
-		<h3><b>@Model.service.ServiceName</b></h3>
+		<h3><b >@Model.service.ServiceName</b></h3>
 
 		<br />
-		<h4><b>Tid:</b> @Model.service.Duration minuter </h4>
-		<h4><b>Pris:</b> @Model.service.Price SEK (inkl. moms)</h4>
+		<h4 class="body-text"><b>Tid:</b> @Model.service.Duration minuter </h4>
+		<h4 class="body-text"><b>Pris:</b> @Model.service.Price SEK (inkl. moms)</h4>
 	</div>
 	<div class="panel panel-primary company-info-box-1 align-center" style="   display:inline-block">
 
-		<div class="panel-body">
-			<br />
+		<div class="panel-body body-text">
+			
 			@Model.bookingSystem.Address
 			<br />
 			@Model.bookingSystem.PostalCode @Model.bookingSystem.City
@@ -37,8 +37,8 @@
 	</div>
 </div>
 <div class="row" style="float:left; min-width:320px;">
-
-	<h4><b> <span class="glyphicon">&#xe023;</span> Välj en tid</b></h4>
+    <br />
+	<h4><b class="body-text"> <span class="glyphicon">&#xe023;</span> Välj en tid</b></h4>
 
 	@{
 		int open = 8;
@@ -56,7 +56,7 @@
 
 			if (!Model.service.Bookings.Any(x => x.StartTime == startTime)) {
 				@Html.ActionLink(startTime.ToString("HH:mm") + "-" + endTime.ToString("HH:mm"), "BookService", "Booking",
-		 new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inStartTime = startTime.ToString() }, new { @class = "btn btn-primary small-margin" })
+		 new { inBookingSystemId = Model.bookingSystem.BookingSystemId, inServiceId = Model.service.ServiceId, inStartTime = startTime.ToString() }, new { @class = "btn btn-primary small-margin body-text" })
 			}
 			startTime = endTime;
 		}

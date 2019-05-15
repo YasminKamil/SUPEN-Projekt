@@ -112,17 +112,23 @@ tr:nth-child(even) {
    
 }
 .small-title {
-    font-size: 17pt;
+    font-size: 17px;
+}
+.medium-title {
+    font-size: 20px;
 }
 .body-text {
-    font-size: 15pt;
+    font-size: 15px;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
     .small-title {
         font-size: 22pt;
     }
+    .medium-title {
+        font-size: 28pt;
+    }
     .body-text {
-        font-size:20pt;
+        font-size:18pt;
     }
 
     .om-oss {

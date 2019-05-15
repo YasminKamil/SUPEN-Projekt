@@ -8,28 +8,28 @@
 
 @foreach (var branch in Model.Branches.Where(x => x.BranchRelations.Count() != 0)) {
 	int totalClick = branch.BranchRelations.Sum(x => x.CountClick);
-	<table style="border:solid; width:90%" class="width-wide align-center">
+	<table style="border:solid; width:90%" class="width-wide align-center body-text">
 		<tr>
 			<th>
-				<b>@branch.BranchName</b>
+				<b class="body-text">@branch.BranchName</b>
 			</th>
 			<th>
-				<b>Klick</b>
+				<b class="body-text">Klick</b>
 			</th>
 			<th>
-				<b>Bokningsföljd</b>
+				<b class="body-text">Bokningsföljd</b>
 			</th>
 		</tr>
 
 		@foreach (var branchRelation in branch.BranchRelations) {
 			double probability = branchRelation.CountClick / (double)totalClick * 100;
 			<tr>
-				<td>
+				<td class="body-text">
 					@Model.Branches.Single(x => x.BranchId.ToString() == branchRelation.branchBId2).BranchName
 				</td>
-				<td> <b>@branchRelation.CountClick</b> </td>
+				<td class="body-text"> @branchRelation.CountClick </td>
 
-				<td> <b>@probability.ToString("0.##") %</b> </td>
+				<td class="body-text"> @probability.ToString("0.##") % </td>
 			</tr>
 		}
 	</table>

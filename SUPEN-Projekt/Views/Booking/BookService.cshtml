@@ -4,7 +4,7 @@
 	ViewBag.Title = "Update";
 }
 <div>
-	<ol class="breadcrumb">
+	<ol class="breadcrumb body-text">
 		<li>
 			@Html.ActionLink("Välj företag", "Index", "BookingSystem")
 		</li>
@@ -21,36 +21,37 @@
 	@Html.HiddenFor(model => Model.bookingSystem)
 	@Html.HiddenFor(model => Model.bookingSystem.CompanyName)
 	@Html.HiddenFor(model => Model.startTime)
-	<h3>
+	<h3 class="medium-title">
 		<b>
 			@Model.bookingSystem.CompanyName
 		</b>
 	</h3>
 
-	<div class="form-horizontal" style="border-top:outset; border-color:lightgray">
+	<div class="form-horizontal body-text" style="border-top:outset; border-color:lightgray">
 		<div style="width:50%; height:inherit; top:8px; right:8px; display:inline-block">
+          
+                <br /> <b class="medium-title">
+                    @Model.service.ServiceName
+                </b>
+                <br />
+             
+                    <b class="body-text">
+                        Starttid
+                    </b> @Model.startTime.ToString("HHmm")
 
-			<br /> <b style="font-size:medium">
-				@Model.service.ServiceName
-			</b>
-			<br />
+                    <b class="body-text">
+                        Tid
+                    </b> @Model.service.Duration minuter
 
-			<b style="font-size:medium">
-				Starttid
-			</b> @Model.startTime.ToString("HHmm")
-
-			<b style="font-size:medium">
-				Tid
-			</b> @Model.service.Duration minuter
-
-			<br />
-			<b style="font-size:medium">
-				Pris
-			</b>@Model.service.Price SEK
+                    <br />
+                    <b class="body-text">
+                        Pris
+                    </b>@Model.service.Price SEK
+               
 		</div>
 
 		<div class="panel panel-primary small-margin company-info-box-1 align-center" style=" height:inherit; top:8px; left:8px; display:inline-block">
-			<div class="panel-body">
+			<div class="panel-body body-text">
 				@Model.bookingSystem.Address
 				<br />
 				@Model.bookingSystem.PostalCode @Model.bookingSystem.City
@@ -99,7 +100,7 @@
 
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-10">
-				<input type="submit" value="Boka" class="btn btn-default" />
+				<input type="submit" value="Boka" class="btn btn-default body-text" />
 			</div>
 		</div>
 	</div>
