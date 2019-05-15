@@ -98,10 +98,13 @@ tr:nth-child(even) {
     height: 80%;
     width: 40%;
     margin: 2% 0 2% 2%;
+    margin-right:2%;
+    margin-left: 55%;
     padding: 10px;
     word-wrap: break-word;
     font-size: 90%;
-    display: inline-block;
+    
+    
 }
 .about-us-image {
     background-repeat: no-repeat;
