@@ -122,13 +122,13 @@ tr:nth-child(even) {
 }
 @media only screen and (max-width: 600px) {
     .small-title {
-        font-size: 22pt;
+        font-size: 22px;
     }
     .medium-title {
-        font-size: 28pt;
+        font-size: 28px;
     }
     .body-text {
-        font-size:18pt;
+        font-size:18px;
     }
 
     .om-oss {
