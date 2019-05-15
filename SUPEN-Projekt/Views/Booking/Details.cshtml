@@ -3,79 +3,83 @@
 
 
 @{
-	ViewBag.Title = "Home Page";
-	var dateformat = Model.booking.Date.ToString("d MMMM yyyy", new CultureInfo("sv-SE"));
+    ViewBag.Title = "Home Page";
+    var dateformat = Model.booking.Date.ToString("d MMMM yyyy", new CultureInfo("sv-SE"));
 }
 
 <script type="text/javascript">
-	$(window).on('load', function () {
-		$('#myModal').modal('show');
-	});
+    $(window).on('load', function () {
+        $('#myModal').modal('show');
+    });
 </script>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title medium-title">Bokningsbekräftelse</h4>
-			</div>
-			<div class="modal-body">
-				<div class="container-fluid">
-					<div class=" row"></div>
-					<div class="row">
-						<div>
-							<div class="list-group">
-                                <a href="#" class="list-group-item">
-
-                                    <text class="small-title">	@Html.DisplayFor(model => model.bookingSystem.CompanyName)</text><br />
-
-                                    <h5 class="list-group-item-text body-text"><strong>@Html.DisplayFor(model => model.service.ServiceName)</strong> den @Html.DisplayFor(model => dateformat)</h5>
-                                    <p class="list-group-item-text body-text" ><strong>Klockan:</strong> @Html.DisplayFor(model => model.booking.StartTime) - @Html.DisplayFor(model => model.booking.EndTime)</p>
-                                    <p class="list-group-item-text body-text" ><strong>Pris: </strong>@Html.DisplayFor(model => model.service.Price) SEK</p>
-                                    <br />
-                                    <h5 class="list-group-item-text text-capitalize body-text" "><strong>@Html.DisplayFor(model => model.booking.UserName)</strong></h5>
-                                    <p class="list-group-item-text body-text" >@Html.DisplayFor(model => model.booking.UserMail)</p>
-                                    <p class="list-group-item-text body-text" >@Html.DisplayFor(model => model.booking.UserMobile)</p>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title medium-title">Tack för din bokning hos 	<text style="font-weight:bold">@Html.DisplayFor(model => model.bookingSystem.CompanyName)!</text></h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class=" row"></div>
+                    <div class="row">
+                        <div>
+                            <div class="list-group">
 
 
-                                    <div class="booking-confirmation-details body-text">
+                                <h5 class="list-group-item-text text-capitalize body-text" ">@Html.DisplayFor(model => model.booking.UserName)</h5>
+                                <p class="list-group-item-text body-text">@Html.DisplayFor(model => model.booking.UserMail)</p>
+                                <p class="list-group-item-text body-text">@Html.DisplayFor(model => model.booking.UserMobile)</p><br />
+
+                                <br />
 
 
-                                        <p class="text-left body-text">
-                                            <strong class="body-text">Besöksadress: <br /> </strong>@Html.DisplayFor(model => model.bookingSystem.Address)<br />
-                                            @Html.DisplayFor(model => model.bookingSystem.City)
-                                            @Html.DisplayFor(model => model.bookingSystem.PostalCode) <br />
-                                            <strong>Tel. </strong> @Html.DisplayFor(model => model.bookingSystem.ContactPhone)<br />
-                                        </p>
+                                <div class="booking-confirmation-details body-text" style="width: 100%">
+                                    <div class="text-left body-text" style=" display: inline-block; left: 0; width: 45%; margin-right: 13%">
+                                        <text class="small-title">@Html.DisplayFor(model => model.service.ServiceName)</text><br />
+
+                                        <h5 class="list-group-item-text body-text">Besökstid den @Html.DisplayFor(model => dateformat)</h5>
+                                        <p class="list-group-item-text body-text">Klockan @Html.DisplayFor(model => model.booking.StartTime) - @Html.DisplayFor(model => model.booking.EndTime)</p>
+                                        <p class="list-group-item-text body-text">Pris @Html.DisplayFor(model => model.service.Price) SEK</p>
                                     </div>
-                                </a>
-							</div>
-						</div>
-						<div class="col-lg-2" style="background-color:white">
-						</div>
-						<div class="row"></div>
-						@if (Model.bookings != null && Model.bookings.Count() > 1 && Model.bookings.Where(x => x.BookingId != Model.booking.BookingId).Count() > 1) {
-							{
-								Html.RenderAction("ServiceSuggestion", "Service", new {
-									inBookingId = Model.booking.BookingId,
-									inServiceName = Model.service.ServiceName,
-									inBookingSystemName = Model.bookingSystem.CompanyName
-								});
-							}
-						}
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
 
-				<div class="booking-confirmation-company">
-					<button type="button" class="btn btn-primary bottom-right" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Klar!</button>
+                                    <div class="text-left body-text" style=" display: inline-block; right: 0; width: 40%">
+                                        <br /> @Html.DisplayFor(model => model.bookingSystem.Address)<br />
+                                        @Html.DisplayFor(model => model.bookingSystem.City)
+                                        @Html.DisplayFor(model => model.bookingSystem.PostalCode) <br />
+                                        <strong>Tfn </strong> @Html.DisplayFor(model => model.bookingSystem.ContactPhone)<br />
+                                    </div>
+                                </div>
 
-				</div>
-			</div>
-		</div>
-	</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2" style="background-color:white">
+                        </div>
+                        <div class="row"></div>
+                        @if (Model.bookings != null && Model.bookings.Count() > 1)
+                        {
+                            {
+                                Html.RenderAction("ServiceSuggestion", "Service", new
+                                {
+                                    inBookingId = Model.booking.BookingId,
+                                    inServiceName = Model.service.ServiceName,
+                                    inBookingSystemName = Model.bookingSystem.CompanyName
+                                });
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <div class="booking-confirmation-company">
+                    <button type="button" class="btn btn-primary bottom-right" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Klar!</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div id="mapid" class="booking-confirmation-map">
@@ -83,17 +87,16 @@
 </div>
 <div class="booking-relevantbookings-position">
 
-	<button type="button" class="btn btn-info btn-sm booking-Information-button body-text" data-toggle="modal" style="border-color:ButtonShadow" data-target="#myModal">Bokningsinformation</button>
+    <button type="button" class="btn btn-info btn-sm booking-Information-button body-text" data-toggle="modal" style="border-color:ButtonShadow" data-target="#myModal">Bokningsinformation</button>
 
-	@{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
-									new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId, branchAId = Model.branchAId });
-	}
+    @{Html.RenderAction("RelevantBookingSystems", "BookingSystem",
+                                          new { bookingSystemId = Model.bookingSystem.BookingSystemId, serviceId = Model.service.ServiceId, bookingId = Model.booking.BookingId, branchAId = Model.branchAId });
+    }
 
 
 </div>
 
 
 
-
-
+@*&& Model.bookings.Where(x => x.BookingId != Model.booking.BookingId).Count() > 1*@
 

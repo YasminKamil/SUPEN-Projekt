@@ -15,7 +15,7 @@ namespace SUPEN_Projekt.Repositories {
 
 		//Retunerar tjänster
 		public async Task<IEnumerable<Service>> GetServices() {
-			return await ApplicationDbContext.Set<Service>().Include(x => x.Branch).Include(b => b.Bookings).Include(x => x.Bookings).ToListAsync();
+			return await ApplicationDbContext.Set<Service>().Include(x => x.Branch).Include(b => b.Bookings).ToListAsync();
 		}
 
 		//Returnerar den specifika tjänsten

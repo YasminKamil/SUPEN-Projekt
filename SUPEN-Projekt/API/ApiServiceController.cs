@@ -63,13 +63,18 @@ namespace SUPEN_Projekt.Controllers {
 			var booking = await uw.BookingSystems.GetServiceSuggestionBookings(bookingSystems.ToList(), 
                 inBooking, bookingSystem.CompanyName, service.ServiceName);
 
+            var services = await uw.Services.GetServices();
+            var selectedBookingSystem = await uw.BookingSystems.Get(inBookingSystemId);
+            var selectedService = selectedBookingSystem.Services.Single(x => x.ServiceName == inServiceName);
+
 			sVM.bookingSystemName = bookingSystem.CompanyName;
 			sVM.serviceName = service.ServiceName;
 			sVM.startTime = booking.StartTime;
 			sVM.endTime = booking.EndTime;
 			sVM.bookingSystemId = bookingSystem.BookingSystemId;
 			sVM.serviceId = service.ServiceId;
-			sVM.branchAId = service.Branch.BranchId;
+       
+            sVM.branchAId = selectedService.Branch.BranchId;
 			sVM.bookingId = booking.BookingId;
 			sVM.PictureUrl = service.Branch.PictureUrl;
 
