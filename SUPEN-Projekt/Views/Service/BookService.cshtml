@@ -11,19 +11,14 @@
 <br />
 
 <h2><b class="medium-title">@Model.bookingSystem.CompanyName</b></h2>
-
-
 <div id="ParentDiv">
 	<div id="firstDiv">
-		<h3><b >@Model.service.ServiceName</b></h3>
-
-		<br />
+		<h3><b class="small-title">@Model.service.ServiceName</b></h3>
 		<h4 class="body-text"><b>Tid:</b> @Model.service.Duration minuter </h4>
 		<h4 class="body-text"><b>Pris:</b> @Model.service.Price SEK (inkl. moms)</h4>
 	</div>
-	<div class="panel panel-primary company-info-box-1 align-center" style="   display:inline-block">
-
-		<div class="panel-body body-text">
+	<div class="panel panel-primary company-info-box-1 align-center" style="display:inline-block">
+        <div class="panel-body body-text">
 			
 			@Model.bookingSystem.Address
 			<br />
@@ -31,7 +26,7 @@
 			<br />
 			Epost: @Model.bookingSystem.ContactEmail
 			<br />
-			Tel. @Model.bookingSystem.ContactPhone
+			Tfn @Model.bookingSystem.ContactPhone
 			<br />
 		</div>
 	</div>
