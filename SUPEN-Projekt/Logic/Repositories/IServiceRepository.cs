@@ -9,6 +9,5 @@ namespace SUPEN_Projekt.Repositories {
 		void AddBooking(Booking booking, int id);
 		Task<Service> GetService(int id);
         Task<Service> GetServiceSuggestion(BookingSystem bookingSystem);
-
     }
 }

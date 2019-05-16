@@ -57,7 +57,7 @@
                         <div class="col-lg-2" style="background-color:white">
                         </div>
                         <div class="row"></div>
-                        @if (Model.bookings != null && Model.bookings.Count() > 1)
+                        @if (Model.bookings != null && Model.bookings.Count() > 1 && Model.bookings.Where(x => x.BookingId != Model.booking.BookingId).Count() > 1)
                         {
                             {
                                 Html.RenderAction("ServiceSuggestion", "Service", new
@@ -98,5 +98,5 @@
 
 
 
-@*&& Model.bookings.Where(x => x.BookingId != Model.booking.BookingId).Count() > 1*@
+
 

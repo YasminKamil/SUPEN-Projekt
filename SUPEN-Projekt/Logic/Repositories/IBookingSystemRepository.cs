@@ -9,7 +9,7 @@ namespace SUPEN_Projekt.Repositories {
 		Task<IEnumerable<BookingSystem>> GetBookingSystems();
 		Task<BookingSystem> GetBookingSystem(int id);
 		Task<List<BookingSystem>> GetRelevantBookingSystemOnlyWithAvailableTimes(int bookingSystemId, int serviceId, int bookingId);
-		Task<BookingSystem> GetBookServiceSuggestion(Booking inBooking, string inServiceName, int inBookingSystemId);
+		Task<BookingSystem> GetServiceSuggestionBookingSystem(Booking inBooking, string inServiceName, int inBookingSystemId);
 		Task<Booking> GetServiceSuggestionBookings(List<BookingSystem> inBookingSystem, Booking inBooking, string inCompanyName, string inServiceName);
 
 	}

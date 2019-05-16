@@ -368,7 +368,7 @@ namespace SUPEN_Projekt.Repositories {
 			return await Task.FromResult(branchesInBookingSystem);
 		}
 
-		public async Task<BookingSystem> GetBookServiceSuggestion(Booking inBooking, string inServiceName, int inBookingSystemId) {
+		public async Task<BookingSystem> GetServiceSuggestionBookingSystem(Booking inBooking, string inServiceName, int inBookingSystemId) {
 			//Den bokningen vi tar in, det är den bokningen som finns i relevantbookingvyn
 			var inBookingSystem = await Get(inBookingSystemId);
 			var bookingSystemsInCity = await GetBookingSystemsInRange(inBookingSystem);
@@ -378,36 +378,42 @@ namespace SUPEN_Projekt.Repositories {
 			List<int> mostBookings = new List<int>();
 			List<Booking> bookings = new List<Booking>();
 			List<BookingSystem> otherBookingSystems = new List<BookingSystem>();
+            Service serviceSuggestion = new Service();
 
-			foreach (var bookingSystem in bookingSystemsInCity) {
+            foreach (var bookingSystem in bookingSystemsInCity) {
 				if (bookingSystem.BookingSystemId != inBookingSystemId && bookingSystem.Services.Count() != 0) {
 					foreach (var service in bookingSystem.Services) {//för varje tjänst i från alla tjänster
 						if (service.Bookings.Count > 0 && service.ServiceName != inServiceName) {
 
-							bookings = service.Bookings.Where(x => x.UserName == inBooking.UserName).ToList();
+							var userNamebookings = service.Bookings.Where(x => x.UserName == inBooking.UserName).ToList();
+                            foreach (var userBooking in userNamebookings)
+                            {
+                                bookings.Add(userBooking);//skapar en motsvarande lista för bokningar separat att jämföra med
+                            }
+                            
 							var numberOfTimes = bookings.Count();//antal bokningar,
 
 							mostBookings.Add(numberOfTimes);
 
 							if (bookings.Count() > 0)//== mostBookings.Max())
 							{
-								formerBookedServices.Add(service);
-								otherBookingSystems.Add(bookingSystem);
+								formerBookedServices.Add(service);//alla tjänster förutom den bokade tjänsten
+								otherBookingSystems.Add(bookingSystem);//alla bokningssystem utom den bokade
 
 							}
 
-						}
+						}//måste koppla ihop servicens id med ett specifikt bokningssystem
 					}
 
 				}
 			}
-			Service serviceSuggestion = new Service();
+			
 			BookingSystem bs = new BookingSystem();
 			if (formerBookedServices != null && formerBookedServices.Count() != 0) {
-				serviceSuggestion = formerBookedServices.Where(x => x.Bookings.Count == mostBookings.Max()).First();
-
-				foreach (var item in otherBookingSystems) {
-					if (item.Services.Where(x => x.Bookings.Count() == serviceSuggestion.Bookings.Count()).Any()) {
+				var servicesWithUserName = formerBookedServices.Where(x => x.Bookings.Count == bookings.Count).ToList();
+                serviceSuggestion = servicesWithUserName.Where(x => x.Bookings.Count == mostBookings.Max()).First();
+                foreach (var item in otherBookingSystems) {
+					if (item.Services.Contains(serviceSuggestion)) { 
 						bs = item;
 					}
 				}
@@ -456,7 +462,7 @@ namespace SUPEN_Projekt.Repositories {
         //Returnerar förslag på tider hos andra bokningssystem 
         public async Task<Booking> GetServiceSuggestionBookings(List<BookingSystem> inBookingSystem, 
             Booking inBooking, string inCompanyName, string inServiceName) {
-			//var bookingSystems = GetBookingSystemsWithAvailableBooking(inBookingSystem, inBooking).Result;
+
 			List<Booking> bookings = new List<Booking>();
 			Booking serviceSuggestionBooking = new Booking();
 
@@ -468,9 +474,6 @@ namespace SUPEN_Projekt.Repositories {
 					foreach (var booking in service.Bookings) {
 						bookings.Add(booking);
 					}
-
-            //var isHalfHourBeforeOrAfter = bookings.Any(x => x.EndTime.AddMinutes(15) < inBooking.StartTime||
-            //inBooking.EndTime.AddMinutes(15) < x.StartTime);
 
 			if (bookings.Count > 0) {
 				serviceSuggestionBooking = bookings.Where(x => x.Available == true && (x.EndTime.AddMinutes(29) < inBooking.StartTime ||

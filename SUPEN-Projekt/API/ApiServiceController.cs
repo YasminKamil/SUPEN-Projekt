@@ -58,7 +58,7 @@ namespace SUPEN_Projekt.Controllers {
 			var bookingSystems = await uw.BookingSystems.GetBookingSystems();
 
 			//Tilldelar respektive variabel ett värde genom att anropa på metoder från repository
-			var bookingSystem = await uw.BookingSystems.GetBookServiceSuggestion(inBooking, inServiceName, inBookingSystemId);
+			var bookingSystem = await uw.BookingSystems.GetServiceSuggestionBookingSystem(inBooking, inServiceName, inBookingSystemId);
 			var service = await uw.Services.GetServiceSuggestion(bookingSystem);
 			var booking = await uw.BookingSystems.GetServiceSuggestionBookings(bookingSystems.ToList(), 
                 inBooking, bookingSystem.CompanyName, service.ServiceName);
