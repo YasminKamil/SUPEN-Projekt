@@ -96,7 +96,7 @@ namespace SUPEN_Projekt.Models {
 				"risus hendrerit.Curabitur consectetur ac risus commodo scelerisque.Sed ut ornare metus.Mauris " +
 				"ac ornare eros. Proin in tristique sem, at hendrerit arcu.", 
 				 "Frisorkompaniet@boka.se", "070 - 000 00 00", "boka.se/salongfinest", "Frisörkompaniet", "Frisörkompaniet@boka.se",
-			"070 - 123 56 78", "Kristinagatan 10", 59.270042, 15.229628, "602 26", "Norrköping");
+			"070 - 123 56 78", "Kristinagatan 10", 59.270042, 15.229628, "602 26", "Örebro");
 
 			AddBookingSystem(context, "boka.se", "Lorem ipsum dolor sit amet, consectetur " +
 				"adipiscing elit. Fusce iaculis sapien lorem, vel hendrerit nisi interdum " +
