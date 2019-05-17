@@ -447,7 +447,7 @@ namespace SUPEN_Projekt.Repositories
                         if (service.Bookings.Count > 0 && service.ServiceName != inServiceName)
                         {
 
-                            bookings = service.Bookings.Where(x => x.UserName.ToLower() == inBooking.UserName.ToLower()).ToList();
+                            bookings = service.Bookings.Where(x => x.UserName == inBooking.UserName).ToList();
                            
 
                             var numberOfTimes = bookings.Count();//antal bokningar,
@@ -470,10 +470,8 @@ namespace SUPEN_Projekt.Repositories
             BookingSystem bs = new BookingSystem();
             if (formerBookedServices != null && formerBookedServices.Count() != 0)
             {
-                serviceSuggestion = formerBookedServices.Where(x => x.Bookings.
-                Where(d => d.UserName.ToLower() == inBooking.UserName.ToLower()).
-                Count() == mostBookings.Max()).First();
-              
+                serviceSuggestion = formerBookedServices.Where(x => x.Bookings.Where(d => d.UserName == inBooking.UserName).Count() == mostBookings.Max()).First();
+                //serviceSuggestion = servicesWithUserName.Where(x => x.Bookings.Count == mostBookings.Max()).First();
                 foreach (var item in otherBookingSystems)
                 {
                     if (item.Services.Contains(serviceSuggestion))
