@@ -34,7 +34,7 @@ namespace SUPEN_Projekt.Repositories {
 			service.Bookings.Add(booking);	 
 		}
 
-		//Returnerar förslag på lediga tider hos ett system som användaren ofta bokar.
+		//Returnerar en tjänst med lediga tider som användaren ofta nyttjar.
 		public async Task<Service> GetServiceSuggestion(BookingSystem bookingSystem) {
 			List<int> mostBookings = new List<int>();
 			Service serviceSuggestion = new Service();
@@ -56,6 +56,5 @@ namespace SUPEN_Projekt.Repositories {
 			}
 			return await Task.FromResult(serviceSuggestion);
 		}
-
 	}
 }
