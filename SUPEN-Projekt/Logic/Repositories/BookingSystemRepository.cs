@@ -427,12 +427,10 @@ namespace SUPEN_Projekt.Repositories
 
         public async Task<BookingSystem> GetServiceSuggestionBookingSystem(Booking inBooking, string inServiceName, int inBookingSystemId)
         {
-            //Den bokningen vi tar in, det är den bokningen som finns i relevantbookingvyn
             var inBookingSystem = await Get(inBookingSystemId);
             var bookingSystemsInCity = await GetBookingSystemsInRange(inBookingSystem);
 
-            // alla services från databasen
-            List<Service> formerBookedServices = new List<Service>();//ny service med lista bokningar
+            List<Service> formerBookedServices = new List<Service>();
             List<int> mostBookings = new List<int>();
             List<Booking> bookings = new List<Booking>();
             List<BookingSystem> otherBookingSystems = new List<BookingSystem>();
@@ -443,35 +441,35 @@ namespace SUPEN_Projekt.Repositories
                 if (bookingSystem.BookingSystemId != inBookingSystemId && bookingSystem.Services.Count() != 0)
                 {
                     foreach (var service in bookingSystem.Services)
-                    {//för varje tjänst i från alla tjänster
+                    {
                         if (service.Bookings.Count > 0 && service.ServiceName != inServiceName)
                         {
 
-                            bookings = service.Bookings.Where(x => x.UserName == inBooking.UserName).ToList();
-                           
+                            bookings = service.Bookings.Where(x => x.UserName.ToLower() == inBooking.UserName.ToLower()).ToList();
 
-                            var numberOfTimes = bookings.Count();//antal bokningar,
+                            var numberOfTimes = bookings.Count();
 
                             mostBookings.Add(numberOfTimes);
 
-                            if (bookings.Count() > 0)//== mostBookings.Max())
+                            if (bookings.Count() > 0)
                             {
-                                formerBookedServices.Add(service);//alla tjänster förutom den bokade tjänsten
-                                otherBookingSystems.Add(bookingSystem);//alla bokningssystem utom den bokade
+                                formerBookedServices.Add(service);
+                                otherBookingSystems.Add(bookingSystem);
 
                             }
 
                         }
                     }
-
                 }
             }
 
             BookingSystem bs = new BookingSystem();
             if (formerBookedServices != null && formerBookedServices.Count() != 0)
             {
-                serviceSuggestion = formerBookedServices.Where(x => x.Bookings.Where(d => d.UserName == inBooking.UserName).Count() == mostBookings.Max()).First();
-                //serviceSuggestion = servicesWithUserName.Where(x => x.Bookings.Count == mostBookings.Max()).First();
+                serviceSuggestion = formerBookedServices.Where(x => x.Bookings.
+                Where(d => d.UserName.ToLower() == inBooking.UserName.ToLower()).
+                Count() == mostBookings.Max()).First();
+
                 foreach (var item in otherBookingSystems)
                 {
                     if (item.Services.Contains(serviceSuggestion))
@@ -483,7 +481,6 @@ namespace SUPEN_Projekt.Repositories
 
             //Returnerar det företag som har en tjänst som användaren nyttjat flest gånger
             return await Task.FromResult(bs);
-
         }
 
         private void GetAvailableBookings(Service service)
@@ -518,8 +515,8 @@ namespace SUPEN_Projekt.Repositories
             }
         }
 
-        //Returnerar förslag på tider hos andra bokningssystem 
-        public async Task<Booking> GetServiceSuggestionBookings(List<BookingSystem> inBookingSystem,
+        //Returnerar ett bokningsförslag  
+        public async Task<Booking> GetServiceSuggestionBooking(List<BookingSystem> inBookingSystem,
             Booking inBooking, string inCompanyName, string inServiceName)
         {
 
@@ -538,7 +535,8 @@ namespace SUPEN_Projekt.Repositories
 
             if (bookings.Count > 0)
             {
-                serviceSuggestionBooking = bookings.Where(x => x.Available == true && (x.EndTime.AddMinutes(29) < inBooking.StartTime ||
+                serviceSuggestionBooking = bookings.Where(x => x.Available == true &&
+                (x.EndTime.AddMinutes(29) < inBooking.StartTime ||
             inBooking.EndTime.AddMinutes(29) < x.StartTime)).First();
             }
 

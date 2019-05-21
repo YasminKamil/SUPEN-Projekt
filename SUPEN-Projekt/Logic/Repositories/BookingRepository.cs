@@ -31,38 +31,14 @@ namespace SUPEN_Projekt.Repositories {
 			booking.UserName = inBooking.UserName;
 			booking.UserMail = inBooking.UserMail;
 			booking.UserMobile = inBooking.UserMobile;
-			booking.Available = false;
+            booking.Available = false;
 			booking.StartTime = inBooking.StartTime;
 			booking.EndTime = inBooking.EndTime;
 			booking.Date = inBooking.Date;
 
-
 			//Sparar bokningen i databasen
 			Add(booking);
 			return await Task.FromResult(booking);
-		}
-
-		public async Task<Booking> GetServiceSuggestionBookings(Service inService, Booking inBooking) {
-			List<Booking> availableBookings = new List<Booking>();
-			Booking serviceSuggestionBooking = new Booking();
-
-			if (inService.Bookings.Count > 0) {
-				foreach (var booking in inService.Bookings) {
-					if (booking.Available == true)
-					//booking.StartTime > inBooking.EndTime.AddMinutes(20) && 
-					//booking.EndTime.AddMinutes(20) < inBooking.StartTime)
-
-					{
-						availableBookings.Add(booking);
-					}
-
-				}
-
-				serviceSuggestionBooking = availableBookings.First();
-				//serviceSuggestion = bookingSystem.Services.Where(x => x.Bookings.Count == mostBookings.Max()).First();
-			}
-
-			return await Task.FromResult(serviceSuggestionBooking);
 		}
 	}
 }
