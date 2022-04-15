@@ -1,6 +1,6 @@
-using System.Web.Http;
+using System.Web.Mvc;
 using Unity;
-using Unity.WebApi;
+using Unity.Mvc5;
 
 namespace SUPEN_Projekt
 {
@@ -15,7 +15,7 @@ namespace SUPEN_Projekt
             
             // e.g. container.RegisterType<ITestService, TestService>();
             
-            GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }
 }
